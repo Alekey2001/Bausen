@@ -29,46 +29,69 @@
         <span class="nav__title">Bechapra</span>
       </div>
 
-      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú">
+      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú" data-i18n="nav.open" data-i18n-attr="aria-label">
         <span class="nav__toggle-line"></span>
         <span class="nav__toggle-line"></span>
         <span class="nav__toggle-line"></span>
       </button>
 
       <div class="nav__panel" id="navMenu">
+        <div class="nav__panel-header">
+          <span class="nav__panel-title" data-i18n="nav.menu">Menú</span>
+          <button class="nav__close" type="button" aria-label="Cerrar menú" data-i18n="nav.close" data-i18n-attr="aria-label">✕</button>
+        </div>
         <ul class="nav__list" role="menubar">
-          <li class="nav__item" role="none"><a role="menuitem" href="#servicios" class="nav__link">Servicios</a></li>
+          <li class="nav__item" role="none"><a role="menuitem" href="#servicios" class="nav__link" data-i18n="nav.services">Servicios</a></li>
           <li class="nav__item nav__item--dropdown" role="none">
-            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-capital" role="menuitem">Human Capital</button>
+            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-capital" role="menuitem" data-i18n="nav.humanCapital">Human Capital</button>
             <ul class="nav__dropdown" id="menu-capital" role="menu">
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link">Atracción de talento</a></li>
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link">Payrolling-Maquila de Nómina</a></li>
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link">Servicios</a></li>
+              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.talent">Atracción de talento</a></li>
+              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.payroll">Payrolling-Maquila de Nómina</a></li>
+              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.services">Servicios</a></li>
             </ul>
           </li>
           <li class="nav__item nav__item--dropdown" role="none">
-            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-do" role="menuitem">Desarrollo Organizacional</button>
+            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-do" role="menuitem" data-i18n="nav.do">Desarrollo Organizacional</button>
             <ul class="nav__dropdown" id="menu-do" role="menu">
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link">Capacitación Empresarial</a></li>
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link">consultoría Organizacional</a></li>
+              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.training">Capacitación Empresarial</a></li>
+              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.consulting">consultoría Organizacional</a></li>
             </ul>
           </li>
           <li class="nav__item nav__item--dropdown" role="none">
-            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-management" role="menuitem">Management Services</button>
+            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-management" role="menuitem" data-i18n="nav.management">Management Services</button>
             <ul class="nav__dropdown" id="menu-management" role="menu">
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link">Contabilidad y Fiscal</a></li>
+              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.accounting">Contabilidad y Fiscal</a></li>
             </ul>
           </li>
-          <li class="nav__item" role="none"><a role="menuitem" href="#eventos" class="nav__link">Eventos</a></li>
-          <li class="nav__item" role="none"><a role="menuitem" href="#contacto" class="nav__link nav__link--cta">Solicitar información</a></li>
+          <li class="nav__item" role="none"><a role="menuitem" href="#eventos" class="nav__link" data-i18n="nav.events">Eventos</a></li>
+          <li class="nav__item" role="none"><a role="menuitem" href="#contacto" class="nav__link nav__link--cta" data-i18n="nav.contactCta">Solicitar información</a></li>
         </ul>
         <div class="nav__actions">
-          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar tema">
+          <div class="lang-switcher">
+            <button class="lang-switcher__button" type="button" aria-expanded="false" aria-controls="langMenu" aria-label="Seleccionar idioma" data-i18n="nav.lang" data-i18n-attr="aria-label">
+              <span class="lang-switcher__icon" aria-hidden="true">🌐</span>
+              <span class="lang-switcher__label">Español</span>
+            </button>
+            <ul class="lang-switcher__menu" id="langMenu" role="menu" aria-label="Seleccionar idioma" data-i18n="nav.lang" data-i18n-attr="aria-label">
+              <li role="none"><button type="button" role="menuitem" data-lang="es">Español</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="en">English</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="fr">Français</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="de">Deutsch</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="it">Italiano</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="pt">Português</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="zh">中文</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="ja">日本語</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="ko">한국어</button></li>
+              <li role="none"><button type="button" role="menuitem" data-lang="ar">العربية</button></li>
+            </ul>
+          </div>
+          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar tema" data-i18n="nav.themeToggle" data-i18n-attr="aria-label">
             <span class="theme-toggle__icon" aria-hidden="true">◐</span>
-            <span class="theme-toggle__text">Tema</span>
+            <span class="theme-toggle__text" data-i18n="nav.theme">Tema</span>
           </button>
         </div>
       </div>
+      <div class="nav__overlay" data-nav-overlay></div>
     </nav>
   </header>
 
@@ -76,35 +99,35 @@
     <section class="hero">
       <div class="hero__content" data-reveal>
         <p class="eyebrow">Bechapra</p>
-        <h1>Potenciamos tu talento y gestionamos tu crecimiento</h1>
-        <p class="hero__lead">Servicios Integrales
+        <h1 data-i18n="hero.title">Potenciamos tu talento y gestionamos tu crecimiento</h1>
+        <p class="hero__lead" data-i18n="hero.lead">Servicios Integrales
 Enfoque personalizado que aborda todas las áreas clave de operación y desarrollo</p>
         <div class="hero__actions">
-          <a class="button button--primary" href="#contacto">Conócenos</a>
-          <a class="button button--ghost" href="#servicios">Ver servicios</a>
+          <a class="button button--primary" href="#contacto" data-i18n="hero.ctaPrimary">Conócenos</a>
+          <a class="button button--ghost" href="#servicios" data-i18n="hero.ctaSecondary">Ver servicios</a>
         </div>
         <div class="hero__stats">
           <div class="stat-card" data-reveal>
             <p class="stat-card__value">+120</p>
-            <p class="stat-card__label">Proyectos integrales</p>
+            <p class="stat-card__label" data-i18n="hero.statProjects">Proyectos integrales</p>
           </div>
           <div class="stat-card" data-reveal>
             <p class="stat-card__value">98%</p>
-            <p class="stat-card__label">Satisfacción directiva</p>
+            <p class="stat-card__label" data-i18n="hero.statSatisfaction">Satisfacción directiva</p>
           </div>
           <div class="stat-card" data-reveal>
             <p class="stat-card__value">15</p>
-            <p class="stat-card__label">Ciudades con operación</p>
+            <p class="stat-card__label" data-i18n="hero.statCities">Ciudades con operación</p>
           </div>
         </div>
       </div>
       <div class="hero__visual" aria-hidden="true" data-reveal>
         <div class="hero__card">
           <div class="hero__placeholder"></div>
-          <div class="hero__chip">Diagnóstico inicial en 7 días</div>
+          <div class="hero__chip" data-i18n="hero.chip">Diagnóstico inicial en 7 días</div>
           <div class="hero__floating">
-            <span>Insights ejecutivos</span>
-            <span>Roadmap 360°</span>
+            <span data-i18n="hero.floatOne">Insights ejecutivos</span>
+            <span data-i18n="hero.floatTwo">Roadmap 360°</span>
           </div>
         </div>
       </div>
@@ -112,76 +135,76 @@ Enfoque personalizado que aborda todas las áreas clave de operación y desarrol
 
     <section class="section" id="servicios">
       <div class="section__header" data-reveal>
-        <p class="eyebrow">Servicios integrales</p>
-        <h2>Líneas de servicio con impacto medible</h2>
-        <p class="section__lead">Diseñamos soluciones end-to-end para escalar equipos y operaciones con evidencia, tecnología y acompañamiento continuo.</p>
+        <p class="eyebrow" data-i18n="services.eyebrow">Servicios integrales</p>
+        <h2 data-i18n="services.title">Líneas de servicio con impacto medible</h2>
+        <p class="section__lead" data-i18n="services.lead">Diseñamos soluciones end-to-end para escalar equipos y operaciones con evidencia, tecnología y acompañamiento continuo.</p>
       </div>
       <div class="cards-grid">
         <article class="card" data-reveal>
-          <h3>Human Capital Analytics</h3>
-          <p>Mapeamos competencias críticas y predictores de desempeño para decisiones rápidas y confiables.</p>
+          <h3 data-i18n="services.cardOneTitle">Human Capital Analytics</h3>
+          <p data-i18n="services.cardOneText">Mapeamos competencias críticas y predictores de desempeño para decisiones rápidas y confiables.</p>
           <ul class="card__list">
-            <li>People analytics</li>
-            <li>Assessment centers</li>
-            <li>Plan de sucesión</li>
+            <li data-i18n="services.cardOneItemOne">People analytics</li>
+            <li data-i18n="services.cardOneItemTwo">Assessment centers</li>
+            <li data-i18n="services.cardOneItemThree">Plan de sucesión</li>
           </ul>
-          <button class="text-link" type="button">Te explicamos el proceso</button>
+          <button class="text-link" type="button" data-i18n="services.cardOneCta">Te explicamos el proceso</button>
         </article>
         <article class="card" data-reveal>
-          <h3>Desarrollo Organizacional</h3>
-          <p>Transformamos cultura y liderazgo con programas escalables, blended y centrados en resultados.</p>
+          <h3 data-i18n="services.cardTwoTitle">Desarrollo Organizacional</h3>
+          <p data-i18n="services.cardTwoText">Transformamos cultura y liderazgo con programas escalables, blended y centrados en resultados.</p>
           <ul class="card__list">
-            <li>Gestión del cambio</li>
-            <li>Academias internas</li>
-            <li>Clima y engagement</li>
+            <li data-i18n="services.cardTwoItemOne">Gestión del cambio</li>
+            <li data-i18n="services.cardTwoItemTwo">Academias internas</li>
+            <li data-i18n="services.cardTwoItemThree">Clima y engagement</li>
           </ul>
-          <button class="text-link" type="button">Diagnóstico inicial</button>
+          <button class="text-link" type="button" data-i18n="services.cardTwoCta">Diagnóstico inicial</button>
         </article>
         <article class="card" data-reveal>
-          <h3>Management Services</h3>
-          <p>Optimización operativa y gobernanza para asegurar crecimiento rentable y sostenible.</p>
+          <h3 data-i18n="services.cardThreeTitle">Management Services</h3>
+          <p data-i18n="services.cardThreeText">Optimización operativa y gobernanza para asegurar crecimiento rentable y sostenible.</p>
           <ul class="card__list">
-            <li>PMO estratégica</li>
-            <li>OKRs &amp; KPIs</li>
-            <li>Modelos de servicio</li>
+            <li data-i18n="services.cardThreeItemOne">PMO estratégica</li>
+            <li data-i18n="services.cardThreeItemTwo">OKRs &amp; KPIs</li>
+            <li data-i18n="services.cardThreeItemThree">Modelos de servicio</li>
           </ul>
-          <button class="text-link" type="button">Ver frameworks</button>
+          <button class="text-link" type="button" data-i18n="services.cardThreeCta">Ver frameworks</button>
         </article>
         <article class="card" data-reveal>
-          <h3>Learning Experiences</h3>
-          <p>Formación ejecutiva con formatos híbridos, métricas de avance y acompañamiento continuo.</p>
+          <h3 data-i18n="services.cardFourTitle">Learning Experiences</h3>
+          <p data-i18n="services.cardFourText">Formación ejecutiva con formatos híbridos, métricas de avance y acompañamiento continuo.</p>
           <ul class="card__list">
-            <li>Leadership labs</li>
-            <li>Bootcamps internos</li>
-            <li>Coaching aplicado</li>
+            <li data-i18n="services.cardFourItemOne">Leadership labs</li>
+            <li data-i18n="services.cardFourItemTwo">Bootcamps internos</li>
+            <li data-i18n="services.cardFourItemThree">Coaching aplicado</li>
           </ul>
-          <button class="text-link" type="button">Explorar rutas</button>
+          <button class="text-link" type="button" data-i18n="services.cardFourCta">Explorar rutas</button>
         </article>
       </div>
     </section>
 
     <section class="section section--highlight" id="pymes">
       <div class="section__content" data-reveal>
-        <h2>Servicios para PYMES</h2>
-        <p>Paquetes modulares para empresas en crecimiento que requieren estructura, procesos y talento alineado sin complejidad.</p>
+        <h2 data-i18n="sme.title">Servicios para PYMES</h2>
+        <p data-i18n="sme.text">Paquetes modulares para empresas en crecimiento que requieren estructura, procesos y talento alineado sin complejidad.</p>
         <div class="pill-list">
-          <span class="pill">Diagnóstico express</span>
-          <span class="pill">HR agile</span>
-          <span class="pill">Gestión de desempeño</span>
-          <span class="pill">Academia líder</span>
+          <span class="pill" data-i18n="sme.pillOne">Diagnóstico express</span>
+          <span class="pill" data-i18n="sme.pillTwo">HR agile</span>
+          <span class="pill" data-i18n="sme.pillThree">Gestión de desempeño</span>
+          <span class="pill" data-i18n="sme.pillFour">Academia líder</span>
         </div>
       </div>
       <div class="section__cta" data-reveal>
-        <p class="section__cta-title">Listos para despegar con una consultoría escalable.</p>
-        <a class="button button--secondary" href="#contacto">Ver paquetes</a>
+        <p class="section__cta-title" data-i18n="sme.ctaTitle">Listos para despegar con una consultoría escalable.</p>
+        <a class="button button--secondary" href="#contacto" data-i18n="sme.ctaButton">Ver paquetes</a>
       </div>
     </section>
 
     <section class="section" id="eventos">
       <div class="section__header" data-reveal>
-        <p class="eyebrow">Eventos</p>
-        <h2>Agenda ejecutiva y experiencias inmersivas</h2>
-        <p class="section__lead">Conferencias y workshops que conectan estrategia, talento y tecnología con resultados concretos.</p>
+        <p class="eyebrow" data-i18n="events.eyebrow">Eventos</p>
+        <h2 data-i18n="events.title">Agenda ejecutiva y experiencias inmersivas</h2>
+        <p class="section__lead" data-i18n="events.lead">Conferencias y workshops que conectan estrategia, talento y tecnología con resultados concretos.</p>
       </div>
       <div class="slider" data-reveal>
         <div class="slider__track" role="list">
@@ -217,18 +240,18 @@ Enfoque personalizado que aborda todas las áreas clave de operación y desarrol
           </article>
         </div>
         <div class="slider__controls">
-          <button class="icon-button" type="button" data-slider-prev aria-label="Anterior">◀</button>
-          <div class="slider__dots" role="tablist" aria-label="Navegación de eventos"></div>
-          <button class="icon-button" type="button" data-slider-next aria-label="Siguiente">▶</button>
+          <button class="icon-button" type="button" data-slider-prev aria-label="Anterior" data-i18n="events.prev" data-i18n-attr="aria-label">◀</button>
+          <div class="slider__dots" role="tablist" aria-label="Navegación de eventos" data-i18n="events.dots" data-i18n-attr="aria-label"></div>
+          <button class="icon-button" type="button" data-slider-next aria-label="Siguiente" data-i18n="events.next" data-i18n-attr="aria-label">▶</button>
         </div>
       </div>
     </section>
 
     <section class="section section--grid" id="oficinas">
       <div class="section__header" data-reveal>
-        <p class="eyebrow">Oficinas</p>
-        <h2>Presencia regional con atención local</h2>
-        <p class="section__lead">Equipo consultor en las principales ciudades para acompañar de forma ágil cada etapa del proyecto.</p>
+        <p class="eyebrow" data-i18n="offices.eyebrow">Oficinas</p>
+        <h2 data-i18n="offices.title">Presencia regional con atención local</h2>
+        <p class="section__lead" data-i18n="offices.lead">Equipo consultor en las principales ciudades para acompañar de forma ágil cada etapa del proyecto.</p>
       </div>
       <div class="office-grid" data-reveal>
         <div class="office-card">
@@ -252,62 +275,62 @@ Enfoque personalizado que aborda todas las áreas clave de operación y desarrol
 
     <section class="section section--contact" id="contacto">
       <div class="section__header" data-reveal>
-        <p class="eyebrow">¿Interesado en nuestros servicios?</p>
-        <h2>Solicita un brief ejecutivo</h2>
-        <p class="section__lead">Completa el formulario y recibe un plan preliminar en menos de 48 horas.</p>
+        <p class="eyebrow" data-i18n="contact.eyebrow">¿Interesado en nuestros servicios?</p>
+        <h2 data-i18n="contact.title">Solicita un brief ejecutivo</h2>
+        <p class="section__lead" data-i18n="contact.lead">Completa el formulario y recibe un plan preliminar en menos de 48 horas.</p>
       </div>
       <div class="contact">
         <form class="form" id="contactForm" novalidate>
           <div class="form__row">
-            <label for="nombre">Nombre</label>
+            <label for="nombre" data-i18n="form.name">Nombre</label>
             <input id="nombre" name="nombre" type="text" autocomplete="name" required />
             <span class="form__error" data-error-for="nombre" aria-live="polite"></span>
           </div>
           <div class="form__row">
-            <label for="empresa">Empresa</label>
+            <label for="empresa" data-i18n="form.company">Empresa</label>
             <input id="empresa" name="empresa" type="text" autocomplete="organization" required />
             <span class="form__error" data-error-for="empresa" aria-live="polite"></span>
           </div>
           <div class="form__row">
-            <label for="email">Email</label>
+            <label for="email" data-i18n="form.email">Email</label>
             <input id="email" name="email" type="email" autocomplete="email" required />
             <span class="form__error" data-error-for="email" aria-live="polite"></span>
           </div>
           <div class="form__row">
-            <label for="telefono">Teléfono</label>
+            <label for="telefono" data-i18n="form.phone">Teléfono</label>
             <input id="telefono" name="telefono" type="tel" autocomplete="tel" required />
             <span class="form__error" data-error-for="telefono" aria-live="polite"></span>
           </div>
           <div class="form__row">
-            <label for="linea">Línea de servicio</label>
+            <label for="linea" data-i18n="form.serviceLine">Línea de servicio</label>
             <select id="linea" name="linea" required>
-              <option value="">Selecciona una opción</option>
-              <option value="human-capital">Human Capital</option>
-              <option value="desarrollo">Desarrollo Organizacional</option>
-              <option value="management">Management Services</option>
-              <option value="learning">Learning Experiences</option>
+              <option value="" data-i18n="form.selectOption">Selecciona una opción</option>
+              <option value="human-capital" data-i18n="form.optionHuman">Human Capital</option>
+              <option value="desarrollo" data-i18n="form.optionDo">Desarrollo Organizacional</option>
+              <option value="management" data-i18n="form.optionManagement">Management Services</option>
+              <option value="learning" data-i18n="form.optionLearning">Learning Experiences</option>
             </select>
             <span class="form__error" data-error-for="linea" aria-live="polite"></span>
           </div>
           <div class="form__row">
-            <label for="mensaje">Mensaje / requerimientos</label>
+            <label for="mensaje" data-i18n="form.message">Mensaje / requerimientos</label>
             <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
             <span class="form__error" data-error-for="mensaje" aria-live="polite"></span>
           </div>
           <div class="form__row form__row--checkbox">
             <label>
               <input id="privacidad" name="privacidad" type="checkbox" required />
-              Acepto aviso de privacidad
+              <span data-i18n="form.privacy">Acepto aviso de privacidad</span>
             </label>
             <span class="form__error" data-error-for="privacidad" aria-live="polite"></span>
           </div>
-          <button class="button button--primary" type="submit">Solicitar información</button>
-          <p class="form__note">Te contactamos en menos de 24 horas hábiles.</p>
+          <button class="button button--primary" type="submit" data-i18n="form.submit">Solicitar información</button>
+          <p class="form__note" data-i18n="form.note">Te contactamos en menos de 24 horas hábiles.</p>
         </form>
 
         <aside class="contact__summary" aria-live="polite">
-          <h3>Resumen de tu solicitud</h3>
-          <p>Completa el formulario para visualizar el brief generado automáticamente.</p>
+          <h3 data-i18n="summary.title">Resumen de tu solicitud</h3>
+          <p data-i18n="summary.text">Completa el formulario para visualizar el brief generado automáticamente.</p>
           <div class="summary" id="summaryPanel"></div>
         </aside>
       </div>
@@ -318,16 +341,16 @@ Enfoque personalizado que aborda todas las áreas clave de operación y desarrol
     <div class="footer__grid">
       <div>
         <h3>BecaPro</h3>
-        <p>Consultoría corporativa integral para organizaciones que buscan velocidad, foco y talento alineado.</p>
+        <p data-i18n="footer.about">Consultoría corporativa integral para organizaciones que buscan velocidad, foco y talento alineado.</p>
       </div>
       <div>
-        <h4>Contacto</h4>
+        <h4 data-i18n="footer.contact">Contacto</h4>
         <p>hola@becapro.com</p>
         <p>+52 55 0000 0000</p>
-        <p>Atención: Lun - Vie 9:00 a 18:00</p>
+        <p data-i18n="footer.hours">Atención: Lun - Vie 9:00 a 18:00</p>
       </div>
       <div>
-        <h4>Redes</h4>
+        <h4 data-i18n="footer.social">Redes</h4>
         <div class="footer__social">
           <a href="#" aria-label="Facebook">Facebook</a>
           <a href="#" aria-label="LinkedIn">LinkedIn</a>
@@ -336,7 +359,7 @@ Enfoque personalizado que aborda todas las áreas clave de operación y desarrol
         </div>
       </div>
     </div>
-    <p class="footer__copy">© <span id="year"></span> Bechapra. Todos los derechos reservados.</p>
+    <p class="footer__copy" data-i18n-html="footer.copy">© <span id="year"></span> Bechapra. Todos los derechos reservados.</p>
   </footer>
 
   <script src="scripbeca.js"></script>
