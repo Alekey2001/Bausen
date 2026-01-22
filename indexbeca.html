@@ -1,367 +1,734 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bechapra | Consultoría corporativa premium</title>
-  <meta name="description" content="Soluciones integrales de capital humano, desarrollo organizacional y management services para empresas en crecimiento." />
-  <link rel="stylesheet" href="stylebeca.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAUSEN | Soluciones Tecnológicas Corporativas</title>
+    <meta name="description" content="BAUSEN provee soluciones tecnológicas empresariales de alto impacto. Desarrollo web, aplicaciones móviles, consultoría IT y transformación digital.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="stylebeca.css">
+    <!-- Three.js para gráficos 3D en el Hero -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- GSAP para animaciones avanzadas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/TextPlugin.min.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
-
-  <header class="site-header" id="inicio">
-    <nav class="nav" aria-label="Principal">
-      <div class="nav__brand">
-        <!-- Reemplazar con logo real -->
-        <div class="logo" aria-hidden="true">
-          <svg viewBox="0 0 48 48" role="img" aria-label="Logo BecaPro">
-            <defs>
-              <linearGradient id="logoGradient" x1="0" x2="1">
-                <stop offset="0%" stop-color="#4f46e5" />
-                <stop offset="100%" stop-color="#0ea5e9" />
-              </linearGradient>
-            </defs>
-            <circle cx="24" cy="24" r="22" fill="url(#logoGradient)" />
-            <path d="M16 30V18h10a6 6 0 0 1 0 12H16Zm7-4h3a2 2 0 0 0 0-4h-3v4Z" fill="#fff" />
-          </svg>
-        </div>
-        <span class="nav__title">Bechapra</span>
-      </div>
-
-      <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Abrir menú" data-i18n="nav.open" data-i18n-attr="aria-label">
-        <span class="nav__toggle-line"></span>
-        <span class="nav__toggle-line"></span>
-        <span class="nav__toggle-line"></span>
-      </button>
-
-      <div class="nav__panel" id="navMenu">
-        <div class="nav__panel-header">
-          <span class="nav__panel-title" data-i18n="nav.menu">Menú</span>
-          <button class="nav__close" type="button" aria-label="Cerrar menú" data-i18n="nav.close" data-i18n-attr="aria-label">✕</button>
-        </div>
-        <ul class="nav__list" role="menubar">
-          <li class="nav__item" role="none"><a role="menuitem" href="#servicios" class="nav__link" data-i18n="nav.services">Servicios</a></li>
-          <li class="nav__item nav__item--dropdown" role="none">
-            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-capital" role="menuitem" data-i18n="nav.humanCapital">Human Capital</button>
-            <ul class="nav__dropdown" id="menu-capital" role="menu">
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.talent">Atracción de talento</a></li>
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.payroll">Payrolling-Maquila de Nómina</a></li>
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.services">Servicios</a></li>
-            </ul>
-          </li>
-          <li class="nav__item nav__item--dropdown" role="none">
-            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-do" role="menuitem" data-i18n="nav.do">Desarrollo Organizacional</button>
-            <ul class="nav__dropdown" id="menu-do" role="menu">
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.training">Capacitación Empresarial</a></li>
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.consulting">consultoría Organizacional</a></li>
-            </ul>
-          </li>
-          <li class="nav__item nav__item--dropdown" role="none">
-            <button class="nav__link nav__dropdown-toggle" type="button" aria-expanded="false" aria-controls="menu-management" role="menuitem" data-i18n="nav.management">Management Services</button>
-            <ul class="nav__dropdown" id="menu-management" role="menu">
-              <li role="none"><a role="menuitem" href="#servicios" class="nav__dropdown-link" data-i18n="nav.accounting">Contabilidad y Fiscal</a></li>
-            </ul>
-          </li>
-          <li class="nav__item" role="none"><a role="menuitem" href="#eventos" class="nav__link" data-i18n="nav.events">Eventos</a></li>
-          <li class="nav__item" role="none"><a role="menuitem" href="#contacto" class="nav__link nav__link--cta" data-i18n="nav.contactCta">Solicitar información</a></li>
-        </ul>
-        <div class="nav__actions">
-          <div class="lang-switcher">
-            <button class="lang-switcher__button" type="button" aria-expanded="false" aria-controls="langMenu" aria-label="Seleccionar idioma" data-i18n="nav.lang" data-i18n-attr="aria-label">
-              <span class="lang-switcher__icon" aria-hidden="true">🌐</span>
-              <span class="lang-switcher__label">Español</span>
-            </button>
-            <ul class="lang-switcher__menu" id="langMenu" role="menu" aria-label="Seleccionar idioma" data-i18n="nav.lang" data-i18n-attr="aria-label">
-              <li role="none"><button type="button" role="menuitem" data-lang="es">Español</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="en">English</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="fr">Français</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="de">Deutsch</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="it">Italiano</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="pt">Português</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="zh">中文</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="ja">日本語</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="ko">한국어</button></li>
-              <li role="none"><button type="button" role="menuitem" data-lang="ar">العربية</button></li>
-            </ul>
-          </div>
-          <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar tema" data-i18n="nav.themeToggle" data-i18n-attr="aria-label">
-            <span class="theme-toggle__icon" aria-hidden="true">◐</span>
-            <span class="theme-toggle__text" data-i18n="nav.theme">Tema</span>
-          </button>
-        </div>
-      </div>
-      <div class="nav__overlay" data-nav-overlay></div>
-    </nav>
-  </header>
-
-  <main id="contenido">
-    <section class="hero">
-      <div class="hero__content" data-reveal>
-        <p class="eyebrow">Bechapra</p>
-        <h1 data-i18n="hero.title">Potenciamos tu talento y gestionamos tu crecimiento</h1>
-        <p class="hero__lead" data-i18n="hero.lead">Servicios Integrales
-Enfoque personalizado que aborda todas las áreas clave de operación y desarrollo</p>
-        <div class="hero__actions">
-          <a class="button button--primary" href="#contacto" data-i18n="hero.ctaPrimary">Conócenos</a>
-          <a class="button button--ghost" href="#servicios" data-i18n="hero.ctaSecondary">Ver servicios</a>
-        </div>
-        <div class="hero__stats">
-          <div class="stat-card" data-reveal>
-            <p class="stat-card__value">+120</p>
-            <p class="stat-card__label" data-i18n="hero.statProjects">Proyectos integrales</p>
-          </div>
-          <div class="stat-card" data-reveal>
-            <p class="stat-card__value">98%</p>
-            <p class="stat-card__label" data-i18n="hero.statSatisfaction">Satisfacción directiva</p>
-          </div>
-          <div class="stat-card" data-reveal>
-            <p class="stat-card__value">15</p>
-            <p class="stat-card__label" data-i18n="hero.statCities">Ciudades con operación</p>
-          </div>
-        </div>
-      </div>
-      <div class="hero__visual" aria-hidden="true" data-reveal>
-        <div class="hero__card">
-          <div class="hero__placeholder"></div>
-          <div class="hero__chip" data-i18n="hero.chip">Diagnóstico inicial en 7 días</div>
-          <div class="hero__floating">
-            <span data-i18n="hero.floatOne">Insights ejecutivos</span>
-            <span data-i18n="hero.floatTwo">Roadmap 360°</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="servicios">
-      <div class="section__header" data-reveal>
-        <p class="eyebrow" data-i18n="services.eyebrow">Servicios integrales</p>
-        <h2 data-i18n="services.title">Líneas de servicio con impacto medible</h2>
-        <p class="section__lead" data-i18n="services.lead">Diseñamos soluciones end-to-end para escalar equipos y operaciones con evidencia, tecnología y acompañamiento continuo.</p>
-      </div>
-      <div class="cards-grid">
-        <article class="card" data-reveal>
-          <h3 data-i18n="services.cardOneTitle">Human Capital Analytics</h3>
-          <p data-i18n="services.cardOneText">Mapeamos competencias críticas y predictores de desempeño para decisiones rápidas y confiables.</p>
-          <ul class="card__list">
-            <li data-i18n="services.cardOneItemOne">People analytics</li>
-            <li data-i18n="services.cardOneItemTwo">Assessment centers</li>
-            <li data-i18n="services.cardOneItemThree">Plan de sucesión</li>
-          </ul>
-          <button class="text-link" type="button" data-i18n="services.cardOneCta">Te explicamos el proceso</button>
-        </article>
-        <article class="card" data-reveal>
-          <h3 data-i18n="services.cardTwoTitle">Desarrollo Organizacional</h3>
-          <p data-i18n="services.cardTwoText">Transformamos cultura y liderazgo con programas escalables, blended y centrados en resultados.</p>
-          <ul class="card__list">
-            <li data-i18n="services.cardTwoItemOne">Gestión del cambio</li>
-            <li data-i18n="services.cardTwoItemTwo">Academias internas</li>
-            <li data-i18n="services.cardTwoItemThree">Clima y engagement</li>
-          </ul>
-          <button class="text-link" type="button" data-i18n="services.cardTwoCta">Diagnóstico inicial</button>
-        </article>
-        <article class="card" data-reveal>
-          <h3 data-i18n="services.cardThreeTitle">Management Services</h3>
-          <p data-i18n="services.cardThreeText">Optimización operativa y gobernanza para asegurar crecimiento rentable y sostenible.</p>
-          <ul class="card__list">
-            <li data-i18n="services.cardThreeItemOne">PMO estratégica</li>
-            <li data-i18n="services.cardThreeItemTwo">OKRs &amp; KPIs</li>
-            <li data-i18n="services.cardThreeItemThree">Modelos de servicio</li>
-          </ul>
-          <button class="text-link" type="button" data-i18n="services.cardThreeCta">Ver frameworks</button>
-        </article>
-        <article class="card" data-reveal>
-          <h3 data-i18n="services.cardFourTitle">Learning Experiences</h3>
-          <p data-i18n="services.cardFourText">Formación ejecutiva con formatos híbridos, métricas de avance y acompañamiento continuo.</p>
-          <ul class="card__list">
-            <li data-i18n="services.cardFourItemOne">Leadership labs</li>
-            <li data-i18n="services.cardFourItemTwo">Bootcamps internos</li>
-            <li data-i18n="services.cardFourItemThree">Coaching aplicado</li>
-          </ul>
-          <button class="text-link" type="button" data-i18n="services.cardFourCta">Explorar rutas</button>
-        </article>
-      </div>
-    </section>
-
-    <section class="section section--highlight" id="pymes">
-      <div class="section__content" data-reveal>
-        <h2 data-i18n="sme.title">Servicios para PYMES</h2>
-        <p data-i18n="sme.text">Paquetes modulares para empresas en crecimiento que requieren estructura, procesos y talento alineado sin complejidad.</p>
-        <div class="pill-list">
-          <span class="pill" data-i18n="sme.pillOne">Diagnóstico express</span>
-          <span class="pill" data-i18n="sme.pillTwo">HR agile</span>
-          <span class="pill" data-i18n="sme.pillThree">Gestión de desempeño</span>
-          <span class="pill" data-i18n="sme.pillFour">Academia líder</span>
-        </div>
-      </div>
-      <div class="section__cta" data-reveal>
-        <p class="section__cta-title" data-i18n="sme.ctaTitle">Listos para despegar con una consultoría escalable.</p>
-        <a class="button button--secondary" href="#contacto" data-i18n="sme.ctaButton">Ver paquetes</a>
-      </div>
-    </section>
-
-    <section class="section" id="eventos">
-      <div class="section__header" data-reveal>
-        <p class="eyebrow" data-i18n="events.eyebrow">Eventos</p>
-        <h2 data-i18n="events.title">Agenda ejecutiva y experiencias inmersivas</h2>
-        <p class="section__lead" data-i18n="events.lead">Conferencias y workshops que conectan estrategia, talento y tecnología con resultados concretos.</p>
-      </div>
-      <div class="slider" data-reveal>
-        <div class="slider__track" role="list">
-          <article class="slider__slide" role="listitem">
-            <div class="event-card">
-              <div class="event-card__media">Placeholder evento</div>
-              <div class="event-card__body">
-                <p class="event-card__date">Junio 2024 · CDMX</p>
-                <h3>Talent Intelligence Summit</h3>
-                <p>Paneles con líderes de HR y analytics sobre decisiones basadas en datos.</p>
-              </div>
+    <!-- Navegación principal -->
+    <header class="header" id="mainHeader">
+        <div class="container">
+            <div class="header-content">
+                <a href="#home" class="logo">
+                    <span class="logo-text">BAUSEN</span>
+                    <span class="logo-subtext">TECH SOLUTIONS</span>
+                </a>
+                
+                <nav class="nav" id="mainNav">
+                    <ul class="nav-list">
+                        <li><a href="#home" class="nav-link active">Inicio</a></li>
+                        <li><a href="#services" class="nav-link">Servicios</a></li>
+                        <li><a href="#differentiators" class="nav-link">Diferenciadores</a></li>
+                        <li><a href="#process" class="nav-link">Proceso</a></li>
+                        <li><a href="#contact" class="nav-link nav-btn">Cotiza ahora</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mainNav">
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                    <span class="menu-bar"></span>
+                </button>
             </div>
-          </article>
-          <article class="slider__slide" role="listitem">
-            <div class="event-card">
-              <div class="event-card__media">Placeholder evento</div>
-              <div class="event-card__body">
-                <p class="event-card__date">Julio 2024 · Monterrey</p>
-                <h3>Culture Design Lab</h3>
-                <p>Workshop intensivo para rediseñar cultura y liderazgo en equipos híbridos.</p>
-              </div>
+        </div>
+    </header>
+
+    <!-- Overlay para menú móvil -->
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+    <main>
+        <!-- Hero Section con Three.js -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            <span class="title-line">Soluciones Tecnológicas</span>
+                            <span class="title-line">que <span class="highlight">Impulsan</span></span>
+                            <span class="title-line">Tu Negocio</span>
+                        </h1>
+                        <p class="hero-subtitle">Bausen: Gestión inteligente para empresas que quieren crecer en nuestros excelentes servicios: Capital humano, nómina, contabilidad, fiscal y legal, integrados en una sola solución.</p>
+                        
+                        <div class="hero-cta">
+                            <a href="#contact" class="btn btn-primary">
+                                <span>Agenda una llamada</span>
+                                <i class="fas fa-phone-alt"></i>
+                            </a>
+                            <a href="#services" class="btn btn-secondary">
+                                <span>Ver servicios</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">+150</span>
+                                <span class="stat-label">Proyectos exitosos</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">Satisfacción clientes</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">+8</span>
+                                <span class="stat-label">Años de experiencia</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <!-- Canvas para Three.js -->
+                        <div id="threejs-container" class="threejs-container">
+                            <canvas id="threejs-canvas"></canvas>
+                            <!-- Fallback para dispositivos sin WebGL -->
+                            <div class="webgl-fallback">
+                                <div class="fallback-geometric"></div>
+                                <div class="fallback-geometric"></div>
+                                <div class="fallback-geometric"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="floating-card">
+                            <div class="floating-card-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="floating-card-content">
+                                <h3>Seguridad Garantizada</h3>
+                                <p>Todos nuestros proyectos incluyen protocolos de ciberseguridad de nivel empresarial.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </article>
-          <article class="slider__slide" role="listitem">
-            <div class="event-card">
-              <div class="event-card__media">Placeholder evento</div>
-              <div class="event-card__body">
-                <p class="event-card__date">Agosto 2024 · Guadalajara</p>
-                <h3>Operational Excellence Day</h3>
-                <p>Metodologías ágiles para eficiencia operativa con enfoque en personas.</p>
-              </div>
+            
+            <a href="#services" class="scroll-indicator">
+                <span class="scroll-text">Descubre más</span>
+                <div class="scroll-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </a>
+        </section>
+
+        <!-- Sección de Servicios -->
+        <section class="section services" id="services">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Nuestra oferta</span>
+                    <h2 class="section-title">Servicios <span class="highlight">Especializados</span></h2>
+                    <p class="section-subtitle">Soluciones tecnológicas integrales diseñadas para impulsar el crecimiento y la eficiencia operativa de tu empresa.</p>
+                </div>
+                
+                <div class="services-grid">
+                    <!-- Servicio 1: Human Capital -->
+                    <div class="card-3d-wrapper">
+                        <article class="service-card service-card-3d">
+                            <div class="service-card-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <span class="service-badge">Más solicitado</span>
+                            </div>
+                            
+                            <h3 class="service-title">Human Capital (Capital Humano)</h3>
+                            <p class="service-description">Estos servicios ayudan a tu empresa a gestionar, encontrar y administrar talento de forma profesional, reduciendo riesgo y carga administrativa.</p>
+                            
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Reclutamiento de perfiles operativos, administrativos y especializados.</li>
+                                <li><i class="fas fa-check"></i> Búsqueda estratégica según tus necesidades.</li>
+                                <li><i class="fas fa-check"></i> Entrevistas y evaluación detallada.</li>
+                                <li><i class="fas fa-check"></i> Presentación de candidatos preseleccionados.</li>
+                            </ul>
+                            
+                            <div class="service-cta">
+                                  <a href="#contact" class="btn btn-outline">
+                                    <span>Solicitar cotización</span>
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Servicio 2: Payrolling -->
+                    <div class="card-3d-wrapper">
+                        <article class="service-card service-card-3d">
+                            <div class="service-card-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-file-invoice-dollar"></i>
+                                </div>
+                            </div>
+                            
+                            <h3 class="service-title">Payrolling / Maquila de Nómina</h3>
+                            <p class="service-description">Gestionamos integralmente tu nómina con precisión y cumplimiento legal. Calculamos impuestos, elaboramos recibos y gestionamos altas/bajas ante seguridad social.</p>
+                            
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Cálculo preciso de nóminas y finiquitos</li>
+                                <li><i class="fas fa-check"></i> Gestión de altas, bajas y modificaciones</li>
+                                <li><i class="fas fa-check"></i> Liquidación de impuestos y cotizaciones</li>
+                                <li><i class="fas fa-check"></i> Reportes y análisis de costes laborales</li>
+                            </ul>
+                            
+                            <div class="service-cta">
+                                <a href="#contact" class="btn btn-outline">
+                                    <span>Consultar servicio</span>
+                                    <i class="fas fa-calculator"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Servicio 3: Consultoría IT -->
+                    <div class="card-3d-wrapper">
+                        <article class="service-card service-card-3d">
+                            <div class="service-card-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                            
+                            <h3 class="service-title">Consultoría IT Estratégica</h3>
+                            <p class="service-description">Auditorías técnicas, planes de transformación digital y asesoramiento especializado para optimizar tu infraestructura tecnológica y maximizar el retorno de inversión.</p>
+                            
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Evaluación de infraestructura tecnológica actual</li>
+                                <li><i class="fas fa-check"></i> Plan de migración y transformación digital</li>
+                                <li><i class="fas fa-check"></i> Optimización de procesos y automatización</li>
+                                <li><i class="fas fa-check"></i> Asesoramiento en selección de tecnologías</li>
+                            </ul>
+                            
+                            <div class="service-cta">
+                                <a href="#contact" class="btn btn-outline">
+                                    <span>Programar auditoría</span>
+                                    <i class="fas fa-clipboard-check"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Servicio 4: Contabilidad y Fiscal -->
+                    <div class="card-3d-wrapper">
+                        <article class="service-card service-card-3d">
+                            <div class="service-card-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                            </div>
+                            
+                            <h3 class="service-title">Contabilidad y Fiscal</h3>
+                            <p class="service-description">Gestión contable integral y asesoramiento fiscal para garantizar el cumplimiento normativo y la optimización de tu situación tributaria.</p>
+                            
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Contabilidad mensual y cierre de ejercicio</li>
+                                <li><i class="fas fa-check"></i> Declaraciones fiscales periódicas</li>
+                                <li><i class="fas fa-check"></i> Planificación fiscal estratégica</li>
+                                <li><i class="fas fa-check"></i> Auditoría y revisión de cuentas</li>
+                            </ul>
+                            
+                            <div class="service-cta">
+                                <a href="#contact" class="btn btn-outline">
+                                    <span>Consultar asesoría</span>
+                                    <i class="fas fa-chart-bar"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Servicio 5: Legal Corporativo -->
+                    <div class="card-3d-wrapper">
+                        <article class="service-card service-card-3d">
+                            <div class="service-card-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-gavel"></i>
+                                </div>
+                            </div>
+                            
+                            <h3 class="service-title">Legal Corporativo</h3>
+                            <p class="service-description">Asesoramiento legal especializado en derecho laboral, mercantil y protección de datos para empresas.</p>
+                            
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Contratación laboral y mercantil</li>
+                                <li><i class="fas fa-check"></i> Cumplimiento LOPD/RGPD</li>
+                                <li><i class="fas fa-check"></i> Gestión de recursos humanos legal</li>
+                                <li><i class="fas fa-check"></i> Asesoramiento en normativas sectoriales</li>
+                            </ul>
+                            
+                            <div class="service-cta">
+                                   <a href="#contact" class="btn btn-outline">
+                                    <span>Solicitar consulta</span>
+                                    <i class="fas fa-scale-balanced"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!-- Servicio 6: Soluciones Integrales -->
+                    <div class="card-3d-wrapper">
+                        <article class="service-card service-card-3d">
+                            <div class="service-card-header">
+                                <div class="service-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                            </div>
+                            
+                            <h3 class="service-title">Soluciones Integrales</h3>
+                            <p class="service-description">Paquetes personalizados que combinan varios servicios para una gestión empresarial completa y eficiente.</p>
+                            
+                            <ul class="service-features">
+                                <li><i class="fas fa-check"></i> Combinación de servicios a medida</li>
+                                <li><i class="fas fa-check"></i> Puntos de contacto únicos</li>
+                                <li><i class="fas fa-check"></i> Reportes consolidados</li>
+                                <li><i class="fas fa-check"></i> Tarifas preferenciales</li>
+                            </ul>
+                            
+                            <div class="service-cta">
+                                <a href="#contact" class="btn btn-outline">
+                                    <span>Solicitar paquete</span>
+                                    <i class="fas fa-box-open"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                
+                <div class="services-cta">
+                    <p class="cta-text">¿Necesitas una solución personalizada que combine varios servicios?</p>
+                    <a href="#contact" class="btn btn-primary">
+                        <span>Hablemos de tu proyecto</span>
+                        <i class="fas fa-comments"></i>
+                    </a>
+                </div>
             </div>
-          </article>
-        </div>
-        <div class="slider__controls">
-          <button class="icon-button" type="button" data-slider-prev aria-label="Anterior" data-i18n="events.prev" data-i18n-attr="aria-label">◀</button>
-          <div class="slider__dots" role="tablist" aria-label="Navegación de eventos" data-i18n="events.dots" data-i18n-attr="aria-label"></div>
-          <button class="icon-button" type="button" data-slider-next aria-label="Siguiente" data-i18n="events.next" data-i18n-attr="aria-label">▶</button>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section class="section section--grid" id="oficinas">
-      <div class="section__header" data-reveal>
-        <p class="eyebrow" data-i18n="offices.eyebrow">Oficinas</p>
-        <h2 data-i18n="offices.title">Presencia regional con atención local</h2>
-        <p class="section__lead" data-i18n="offices.lead">Equipo consultor en las principales ciudades para acompañar de forma ágil cada etapa del proyecto.</p>
-      </div>
-      <div class="office-grid" data-reveal>
-        <div class="office-card">
-          <h3>CDMX</h3>
-          <p>Polanco · Santa Fe · Reforma</p>
-        </div>
-        <div class="office-card">
-          <h3>Monterrey</h3>
-          <p>San Pedro · Valle Oriente</p>
-        </div>
-        <div class="office-card">
-          <h3>Guadalajara</h3>
-          <p>Andares · Zapopan</p>
-        </div>
-        <div class="office-card">
-          <h3>Querétaro</h3>
-          <p>Centro corporativo · Juriquilla</p>
-        </div>
-      </div>
-    </section>
+        <!-- Sección de Diferenciadores -->
+        <section class="section differentiators dark-bg" id="differentiators">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Nuestra ventaja competitiva</span>
+                    <h2 class="section-title">¿Por qué elegir <span class="highlight">BAUSEN</span>?</h2>
+                    <p class="section-subtitle">Nos diferenciamos por un enfoque integral que prioriza resultados tangibles, tecnología de vanguardia y relaciones a largo plazo con nuestros clientes.</p>
+                </div>
+                
+                <div class="differentiators-grid">
+                    <div class="card-3d-wrapper">
+                        <div class="differentiator-card differentiator-card-3d">
+                            <div class="differentiator-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <h3>Enfoque en Resultados</h3>
+                            <p>Nos comprometemos con KPIs claros y medibles. No solo entregamos proyectos, garantizamos mejoras en conversión, eficiencia operativa y retorno de inversión.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-3d-wrapper">
+                        <div class="differentiator-card differentiator-card-3d">
+                            <div class="differentiator-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Equipo Senior Dedicado</h3>
+                            <p>Cada cliente cuenta con un equipo de especialistas senior con más de 8 años de experiencia. Sin rotaciones, garantizando continuidad y conocimiento profundo de tu negocio.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-3d-wrapper">
+                        <div class="differentiator-card differentiator-card-3d">
+                            <div class="differentiator-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Tecnología de Vanguardia</h3>
+                            <p>Utilizamos stack tecnológico moderno y probado: React, Vue.js, Node.js, Python, Three.js, AWS, Docker. Garantizando rendimiento, seguridad y escalabilidad.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-3d-wrapper">
+                        <div class="differentiator-card differentiator-card-3d">
+                            <div class="differentiator-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <h3>Transparencia Total</h3>
+                            <p>Reportes semanales, presupuestos detallados sin cargos ocultos y comunicación constante. Sabrás exactamente en qué se invierte cada parte de tu presupuesto.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-3d-wrapper">
+                        <div class="differentiator-card differentiator-card-3d">
+                            <div class="differentiator-icon">
+                                <i class="fas fa-infinity"></i>
+                            </div>
+                            <h3>Soporte Continuo</h3>
+                            <p>Mantenimiento proactivo, actualizaciones y soporte técnico post-lanzamiento incluido en todos nuestros planes. Tu éxito a largo plazo es nuestra prioridad.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-3d-wrapper">
+                        <div class="differentiator-card differentiator-card-3d">
+                            <div class="differentiator-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3>Certificaciones y Estándares</h3>
+                            <p>Cumplimos con estándares internacionales de calidad (ISO 27001, GDPR) y contamos con certificaciones en tecnologías líderes del mercado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <section class="section section--contact" id="contacto">
-      <div class="section__header" data-reveal>
-        <p class="eyebrow" data-i18n="contact.eyebrow">¿Interesado en nuestros servicios?</p>
-        <h2 data-i18n="contact.title">Solicita un brief ejecutivo</h2>
-        <p class="section__lead" data-i18n="contact.lead">Completa el formulario y recibe un plan preliminar en menos de 48 horas.</p>
-      </div>
-      <div class="contact">
-        <form class="form" id="contactForm" novalidate>
-          <div class="form__row">
-            <label for="nombre" data-i18n="form.name">Nombre</label>
-            <input id="nombre" name="nombre" type="text" autocomplete="name" required />
-            <span class="form__error" data-error-for="nombre" aria-live="polite"></span>
-          </div>
-          <div class="form__row">
-            <label for="empresa" data-i18n="form.company">Empresa</label>
-            <input id="empresa" name="empresa" type="text" autocomplete="organization" required />
-            <span class="form__error" data-error-for="empresa" aria-live="polite"></span>
-          </div>
-          <div class="form__row">
-            <label for="email" data-i18n="form.email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required />
-            <span class="form__error" data-error-for="email" aria-live="polite"></span>
-          </div>
-          <div class="form__row">
-            <label for="telefono" data-i18n="form.phone">Teléfono</label>
-            <input id="telefono" name="telefono" type="tel" autocomplete="tel" required />
-            <span class="form__error" data-error-for="telefono" aria-live="polite"></span>
-          </div>
-          <div class="form__row">
-            <label for="linea" data-i18n="form.serviceLine">Línea de servicio</label>
-            <select id="linea" name="linea" required>
-              <option value="" data-i18n="form.selectOption">Selecciona una opción</option>
-              <option value="human-capital" data-i18n="form.optionHuman">Human Capital</option>
-              <option value="desarrollo" data-i18n="form.optionDo">Desarrollo Organizacional</option>
-              <option value="management" data-i18n="form.optionManagement">Management Services</option>
-              <option value="learning" data-i18n="form.optionLearning">Learning Experiences</option>
-            </select>
-            <span class="form__error" data-error-for="linea" aria-live="polite"></span>
-          </div>
-          <div class="form__row">
-            <label for="mensaje" data-i18n="form.message">Mensaje / requerimientos</label>
-            <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
-            <span class="form__error" data-error-for="mensaje" aria-live="polite"></span>
-          </div>
-          <div class="form__row form__row--checkbox">
-            <label>
-              <input id="privacidad" name="privacidad" type="checkbox" required />
-              <span data-i18n="form.privacy">Acepto aviso de privacidad</span>
-            </label>
-            <span class="form__error" data-error-for="privacidad" aria-live="polite"></span>
-          </div>
-          <button class="button button--primary" type="submit" data-i18n="form.submit">Solicitar información</button>
-          <p class="form__note" data-i18n="form.note">Te contactamos en menos de 24 horas hábiles.</p>
-        </form>
+        <!-- Sección de Proceso de Trabajo -->
+        <section class="section process" id="process">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Cómo trabajamos</span>
+                    <h2 class="section-title">Proceso <span class="highlight">Claro y Efectivo</span></h2>
+                    <p class="section-subtitle">Una metodología probada que garantiza transparencia, calidad y alineación en cada etapa de tu proyecto.</p>
+                </div>
+                
+                <div class="process-timeline">
+                    <div class="process-step">
+                        <div class="step-number">01</div>
+                        <div class="step-content">
+                            <h3>Descubrimiento y Análisis</h3>
+                            <p>Reuniones iniciales para entender tus objetivos, audiencia y necesidades. Análisis de mercado y competencia.</p>
+                            <ul class="step-details">
+                                <li>Brief estratégico</li>
+                                <li>Definición de KPIs</li>
+                                <li>Plan de proyecto</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">02</div>
+                        <div class="step-content">
+                            <h3>Diseño y Estrategia</h3>
+                            <p>Creación de wireframes, prototipos interactivos y diseño visual alineado con tu identidad corporativa.</p>
+                            <ul class="step-details">
+                                <li>Arquitectura de información</li>
+                                <li>Prototipos interactivos</li>
+                                <li>Diseño UI/UX</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">03</div>
+                        <div class="step-content">
+                            <h3>Desarrollo Ágil</h3>
+                            <p>Construcción iterativa con sprints de 2 semanas, entregas parciales y feedback constante para asegurar calidad.</p>
+                            <ul class="step-details">
+                                <li>Desarrollo por sprints</li>
+                                <li>Revisiones semanales</li>
+                                <li>Pruebas continuas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">04</div>
+                        <div class="step-content">
+                            <h3>Pruebas y Optimización</h3>
+                            <p>QA exhaustivo, pruebas de usabilidad, optimización de rendimiento y preparación para lanzamiento.</p>
+                            <ul class="step-details">
+                                <li>Pruebas de seguridad</li>
+                                <li>Optimización SEO</li>
+                                <li>Pruebas de carga</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">05</div>
+                        <div class="step-content">
+                            <h3>Lanzamiento y Soporte</h3>
+                            <p>Despliegue controlado, monitoreo post-lanzamiento, formación del equipo y soporte continuo garantizado.</p>
+                            <ul class="step-details">
+                                <li>Lanzamiento escalonado</li>
+                                <li>Documentación completa</li>
+                                <li>Soporte post-lanzamiento</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="process-cta">
+                    <p>¿Listo para comenzar? Te guiamos paso a paso.</p>
+                    <a href="#contact" class="btn btn-primary">
+                        <span>Iniciar mi proyecto</span>
+                        <i class="fas fa-play-circle"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-        <aside class="contact__summary" aria-live="polite">
-          <h3 data-i18n="summary.title">Resumen de tu solicitud</h3>
-          <p data-i18n="summary.text">Completa el formulario para visualizar el brief generado automáticamente.</p>
-          <div class="summary" id="summaryPanel"></div>
-        </aside>
-      </div>
-    </section>
-  </main>
+        <!-- CTA Intermedio - MEJORADO -->
+        <section class="cta-section enhanced-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">¿Tienes un proyecto en mente?</h2>
+                    <p class="cta-text">Solicita una <span class="highlight">consulta gratuita</span> con nuestros especialistas. Analizaremos tus necesidades y te presentaremos una propuesta personalizada sin compromiso.</p>
+                    
+                    <div class="cta-actions">
+                        <a href="#contact" class="btn btn-primary btn-large btn-glow">
+                            <span>Solicitar consulta gratuita</span>
+                            <i class="fas fa-calendar-check"></i>
+                        </a>
+                        <div class="cta-contact-info">
+                            <div class="contact-alt">
+                                <i class="fas fa-phone-alt"></i>
+                                <div>
+                                    <span class="contact-label">O llámanos directamente</span>
+                                    <a href="tel:+34910123456" class="contact-phone">+34 910 123 456</a>
+                                </div>
+                            </div>
+                            <div class="contact-alt">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <span class="contact-label">Disponibilidad</span>
+                                    <span class="contact-time">Lun-Vie: 9:00 - 18:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="cta-note"><i class="fas fa-shield-alt"></i> Respuesta garantizada en menos de <strong>24 horas hábiles</strong>. Sin compromiso.</p>
+                </div>
+            </div>
+        </section>
 
-  <footer class="footer">
-    <div class="footer__grid">
-      <div>
-        <h3>BecaPro</h3>
-        <p data-i18n="footer.about">Consultoría corporativa integral para organizaciones que buscan velocidad, foco y talento alineado.</p>
-      </div>
-      <div>
-        <h4 data-i18n="footer.contact">Contacto</h4>
-        <p>hola@becapro.com</p>
-        <p>+52 55 0000 0000</p>
-        <p data-i18n="footer.hours">Atención: Lun - Vie 9:00 a 18:00</p>
-      </div>
-      <div>
-        <h4 data-i18n="footer.social">Redes</h4>
-        <div class="footer__social">
-          <a href="#" aria-label="Facebook">Facebook</a>
-          <a href="#" aria-label="LinkedIn">LinkedIn</a>
-          <a href="#" aria-label="YouTube">YouTube</a>
-          <a href="#" aria-label="Instagram">Instagram</a>
+        <!-- Formulario de Contacto -->
+        <section class="section contact" id="contact">
+            <div class="container">
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <div class="section-header">
+                            <span class="section-label">Contacto directo</span>
+                            <h2 class="section-title">Hablemos de tu <span class="highlight">proyecto</span></h2>
+                            <p class="section-subtitle">Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas para evaluar tu proyecto sin compromiso.</p>
+                        </div>
+                        
+                        <div class="info-items">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Teléfono</h4>
+                                    <a href="tel:+34910123456">+34 910 123 456</a>
+                                    <p>Lun-Vie: 9:00 - 18:00</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Email</h4>
+                                    <a href="mailto:info@bausen.com">info@bausen.com</a>
+                                    <p>Respuesta en menos de 24h</p>
+                                </div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h4>Oficina Central</h4>
+                                    <p>Calle Tecnología, 123<br>28027 Madrid, España</p>
+                                    <p class="info-note">Consultas presenciales con cita previa</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="trust-badges">
+                            <div class="badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Datos 100% seguros</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-user-check"></i>
+                                <span>Sin spam, garantizado</span>
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-lock"></i>
+                                <span>Cifrado SSL</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Nombre completo *</label>
+                                <input type="text" id="name" name="name" required placeholder="Ej: Juan Pérez García">
+                                <div class="form-error" id="nameError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email corporativo *</label>
+                                <input type="email" id="email" name="email" required placeholder="juan.perez@empresa.com">
+                                <div class="form-error" id="emailError"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="company">Empresa</label>
+                                <input type="text" id="company" name="company" placeholder="Nombre de tu empresa">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Teléfono</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+34 600 000 000">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="service">Servicio de interés *</label>
+                                <select id="service" name="service" required>
+                                    <option value="" disabled selected>Selecciona un servicio</option>
+                                    <option value="capital-humano">Human Capital</option>
+                                    <option value="payrolling">Payrolling / Nómina</option>
+                                    <option value="consulting">Consultoría IT</option>
+                                    <option value="contabilidad">Contabilidad y Fiscal</option>
+                                    <option value="legal">Legal Corporativo</option>
+                                    <option value="integral">Solución Integral</option>
+                                </select>
+                                <div class="form-error" id="serviceError"></div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="message">Describe tu proyecto o necesidades *</label>
+                                <textarea id="message" name="message" rows="4" required placeholder="Cuéntanos sobre los objetivos de tu proyecto, plazos estimados, presupuesto aproximado..."></textarea>
+                                <div class="form-error" id="messageError"></div>
+                            </div>
+                            
+                            <div class="form-group full-width checkbox-group">
+                                <input type="checkbox" id="privacy" name="privacy" required>
+                                <label for="privacy">Acepto la <a href="#" class="privacy-link">Política de Privacidad</a> y el tratamiento de mis datos para gestionar mi consulta.</label>
+                                <div class="form-error" id="privacyError"></div>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <button type="submit" class="btn btn-primary btn-full">
+                                    <span id="submitText">Enviar solicitud</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                    <div class="spinner hidden" id="submitSpinner"></div>
+                                </button>
+                                
+                                <div class="form-message hidden" id="formMessage"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-brand">
+                        <a href="#home" class="footer-logo">BAUSEN</a>
+                        <p class="footer-description">Especialistas en soluciones tecnológicas empresariales que combinan innovación, diseño y resultados medibles.</p>
+                        
+                        <div class="footer-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-links">
+                        <div class="footer-column">
+                            <h4>Servicios</h4>
+                            <ul>
+                                <li><a href="#services">Human Capital</a></li>
+                                <li><a href="#services">Payrolling</a></li>
+                                <li><a href="#services">Consultoría IT</a></li>
+                                <li><a href="#services">Contabilidad</a></li>
+                                <li><a href="#services">Legal Corporativo</a></li>
+                                <li><a href="#services">Soluciones Integrales</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4>Empresa</h4>
+                            <ul>
+                                <li><a href="#differentiators">Diferenciadores</a></li>
+                                <li><a href="#process">Proceso</a></li>
+                                <li><a href="#contact">Contacto</a></li>
+                                <li><a href="#">Trabaja con nosotros</a></li>
+                                <li><a href="#">Blog corporativo</a></li>
+                                <li><a href="#">Casos de éxito</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="footer-column">
+                            <h4>Legal</h4>
+                            <ul>
+                                <li><a href="#">Política de privacidad</a></li>
+                                <li><a href="#">Términos y condiciones</a></li>
+                                <li><a href="#">Política de cookies</a></li>
+                                <li><a href="#">Aviso legal</a></li>
+                                <li><a href="#">RGPD</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-bottom">
+                    <div class="footer-copyright">
+                        <p>&copy; <span id="currentYear">2025</span> BAUSEN Tech Solutions. Todos los derechos reservados.</p>
+                        <p class="footer-note">CIF: B12345678 | Registro Mercantil de Madrid, Tomo 12345, Folio 123, Sección 8, Hoja M-123456</p>
+                    </div>
+                    
+                    <div class="footer-payments">
+                        <div class="payment-method">
+                            <i class="fab fa-cc-visa"></i>
+                        </div>
+                        <div class="payment-method">
+                            <i class="fab fa-cc-mastercard"></i>
+                        </div>
+                        <div class="payment-method">
+                            <i class="fab fa-cc-amex"></i>
+                        </div>
+                        <div class="payment-method">
+                            <i class="fas fa-university"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="scripbeca.js"></script>
+
+    <!-- Modal de servicio (previsualizar / redirigir / contactar) -->
+    <div id="serviceModal" class="service-modal" aria-hidden="true">
+        <div class="service-modal-overlay" data-modal-close></div>
+        <div class="service-modal-content" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+            <button class="service-modal-close" aria-label="Cerrar" data-modal-close>&times;</button>
+            <h3 id="serviceModalTitle" class="service-modal-title">Título del servicio</h3>
+            <p class="service-modal-desc">Descripción breve del servicio.</p>
+            <div class="service-modal-actions">
+                <a href="#" class="btn btn-outline service-modal-details" target="_self" rel="noopener">Ver más</a>
+                <button class="btn btn-primary service-modal-contact">Contactar</button>
+            </div>
+        </div>
     </div>
-    <p class="footer__copy" data-i18n-html="footer.copy">© <span id="year"></span> Bechapra. Todos los derechos reservados.</p>
-  </footer>
-
-  <script src="scripbeca.js"></script>
 </body>
 </html>
