@@ -470,6 +470,136 @@
                 </div>
             </div>
         </section>
+        <!-- ============================================
+    SECCIÓN DE UBICACIÓN CON GOOGLE MAPS
+    Insertar después de la sección #process
+================================================ -->
+<section class="section location" id="location">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Nuestra presencia</span>
+            <h2 class="section-title">Dónde <span class="highlight">Encontrarnos</span></h2>
+            <p class="section-subtitle">Visita nuestra oficina principal en Madrid. Estamos ubicados en el corazón tecnológico de la ciudad, con fácil acceso y todas las comodidades para atenderte.</p>
+        </div>
+        
+        <div class="location-wrapper">
+            <div class="location-info">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Oficina Central</h3>
+                        <address>
+                            <p><strong>Dirección:</strong><br>
+                            <!-- EDITAR: Cambiar dirección aquí -->
+                            Calle Tecnología, 123<br>
+                            28027 Madrid, España</p>
+                            
+                            <p><strong>Horario de atención:</strong><br>
+                            Lunes a Viernes: 9:00 - 18:00<br>
+                            Sábados: 10:00 - 14:00 (con cita previa)</p>
+                            
+                            <p><strong>Contacto:</strong><br>
+                            <a href="tel:+34910123456">+34 910 123 456</a><br>
+                            <a href="mailto:oficina@bausen.com">oficina@bausen.com</a></p>
+                        </address>
+                        
+                        <div class="location-features">
+                            <div class="feature">
+                                <i class="fas fa-wifi"></i>
+                                <span>WiFi gratuito</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-parking"></i>
+                                <span>Parking disponible</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-wheelchair"></i>
+                                <span>Accesible</span>
+                            </div>
+                            <div class="feature">
+                                <i class="fas fa-train"></i>
+                                <span>Cerca del metro</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://maps.google.com/?q=Calle+Tecnologia+123+Madrid" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="btn btn-outline">
+                            <span>Abrir en Google Maps</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="location-map">
+                <!-- Contenedor del mapa de Google -->
+                <div class="map-container">
+                    <!-- 
+                    IMPORTANTE: Reemplazar YOUR_API_KEY con tu clave API de Google Maps
+                    Para obtener una API Key:
+                    1. Ve a https://cloud.google.com/maps-platform
+                    2. Crea un proyecto y habilita "Maps JavaScript API"
+                    3. Genera una clave API con restricciones HTTP
+                    -->
+
+                    
+                    <!-- 
+                    EDITAR: Cambiar coordenadas y zoom aquí 
+                    Cómo obtener coordenadas:
+                    1. Abre Google Maps
+                    2. Haz clic derecho en la ubicación
+                    3. Selecciona "¿Qué hay aquí?"
+                    4. Copia las coordenadas (latitud, longitud)
+                    -->
+                    <gmp-map
+                        center="40.4168, -3.7038" <!-- EDITAR: Coordenadas de Madrid -->
+                        zoom="15" <!-- EDITAR: Nivel de zoom (1: mundo, 20: edificio) -->
+                        map-id="BAUSEN_MAP"
+                        style="height: 100%; border-radius: var(--border-radius-lg);">
+                        
+                        <!-- Marcador avanzado personalizado -->
+                        <gmp-advanced-marker
+                            position="40.4168, -3.7038" <!-- EDITAR: Misma posición que center -->
+                            title="BAUSEN - Oficina Central">
+                        </gmp-advanced-marker>
+                    </gmp-map>
+                    
+                    <!-- Fallback para navegadores sin JavaScript -->
+                    <div class="map-fallback">
+                        <div class="fallback-content">
+                            <i class="fas fa-map"></i>
+                            <h4>Mapa no disponible</h4>
+                            <p>Activa JavaScript para ver el mapa interactivo.</p>
+                            <a href="https://maps.google.com/?q=Calle+Tecnologia+123+Madrid" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="btn btn-outline btn-small">
+                                Ver ubicación en Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="map-note">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Puedes arrastrar el mapa, hacer zoom y hacer clic en el marcador para más información.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="location-cta">
+            <p>¿Necesitas indicaciones precisas o quieres programar una visita?</p>
+            <a href="#contact" class="btn btn-primary">
+                <span>Solicitar indicaciones</span>
+                <i class="fas fa-route"></i>
+            </a>
+        </div>
+    </div>
+</section>
 
         <!-- CTA Intermedio - MEJORADO -->
         <section class="cta-section enhanced-cta">
@@ -716,9 +846,14 @@
 
     <!-- JavaScript -->
     <script src="scripbeca.js"></script>
+    <!-- aqui va el secrip de la key de google maps -->
+     <script 
+                        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=maps,marker&v=weekly"
+                        defer>
+                    </script>
 
-    <!-- Modal de servicio (previsualizar / redirigir / contactar) -->
-    <div id="serviceModal" class="service-modal" aria-hidden="true">
+    <!-- Modal de servicio DESHABILITADO - Oculto -->
+    <!-- <div id="serviceModal" class="service-modal" aria-hidden="true">
         <div class="service-modal-overlay" data-modal-close></div>
         <div class="service-modal-content" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
             <button class="service-modal-close" aria-label="Cerrar" data-modal-close>&times;</button>
@@ -729,6 +864,6 @@
                 <button class="btn btn-primary service-modal-contact">Contactar</button>
             </div>
         </div>
-    </div>
+    </div> -->
 </body>
 </html>

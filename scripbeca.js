@@ -1124,3 +1124,119 @@ document.addEventListener('DOMContentLoaded', function() {
         cleanupApp();
     });
 });
+/**
+ * ============================================
+ * 12. GOOGLE MAPS - INICIALIZACIÓN Y CONFIGURACIÓN
+ * ============================================
+ */
+
+/**
+ * Inicializa y configura el mapa de Google Maps
+ */
+function initGoogleMaps() {
+    // Verificar si el elemento gmp-map existe
+    const mapElement = document.querySelector('gmp-map');
+    if (!mapElement) return;
+    
+    // Detectar si el navegador soporta Web Components (necesario para gmp-map)
+    if (!('customElements' in window)) {
+        showMapFallback();
+        return;
+    }
+    
+    // Configurar el mapa cuando la API esté lista
+    if (typeof google !== 'undefined' && google.maps) {
+        configureMap();
+    } else {
+        // Si la API no se carga, mostrar fallback después de 5 segundos
+        setTimeout(() => {
+            if (typeof google === 'undefined' || !google.maps) {
+                showMapFallback();
+            }
+        }, 5000);
+    }
+}
+
+/**
+ * Configura las opciones del mapa
+ */
+function configureMap() {
+    const mapElement = document.querySelector('gmp-map');
+    if (!mapElement || !mapElement.innerMap) return;
+    
+    const map = mapElement.innerMap;
+    
+    // Configurar controles del mapa
+    map.setOptions({
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+            position: google.maps.ControlPosition.TOP_RIGHT
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        fullscreenControl: true,
+        streetViewControl: false,
+        rotateControl: false,
+        scaleControl: true,
+        gestureHandling: 'greedy' // Mejor experiencia táctil
+    });
+    
+    // Añadir evento click al marcador
+    const marker = document.querySelector('gmp-advanced-marker');
+    if (marker) {
+        marker.addEventListener('gmp-click', () => {
+            // Aquí puedes añadir funcionalidad cuando se hace clic en el marcador
+            console.log('Marcador de BAUSEN clickeado');
+        });
+    }
+    
+    // Ajustar el mapa al redimensionar la ventana
+    window.addEventListener('resize', () => {
+        setTimeout(() => {
+            if (map && typeof map.fitBounds === 'function') {
+                google.maps.event.trigger(map, 'resize');
+            }
+        }, 300);
+    });
+}
+
+/**
+ * Muestra el fallback cuando el mapa no puede cargarse
+ */
+function showMapFallback() {
+    const mapContainer = document.querySelector('.map-container');
+    if (mapContainer) {
+        mapContainer.classList.add('no-js');
+    }
+}
+
+/**
+ * Carga la API de Google Maps de forma dinámica
+ * Solo se ejecuta si no se detectó la API
+ */
+function loadGoogleMapsAPI() {
+    // Verificar si ya está cargada la API
+    if (typeof google !== 'undefined' && google.maps) {
+        initGoogleMaps();
+        return;
+    }
+    
+    // Verificar si ya existe un script de Google Maps
+    const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
+    if (existingScript) {
+        // Si ya existe, esperar a que cargue
+        existingScript.addEventListener('load', initGoogleMaps);
+        return;
+    }
+    
+    console.warn('Google Maps API no detectada. Asegúrate de haber agregado la clave API.');
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    // Iniciar Google Maps después de un pequeño delay
+    setTimeout(loadGoogleMapsAPI, 1000);
+});
