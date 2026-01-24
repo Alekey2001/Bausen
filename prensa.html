@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bausen | Sala de Prensa</title>
+
+  <link rel="stylesheet" href="prensa.css" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <meta name="theme-color" content="#08102a" />
+</head>
+
+<body>
+  <!-- Overlay para mobile -->
+  <div class="overlay" id="mobileMenuOverlay" aria-hidden="true"></div>
+
+  <!-- HEADER (fijo) -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+      <!-- Brand -->
+      <a class="brand" href="indexbeca.html" aria-label="Bausen - Inicio">
+        <img
+          src="/images/bausenlogo.png"
+    alt="Bausen"
+    width="130"
+    height="47"
+        />
+      </a>
+
+      <!-- Idiomas (en lugar del menú hamburguesa, como pediste antes) -->
+      <div class="lang" data-ui="lang">
+        <button class="lang__btn" type="button" aria-haspopup="listbox" aria-expanded="false" id="langBtn">
+          <span class="lang__tag">ES</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <ul class="lang__list" role="listbox" aria-label="Selector de idioma" id="langList">
+          <li role="option" data-lang="es" aria-selected="true">Español (ES)</li>
+          <li role="option" data-lang="en">English (EN)</li>
+          <li role="option" data-lang="pt">Português (PT)</li>
+          <li role="option" data-lang="fr">Français (FR)</li>
+          <li role="option" data-lang="de">Deutsch (DE)</li>
+          <li role="option" data-lang="it">Italiano (IT)</li>
+        </ul>
+      </div>
+
+      <!-- Nav desktop -->
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="nav__link" href="indexbeca.html">Inicio</a>
+        <a class="nav__link" href="servicios.html">Servicios</a>
+        <a class="nav__link" href="noticias.html">Noticias</a>
+        <a class="nav__link is-active" href="prensa.html" aria-current="page">Prensa</a>
+        <a class="nav__link" href="centro.html">Centro de Formación</a>
+        <a class="nav__link" href="acerca.html">Acerca de</a>
+      </nav>
+
+      <!-- Acciones -->
+      <div class="header__actions">
+        <a class="btn btn--ghost btn--pill" href="#contacto-prensa">
+          ¿Eres colaborador?
+        </a>
+
+        <button class="theme-toggle" type="button" id="themeToggle" aria-label="Cambiar tema" aria-pressed="true">
+          <span class="theme-toggle__icon" aria-hidden="true">
+            <i class="fa-solid fa-moon"></i>
+          </span>
+        </button>
+
+        <!-- Hamburguesa (en lugar de idiomas, como pediste antes) -->
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+      <div class="mobile-menu__head">
+        <span class="mobile-menu__title">Menú</span>
+        <button class="mobile-menu__close" type="button" id="menuClose" aria-label="Cerrar menú">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Navegación móvil">
+        <a class="mobile-nav-link" href="indexbeca.html">Inicio</a>
+        <a class="mobile-nav-link" href="servicios.html">Servicios</a>
+        <a class="mobile-nav-link" href="noticias.html">Noticias</a>
+        <a class="mobile-nav-link is-active" href="prensa.html" aria-current="page">Prensa</a>
+        <a class="mobile-nav-link" href="centro.html">Centro de Formación</a>
+        <a class="mobile-nav-link" href="acerca.html">Acerca de</a>
+      </nav>
+
+      <div class="mobile-menu__footer">
+        <a class="btn btn--primary btn--block" href="#contacto-prensa">Contacto de Prensa</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- HERO -->
+    <section class="hero" aria-label="Sala de Prensa">
+      <div class="hero__bg" aria-hidden="true"></div>
+
+      <div class="container hero__grid">
+        <div class="hero__copy reveal">
+          <div class="pill">
+            <i class="fa-solid fa-bullhorn" aria-hidden="true"></i>
+            <span>Comunicados Oficiales</span>
+          </div>
+
+          <h1 class="hero__title">Sala de<br/>Prensa</h1>
+
+          <p class="hero__subtitle">
+            Mantente informado sobre nuestros comunicados oficiales, reconocimientos y apariciones
+            en medios de comunicación.
+          </p>
+
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#contacto-prensa">Contacto de Prensa</a>
+            <a class="btn btn--ghost" href="#comunicados">Ver Comunicados</a>
+          </div>
+
+          <!-- KPIs -->
+          <div class="kpis">
+            <div class="kpi card-neo reveal" data-tilt>
+              <div class="kpi__value">50+</div>
+              <div class="kpi__label">Comunicados</div>
+            </div>
+            <div class="kpi card-neo reveal" data-tilt>
+              <div class="kpi__value">15+</div>
+              <div class="kpi__label">Años de trayectoria</div>
+            </div>
+            <div class="kpi card-neo reveal" data-tilt>
+              <div class="kpi__value">100+</div>
+              <div class="kpi__label">Menciones en medios</div>
+            </div>
+            <div class="kpi card-neo reveal" data-tilt>
+              <div class="kpi__value">∞</div>
+              <div class="kpi__label">Compromiso</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta/placeholder (estilo 3D) -->
+        <div class="hero__panel reveal" data-tilt>
+          <div class="hero__panel-top">
+            <span class="chip">Soluciones integrales</span>
+            <i class="fa-regular fa-newspaper" aria-hidden="true"></i>
+          </div>
+          <div class="hero__panel-mid">
+            <div class="float-orb orb1" aria-hidden="true"></div>
+            <div class="float-orb orb2" aria-hidden="true"></div>
+            <div class="float-orb orb3" aria-hidden="true"></div>
+            <p>Espacio para tu imagen corporativa</p>
+          </div>
+        </div>
+      </div>
+
+    <!-- Separador 3D (orbes) -->
+<div class="divider-3d" aria-hidden="true">
+  <div class="divider-3d__orbs">
+    <span class="orb orb--a"></span>
+    <span class="orb orb--b"></span>
+    <span class="orb orb--c"></span>
+    <span class="orb orb--d"></span>
+    <span class="orb orb--e"></span>
+  </div>
+  <div class="divider-3d__glow"></div>
+</div>
+
+
+    <!-- COMUNICADOS -->
+    <section class="section" id="comunicados" aria-label="Nuestros Comunicados">
+      <div class="container">
+        <header class="section__head reveal">
+          <div class="pill pill--soft">
+            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+            <span>Comunicados Oficiales</span>
+          </div>
+          <h2 class="section__title">Nuestros <span class="grad">Comunicados</span></h2>
+          <p class="section__subtitle">
+            Información oficial sobre nuestras actividades, logros y novedades.
+          </p>
+        </header>
+
+        <!-- Barra de búsqueda / filtros -->
+        <div class="filters reveal">
+          <div class="search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="searchInput" type="search" placeholder="Buscar por título o contenido..." autocomplete="off" />
+          </div>
+
+          <div class="select">
+            <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+            <select id="yearSelect" aria-label="Filtrar por año">
+              <option value="all">Todos los años</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Grid comunicados -->
+        <div class="press-grid" id="pressGrid" aria-live="polite"></div>
+
+        <!-- Espacio grande para contenido futuro (cuando no hay resultados) -->
+        <div class="empty-state reveal" id="emptyState" hidden>
+          <div class="empty-state__icon" aria-hidden="true">
+            <i class="fa-regular fa-file-lines"></i>
+          </div>
+          <h3>No hay comunicados disponibles</h3>
+          <p>Cuando publiquemos un nuevo contenido aparecerá aquí automáticamente.</p>
+          <div class="empty-state__placeholder" aria-hidden="true">
+            <span>Área reservada para futuros comunicados</span>
+          </div>
+        </div>
+
+        <p class="micro reveal" id="resultsMeta">Mostrando 0 comunicados</p>
+      </div>
+    </section>
+
+    <!-- CTA MEDIOS -->
+    <section class="cta" id="contacto-prensa" aria-label="Contacto de Prensa">
+      <div class="container cta__inner reveal" data-tilt>
+        <div class="cta__copy">
+          <h3>¿Eres medio de <span class="grad">comunicación</span>?</h3>
+          <p>
+            Contáctanos para solicitar información, entrevistas o material de prensa.
+            Nuestro equipo de comunicación está disponible para atenderte.
+          </p>
+        </div>
+
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="mailto:prensa@bausen.com">
+            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+            prensa@bausen.com
+          </a>
+          <a class="btn btn--ghost" href="#comunicados">
+            <i class="fa-regular fa-newspaper" aria-hidden="true"></i>
+            Ver comunicados
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer__grid">
+      <div class="footer__col">
+        <div class="footer__logo">
+          <img
+          src="/images/bausenlogo.png"
+    alt="Bausen"
+    width="130"
+    height="47"
+        />
+        </div>
+
+        <p class="footer__text">
+          Tu aliado estratégico en soluciones empresariales integrales.
+          Transformamos organizaciones desde adentro.
+        </p>
+
+        <div class="footer__meta">
+          <div class="meta-row">
+            <span class="meta-ico"><i class="fa-regular fa-clock" aria-hidden="true"></i></span>
+            <div>
+              <strong>Horario de atención</strong>
+              <div>Lunes - Viernes: 9:00 - 18:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer__social">
+          <span class="footer__social-title">Síguenos en redes</span>
+          <div class="social">
+            <a class="social__btn" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="social__btn" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="social__btn" href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a class="social__btn" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__title">EMPRESA</h4>
+        <a class="footer__link" href="acerca.html">Acerca de</a>
+        <a class="footer__link" href="servicios.html">Servicios</a>
+        <a class="footer__link" href="noticias.html">Noticias</a>
+        <a class="footer__link" href="prensa.html">Prensa</a>
+        <a class="footer__link" href="#contacto-prensa">Contacto</a>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__title">SERVICIOS</h4>
+        <a class="footer__link" href="servicios.html#capital-humano">Capital Humano</a>
+        <a class="footer__link" href="servicios.html#legales">Servicios Legales</a>
+        <a class="footer__link" href="servicios.html#contables">Servicios Contables</a>
+        <a class="footer__link" href="servicios.html#desarrollo">Desarrollo Organizacional</a>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__title">CONTACTO</h4>
+        <p class="footer__text"><strong>Próximamente.</strong> No se encontraron sucursales activas.</p>
+
+        <div class="contact-mini">
+          <div class="contact-mini__row">
+            <span class="meta-ico"><i class="fa-solid fa-phone" aria-hidden="true"></i></span>
+            <div>
+              <strong>Teléfono</strong>
+              <div>+55 65 524 5678</div>
+            </div>
+          </div>
+          <div class="contact-mini__row">
+            <span class="meta-ico"><i class="fa-regular fa-envelope" aria-hidden="true"></i></span>
+            <div>
+              <strong>Email</strong>
+              <div>contact@bausen.com</div>
+            </div>
+          </div>
+
+          <a class="footer__link footer__link--map" href="#" target="_blank" rel="noreferrer">
+            Ver en Google Maps <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <span>© 2026 Bausen. Todos los derechos reservados</span>
+      <div class="footer__legal">
+        <a href="#" class="footer__legal-link">Política de privacidad</a>
+        <a href="#" class="footer__legal-link">Términos de servicio</a>
+        <a href="#" class="footer__legal-link">Política de cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="prensa.js"></script>
+</body>
+</html>

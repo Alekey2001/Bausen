@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bausen | Servicios</title>
+
+  <link rel="stylesheet" href="servicios.css" />
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- HEADER (fijo) -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+     <a class="brand" href="indexbeca.html" aria-label="Bausen - Inicio">
+  <img
+    class="brand__logo"
+    src="/images/bausenlogo.png"
+    alt="Bausen"
+    width="140"
+    height="34"
+    loading="eager"
+    decoding="async"
+  />
+</a>
+      <!-- Idiomas (AHORA VA DONDE ANTES ESTABA LA HAMBURGUESA) -->
+      <div class="lang header__lang">
+        <button class="lang__btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="lang__code" id="langCode">ES</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <ul class="lang__list" id="langList" role="listbox" aria-label="Selector de idioma">
+          <li class="lang__item" role="option" data-lang="ES" aria-selected="true">Español (ES)</li>
+          <li class="lang__item" role="option" data-lang="EN">English (EN)</li>
+          <li class="lang__item" role="option" data-lang="PT">Português (PT)</li>
+          <li class="lang__item" role="option" data-lang="FR">Français (FR)</li>
+          <li class="lang__item" role="option" data-lang="DE">Deutsch (DE)</li>
+          <li class="lang__item" role="option" data-lang="IT">Italiano (IT)</li>
+        </ul>
+      </div>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="nav__link" href="indexbeca.html">Inicio</a>
+        <a class="nav__link is-active" href="servicios.html" aria-current="page">Servicios</a>
+        <a class="nav__link" href="noticias.html">Noticias</a>
+        <a class="nav__link" href="prensa.html">Prensa</a>
+        <a class="nav__link" href="centro.html">Centro de Formación</a>
+        <a class="nav__link" href="acerca.html">Acerca de</a>
+      </nav>
+
+      <div class="header__actions">
+        <a class="btn btn--primary btn--pill" href="colaboradores.html">
+          ¿Eres colaborador?
+        </a>
+
+        <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i>
+        </button>
+
+        <!-- Hamburguesa (AHORA VA DONDE ANTES ESTABAN LOS IDIOMAS) -->
+        <button class="icon-btn header__burger" id="menuToggle"
+          aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile overlay/menu -->
+    <div class="mobile-overlay" id="mobileOverlay" hidden></div>
+    <aside class="mobile-menu" id="mobileMenu" aria-label="Menú móvil" hidden>
+      <div class="mobile-menu__head">
+        <span class="mobile-menu__title">Menú</span>
+        <button class="icon-btn" id="menuClose" aria-label="Cerrar menú">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Navegación móvil">
+        <a class="mobile-nav__link" href="indexbeca.html">Inicio</a>
+        <a class="mobile-nav__link is-active" href="servicios.html" aria-current="page">Servicios</a>
+        <a class="mobile-nav__link" href="noticias.html">Noticias</a>
+        <a class="mobile-nav__link" href="prensa.html">Prensa</a>
+        <a class="mobile-nav__link" href="formacion.html">Centro de Formación</a>
+        <a class="mobile-nav__link" href="acerca.html">Acerca de</a>
+        <a class="mobile-nav__link" href="colaboradores.html">¿Eres colaborador?</a>
+      </nav>
+
+      <div class="mobile-menu__footer">
+        <button class="btn btn--soft" id="mobileTheme" type="button">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+          Cambiar tema
+        </button>
+      </div>
+    </aside>
+  </header>
+
+  <!-- MAIN -->
+  <main id="contenido" class="main">
+    <section class="hero hero--services">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <div class="pill">
+            <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+            <span>Soluciones empresariales</span>
+          </div>
+
+          <h1 class="hero__title">Nuestros Servicios</h1>
+          <p class="hero__subtitle">
+            Descubre soluciones integrales en Capital Humano, Desarrollo Organizacional y Management Services,
+            diseñadas para impulsar el crecimiento de tu empresa.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#lineas-servicio">
+              Explorar servicios <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn--ghost" href="#cta">Contactar</a>
+          </div>
+
+          <div class="kpis" aria-label="Indicadores clave">
+            <div class="kpi">
+              <span class="kpi__num" data-count="9">0</span>
+              <span class="kpi__label">Servicios</span>
+            </div>
+            <div class="kpi">
+              <span class="kpi__num" data-count="500">0</span>
+              <span class="kpi__label">Clientes</span>
+            </div>
+            <div class="kpi">
+              <span class="kpi__num" data-count="15">0</span>
+              <span class="kpi__label">Años</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__media" aria-hidden="true">
+          <div class="media-card">
+            <div class="media-tag">
+              <i class="fa-solid fa-badge-check" aria-hidden="true"></i>
+              <span>Soluciones integrales</span>
+            </div>
+            <img class="media-img" src="assets/servicios-hero.jpg" alt=""
+                 onerror="this.style.display='none'; this.parentElement.classList.add('no-img');" />
+            <div class="media-fallback">
+              <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+              <p>Espacio para tu imagen corporativa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NUEVO: separador 3D (reemplaza la franja blanca) -->
+      <div class="hero__divider" aria-hidden="true"></div>
+    </section>
+
+    <!-- Más espacio para separar secciones -->
+    <section class="section section--spaced" id="lineas-servicio">
+      <div class="container">
+        <header class="section__head">
+          <h2 class="section__title">Nuestras Líneas de Servicio</h2>
+          <p class="section__subtitle">
+            Soluciones especializadas diseñadas para la necesidad de tu negocio.
+          </p>
+          <span class="section__accent" aria-hidden="true"></span>
+        </header>
+
+        <div class="cards cards--neon">
+          <article class="card card--neon reveal">
+            <div class="card__top">
+              <div class="card__icon" aria-hidden="true"><i class="fa-solid fa-people-group"></i></div>
+              <h3 class="card__title">Capital Humano</h3>
+              <p class="card__desc">
+                Potenciamos el crecimiento y éxito a través de soluciones integrales de gestión del talento.
+              </p>
+            </div>
+            <div class="card__meta">
+              <span class="tag">Servicios incluidos</span>
+              <ul class="mini-list">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Servicios Especializados</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Payrolling</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Atracción de Talento</li>
+              </ul>
+            </div>
+            <div class="card__actions">
+              <a class="link" href="capital-humano.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+          </article>
+
+          <article class="card card--neon reveal">
+            <div class="card__top">
+              <div class="card__icon" aria-hidden="true"><i class="fa-solid fa-sitemap"></i></div>
+              <h3 class="card__title">Desarrollo Organizacional</h3>
+              <p class="card__desc">
+                Impulsamos la cultura y eficacia organizacional con enfoques prácticos y medibles.
+              </p>
+            </div>
+            <div class="card__meta">
+              <span class="tag">Servicios incluidos</span>
+              <ul class="mini-list">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Capacitación Empresarial</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Consultoría Organizacional</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> NOM-035</li>
+              </ul>
+            </div>
+            <div class="card__actions">
+              <a class="link" href="desarrollo-organizacional.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+          </article>
+
+          <article class="card card--neon reveal">
+            <div class="card__top">
+              <div class="card__icon" aria-hidden="true"><i class="fa-solid fa-briefcase"></i></div>
+              <h3 class="card__title">Management Services</h3>
+              <p class="card__desc">
+                Gestión integral para crecimiento del negocio: finanzas, legal y soluciones PyME.
+              </p>
+            </div>
+            <div class="card__meta">
+              <span class="tag">Servicios incluidos</span>
+              <ul class="mini-list">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Servicios Contables</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Servicios Legales</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Servicios PyME</li>
+              </ul>
+            </div>
+            <div class="card__actions">
+              <a class="link" href="management-services.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta cta--spaced" id="cta">
+      <div class="container cta__inner">
+        <div class="cta__copy">
+          <h2 class="cta__title">¿Listo para impulsar tu empresa?</h2>
+          <p class="cta__text">
+            Nuestro equipo de expertos está listo para ayudarte a encontrar la solución perfecta para tus necesidades.
+          </p>
+        </div>
+
+        <div class="cta__actions">
+          <a class="btn btn--light" href="contacto.html">Contáctanos</a>
+          <a class="btn btn--ghost-light" href="acerca.html">Conocer más</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (normal, no fijo) -->
+  <footer class="site-footer" aria-label="Pie de página">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <div class="footer__logo">
+  <img
+    class="footer__logo-img"
+    src="/images/bausenlogo.png"
+    alt="Bausen"
+    width="140"
+    height="34"
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+
+
+        <p class="footer__desc">
+          Tu aliado estratégico en soluciones empresariales integrales.
+          Transformamos organizaciones desde adentro.
+        </p>
+
+        <div class="footer__hours">
+          <span class="footer__icon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
+          <div>
+            <strong>Horario de atención</strong>
+            <div>Lunes - Viernes: 9:00 - 18:00</div>
+          </div>
+        </div>
+
+        <div class="footer__social">
+          <span class="footer__label">Síguenos en redes</span>
+          <div class="footer__social-row">
+            <a class="social" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="social" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="social" href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a class="social" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__title">EMPRESA</h3>
+        <a class="footer__link" href="acerca.html">Acerca de</a>
+        <a class="footer__link" href="servicios.html">Servicios</a>
+        <a class="footer__link" href="noticias.html">Noticias</a>
+        <a class="footer__link" href="prensa.html">Prensa</a>
+        <a class="footer__link" href="contacto.html">Contacto</a>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__title">SERVICIOS</h3>
+        <a class="footer__link" href="capital-humano.html">Capital Humano</a>
+        <a class="footer__link" href="servicios-legales.html">Servicios Legales</a>
+        <a class="footer__link" href="servicios-contables.html">Servicios Contables</a>
+        <a class="footer__link" href="desarrollo-organizacional.html">Desarrollo Organizacional</a>
+      </div>
+
+      <div class="footer__col footer__contact">
+        <h3 class="footer__title">CONTACTO</h3>
+        <p class="footer__note">
+          <strong>Próximamente.</strong> No se encontraron sucursales activas.
+        </p>
+
+        <div class="footer__contact-item">
+          <span class="footer__icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></span>
+          <div>
+            <div class="footer__contact-label">Teléfono</div>
+            <a class="footer__contact-val" href="tel:+65655245678">+65 65 524 5678</a>
+          </div>
+        </div>
+
+        <div class="footer__contact-item">
+          <span class="footer__icon" aria-hidden="true"><i class="fa-regular fa-envelope"></i></span>
+          <div>
+            <div class="footer__contact-label">Email</div>
+            <a class="footer__contact-val" href="mailto:contact@bausen.com">contact@bausen.com</a>
+          </div>
+        </div>
+
+        <a class="footer__maps" href="#" target="_blank" rel="noreferrer">
+          Ver en Google Maps <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <div class="footer__copy">© 2026 Bausen. Todos los derechos reservados</div>
+      <div class="footer__legal">
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="terminos.html">Términos de servicio</a>
+        <a href="cookies.html">Política de cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="servicios.js"></script>
+</body>
+</html>

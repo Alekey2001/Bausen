@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bausen | Noticias y Actualidad</title>
+
+  <link rel="stylesheet" href="noticias.css" />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+      <a class="brand" href="indexbeca.html" aria-label="Bausen - Inicio">
+  <img
+    class="brand__logo"
+    src="/images/bausenlogo.png"
+    alt="Bausen"
+    width="140"
+    height="48"
+    loading="eager"
+    decoding="async"
+  />
+</a>
+
+
+      <div class="lang header__lang">
+        <button class="lang__btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="lang__code" id="langCode">ES</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+        <ul class="lang__list" id="langList" role="listbox" aria-label="Selector de idioma">
+          <li class="lang__item" role="option" data-lang="ES" aria-selected="true">Español (ES)</li>
+          <li class="lang__item" role="option" data-lang="EN">English (EN)</li>
+          <li class="lang__item" role="option" data-lang="PT">Português (PT)</li>
+          <li class="lang__item" role="option" data-lang="FR">Français (FR)</li>
+          <li class="lang__item" role="option" data-lang="DE">Deutsch (DE)</li>
+          <li class="lang__item" role="option" data-lang="IT">Italiano (IT)</li>
+        </ul>
+      </div>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="nav__link" href="indexbeca.html">Inicio</a>
+        <a class="nav__link" href="servicios.html">Servicios</a>
+        <a class="nav__link is-active" href="noticias.html" aria-current="page">Noticias</a>
+        <a class="nav__link" href="prensa.html">Prensa</a>
+        <a class="nav__link" href="centro.html">Centro de Formación</a>
+        <a class="nav__link" href="acerca.html">Acerca de</a>
+      </nav>
+
+      <div class="header__actions">
+        <a class="btn btn--primary btn--pill" href="colaboradores.html">¿Eres colaborador?</a>
+
+        <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+          <i class="fa-solid fa-moon" aria-hidden="true"></i>
+        </button>
+
+        <button class="icon-btn header__burger" id="menuToggle"
+          aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-overlay" id="mobileOverlay" hidden></div>
+    <aside class="mobile-menu" id="mobileMenu" aria-label="Menú móvil" hidden>
+      <div class="mobile-menu__head">
+        <span class="mobile-menu__title">Menú</span>
+        <button class="icon-btn" id="menuClose" aria-label="Cerrar menú">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Navegación móvil">
+        <a class="mobile-nav__link" href="indexbeca.html">Inicio</a>
+        <a class="mobile-nav__link" href="servicios.html">Servicios</a>
+        <a class="mobile-nav__link is-active" href="noticias.html" aria-current="page">Noticias</a>
+        <a class="mobile-nav__link" href="prensa.html">Prensa</a>
+        <a class="mobile-nav__link" href="centro.html">Centro de Formación</a>
+        <a class="mobile-nav__link" href="acerca.html">Acerca de</a>
+        <a class="mobile-nav__link" href="colaboradores.html">¿Eres colaborador?</a>
+      </nav>
+
+      <div class="mobile-menu__footer">
+        <button class="btn btn--soft" id="mobileTheme" type="button">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+          Cambiar tema
+        </button>
+      </div>
+    </aside>
+  </header>
+
+  <main id="contenido" class="main">
+    <section class="hero hero--news">
+      <div class="container hero__inner">
+        <div class="pill">
+          <i class="fa-regular fa-newspaper" aria-hidden="true"></i>
+          <span>Blog & Actualidad</span>
+        </div>
+
+        <h1 class="hero__title">Noticias y Actualidad</h1>
+        <p class="hero__subtitle">
+          Blog corporativo, eventos destacados y actualizaciones sobre cambios legislativos que impactan tus operaciones empresariales.
+        </p>
+
+        <div class="hero__actions">
+          <button class="btn btn--primary" type="button" id="openNewsletter">
+            Suscríbete al newsletter <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero__curve" aria-hidden="true"></div>
+    </section>
+
+    <section class="search-wrap" aria-label="Buscador de noticias">
+      <div class="container search-wrap__inner">
+        <form class="search" id="searchForm" autocomplete="off">
+          <div class="search__field">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Buscar noticias, temas o palabras clave..."
+              aria-label="Buscar noticias"
+            />
+          </div>
+
+          <button class="btn btn--primary btn--sm" type="submit">
+            Buscar
+          </button>
+        </form>
+
+        <div class="search-hint muted">
+          Buscador próximamente disponible (estructura lista para integrar noticias).
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="recientes">
+      <div class="container">
+        <header class="title-block">
+          <h2 class="title-block__title">
+            Noticias <span class="title-accent">Más Recientes</span>
+          </h2>
+          <p class="title-block__sub">Mantente informado con las últimas novedades del sector</p>
+          <span class="title-block__line" aria-hidden="true"></span>
+        </header>
+
+        <div class="news-grid" id="newsGrid" aria-live="polite"></div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></div>
+          <div class="empty-title">No hay noticias disponibles</div>
+          <div class="empty-sub muted">Cuando publiquemos contenido nuevo, aparecerá aquí automáticamente.</div>
+
+          <!-- espacio para contenido futuro (solo visual, no rompe estructura) -->
+          <div class="empty-future" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--alt" id="categorias">
+      <div class="container">
+        <header class="title-block">
+          <h2 class="title-block__title">Explora por <span class="title-accent">Categoría</span></h2>
+          <p class="title-block__sub">Encuentra el contenido de acuerdo a lo que te interesa</p>
+          <span class="title-block__line" aria-hidden="true"></span>
+        </header>
+
+        <div class="cat-grid">
+          <button class="cat-card reveal" type="button" data-cat="blog" aria-label="Explorar Blog Corporativo">
+            <div class="cat-card__icon" aria-hidden="true"><i class="fa-solid fa-building"></i></div>
+            <div class="cat-card__title">Blog Corporativo</div>
+            <div class="cat-card__sub muted">Tendencias, insights y mejores prácticas</div>
+            <div class="cat-card__kpi"><span id="countBlog">42</span> artículos</div>
+          </button>
+
+          <button class="cat-card reveal" type="button" data-cat="eventos" aria-label="Explorar Eventos">
+            <div class="cat-card__icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="cat-card__title">Eventos</div>
+            <div class="cat-card__sub muted">Webinars, conferencias y anuncios</div>
+            <div class="cat-card__kpi"><span id="countEventos">18</span> eventos</div>
+          </button>
+
+          <button class="cat-card reveal" type="button" data-cat="legales" aria-label="Explorar Cambios Legislativos">
+            <div class="cat-card__icon" aria-hidden="true"><i class="fa-solid fa-scale-balanced"></i></div>
+            <div class="cat-card__title">Cambios Legislativos</div>
+            <div class="cat-card__sub muted">Actualizaciones legales y su impacto</div>
+            <div class="cat-card__kpi"><span id="countLegales">27</span> actualizaciones</div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal" id="newsletterModal" aria-hidden="true" role="dialog" aria-label="Suscripción a newsletter">
+      <div class="modal__backdrop" data-close="modal"></div>
+      <div class="modal__panel" role="document">
+        <div class="modal__head">
+          <h3 class="modal__title">Suscripción a Newsletter</h3>
+          <button class="icon-btn" type="button" data-close="modal" aria-label="Cerrar">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <p class="modal__text muted">
+          Recibe actualizaciones periódicas sobre noticias, eventos y cambios legislativos relevantes para tu empresa.
+        </p>
+
+        <form class="modal__form" id="newsletterForm">
+          <label class="field">
+            <span class="field__label">Nombre</span>
+            <input type="text" id="nlName" placeholder="Tu nombre" required />
+          </label>
+
+          <label class="field">
+            <span class="field__label">Correo electrónico</span>
+            <input type="email" id="nlEmail" placeholder="tucorreo@empresa.com" required />
+          </label>
+
+          <button class="btn btn--primary" type="submit">
+            Suscribirme
+          </button>
+
+          <p class="form-status" id="newsletterStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" aria-label="Pie de página">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <div class="footer__logo">
+  <img
+    class="footer__logo-img"
+    src="/images/bausenlogo.png"
+    alt="Bausen"
+    width="140"
+    height="48"
+    loading="lazy"
+    decoding="async"
+  />
+</div>
+
+        <p class="footer__desc">
+          Tu aliado estratégico en soluciones empresariales integrales.
+          Transformamos organizaciones desde adentro.
+        </p>
+
+        <div class="footer__hours">
+          <span class="footer__icon" aria-hidden="true"><i class="fa-regular fa-clock"></i></span>
+          <div>
+            <strong>Horario de atención</strong>
+            <div>Lunes - Viernes: 9:00 - 18:00</div>
+          </div>
+        </div>
+
+        <div class="footer__social">
+          <span class="footer__label">Síguenos en redes</span>
+          <div class="footer__social-row">
+            <a class="social" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="social" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="social" href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a class="social" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__title">EMPRESA</h3>
+        <a class="footer__link" href="acerca.html">Acerca de</a>
+        <a class="footer__link" href="servicios.html">Servicios</a>
+        <a class="footer__link" href="noticias.html">Noticias</a>
+        <a class="footer__link" href="prensa.html">Prensa</a>
+        <a class="footer__link" href="contacto.html">Contacto</a>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__title">SERVICIOS</h3>
+        <a class="footer__link" href="capital-humano.html">Capital Humano</a>
+        <a class="footer__link" href="servicios-legales.html">Servicios Legales</a>
+        <a class="footer__link" href="servicios-contables.html">Servicios Contables</a>
+        <a class="footer__link" href="desarrollo-organizacional.html">Desarrollo Organizacional</a>
+      </div>
+
+      <div class="footer__col footer__contact">
+        <h3 class="footer__title">CONTACTO</h3>
+        <p class="footer__note"><strong>Próximamente.</strong> No se encontraron sucursales activas.</p>
+
+        <div class="footer__contact-item">
+          <span class="footer__icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></span>
+          <div>
+            <div class="footer__contact-label">Teléfono</div>
+            <a class="footer__contact-val" href="tel:+65655245678">+65 65 524 5678</a>
+          </div>
+        </div>
+
+        <div class="footer__contact-item">
+          <span class="footer__icon" aria-hidden="true"><i class="fa-regular fa-envelope"></i></span>
+          <div>
+            <div class="footer__contact-label">Email</div>
+            <a class="footer__contact-val" href="mailto:contact@bausen.com">contact@bausen.com</a>
+          </div>
+        </div>
+
+        <a class="footer__maps" href="#" target="_blank" rel="noreferrer">
+          Ver en Google Maps <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <div class="footer__copy">© 2026 Bausen. Todos los derechos reservados</div>
+      <div class="footer__legal">
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="terminos.html">Términos de servicio</a>
+        <a href="cookies.html">Política de cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="noticias.js"></script>
+</body>
+</html>

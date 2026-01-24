@@ -1,11 +1,11 @@
 /* =========================
-   Bausen - Servicios (JS final)
+   Bausen - Noticias (JS parche)
+   - Tema claro/oscuro persistente
+   - Idiomas dropdown
    - Menú móvil
-   - Tema claro/oscuro con persistencia
-   - Dropdown idioma
-   - KPIs count-up
    - Reveal on scroll
-   - Ajuste de padding-top por header fijo
+   - Hover 3D + glow en categorías (tilt)
+   - Buscador: estructura lista para lógica futura
 ========================= */
 
 (function () {
@@ -29,6 +29,14 @@
   const langBtn = $("#langBtn");
   const langList = $("#langList");
   const langCode = $("#langCode");
+
+  const openNewsletter = $("#openNewsletter");
+  const newsletterModal = $("#newsletterModal");
+  const newsletterForm = $("#newsletterForm");
+  const newsletterStatus = $("#newsletterStatus");
+
+  const searchForm = $("#searchForm");
+  const searchInput = $("#searchInput");
 
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
@@ -56,7 +64,6 @@
     root.setAttribute("data-theme", theme);
     localStorage.setItem("bausen_theme", theme);
     setThemeIcon(theme);
-
     window.setTimeout(() => root.classList.remove("theme-transition"), 380);
   }
 
@@ -65,8 +72,7 @@
     applyTheme(current === "dark" ? "light" : "dark");
   }
 
-  const savedTheme = localStorage.getItem("bausen_theme") || "dark";
-  applyTheme(savedTheme);
+  applyTheme(localStorage.getItem("bausen_theme") || "dark");
 
   if (themeToggle) themeToggle.addEventListener("click", toggleTheme);
   if (mobileTheme) mobileTheme.addEventListener("click", toggleTheme);
@@ -95,7 +101,7 @@
     $$(".lang__item", langList).forEach((item) => {
       item.addEventListener("click", () => {
         const code = item.dataset.lang || "ES";
-        langCode.textContent = code;
+        if (langCode) langCode.textContent = code;
 
         $$(".lang__item", langList).forEach((i) => i.setAttribute("aria-selected", "false"));
         item.setAttribute("aria-selected", "true");
@@ -111,7 +117,7 @@
     });
 
     const savedLang = localStorage.getItem("bausen_lang");
-    if (savedLang) {
+    if (savedLang && langCode) {
       langCode.textContent = savedLang;
       $$(".lang__item", langList).forEach((i) => {
         i.setAttribute("aria-selected", String(i.dataset.lang === savedLang));
@@ -153,8 +159,59 @@
   if (menuClose) menuClose.addEventListener("click", closeMenu);
   if (mobileOverlay) mobileOverlay.addEventListener("click", closeMenu);
 
+  // =========================
+  // Newsletter modal
+  // =========================
+  function openModal() {
+    if (!newsletterModal) return;
+    newsletterModal.classList.add("is-open");
+    newsletterModal.setAttribute("aria-hidden", "false");
+    lockScroll(true);
+    setTimeout(() => $("#nlName")?.focus(), 60);
+  }
+
+  function closeModal() {
+    if (!newsletterModal) return;
+    newsletterModal.classList.remove("is-open");
+    newsletterModal.setAttribute("aria-hidden", "true");
+    lockScroll(false);
+  }
+
+  if (openNewsletter) openNewsletter.addEventListener("click", openModal);
+
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    if (!(t instanceof HTMLElement)) return;
+    if (t.matches('[data-close="modal"]') || t.closest('[data-close="modal"]')) closeModal();
+  });
+
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!newsletterStatus) return;
+
+      newsletterStatus.textContent = "Procesando suscripción...";
+      newsletterStatus.style.color = "";
+
+      // TODO: Integrar backend real: POST /api/newsletter {name,email}
+      await new Promise((r) => setTimeout(r, 650));
+
+      newsletterStatus.textContent = "Listo. Suscripción registrada (demo).";
+      newsletterStatus.style.color = "currentColor";
+
+      setTimeout(() => {
+        closeModal();
+        newsletterForm.reset();
+        newsletterStatus.textContent = "";
+      }, 950);
+    });
+  }
+
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeMenu();
+    if (e.key === "Escape") {
+      closeMenu();
+      closeModal();
+    }
   });
 
   // =========================
@@ -175,54 +232,68 @@
       },
       { threshold: 0.18, rootMargin: "0px 0px -6% 0px" }
     );
-
     revealEls.forEach((el) => io.observe(el));
   } else {
     $$(".reveal").forEach((el) => el.classList.add("is-in"));
   }
 
   // =========================
-  // KPI count-up
+  // Buscador (estructura lista para lógica futura)
   // =========================
-  function animateCount(el, to, duration = 900) {
-    const start = performance.now();
-    const from = 0;
+  if (searchForm && searchInput) {
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
 
-    function frame(now) {
-      const t = clamp((now - start) / duration, 0, 1);
-      const eased = 1 - Math.pow(1 - t, 3);
-      const val = Math.round(from + (to - from) * eased);
-      el.textContent = String(val);
-      if (t < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
+      const q = (searchInput.value || "").trim();
 
-  const kpiNums = $$(".kpi__num[data-count]");
-  if (kpiNums.length) {
-    const ioKpi = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target;
-          const to = parseInt(el.getAttribute("data-count"), 10) || 0;
-          animateCount(el, to, 850);
-          ioKpi.unobserve(el);
-        });
-      },
-      { threshold: 0.35 }
-    );
+      // Hook futuro:
+      // - cuando exista backend: GET /api/news?q=...
+      // - o filtrar un array local de noticias.
+      // Por ahora solo deja la UX lista sin romper estructura.
+      if (!q) {
+        searchInput.focus();
+        return;
+      }
 
-    kpiNums.forEach((el) => ioKpi.observe(el));
+      // Demo: feedback no intrusivo
+      searchInput.blur();
+      // Si quieres, aquí puedes abrir un toast o hacer scroll a "Noticias Más Recientes".
+      document.getElementById("recientes")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
 
   // =========================
-  // Header height -> CSS var
+  // Hover 3D real (tilt) para las 3 cards de categoría
+  // =========================
+  function attachTilt(el) {
+    const strength = 10; // sutil
+    const lift = 6;      // elevación al hover
+
+    el.addEventListener("mousemove", (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+
+      const rx = (0.5 - py) * strength;
+      const ry = (px - 0.5) * strength;
+
+      el.style.transform = `translateY(-${lift}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    });
+
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "";
+    });
+  }
+
+  if (!prefersReduced && window.matchMedia("(min-width: 980px)").matches) {
+    $$(".cat-card").forEach(attachTilt);
+  }
+
+  // =========================
+  // Header measurement
   // =========================
   measureHeader();
-
   const ro = new ResizeObserver(() => measureHeader());
   if (header) ro.observe(header);
-
   window.addEventListener("resize", () => measureHeader());
 })();
