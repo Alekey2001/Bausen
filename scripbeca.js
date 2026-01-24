@@ -1,1242 +1,1057 @@
-/**
- * BAUSEN - Script principal del sitio web corporativo
- * @version 1.1.0
- * @description Maneja navegación, animaciones, Three.js, efectos 3D y formularios
- */
+/* scripbeca.js — BAUSEN (compatible con tu HTML/CSS actual)
+   Incluye:
+   - Loader (con failsafe)
+   - Tema (persistente)
+   - Idioma (dropdown + select móvil, persistente)
+   - Menú móvil (overlay + ESC + bloqueo scroll)
+   - Active link por data-page (corrige indexbeca/index)
+   - Año en footer
+   - Reveal on scroll (data-animate + data-delay)
+   - Scroll indicator (baja a la siguiente sección real)
+   - Cursor custom (desktop) + estados hover/interactive
+   - Parallax hero (media-card + orbs)
+   - Tabs Training Center (3 panels + dots)
+   - Carrusel Reconocimientos (scroll + drag + indicadores clic + auto update)
+   - Botón “Reintentar” del mapa (UI)
+   - Formulario contacto (validación simple + status)
+*/
 
-// ============================================
-// 1. CONFIGURACIÓN Y VARIABLES GLOBALES
-// ============================================
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Estado global de la aplicación
-    const AppState = {
-        isMenuOpen: false,
-        isThreeJSInitialized: false,
-        isWebGLSupported: true,
-        scrollPosition: 0,
-        windowWidth: window.innerWidth,
-        windowHeight: window.innerHeight,
-        lastToggleTime: 0
-    };
-    
-    // Elementos del DOM
-    const DOM = {
-        // Header y navegación
-        header: document.getElementById('mainHeader'),
-        nav: document.getElementById('mainNav'),
-        menuToggle: document.getElementById('menuToggle'),
-        navLinks: document.querySelectorAll('.nav-link'),
-        navList: document.querySelector('.nav-list'),
-        navOverlay: document.getElementById('navOverlay'),
-        
-        // Three.js
-        threeContainer: document.getElementById('threejs-container'),
-        threeCanvas: document.getElementById('threejs-canvas'),
-        webglFallback: document.querySelector('.webgl-fallback'),
-        
-        // Formularios
-        contactForm: document.getElementById('contactForm'),
-        formMessage: document.getElementById('formMessage'),
-        submitText: document.getElementById('submitText'),
-        submitSpinner: document.getElementById('submitSpinner'),
-        
-        // Footer
-        currentYear: document.getElementById('currentYear')
-    };
-    
-    // Instancias de Three.js
-    let ThreeScene = {
-        scene: null,
-        camera: null,
-        renderer: null,
-        meshes: [],
-        lights: [],
-        clock: null,
-        animationId: null
-    };
-    
-    // ============================================
-    // 2. DETECCIÓN DE WEBGL Y COMPATIBILIDAD
-    // ============================================
-    
-    /**
-     * Detecta si el navegador soporta WebGL
-     * @returns {boolean} True si WebGL está disponible
-     */
-    function detectWebGL() {
-        try {
-            const canvas = document.createElement('canvas');
-            const contexts = ['webgl', 'experimental-webgl', 'webgl2'];
-            
-            for (let i = 0; i < contexts.length; i++) {
-                try {
-                    if (canvas.getContext(contexts[i])) {
-                        return true;
-                    }
-                } catch (e) {
-                    continue;
-                }
-            }
-        } catch (e) {
-            console.warn('WebGL no disponible:', e.message);
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Configura el fallback para dispositivos sin WebGL
-     */
-    function setupWebGLFallback() {
-        if (!AppState.isWebGLSupported && DOM.webglFallback) {
-            DOM.threeCanvas.style.display = 'none';
-            DOM.webglFallback.style.zIndex = '1';
-            
-            // Activar animaciones CSS en el fallback
-            const fallbackElements = document.querySelectorAll('.fallback-geometric');
-            fallbackElements.forEach(el => {
-                el.style.animationPlayState = 'running';
-            });
-        }
-    }
-    
-    // ============================================
-    // 3. THREE.JS - ESCENA 3D CORPORATIVA
-    // ============================================
-    
-    /**
-     * Inicializa la escena 3D con Three.js
-     */
-    function initThreeJS() {
-        // Verificar si Three.js está disponible
-        if (typeof THREE === 'undefined') {
-            console.error('Three.js no está cargado');
-            AppState.isWebGLSupported = false;
-            setupWebGLFallback();
-            return;
-        }
-        
-        // Verificar soporte de WebGL
-        AppState.isWebGLSupported = detectWebGL();
-        if (!AppState.isWebGLSupported) {
-            setupWebGLFallback();
-            return;
-        }
-        
-        // Dimensiones del canvas
-        const width = DOM.threeContainer.clientWidth;
-        const height = DOM.threeContainer.clientHeight;
-        
-        // 1. ESCENA
-        ThreeScene.scene = new THREE.Scene();
-        ThreeScene.scene.background = null;
-        ThreeScene.scene.fog = new THREE.Fog(0x1a56db, 10, 25);
-        
-        // 2. CÁMARA
-        ThreeScene.camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-        ThreeScene.camera.position.set(0, 0, 8);
-        
-        // 3. RENDERER
-        ThreeScene.renderer = new THREE.WebGLRenderer({
-            canvas: DOM.threeCanvas,
-            antialias: true,
-            alpha: true,
-            powerPreference: 'high-performance'
-        });
-        
-        ThreeScene.renderer.setSize(width, height);
-        ThreeScene.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        ThreeScene.renderer.shadowMap.enabled = false;
-        ThreeScene.renderer.outputEncoding = THREE.sRGBEncoding;
-        
-        // 4. ILUMINACIÓN
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        ThreeScene.scene.add(ambientLight);
-        ThreeScene.lights.push(ambientLight);
-        
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(5, 5, 5);
-        ThreeScene.scene.add(directionalLight);
-        ThreeScene.lights.push(directionalLight);
-        
-        const fillLight = new THREE.DirectionalLight(0x3b82f6, 0.3);
-        fillLight.position.set(-5, -3, -5);
-        ThreeScene.scene.add(fillLight);
-        ThreeScene.lights.push(fillLight);
-        
-        // 5. GEOMETRÍAS CORPORATIVAS ABSTRACTAS
-        const geometries = [
-            new THREE.BoxGeometry(1.2, 1.2, 1.2, 2, 2, 2),
-            new THREE.IcosahedronGeometry(1, 0),
-            new THREE.TorusGeometry(0.8, 0.3, 16, 32),
-            new THREE.OctahedronGeometry(1, 0),
-            new THREE.DodecahedronGeometry(1, 0)
-        ];
-        
-        const material = new THREE.MeshPhysicalMaterial({
-            color: 0x1a56db,
-            metalness: 0.4,
-            roughness: 0.2,
-            clearcoat: 0.5,
-            clearcoatRoughness: 0.1,
-            transparent: true,
-            opacity: 0.9,
-            side: THREE.DoubleSide
-        });
-        
-        const accentMaterial = new THREE.MeshPhysicalMaterial({
-            color: 0x8b5cf6,
-            metalness: 0.5,
-            roughness: 0.3,
-            transparent: true,
-            opacity: 0.8,
-            side: THREE.DoubleSide
-        });
-        
-        const meshCount = AppState.windowWidth < 768 ? 4 : 6;
-        
-        for (let i = 0; i < meshCount; i++) {
-            const geometry = geometries[i % geometries.length];
-            const meshMaterial = i % 3 === 0 ? accentMaterial : material;
-            const mesh = new THREE.Mesh(geometry, meshMaterial);
-            
-            const angle = (i / meshCount) * Math.PI * 2;
-            const radius = 3 + Math.random() * 2;
-            
-            mesh.position.x = Math.cos(angle) * radius;
-            mesh.position.y = (Math.random() - 0.5) * 2;
-            mesh.position.z = Math.sin(angle) * radius;
-            
-            mesh.rotation.x = Math.random() * Math.PI;
-            mesh.rotation.y = Math.random() * Math.PI;
-            mesh.rotation.z = Math.random() * Math.PI;
-            
-            const scale = 0.6 + Math.random() * 0.4;
-            mesh.scale.set(scale, scale, scale);
-            
-            mesh.userData = {
-                speed: 0.2 + Math.random() * 0.3,
-                rotationSpeed: {
-                    x: (Math.random() - 0.5) * 0.005,
-                    y: (Math.random() - 0.5) * 0.005,
-                    z: (Math.random() - 0.5) * 0.005
-                },
-                floatAmplitude: 0.05 + Math.random() * 0.1,
-                floatSpeed: 0.5 + Math.random() * 0.5,
-                originalY: mesh.position.y,
-                pulseSpeed: 0.5 + Math.random() * 1,
-                pulsePhase: Math.random() * Math.PI * 2
-            };
-            
-            ThreeScene.scene.add(mesh);
-            ThreeScene.meshes.push(mesh);
-        }
-        
-        // 6. RELOJ PARA ANIMACIONES
-        ThreeScene.clock = new THREE.Clock();
-        
-        // 7. INICIAR ANIMACIÓN
-        animateThreeJS();
-        
-        // 8. MANEJAR REDIMENSIONAMIENTO
-        window.addEventListener('resize', handleThreeJSResize);
-        
-        AppState.isThreeJSInitialized = true;
-        console.log('Three.js inicializado correctamente');
-    }
-    
-    /**
-     * Maneja el redimensionamiento de la ventana para Three.js
-     */
-    function handleThreeJSResize() {
-        if (!AppState.isThreeJSInitialized || !AppState.isWebGLSupported) return;
-        
-        const width = DOM.threeContainer.clientWidth;
-        const height = DOM.threeContainer.clientHeight;
-        
-        ThreeScene.camera.aspect = width / height;
-        ThreeScene.camera.updateProjectionMatrix();
-        ThreeScene.renderer.setSize(width, height);
-        
-        if (AppState.windowWidth < 768) {
-            ThreeScene.renderer.setPixelRatio(1);
-        } else {
-            ThreeScene.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        }
-    }
-    
-    /**
-     * Bucle de animación de Three.js
-     */
-    function animateThreeJS() {
-        if (!AppState.isThreeJSInitialized || !AppState.isWebGLSupported) return;
-        
-        ThreeScene.animationId = requestAnimationFrame(animateThreeJS);
-        
-        const delta = ThreeScene.clock.getDelta();
-        const time = ThreeScene.clock.getElapsedTime();
-        
-        // Animar cada malla
-        ThreeScene.meshes.forEach((mesh, index) => {
-            mesh.rotation.x += mesh.userData.rotationSpeed.x;
-            mesh.rotation.y += mesh.userData.rotationSpeed.y;
-            mesh.rotation.z += mesh.userData.rotationSpeed.z;
-            
-            mesh.position.y = mesh.userData.originalY + 
-                Math.sin(time * mesh.userData.floatSpeed + index) * 
-                mesh.userData.floatAmplitude;
-            
-            const pulse = Math.sin(time * mesh.userData.pulseSpeed + mesh.userData.pulsePhase) * 0.05;
-            mesh.scale.setScalar(0.8 + pulse);
-            
-            const orbitSpeed = mesh.userData.speed * 0.001;
-            mesh.position.x = Math.cos(time * orbitSpeed + index) * (3 + index * 0.3);
-            mesh.position.z = Math.sin(time * orbitSpeed + index) * (3 + index * 0.3);
-        });
-        
-        const scrollEffect = AppState.scrollPosition * 0.0001;
-        ThreeScene.camera.position.x = Math.sin(time * 0.1) * 0.5 + scrollEffect * 2;
-        ThreeScene.camera.position.y = Math.cos(time * 0.05) * 0.3;
-        ThreeScene.camera.lookAt(ThreeScene.scene.position);
-        
-        ThreeScene.renderer.render(ThreeScene.scene, ThreeScene.camera);
-    }
-    
-    /**
-     * Limpia los recursos de Three.js
-     */
-    function cleanupThreeJS() {
-        if (ThreeScene.animationId) {
-            cancelAnimationFrame(ThreeScene.animationId);
-        }
-        
-        if (ThreeScene.renderer) {
-            ThreeScene.renderer.dispose();
-        }
-        
-        ThreeScene.meshes.forEach(mesh => {
-            if (mesh.geometry) mesh.geometry.dispose();
-            if (mesh.material) {
-                if (Array.isArray(mesh.material)) {
-                    mesh.material.forEach(material => material.dispose());
-                } else {
-                    mesh.material.dispose();
-                }
-            }
-        });
-        
-        ThreeScene.lights.forEach(light => {
-            if (light.dispose) light.dispose();
-        });
-        
-        ThreeScene.scene = null;
-        ThreeScene.camera = null;
-        ThreeScene.renderer = null;
-        ThreeScene.meshes = [];
-        ThreeScene.lights = [];
-        
-        AppState.isThreeJSInitialized = false;
-    }
-    
-    // ============================================
-    // 4. ANIMACIONES 3D PARA TARJETAS
-    // ============================================
-    
-    /**
-     * Inicializa efectos 3D para tarjetas de servicios y diferenciadores
-     */
-    function init3DCardEffects() {
-        const serviceCards = document.querySelectorAll('.service-card-3d');
-        const differentiatorCards = document.querySelectorAll('.differentiator-card-3d');
-        
-        // Verificar si el dispositivo soporta hover (no es táctil)
-        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        
-        if (isTouchDevice) {
-            console.log('Dispositivo táctil detectado - Efectos 3D optimizados para touch');
-            initTouchCardEffects(serviceCards, differentiatorCards);
-        } else {
-            console.log('Dispositivo no táctil - Activando efectos 3D completos');
-            initDesktopCardEffects(serviceCards, differentiatorCards);
-        }
-        
-        // Mejorar accesibilidad
-        enhanceCardAccessibility();
-    }
-    
-    /**
-     * Efectos 3D para desktop (con seguimiento de cursor)
-     */
-    function initDesktopCardEffects(serviceCards, differentiatorCards) {
-        const cards = [...serviceCards, ...differentiatorCards];
-        
-        cards.forEach(card => {
-            const wrapper = card.closest('.card-3d-wrapper');
-            if (!wrapper) return;
-            
-            let isActive = false;
-            let currentX = 0;
-            let currentY = 0;
-            let targetX = 0;
-            let targetY = 0;
-            
-            // Smooth animation loop
-            function animate() {
-                // Suavizar el movimiento (lerp)
-                currentX += (targetX - currentX) * 0.15;
-                currentY += (targetY - currentY) * 0.15;
-                
-                // Aplicar transformación
-                const transform = `
-                    rotateX(${currentY}deg) 
-                    rotateY(${currentX}deg) 
-                    translateZ(${isActive ? '20px' : '0'})
-                `;
-                
-                card.style.transform = transform;
-                
-                // Continuar animación si es necesario
-                if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
-                    requestAnimationFrame(animate);
-                }
-            }
-            
-            // Iniciar loop de animación
-            animate();
-            
-            // Event listeners
-            wrapper.addEventListener('mouseenter', () => {
-                isActive = true;
-                card.style.transition = 'transform 0.3s ease-out';
-            });
-            
-            wrapper.addEventListener('mouseleave', () => {
-                isActive = false;
-                targetX = 0;
-                targetY = 0;
-                card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-            });
-            
-            wrapper.addEventListener('mousemove', (e) => {
-                if (!isActive) return;
-                
-                const rect = wrapper.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                // Normalizar coordenadas (-1 a 1)
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                // Calcular rotación (máximo 5 grados)
-                targetX = ((x - centerX) / centerX) * 5;
-                targetY = ((centerY - y) / centerY) * -5;
-                
-                // Iniciar animación si no está corriendo
-                if (Math.abs(targetX - currentX) > 0.5 || Math.abs(targetY - currentY) > 0.5) {
-                    requestAnimationFrame(animate);
-                }
-            });
-            
-            // Asegurar que la tarjeta vuelva a su estado original
-            wrapper.addEventListener('mouseleave', () => {
-                targetX = 0;
-                targetY = 0;
-            });
-        });
-    }
-    
-    /**
-     * Efectos optimizados para dispositivos táctiles
-     */
-    function initTouchCardEffects(serviceCards, differentiatorCards) {
-        const cards = [...serviceCards, ...differentiatorCards];
-        
-        cards.forEach(card => {
-            const wrapper = card.closest('.card-3d-wrapper');
-            if (!wrapper) return;
-            
-            let touchStartY = 0;
-            let isPressed = false;
-            
-            // Touch events
-            wrapper.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                touchStartY = e.touches[0].clientY;
-                isPressed = true;
-                
-                card.style.transition = 'transform 0.2s ease-out';
-                card.style.transform = 'translateY(-8px) translateZ(10px) scale(0.98)';
-                
-                // Feedback táctil (si está disponible)
-                if (navigator.vibrate) {
-                    navigator.vibrate(10);
-                }
-            }, { passive: false });
-            
-            wrapper.addEventListener('touchend', () => {
-                isPressed = false;
-                card.style.transition = 'transform 0.3s ease-out';
-                card.style.transform = 'translateY(0) translateZ(0) scale(1)';
-            });
-            
-            wrapper.addEventListener('touchmove', (e) => {
-                if (!isPressed) return;
-                
-                const touchY = e.touches[0].clientY;
-                const deltaY = touchStartY - touchY;
-                
-                // Efecto sutil basado en el movimiento
-                const intensity = Math.min(Math.abs(deltaY) / 100, 0.5);
-                const direction = deltaY > 0 ? -1 : 1;
-                
-                card.style.transform = `translateY(${-8 + intensity * 5}px) 
-                                       translateZ(${10 + intensity * 5}px) 
-                                       rotateX(${direction * intensity * 3}deg) 
-                                       scale(${0.98 - intensity * 0.05})`;
-            });
-            
-            // Click como fallback
-            wrapper.addEventListener('click', () => {
-                // Efecto de pulso
-                card.style.transition = 'transform 0.2s ease-out';
-                card.style.transform = 'translateY(-4px) translateZ(5px) scale(0.99)';
-                
-                setTimeout(() => {
-                    card.style.transition = 'transform 0.3s ease-out';
-                    card.style.transform = 'translateY(0) translateZ(0) scale(1)';
-                }, 200);
-            });
-        });
-    }
-    
-    /**
-     * Mejora la accesibilidad de las tarjetas 3D
-     */
-    function enhanceCardAccessibility() {
-        const cards = document.querySelectorAll('.service-card-3d, .differentiator-card-3d');
-        
-        cards.forEach(card => {
-            // Asegurar que las tarjetas sean focusables
-            card.setAttribute('tabindex', '0');
-            
-            // Efectos de teclado
-            card.addEventListener('focus', () => {
-                card.style.outline = '2px solid var(--color-primary)';
-                card.style.outlineOffset = '4px';
-            });
-            
-            card.addEventListener('blur', () => {
-                card.style.outline = 'none';
-            });
-            
-            card.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    
-                    // Simular click en el enlace principal de la tarjeta
-                    const link = card.querySelector('a');
-                    if (link) {
-                        link.click();
-                    }
-                    
-                    // Efecto visual de activación
-                    card.style.transition = 'transform 0.2s ease-out';
-                    card.style.transform = 'translateY(-8px) translateZ(10px)';
-                    
-                    setTimeout(() => {
-                        card.style.transition = 'transform 0.3s ease-out';
-                        card.style.transform = 'translateY(0) translateZ(0)';
-                    }, 200);
-                }
-            });
-        });
-    }
-    
-    // ============================================
-    // 5. NAVEGACIÓN Y HEADER
-    // ============================================
-    
-    /**
-     * Maneja el comportamiento del header al hacer scroll
-     */
-    function handleScroll() {
-        AppState.scrollPosition = window.scrollY || document.documentElement.scrollTop;
-        
-        // Header sticky con efecto
-        if (AppState.scrollPosition > 100) {
-            DOM.header.classList.add('scrolled');
-        } else {
-            DOM.header.classList.remove('scrolled');
-        }
-        
-        // Actualizar enlace activo en navegación
-        updateActiveNavLink();
-    }
-    
-    /**
-     * Actualiza el enlace de navegación activo basado en scroll
-     */
-    function updateActiveNavLink() {
-        const sections = document.querySelectorAll('section[id]');
-        const scrollPos = AppState.scrollPosition + 100;
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                DOM.navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${sectionId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-    }
-    
-    /**
-     * Alternar menú móvil
-     */
-    function toggleMobileMenu() {
-        // Debounce rapid triggers to avoid double-toggle from multiple event types
-        const now = Date.now();
-        if (now - AppState.lastToggleTime < 300) return;
-        AppState.lastToggleTime = now;
+  /* =========================
+     Helpers
+  ========================= */
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-        AppState.isMenuOpen = !AppState.isMenuOpen;
-        DOM.nav.classList.toggle('active');
-        DOM.menuToggle.classList.toggle('active');
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
 
-        // Activar / desactivar overlay si existe
-        if (DOM.navOverlay) {
-            DOM.navOverlay.classList.toggle('active');
-            DOM.navOverlay.setAttribute('aria-hidden', String(!AppState.isMenuOpen));
-        }
+  const storage = {
+    get(key, fallback = null) {
+      try {
+        const v = localStorage.getItem(key);
+        return v === null ? fallback : v;
+      } catch {
+        return fallback;
+      }
+    },
+    set(key, val) {
+      try {
+        localStorage.setItem(key, String(val));
+      } catch {}
+    },
+  };
 
-        // Bloquear scroll del body cuando el menú está abierto
-        document.body.style.overflow = AppState.isMenuOpen ? 'hidden' : '';
+  /* =========================
+     Elements
+  ========================= */
+  // Loader / Theme
+  const pageLoader = $("#page-loader");
+  const themeToggle = $("#theme-toggle");
 
-        // Actualizar aria-expanded y aria-label para accesibilidad
-        const isExpanded = DOM.nav.classList.contains('active');
-        DOM.menuToggle.setAttribute('aria-expanded', isExpanded);
-        DOM.menuToggle.setAttribute('aria-label', isExpanded ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
-    }
-    
-    /**
-     * Cierra el menú móvil
-     */
-    function closeMobileMenu() {
-        if (!AppState.isMenuOpen) return;
-        
-        AppState.isMenuOpen = false;
-        DOM.nav.classList.remove('active');
-        DOM.menuToggle.classList.remove('active');
-        document.body.style.overflow = '';
-        DOM.menuToggle.setAttribute('aria-expanded', 'false');
-        DOM.menuToggle.setAttribute('aria-label', 'Abrir menú de navegación');
+  // Language
+  const languageBtn = $("#language-btn");
+  const languageDropdown = $("#language-dropdown");
+  const languageOptions = $$(".language-option");
+  const languageCode = $("#language-code");
+  const mobileLanguageSelect = $("#mobile-language-select");
 
-        if (DOM.navOverlay) {
-            DOM.navOverlay.classList.remove('active');
-            DOM.navOverlay.setAttribute('aria-hidden', 'true');
-        }
-    }
-    
-    /**
-     * Inicializa el scroll suave para enlaces internos
-     */
-    function initSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                
-                if (href === '#') return;
-                
-                const targetElement = document.querySelector(href);
-                if (targetElement) {
-                    e.preventDefault();
-                    
-                    // Cerrar menú móvil si está abierto
-                    closeMobileMenu();
-                    
-                    // Scroll suave al elemento
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    }
-    
-    // ============================================
-    // 6. FORMULARIO DE CONTACTO
-    // ============================================
-    
-    /**
-     * Valida un campo de formulario
-     * @param {HTMLElement} field - Campo a validar
-     * @returns {Object} Resultado de validación
-     */
-    function validateField(field) {
-        const value = field.value.trim();
-        const type = field.type;
-        const name = field.name;
-        const isRequired = field.required;
-        
-        // Validar campo requerido
-        if (isRequired && !value) {
-            return {
-                isValid: false,
-                message: 'Este campo es obligatorio'
-            };
-        }
-        
-        // Validaciones específicas por tipo
-        switch (name) {
-            case 'email':
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (value && !emailRegex.test(value)) {
-                    return {
-                        isValid: false,
-                        message: 'Por favor, introduce un email válido'
-                    };
-                }
-                break;
-                
-            case 'phone':
-                const phoneRegex = /^[\+]?[0-9\s\-\(\)]+$/;
-                if (value && !phoneRegex.test(value)) {
-                    return {
-                        isValid: false,
-                        message: 'Por favor, introduce un teléfono válido'
-                    };
-                }
-                break;
-                
-            case 'message':
-                if (value.length < 10) {
-                    return {
-                        isValid: false,
-                        message: 'Por favor, proporciona más detalles (mínimo 10 caracteres)'
-                    };
-                }
-                break;
-        }
-        
-        return { isValid: true, message: '' };
-    }
-    
-    /**
-     * Muestra un error en un campo del formulario
-     * @param {HTMLElement} field - Campo con error
-     * @param {string} message - Mensaje de error
-     */
-    function showFieldError(field, message) {
-        const errorElement = document.getElementById(`${field.name}Error`);
-        if (errorElement) {
-            errorElement.textContent = message;
-            field.classList.add('error');
-        }
-    }
-    
-    /**
-     * Limpia los errores de un campo del formulario
-     * @param {HTMLElement} field - Campo a limpiar
-     */
-    function clearFieldError(field) {
-        const errorElement = document.getElementById(`${field.name}Error`);
-        if (errorElement) {
-            errorElement.textContent = '';
-            field.classList.remove('error');
-        }
-    }
-    
-    /**
-     * Muestra un mensaje de formulario
-     * @param {string} message - Mensaje a mostrar
-     * @param {string} type - Tipo de mensaje (success/error)
-     */
-    function showFormMessage(message, type) {
-        DOM.formMessage.textContent = message;
-        DOM.formMessage.className = `form-message ${type}`;
-        DOM.formMessage.classList.remove('hidden');
-        
-        // Scroll al mensaje
-        DOM.formMessage.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-        });
-        
-        // Ocultar después de 5 segundos
-        if (type === 'success') {
-            setTimeout(() => {
-                DOM.formMessage.classList.add('hidden');
-            }, 5000);
-        }
-    }
-    
-    /**
-     * Maneja el envío del formulario de contacto
-     * @param {Event} e - Evento de envío
-     */
-    async function handleFormSubmit(e) {
-        e.preventDefault();
-        
-        // Validar todos los campos
-        const fields = DOM.contactForm.querySelectorAll('input, select, textarea');
-        let isValid = true;
-        
-        fields.forEach(field => {
-            const validation = validateField(field);
-            if (!validation.isValid) {
-                showFieldError(field, validation.message);
-                isValid = false;
-            } else {
-                clearFieldError(field);
-            }
-        });
-        
-        if (!isValid) {
-            showFormMessage('Por favor, corrige los errores en el formulario', 'error');
-            return;
-        }
-        
-        // Mostrar estado de carga
-        DOM.submitText.textContent = 'Enviando...';
-        DOM.submitSpinner.classList.remove('hidden');
-        
-        try {
-            // Simular envío (en producción, reemplazar con fetch real)
-            await simulateFormSubmit();
-            
-            // Éxito
-            showFormMessage('¡Mensaje enviado con éxito! Te contactaremos en menos de 24 horas.', 'success');
-            DOM.contactForm.reset();
-            
-        } catch (error) {
-            // Error
-            showFormMessage('Hubo un error al enviar el mensaje. Por favor, intenta de nuevo.', 'error');
-            console.error('Error en envío de formulario:', error);
-            
-        } finally {
-            // Restaurar estado normal
-            DOM.submitText.textContent = 'Enviar solicitud';
-            DOM.submitSpinner.classList.add('hidden');
-        }
-    }
-    
-    /**
-     * Simula el envío del formulario
-     * @returns {Promise} Promesa que simula una petición
-     */
-    function simulateFormSubmit() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                // Simular éxito 90% de las veces
-                Math.random() > 0.1 ? resolve() : reject(new Error('Error de servidor simulado'));
-            }, 1500);
-        });
-    }
-    
-    /**
-     * Inicializa la validación en tiempo real
-     */
-    function initFormValidation() {
-        const fields = DOM.contactForm.querySelectorAll('input, select, textarea');
-        
-        fields.forEach(field => {
-            // Validar al perder el foco
-            field.addEventListener('blur', () => {
-                const validation = validateField(field);
-                if (!validation.isValid) {
-                    showFieldError(field, validation.message);
-                } else {
-                    clearFieldError(field);
-                }
-            });
-            
-            // Limpiar error al empezar a escribir
-            field.addEventListener('input', () => {
-                clearFieldError(field);
-            });
-        });
-    }
-    
-    // ============================================
-    // 7. ANIMACIONES Y EFECTOS
-    // ============================================
-    
-    /**
-     * Inicializa animaciones al hacer scroll
-     */
-    function initScrollAnimations() {
-        // Configurar observador de intersección
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Añadir clase para animación
-                    entry.target.classList.add('animate-in');
-                    
-                    // Opcional: dejar de observar después de animar
-                    // observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        
-        // Observar elementos que deben animarse
-        const animateElements = document.querySelectorAll(
-            '.service-card, .differentiator-card, .process-step'
-        );
-        
-        animateElements.forEach((el, index) => {
-            // Añadir retardo escalonado
-            el.style.transitionDelay = `${index * 0.1}s`;
-            observer.observe(el);
-        });
-    }
-    
-    /**
-     * Actualiza el año actual en el footer
-     */
-    function updateCurrentYear() {
-        if (DOM.currentYear) {
-            DOM.currentYear.textContent = new Date().getFullYear();
-        }
-    }
-    
-    // ============================================
-    // 8. MANEJO DE REDIMENSIONAMIENTO
-    // ============================================
-    
-    /**
-     * Maneja el redimensionamiento de la ventana
-     */
-    function handleResize() {
-        AppState.windowWidth = window.innerWidth;
-        AppState.windowHeight = window.innerHeight;
-        
-        // Cerrar menú móvil en pantallas grandes
-        if (AppState.windowWidth > 768 && AppState.isMenuOpen) {
-            closeMobileMenu();
-        }
-        
-        // Reconfigurar Three.js en cambio de tamaño
-        if (AppState.isThreeJSInitialized) {
-            handleThreeJSResize();
-        }
-    }
-    
-    // ============================================
-    // 9. INICIALIZACIÓN PRINCIPAL
-    // ============================================
-    
-    /**
-     * Inicializa todos los módulos de la aplicación
-     */
-    function initApp() {
-        console.log('Inicializando BAUSEN...');
-        
-        // 1. Detectar WebGL
-        AppState.isWebGLSupported = detectWebGL();
-        
-        // 2. Inicializar Three.js (con retardo para priorizar contenido crítico)
-        if (AppState.isWebGLSupported) {
-            setTimeout(() => {
-                initThreeJS();
-            }, 500);
-        } else {
-            setupWebGLFallback();
-        }
-        
-        // 3. Configurar eventos de scroll
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Llamar inicialmente
-        
-        // 4. Configurar navegación
-        if (DOM.menuToggle) {
-            DOM.menuToggle.addEventListener('click', toggleMobileMenu);
-            
-            // Teclas Enter / Space para accesibilidad
-            DOM.menuToggle.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-                    e.preventDefault();
-                    toggleMobileMenu();
-                }
-            });
-        }
-        
-        // Cerrar menú al hacer clic en un enlace
-        DOM.navLinks.forEach(link => {
-            link.addEventListener('click', closeMobileMenu);
-        });
-        
-        // Cerrar menú al hacer clic fuera (overlay) o en cualquier clic fuera de nav/menu
-        if (DOM.navOverlay) {
-            DOM.navOverlay.addEventListener('click', closeMobileMenu);
-        }
+  // Mobile menu
+  // --- Cerrar menú al navegar y mantener la sección actual (sin saltos raros) ---
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    // cierra drawer
+    document.body.classList.remove('menu-open');
+    document.querySelector('.mobile-menu-overlay')?.classList.remove('show');
+    document.querySelector('.mobile-menu')?.classList.remove('open');
 
-        document.addEventListener('click', (e) => {
-            if (AppState.isMenuOpen && 
-                !DOM.nav.contains(e.target) && 
-                !DOM.menuToggle.contains(e.target) &&
-                (!DOM.navOverlay || !DOM.navOverlay.contains(e.target))) {
-                closeMobileMenu();
-            }
-        });
-
-        // NOTE: Removed click interception for `.service-request` anchors so native navigation works.
-        // Previous modal/prefill logic was removed to ensure links behave as normal <a href="..."> elements.
-        
-        // 5. Inicializar scroll suave
-        initSmoothScroll();
-
-        // Asegurar estado limpio de overlay/menú al iniciar
-        try {
-            if (DOM.navOverlay) {
-                DOM.navOverlay.classList.remove('active');
-                DOM.navOverlay.setAttribute('aria-hidden', 'true');
-                DOM.navOverlay.style.pointerEvents = 'none';
-            }
-
-            if (DOM.nav) DOM.nav.classList.remove('active');
-            if (DOM.menuToggle) {
-                DOM.menuToggle.classList.remove('active');
-                DOM.menuToggle.setAttribute('aria-expanded', 'false');
-                DOM.menuToggle.setAttribute('aria-label', 'Abrir menú de navegación');
-            }
-            document.body.style.overflow = '';
-        } catch (err) {
-            console.warn('Error limpiando estado inicial del menú:', err);
-        }
-
-        // Asegurar que los botones de servicios sean interactivamente clicables
-        try {
-            const serviceButtons = document.querySelectorAll('.service-cta a, .service-cta .btn');
-            serviceButtons.forEach(btn => {
-                btn.style.pointerEvents = 'auto';
-                btn.style.position = 'relative';
-                // set z-index above typical content but below overlays (use 1060)
-                btn.style.zIndex = '1060';
-            });
-        } catch (err) {
-            console.warn('Error asegurando interactividad botones servicios:', err);
-        }
-        
-        // 6. Configurar formulario
-        if (DOM.contactForm) {
-            initFormValidation();
-            DOM.contactForm.addEventListener('submit', handleFormSubmit);
-        }
-        
-        // 7. Inicializar animaciones 3D para tarjetas
-        setTimeout(() => {
-            init3DCardEffects();
-        }, 1000);
-        
-        // 8. Inicializar animaciones scroll
-        initScrollAnimations();
-        
-        // 9. Actualizar año actual
-        updateCurrentYear();
-        
-        // 10. Configurar redimensionamiento
-        window.addEventListener('resize', handleResize);
-        
-        // 11. Manejar tecla Escape para cerrar menú
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && AppState.isMenuOpen) {
-                closeMobileMenu();
-            }
-        });
-        
-        console.log('BAUSEN inicializado correctamente');
-    }
-    
-    /**
-     * Limpia todos los recursos antes de desmontar
-     */
-    function cleanupApp() {
-        // Limpiar Three.js
-        if (AppState.isThreeJSInitialized) {
-            cleanupThreeJS();
-        }
-        
-        // Remover event listeners
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleResize);
-        
-        if (DOM.menuToggle) {
-            DOM.menuToggle.removeEventListener('click', toggleMobileMenu);
-        }
-        
-        if (DOM.contactForm) {
-            DOM.contactForm.removeEventListener('submit', handleFormSubmit);
-        }
-        
-        console.log('BAUSEN limpiado correctamente');
-    }
-    
-    // ============================================
-    // 10. POLYFILLS Y COMPATIBILIDAD
-    // ============================================
-    
-    /**
-     * Aplica polyfills para navegadores antiguos
-     */
-    function applyPolyfills() {
-        // Polyfill para IntersectionObserver
-        if (!('IntersectionObserver' in window)) {
-            const script = document.createElement('script');
-            script.src = 'https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver';
-            document.head.appendChild(script);
-        }
-        
-        // Polyfill para smooth scroll
-        if (!('scrollBehavior' in document.documentElement.style)) {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js';
-            document.head.appendChild(script);
-        }
-    }
-    
-    // ============================================
-    // 11. INICIALIZACIÓN Y EJECUCIÓN
-    // ============================================
-    
-    // Aplicar polyfills si es necesario
-    applyPolyfills();
-    
-    // Inicializar aplicación cuando el DOM esté listo
-    initApp();
-    
-    // Limpiar al descargar la página
-    window.addEventListener('beforeunload', () => {
-        cleanupApp();
-    });
+    // actualiza aria
+    const btn = document.getElementById('menu-toggle');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  });
 });
-/**
- * ============================================
- * 12. GOOGLE MAPS - INICIALIZACIÓN Y CONFIGURACIÓN
- * ============================================
- */
 
-/**
- * Inicializa y configura el mapa de Google Maps
- */
-function initGoogleMaps() {
-    // Verificar si el elemento gmp-map existe
-    const mapElement = document.querySelector('gmp-map');
-    if (!mapElement) return;
-    
-    // Detectar si el navegador soporta Web Components (necesario para gmp-map)
-    if (!('customElements' in window)) {
-        showMapFallback();
-        return;
-    }
-    
-    // Configurar el mapa cuando la API esté lista
-    if (typeof google !== 'undefined' && google.maps) {
-        configureMap();
+// Evita que el botón hamburguesa haga “jump” si por error es un <a> o si hay default
+const menuBtn = document.getElementById('menu-toggle');
+if (menuBtn) {
+  menuBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+  });
+}
+
+
+  // Nav + footer year
+  const mainNavLinks = $$(".nav-link, .mobile-nav-link");
+  const currentYear = $("#current-year");
+
+  // Cursor
+  const cursorDot = $("#cursor-dot");
+  const cursorRing = $("#cursor-ring");
+
+  // Hero
+  const hero = $("#hero");
+  const mediaCard = $("#media-card");
+  const orb1 = $(".hero-orb-1");
+  const orb2 = $(".hero-orb-2");
+  const orb3 = $(".hero-orb-3");
+
+  // Scroll indicator
+  const scrollIndicator = $(".scroll-indicator");
+
+  // Training
+  const trainingRoot = $("#training");
+  const trainingTabs = trainingRoot ? $$(".training-tab", trainingRoot) : [];
+  const trainingPanels = trainingRoot ? $$(".training-panel", trainingRoot) : [];
+
+  // Awards
+  const awardsRoot = $("#awards");
+  const awardsTrack = awardsRoot ? $(".awards-track", awardsRoot) : null;
+  const awardCards = awardsTrack ? $$(".award-card", awardsTrack) : [];
+  const awardIndicators = awardsRoot ? $$(".award-indicator", awardsRoot) : [];
+
+  // Contact
+  const contactForm = $("#contactForm");
+  const formStatus = $("#formStatus");
+  const mapRetryBtn = $(".contact-map-retry");
+
+  /* =========================
+     Loader
+  ========================= */
+  function initLoader() {
+    if (!pageLoader) return;
+
+    // Bloquea scroll mientras carga
+    body.style.overflow = "hidden";
+
+    const hide = () => {
+      // Evita múltiples ejecuciones
+      if (pageLoader.classList.contains("hidden")) return;
+
+      // Transición suave: tu CSS maneja opacity/visibility
+      pageLoader.classList.add("hidden");
+      body.style.overflow = "";
+    };
+
+    // Si ya cargó, ocultar; si no, al load
+    if (document.readyState === "complete") {
+      setTimeout(hide, prefersReducedMotion ? 120 : 350);
     } else {
-        // Si la API no se carga, mostrar fallback después de 5 segundos
-        setTimeout(() => {
-            if (typeof google === 'undefined' || !google.maps) {
-                showMapFallback();
-            }
-        }, 5000);
+      window.addEventListener(
+        "load",
+        () => setTimeout(hide, prefersReducedMotion ? 120 : 350),
+        { once: true }
+      );
     }
-}
 
-/**
- * Configura las opciones del mapa
- */
-function configureMap() {
-    const mapElement = document.querySelector('gmp-map');
-    if (!mapElement || !mapElement.innerMap) return;
-    
-    const map = mapElement.innerMap;
-    
-    // Configurar controles del mapa
-    map.setOptions({
-        mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-            position: google.maps.ControlPosition.TOP_RIGHT
-        },
-        zoomControl: true,
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_CENTER
-        },
-        fullscreenControl: true,
-        streetViewControl: false,
-        rotateControl: false,
-        scaleControl: true,
-        gestureHandling: 'greedy' // Mejor experiencia táctil
-    });
-    
-    // Añadir evento click al marcador
-    const marker = document.querySelector('gmp-advanced-marker');
-    if (marker) {
-        marker.addEventListener('gmp-click', () => {
-            // Aquí puedes añadir funcionalidad cuando se hace clic en el marcador
-            console.log('Marcador de BAUSEN clickeado');
+    // Failsafe
+    setTimeout(hide, 3500);
+  }
+
+  /* =========================
+     Theme (persist)
+  ========================= */
+  function initTheme() {
+    const KEY = "theme"; // mantengo tu key existente
+
+    const apply = (mode) => {
+      const isDark = mode === "dark";
+      body.classList.toggle("theme-dark", isDark);
+      storage.set(KEY, isDark ? "dark" : "light");
+    };
+
+    // Load saved or OS preference
+    const saved = storage.get(KEY);
+    if (saved === "dark" || saved === "light") {
+      apply(saved);
+    } else {
+      const osDark = window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      apply(osDark ? "dark" : "light");
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const isDark = body.classList.contains("theme-dark");
+        apply(isDark ? "light" : "dark");
+      });
+    }
+  }
+
+  /* =========================
+     Language (persist)
+  ========================= */
+  function initLanguage() {
+    const KEY = "preferred-language"; // mantengo tu key existente
+
+    const setLang = (lang) => {
+      const safe = String(lang || "ES").toUpperCase();
+      storage.set(KEY, safe);
+      if (languageCode) languageCode.textContent = safe;
+      if (mobileLanguageSelect) mobileLanguageSelect.value = safe;
+    };
+
+    // init
+    setLang(storage.get(KEY, "ES"));
+
+    // Desktop dropdown
+    if (languageBtn && languageDropdown) {
+      const open = () => {
+        languageBtn.setAttribute("aria-expanded", "true");
+        languageDropdown.classList.add("show");
+      };
+      const close = () => {
+        languageBtn.setAttribute("aria-expanded", "false");
+        languageDropdown.classList.remove("show");
+      };
+      const toggle = () => {
+        const expanded = languageBtn.getAttribute("aria-expanded") === "true";
+        expanded ? close() : open();
+      };
+
+      languageBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggle();
+      });
+
+      languageOptions.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const lang = opt.getAttribute("data-lang") || "ES";
+          setLang(lang);
+          close();
         });
+      });
+
+      // Close outside + ESC
+      document.addEventListener("click", (e) => {
+        if (!languageDropdown.classList.contains("show")) return;
+        if (languageBtn.contains(e.target) || languageDropdown.contains(e.target)) return;
+        close();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
     }
-    
-    // Ajustar el mapa al redimensionar la ventana
-    window.addEventListener('resize', () => {
-        setTimeout(() => {
-            if (map && typeof map.fitBounds === 'function') {
-                google.maps.event.trigger(map, 'resize');
-            }
-        }, 300);
+
+    // Mobile select
+    if (mobileLanguageSelect) {
+      mobileLanguageSelect.addEventListener("change", (e) => setLang(e.target.value));
+    }
+  }
+
+ /* =========================
+   Mobile menu (FIX definitivo sin romper JS)
+========================= */
+function initMobileMenu() {
+  // Fallbacks: soporta IDs y clases alternas
+  const toggleBtn =
+    document.getElementById("menu-toggle") ||
+    document.querySelector(".menu-toggle") ||
+    document.querySelector(".nav__toggle");
+
+  const panel =
+    document.getElementById("mobile-menu") ||
+    document.querySelector(".mobile-menu") ||
+    document.querySelector(".nav__panel");
+
+  const overlay =
+    document.getElementById("mobile-menu-overlay") ||
+    document.querySelector(".mobile-menu-overlay") ||
+    document.querySelector(".nav__overlay");
+
+  const closeBtn =
+    document.getElementById("close-menu") ||
+    document.querySelector(".close-menu") ||
+    document.querySelector(".nav__close");
+
+  if (!toggleBtn || !panel || !overlay) return;
+
+  const bodyEl = document.body;
+  const rootEl = document.documentElement;
+
+  const setLocked = (locked) => {
+    // Scroll lock sólido
+    rootEl.style.overflow = locked ? "hidden" : "";
+    bodyEl.style.overflow = locked ? "hidden" : "";
+    bodyEl.classList.toggle("menu-open", locked);
+  };
+
+  const openMenu = () => {
+    panel.classList.add("open");
+    overlay.classList.add("show");
+    toggleBtn.setAttribute("aria-expanded", "true");
+    setLocked(true);
+
+    // focus primer link (accesibilidad)
+    window.setTimeout(() => {
+      const firstLink =
+        panel.querySelector(".mobile-nav-link") ||
+        panel.querySelector("a[href]") ||
+        panel.querySelector("button");
+      if (firstLink) firstLink.focus();
+    }, 80);
+  };
+
+  const closeMenuFn = () => {
+    panel.classList.remove("open");
+    overlay.classList.remove("show");
+    toggleBtn.setAttribute("aria-expanded", "false");
+    setLocked(false);
+
+    // regresa focus al botón
+    window.setTimeout(() => toggleBtn.focus(), 0);
+  };
+
+  const toggleMenu = (e) => {
+    if (e) e.preventDefault();
+    const isOpen = panel.classList.contains("open");
+    isOpen ? closeMenuFn() : openMenu();
+  };
+
+  // Limpia listeners duplicados si recargas scripts (defensivo)
+  toggleBtn.removeEventListener("click", toggleMenu);
+  toggleBtn.addEventListener("click", toggleMenu);
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMenuFn();
     });
-}
+  }
 
-/**
- * Muestra el fallback cuando el mapa no puede cargarse
- */
-function showMapFallback() {
-    const mapContainer = document.querySelector('.map-container');
-    if (mapContainer) {
-        mapContainer.classList.add('no-js');
+  overlay.addEventListener("click", closeMenuFn);
+
+  // Cierra al click en links del panel (solo si son links)
+  panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
+    el.addEventListener("click", () => closeMenuFn());
+  });
+
+  // ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
+  });
+
+  // Si pasa a desktop, cierra y limpia
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980 && panel.classList.contains("open")) {
+      closeMenuFn();
     }
+  });
 }
 
-/**
- * Carga la API de Google Maps de forma dinámica
- * Solo se ejecuta si no se detectó la API
- */
-function loadGoogleMapsAPI() {
-    // Verificar si ya está cargada la API
-    if (typeof google !== 'undefined' && google.maps) {
-        initGoogleMaps();
+
+  /* =========================
+     Active link (data-page)
+     Corrige: indexbeca.html tiene data-page="index"
+  ========================= */
+  function initActiveLink() {
+    const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
+    const pageNoExt = file.replace(".html", "").replace(".htm", "");
+
+    // Normalizaciones típicas de tu proyecto
+    const alias = {
+      indexbeca: "index",
+      index: "index",
+      inicio: "index",
+      contacto: "contacto",
+      acercade: "acercade",
+      servicios: "servicios",
+      noticias: "noticias",
+      prensa: "prensa",
+      centro: "centro",
+    };
+
+    const currentKey = alias[pageNoExt] || pageNoExt || "index";
+
+    mainNavLinks.forEach((link) => {
+      const key = (link.getAttribute("data-page") || "").toLowerCase();
+      link.classList.toggle("active", key === currentKey);
+    });
+  }
+
+  /* =========================
+     Footer year
+  ========================= */
+  function initYear() {
+    if (currentYear) currentYear.textContent = String(new Date().getFullYear());
+  }
+
+  /* =========================
+     Reveal animations (data-animate + data-delay)
+     Tu CSS ya hace transición; aquí solo agregamos is-visible.
+  ========================= */
+  function initReveal() {
+    const els = $$("[data-animate]");
+    if (!els.length) return;
+
+    // Aplica delay via inline (para que funcione incluso si cambias CSS)
+    els.forEach((el) => {
+      const d = parseInt(el.getAttribute("data-delay") || "0", 10);
+      if (!Number.isNaN(d) && d > 0) el.style.transitionDelay = `${d}ms`;
+    });
+
+    if (prefersReducedMotion) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.14, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    els.forEach((el) => io.observe(el));
+  }
+
+  /* =========================
+     Scroll indicator -> siguiente sección real
+  ========================= */
+  function initScrollIndicator() {
+    if (!scrollIndicator) return;
+
+    scrollIndicator.addEventListener("click", () => {
+      // busca la siguiente sección después del hero
+      const heroSection = hero || $(".hero");
+      const next =
+        (heroSection && heroSection.nextElementSibling) ||
+        $("#services") ||
+        $(".services") ||
+        $("main section:nth-of-type(2)");
+
+      if (next) {
+        next.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+      } else {
+        window.scrollTo({
+          top: window.innerHeight * 0.9,
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
+      }
+    });
+  }
+
+  /* =========================
+     Custom Cursor (IMPORTANTE)
+     Tu CSS base usa translate(-50%,-50%), así que lo conservamos al setear transform.
+  ========================= */
+  function initCursor() {
+    if (!cursorDot || !cursorRing) return;
+    if (!hasFinePointer || prefersReducedMotion) return;
+
+    body.classList.add("has-cursor");
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let dotX = mouseX,
+      dotY = mouseY;
+    let ringX = mouseX,
+      ringY = mouseY;
+
+    let raf = null;
+
+    const setPos = (el, x, y) => {
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+    };
+
+    const onMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+
+    const tick = () => {
+      // dot más pegado, ring más suave
+      dotX += (mouseX - dotX) * 0.6;
+      dotY += (mouseY - dotY) * 0.6;
+      ringX += (mouseX - ringX) * 0.16;
+      ringY += (mouseY - ringY) * 0.16;
+
+      setPos(cursorDot, dotX, dotY);
+      setPos(cursorRing, ringX, ringY);
+
+      raf = null;
+    };
+
+    const isInteractive = (t) =>
+      !!t.closest(
+        "a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card"
+      );
+
+    const isSoftInteractive = (t) =>
+      !!t.closest(".media-card, .nav-link, .language-btn, .theme-toggle");
+
+    const onOver = (e) => {
+      const t = e.target;
+      cursorRing.classList.toggle("hover", isInteractive(t));
+      cursorRing.classList.toggle("interactive", isSoftInteractive(t));
+    };
+
+    const onOut = () => {
+      cursorRing.classList.remove("hover", "interactive");
+    };
+
+    document.addEventListener("mousemove", onMove, { passive: true });
+    document.addEventListener("mouseover", onOver, { passive: true });
+    document.addEventListener("mouseout", onOut, { passive: true });
+  }
+
+  /* =========================
+     Hero parallax (media + orbs)
+  ========================= */
+  function initHeroParallax() {
+    if (!hero || !mediaCard) return;
+    if (!hasFinePointer || prefersReducedMotion) return;
+
+    let raf = null;
+    let tx = 0;
+    let ty = 0;
+
+    const onMove = (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      tx = Math.max(-0.6, Math.min(0.6, x));
+      ty = Math.max(-0.6, Math.min(0.6, y));
+
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+
+        // Media card (ligero)
+        mediaCard.style.transform = `translate3d(${tx * 12}px, ${ty * 9}px, 0)`;
+
+        // Orbs (más profundo)
+        if (orb1) orb1.style.transform = `translate3d(${tx * 18}px, ${ty * 12}px, 0)`;
+        if (orb2) orb2.style.transform = `translate3d(${tx * -14}px, ${ty * -10}px, 0)`;
+        if (orb3) orb3.style.transform = `translate3d(${tx * 10}px, ${ty * -8}px, 0)`;
+      });
+    };
+
+    const onLeave = () => {
+      mediaCard.style.transform = "";
+      if (orb1) orb1.style.transform = "";
+      if (orb2) orb2.style.transform = "";
+      if (orb3) orb3.style.transform = "";
+    };
+
+    hero.addEventListener("mousemove", onMove, { passive: true });
+    hero.addEventListener("mouseleave", onLeave, { passive: true });
+  }
+// taning esta aprte es de la seccion 3  de  la apgina principal 
+  /* =========================
+     Training tabs (3 panels)
+  ========================= */
+ function initTrainingTabs() {
+  if (!trainingRoot || !trainingTabs.length || !trainingPanels.length) return;
+
+  const AUTO_MS = 5200; // tiempo de cambio automático
+  const FADE_MS = 280;
+
+  const progressBar = $(".training-progress-left .training-progress-bar", trainingRoot);
+  const dots = $$(".training-dot", trainingRoot);
+
+  let currentKey = "becarios";
+  let timer = null;
+
+  const keyFromId = (id) => {
+    const lower = String(id || "").toLowerCase();
+    if (lower.includes("eventos")) return "eventos";
+    if (lower.includes("webinars")) return "webinars";
+    if (lower.includes("becarios")) return "becarios";
+    return "";
+  };
+
+  const tabLabelFromKey = (key) => {
+    const tab = trainingTabs.find((t) => (t.dataset.tab || "").toLowerCase() === key);
+    return tab ? (tab.querySelector("span")?.textContent || "").trim() : "";
+  };
+
+  const setLeftTitle = (key) => {
+    const leftTitle = $(".training-image-title", trainingRoot);
+    const label = tabLabelFromKey(key);
+    if (leftTitle && label) leftTitle.textContent = label;
+  };
+
+  const setDotsActive = (key) => {
+    if (!dots.length) return;
+    dots.forEach((b) => {
+      b.classList.toggle("is-active", (b.dataset.go || "").toLowerCase() === key);
+    });
+  };
+
+  const resetProgress = () => {
+    if (!progressBar || prefersReducedMotion) return;
+
+    progressBar.style.animation = "none";
+    progressBar.style.width = "0%";
+    progressBar.offsetHeight; // reflow
+    progressBar.style.animation = `trainingProgressFill ${AUTO_MS}ms linear forwards`;
+  };
+
+  const stopAuto = () => {
+    if (timer) clearTimeout(timer);
+    timer = null;
+  };
+
+  const startAuto = () => {
+    if (prefersReducedMotion) return;
+    stopAuto();
+    timer = setTimeout(() => {
+      const order = ["eventos", "webinars", "becarios"];
+      const idx = order.indexOf(currentKey);
+      const next = order[(idx + 1) % order.length];
+      showPanel(next, true);
+    }, AUTO_MS);
+  };
+
+  const syncLeftIcon = (key) => {
+    const leftIconWrap = trainingRoot
+      ? trainingRoot.querySelector(".training-card-left .training-image-icon")
+      : null;
+
+    const activeTab = trainingTabs.find(
+      (t) => (t.dataset.tab || "").toLowerCase() === key
+    );
+
+    if (leftIconWrap && activeTab && activeTab.dataset.icon) {
+      let leftI = leftIconWrap.querySelector("i");
+
+      if (!leftI) {
+        leftI = document.createElement("i");
+        leftI.setAttribute("aria-hidden", "true");
+        leftIconWrap.innerHTML = "";
+        leftIconWrap.appendChild(leftI);
+      }
+
+      leftI.className = activeTab.dataset.icon;
+
+      leftIconWrap.classList.add("is-swap");
+      setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
+    }
+  };
+
+  const showPanel = (key, fromAuto = false) => {
+    currentKey = key;
+
+    // Tabs active
+    trainingTabs.forEach((tab) => {
+      const is = (tab.dataset.tab || "").toLowerCase() === key;
+      tab.classList.toggle("is-active", is);
+      tab.setAttribute("aria-selected", is ? "true" : "false");
+    });
+    // === FIX DEFINITIVO: re-render del icono grande izquierdo ===
+const leftIconWrap = trainingRoot
+  ? trainingRoot.querySelector(".training-card-left .training-image-icon")
+  : null;
+
+const activeTab = trainingTabs.find(
+  (t) => (t.dataset.tab || "").toLowerCase() === key
+);
+
+if (leftIconWrap && activeTab && activeTab.dataset.icon) {
+  // 1) Reemplaza el contenido (esto funciona aunque FA convierta a SVG)
+  leftIconWrap.innerHTML = `<i class="${activeTab.dataset.icon}" aria-hidden="true"></i>`;
+
+  // 2) Si FontAwesome JS está activo, fuerza el refresh del nodo
+  if (window.FontAwesome && window.FontAwesome.dom && typeof window.FontAwesome.dom.i2svg === "function") {
+    window.FontAwesome.dom.i2svg({ node: leftIconWrap });
+  }
+
+  // 3) micro-swap opcional
+  leftIconWrap.classList.add("is-swap");
+  setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
+}
+console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
+
+
+    // ✅ Icono izquierdo sincronizado
+    syncLeftIcon(key);
+
+    // Panels fade
+    const currentActive = trainingPanels.find((p) => p.classList.contains("is-active"));
+
+    trainingPanels.forEach((panel) => {
+      const pKey = keyFromId(panel.id);
+      const shouldBeActive = pKey === key;
+
+      if (shouldBeActive) {
+        panel.removeAttribute("hidden");
+        panel.classList.remove("is-active");
+        panel.offsetHeight; // reflow
+        panel.classList.add("is-active");
+      } else {
+        if (panel === currentActive) {
+          panel.classList.remove("is-active");
+          setTimeout(() => panel.setAttribute("hidden", ""), FADE_MS);
+        } else {
+          panel.classList.remove("is-active");
+          panel.setAttribute("hidden", "");
+        }
+      }
+    });
+
+    // Title + dots + progress
+    setLeftTitle(key);
+    setDotsActive(key);
+    resetProgress();
+
+    // Auto
+    startAuto();
+  };
+
+  // Click tabs
+  trainingTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const key = (tab.dataset.tab || "").toLowerCase();
+      if (!key) return;
+      showPanel(key, false);
+    });
+  });
+
+  // Click dots
+  if (dots.length) {
+    dots.forEach((b) => {
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const key = (b.dataset.go || "").toLowerCase();
+        if (!key) return;
+        showPanel(key, false);
+      });
+    });
+  }
+
+  // Init
+  const initialTab = trainingTabs.find((t) => t.classList.contains("is-active")) || trainingTabs[0];
+  const initialKey = (initialTab?.dataset.tab || "becarios").toLowerCase();
+  showPanel(initialKey, false);
+}
+
+
+  /* =========================
+     Awards carousel (scroll + indicadores)
+  ========================= */
+  function initAwardsCarousel() {
+    if (!awardsTrack || !awardCards.length) return;
+
+    const canScroll = () => awardsTrack.scrollWidth > awardsTrack.clientWidth + 5;
+
+    const setIndicator = (idx) => {
+      if (!awardIndicators.length) return;
+      awardIndicators.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+    };
+
+    // Mapea cardIndex (0..cards-1) a dotIndex (0..dots-1)
+    const mapCardToDot = (cardIndex) => {
+      if (!awardIndicators.length) return 0;
+      if (awardCards.length === 1) return 0;
+      const ratio = cardIndex / (awardCards.length - 1);
+      return Math.round(ratio * (awardIndicators.length - 1));
+    };
+
+    const nearestCardIndex = () => {
+      const rect = awardsTrack.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+
+      let best = 0;
+      let bestDist = Infinity;
+
+      awardCards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        const c = r.left + r.width / 2;
+        const dist = Math.abs(c - centerX);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+
+      return best;
+    };
+
+    const updateIndicators = () => {
+      const cardIdx = nearestCardIndex();
+      setIndicator(mapCardToDot(cardIdx));
+    };
+
+    // Click dots -> scroll a card aproximada
+    if (awardIndicators.length) {
+      awardIndicators.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+          if (!awardCards.length) return;
+
+          const targetCardIdx =
+            awardIndicators.length === 1
+              ? 0
+              : Math.round((i / (awardIndicators.length - 1)) * (awardCards.length - 1));
+
+          const target = awardCards[targetCardIdx];
+          if (!target) return;
+
+          target.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+            inline: "center",
+            block: "nearest",
+          });
+
+          setIndicator(i);
+        });
+      });
+    }
+
+    // Drag scroll (mouse)
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    const onDown = (e) => {
+      if (!canScroll()) return;
+      isDown = true;
+      awardsTrack.classList.add("is-dragging");
+      startX = e.clientX;
+      startScroll = awardsTrack.scrollLeft;
+    };
+
+    const onMove = (e) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      awardsTrack.scrollLeft = startScroll - dx;
+    };
+
+    const onUp = () => {
+      if (!isDown) return;
+      isDown = false;
+      awardsTrack.classList.remove("is-dragging");
+      updateIndicators();
+    };
+
+    awardsTrack.addEventListener("mousedown", onDown);
+    awardsTrack.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+
+    // Touch drag
+    let tDown = false;
+    let tStartX = 0;
+    let tStartScroll = 0;
+
+    awardsTrack.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!canScroll()) return;
+        tDown = true;
+        tStartX = e.touches[0].clientX;
+        tStartScroll = awardsTrack.scrollLeft;
+      },
+      { passive: true }
+    );
+
+    awardsTrack.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!tDown) return;
+        const dx = e.touches[0].clientX - tStartX;
+        awardsTrack.scrollLeft = tStartScroll - dx;
+      },
+      { passive: true }
+    );
+
+    awardsTrack.addEventListener(
+      "touchend",
+      () => {
+        if (!tDown) return;
+        tDown = false;
+        updateIndicators();
+      },
+      { passive: true }
+    );
+
+    // Scroll -> update indicators (throttle)
+    let st = null;
+    awardsTrack.addEventListener("scroll", () => {
+      if (st) clearTimeout(st);
+      st = setTimeout(updateIndicators, 90);
+    });
+
+    // init
+    updateIndicators();
+  }
+
+  /* =========================
+     Map retry (solo UI)
+  ========================= */
+  function initMapRetry() {
+    if (!mapRetryBtn) return;
+
+    mapRetryBtn.addEventListener("click", () => {
+      const old = mapRetryBtn.textContent;
+      mapRetryBtn.disabled = true;
+      mapRetryBtn.textContent = "Reintentando…";
+
+      setTimeout(() => {
+        mapRetryBtn.disabled = false;
+        mapRetryBtn.textContent = old;
+      }, 900);
+    });
+  }
+
+  /* =========================
+     Contact form validation (UI)
+  ========================= */
+  function initContactForm() {
+    if (!contactForm || !formStatus) return;
+
+    const setStatus = (msg, ok) => {
+      formStatus.textContent = msg || "";
+      formStatus.style.opacity = msg ? "1" : "0";
+      formStatus.style.marginTop = msg ? "12px" : "";
+      formStatus.style.fontWeight = "900";
+      formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
+    };
+
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
+
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const fullName = ($("#fullName")?.value || "").trim();
+      const email = ($("#email")?.value || "").trim();
+      const message = ($("#message")?.value || "").trim();
+
+      if (!fullName || !email || !message) {
+        setStatus("Por favor completa tu nombre, email y mensaje.", false);
         return;
-    }
-    
-    // Verificar si ya existe un script de Google Maps
-    const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
-    if (existingScript) {
-        // Si ya existe, esperar a que cargue
-        existingScript.addEventListener('load', initGoogleMaps);
+      }
+      if (!isEmail(email)) {
+        setStatus("Por favor ingresa un email válido.", false);
         return;
-    }
-    
-    console.warn('Google Maps API no detectada. Asegúrate de haber agregado la clave API.');
-}
+      }
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    // Iniciar Google Maps después de un pequeño delay
-    setTimeout(loadGoogleMapsAPI, 1000);
+      // Aquí conectas tu backend si quieres.
+      setStatus("Mensaje enviado. Nos pondremos en contacto a la brevedad.", true);
+      contactForm.reset();
+
+      setTimeout(() => setStatus("", true), 4500);
+    });
+  }
+
+  /* =========================
+     Boot
+  ========================= */
+  initLoader();
+  initTheme();
+  initLanguage();
+  initMobileMenu();
+  initActiveLink();
+  initYear();
+  initReveal();
+  initScrollIndicator();
+  initCursor();
+  initHeroParallax();
+  initTrainingTabs();
+  initAwardsCarousel();
+  initMapRetry();
+  initContactForm();
 });
+// =========================
+// CONTACTO: Reintentar mapa + validación simple
+// =========================
+(() => {
+  // Reintentar mapa
+  const retryBtn = document.querySelector('.contact-map-retry');
+  const alertBox = document.querySelector('.contact-map-alert');
+  const mapIframe = document.querySelector('.contact-map-frame iframe');
+
+  if (retryBtn && mapIframe) {
+    retryBtn.addEventListener('click', () => {
+      // Oculta el aviso (si lo quieres permanente, elimina esta línea)
+      if (alertBox) alertBox.style.display = 'none';
+
+      // Recarga el iframe evitando caché
+      const src = mapIframe.getAttribute('src') || '';
+      const clean = src.split('&_t=')[0];
+      mapIframe.setAttribute('src', `${clean}&_t=${Date.now()}`);
+    });
+  }
+
+  // Validación mínima del formulario (si luego lo conectas a backend, mantén esto)
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+
+  const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim());
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const fullName = document.getElementById('fullName');
+      const email = document.getElementById('email');
+      const message = document.getElementById('message');
+
+      const nameVal = fullName?.value.trim() || '';
+      const emailVal = email?.value.trim() || '';
+      const msgVal = message?.value.trim() || '';
+
+      if (status) status.textContent = '';
+
+      // Reglas mínimas (ajusta si deseas)
+      if (nameVal.length < 3) {
+        if (status) status.textContent = 'Por favor, ingresa tu nombre completo.';
+        fullName?.focus();
+        return;
+      }
+      if (!isEmail(emailVal)) {
+        if (status) status.textContent = 'Por favor, ingresa un correo válido.';
+        email?.focus();
+        return;
+      }
+      if (msgVal.length < 10) {
+        if (status) status.textContent = 'Cuéntanos un poco más (mínimo 10 caracteres).';
+        message?.focus();
+        return;
+      }
+
+      // Placeholder: aquí luego conectas a tu backend / EmailJS / etc.
+      if (status) status.textContent = 'Listo. Tu mensaje está listo para enviarse (pendiente de integración).';
+      form.reset();
+    });
+  }
+})();
+// === CONTACT MAP: Retry button with loading + always "no branches" ===
+(() => {
+  const btn = document.getElementById("mapRetryBtn");
+  const alertBox = document.querySelector(".contact-map-alert");
+  const title = alertBox?.querySelector(".contact-map-alert-title");
+
+  if (!btn || !alertBox || !title) return;
+
+  const DEFAULT_MSG = "No se encontraron sucursales activas";
+
+  btn.addEventListener("click", () => {
+    if (btn.classList.contains("is-loading")) return;
+
+    // set loading
+    btn.classList.add("is-loading");
+    btn.disabled = true;
+
+    // opcional: feedback en el mensaje
+    title.textContent = "Buscando sucursales…";
+
+    // simula carga tipo "cargando página"
+    window.setTimeout(() => {
+      // no hay sucursales -> volvemos al estado original
+      title.textContent = DEFAULT_MSG;
+
+      btn.classList.remove("is-loading");
+      btn.disabled = false;
+    }, 1100);
+  });
+})();
