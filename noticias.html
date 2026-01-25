@@ -44,13 +44,14 @@
       </div>
 
       <nav class="nav" aria-label="Navegación principal">
-        <a class="nav__link" href="indexbeca.html">Inicio</a>
-        <a class="nav__link" href="servicios.html">Servicios</a>
-        <a class="nav__link is-active" href="noticias.html" aria-current="page">Noticias</a>
-        <a class="nav__link" href="prensa.html">Prensa</a>
-        <a class="nav__link" href="centro.html">Centro de Formación</a>
-        <a class="nav__link" href="acerca.html">Acerca de</a>
-      </nav>
+  <a class="nav__link" href="indexbeca.html">Inicio</a>
+  <a class="nav__link" href="prensa.html">Prensa</a>
+  <a class="nav__link" href="servicios.html">Servicios</a>
+  <a class="nav__link is-active" href="noticias.html" aria-current="page">Noticias</a>
+  <a class="nav__link" href="centro.html">Centro de Formación</a>
+  <a class="nav__link" href="acerca.html">Acerca de</a>
+</nav>
+
 
       <div class="header__actions">
         <a class="btn btn--primary btn--pill" href="colaboradores.html">¿Eres colaborador?</a>
@@ -77,20 +78,33 @@
 
       <nav class="mobile-nav" aria-label="Navegación móvil">
         <a class="mobile-nav__link" href="indexbeca.html">Inicio</a>
+        <a class="mobile-nav__link" href="prensa.html">Prensa</a>
         <a class="mobile-nav__link" href="servicios.html">Servicios</a>
         <a class="mobile-nav__link is-active" href="noticias.html" aria-current="page">Noticias</a>
-        <a class="mobile-nav__link" href="prensa.html">Prensa</a>
         <a class="mobile-nav__link" href="centro.html">Centro de Formación</a>
         <a class="mobile-nav__link" href="acerca.html">Acerca de</a>
         <a class="mobile-nav__link" href="colaboradores.html">¿Eres colaborador?</a>
       </nav>
+      <!-- Footer menú móvil: Idioma + CTA -->
+<div class="mobile-menu__footer" aria-label="Opciones del menú móvil">
 
-      <div class="mobile-menu__footer">
-        <button class="btn btn--soft" id="mobileTheme" type="button">
-          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
-          Cambiar tema
-        </button>
-      </div>
+  <label class="mobile-lang__label" for="mobileLangSelect">Idioma</label>
+
+  <select class="mobile-lang__select" id="mobileLangSelect" aria-label="Seleccionar idioma">
+    <option value="ES">Español (ES)</option>
+    <option value="EN">English (EN)</option>
+    <option value="PT">Português (PT)</option>
+    <option value="FR">Français (FR)</option>
+    <option value="DE">Deutsch (DE)</option>
+    <option value="IT">Italiano (IT)</option>
+  </select>
+
+  <a class="btn btn--primary btn--pill mobile-cta" href="colaboradores.html">
+    ¿Eres colaborador?
+  </a>
+
+</div>
+
     </aside>
   </header>
 

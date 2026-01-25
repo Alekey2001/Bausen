@@ -297,3 +297,31 @@
   if (header) ro.observe(header);
   window.addEventListener("resize", () => measureHeader());
 })();
+// Sync idioma: select del menú móvil -> header + localStorage
+(() => {
+  const mobileSelect = document.getElementById("mobileLangSelect");
+  const langCode = document.getElementById("langCode");
+  const langList = document.getElementById("langList");
+
+  if (!mobileSelect) return;
+
+  // Inicializa el select con el idioma guardado (si existe)
+  try {
+    const saved = localStorage.getItem("bausen_lang");
+    if (saved) mobileSelect.value = saved;
+  } catch {}
+
+  const apply = (code) => {
+    if (langCode) langCode.textContent = code;
+
+    if (langList) {
+      langList.querySelectorAll(".lang__item").forEach((li) => {
+        li.setAttribute("aria-selected", li.dataset.lang === code ? "true" : "false");
+      });
+    }
+
+    try { localStorage.setItem("bausen_lang", code); } catch {}
+  };
+
+  mobileSelect.addEventListener("change", () => apply(mobileSelect.value));
+})();

@@ -226,3 +226,22 @@
 
   window.addEventListener("resize", () => measureHeader());
 })();
+// Sync idioma (mobile select -> header code)
+(() => {
+  const mobileSelect = document.getElementById("mobileLangSelect");
+  const langCode = document.getElementById("langCode");
+  const langList = document.getElementById("langList");
+
+  if (!mobileSelect) return;
+
+  const apply = (code) => {
+    if (langCode) langCode.textContent = code;
+    if (langList) {
+      langList.querySelectorAll(".lang__item").forEach((li) => {
+        li.setAttribute("aria-selected", li.dataset.lang === code ? "true" : "false");
+      });
+    }
+  };
+
+  mobileSelect.addEventListener("change", () => apply(mobileSelect.value));
+})();
