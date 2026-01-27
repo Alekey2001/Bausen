@@ -22,10 +22,13 @@
       <!-- Brand -->
       <a class="brand" href="index.html" aria-label="Bausen - Inicio">
         <img
+          class="brand__logo"
           src="/images/bausenlogo.png"
           alt="Bausen"
           width="130"
           height="47"
+          loading="eager"
+          decoding="async"
         />
       </a>
 
@@ -73,30 +76,30 @@
         </button>
       </div>
     </div>
-
   </header>
-   <!-- Mobile menu -->
-    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-      <div class="mobile-menu__head">
-        <span class="mobile-menu__title">Menú</span>
-        <button class="mobile-menu__close" type="button" id="menuClose" aria-label="Cerrar menú">
-          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-        </button>
-      </div>
 
-      <nav class="mobile-nav" aria-label="Navegación móvil">
-        <a class="mobile-nav-link" href="index.html">Inicio</a>
-        <a class="mobile-nav-link is-active" href="prensa.html" aria-current="page">Prensa</a>
-        <a class="mobile-nav-link" href="servicios.html">Servicios</a>
-        <a class="mobile-nav-link" href="noticias.html">Noticias</a>
-        <a class="mobile-nav-link" href="centro.html">Centro de Formación</a>
-        <a class="mobile-nav-link" href="acerca.html">Acerca de</a>
-      </nav>
-
-      <div class="mobile-menu__footer">
-        <a class="btn btn--primary btn--block" href="#contacto-prensa">Contacto de Prensa</a>
-      </div>
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__head">
+      <span class="mobile-menu__title">Menú</span>
+      <button class="mobile-menu__close" type="button" id="menuClose" aria-label="Cerrar menú">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
     </div>
+
+    <nav class="mobile-nav" aria-label="Navegación móvil">
+      <a class="mobile-nav-link" href="index.html">Inicio</a>
+      <a class="mobile-nav-link is-active" href="prensa.html" aria-current="page">Prensa</a>
+      <a class="mobile-nav-link" href="servicios.html">Servicios</a>
+      <a class="mobile-nav-link" href="noticias.html">Noticias</a>
+      <a class="mobile-nav-link" href="centro.html">Centro de Formación</a>
+      <a class="mobile-nav-link" href="acerca.html">Acerca de</a>
+    </nav>
+
+    <div class="mobile-menu__footer">
+      <a class="btn btn--primary btn--block" href="#contacto-prensa">Contacto de Prensa</a>
+    </div>
+  </div>
 
   <main class="page">
     <!-- HERO -->
@@ -250,10 +253,13 @@
       <div class="footer__col">
         <div class="footer__logo">
           <img
+            class="footer__logo-img"
             src="/images/bausenlogo.png"
             alt="Bausen"
             width="130"
             height="47"
+            loading="lazy"
+            decoding="async"
           />
         </div>
 

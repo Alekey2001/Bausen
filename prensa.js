@@ -1,11 +1,11 @@
 /* =========================
-   Prensa - JS
+   Prensa - JS (robusto)
    - Tema claro/oscuro (persistente)
-   - Menú móvil (FIX z-index + footer idioma + colaborador)
+   - Menú móvil (sin estados raros + UI footer configurable)
    - Selector de idioma (UI)
-   - Reveal on scroll (sin duplicar observers)
-   - Tilt 3D suave (sin duplicar listeners)
-   - Buscador + filtro por año (demo lista, listo para backend)
+   - Reveal on scroll (single observer)
+   - Tilt 3D suave (no duplicates)
+   - Buscador + filtro por año (demo lista)
 ========================= */
 
 (() => {
@@ -13,26 +13,33 @@
   if (window.__bausen_prensa_inited) return;
   window.__bausen_prensa_inited = true;
 
-  document.documentElement.classList.remove("no-js");
-  document.documentElement.classList.add("js");
+  const root = document.documentElement;
+  root.classList.remove("no-js");
+  root.classList.add("js");
 
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  // ✅ Config: si quieres que el CTA del menú móvil sea SIEMPRE “¿Eres colaborador?”
+  // ponlo en true. Si lo dejas false, respeta tu HTML (Contacto de Prensa).
+  const FORCE_MOBILE_PRIMARY_CTA_TO_COLLAB = false;
 
   /* =========================
      Theme
   ========================= */
   function initTheme() {
-    const root = document.documentElement;
     const btn = $("#themeToggle");
     if (!btn) return;
 
     const stored = localStorage.getItem("bausen_theme");
-    if (stored === "light" || stored === "dark") root.setAttribute("data-theme", stored);
+    if (stored === "light" || stored === "dark") {
+      root.setAttribute("data-theme", stored);
+    }
 
     const syncIcon = () => {
       const isDark = root.getAttribute("data-theme") !== "light";
       btn.setAttribute("aria-pressed", String(isDark));
+
       const icon = $(".theme-toggle__icon i", btn);
       if (icon) icon.className = isDark ? "fa-solid fa-moon" : "fa-solid fa-sun";
     };
@@ -56,6 +63,7 @@
     const list = $("#langList");
     if (!wrapper || !btn || !list) return;
 
+    const items = () => $$("li[data-lang]", list);
     const isOpen = () => wrapper.classList.contains("is-open");
 
     const close = () => {
@@ -71,11 +79,11 @@
     const setLang = (lang) => {
       const li =
         $(`#langList li[data-lang="${lang}"]`) ||
-        $$("#langList li").find((x) => x.dataset.lang === lang);
+        items().find((x) => x.dataset.lang === lang);
 
       if (!li) return;
 
-      $$("#langList li").forEach((x) => x.setAttribute("aria-selected", "false"));
+      items().forEach((x) => x.setAttribute("aria-selected", "false"));
       li.setAttribute("aria-selected", "true");
 
       const tag = $(".lang__tag", btn);
@@ -84,11 +92,13 @@
       document.dispatchEvent(new CustomEvent("bausen:langchange", { detail: { lang } }));
     };
 
+    // Click toggle
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       isOpen() ? close() : open();
     });
 
+    // Click select
     list.addEventListener("click", (e) => {
       const li = e.target.closest("li[data-lang]");
       if (!li) return;
@@ -96,23 +106,51 @@
       close();
     });
 
+    // ✅ Teclado: Esc para cerrar, Enter/Espacio para seleccionar en foco
+    document.addEventListener("keydown", (e) => {
+      if (!isOpen()) {
+        // abrir con Enter/Espacio si el foco está en el botón
+        if ((e.key === "Enter" || e.key === " ") && document.activeElement === btn) {
+          e.preventDefault();
+          open();
+        }
+        return;
+      }
+
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+
+      if (e.key === "Enter" || e.key === " ") {
+        const active = document.activeElement;
+        if (active && active.matches && active.matches("#langList li[data-lang]")) {
+          e.preventDefault();
+          setLang(active.dataset.lang || "es");
+          close();
+        }
+      }
+    });
+
+    // Cierra al click fuera
     document.addEventListener("click", (e) => {
       if (!isOpen()) return;
       if (wrapper.contains(e.target)) return;
       close();
     });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-
-    // Helpers expuestos
+    // Exponer helpers
     wrapper.__closeLang = close;
     wrapper.__setLang = setLang;
+
+    // Opcional: hacer items focusables para teclado (sin cambiar estilo)
+    items().forEach((li) => {
+      if (!li.hasAttribute("tabindex")) li.setAttribute("tabindex", "0");
+    });
   }
 
   /* =========================
-     Mobile menu (FIX)
+     Mobile menu
   ========================= */
   function initMobileMenu() {
     const menuToggle = $("#menuToggle");
@@ -124,16 +162,12 @@
     if (!menuToggle || !mobileMenu || !overlay) return;
 
     const lockScroll = (locked) => {
-      document.documentElement.style.overflow = locked ? "hidden" : "";
+      root.style.overflow = locked ? "hidden" : "";
       document.body.style.overflow = locked ? "hidden" : "";
     };
 
-    const simplifyLabel = (txt) => {
-      // "Español (ES)" -> "Español"
-      return String(txt || "").replace(/\s*\([^)]*\)\s*/g, "").trim();
-    };
+    const simplifyLabel = (txt) => String(txt || "").replace(/\s*\([^)]*\)\s*/g, "").trim();
 
-    // Inyecta: idioma + botón colaborador en el footer del menú
     const ensureMobileFooterUI = () => {
       const footer = $(".mobile-menu__footer", mobileMenu);
       if (!footer) return;
@@ -142,6 +176,7 @@
       if (!footer.querySelector(".mobile-lang")) {
         const div = document.createElement("div");
         div.className = "mobile-lang";
+
         const sel = document.createElement("select");
         sel.setAttribute("aria-label", "Idioma");
 
@@ -150,6 +185,7 @@
           const opt = document.createElement("option");
           opt.value = li.dataset.lang || "es";
           opt.textContent = simplifyLabel(li.textContent);
+
           if (li.getAttribute("aria-selected") === "true") opt.selected = true;
           sel.appendChild(opt);
         });
@@ -161,7 +197,7 @@
           }
         });
 
-        // sincroniza si cambias idioma desde el header
+        // ✅ Sincroniza si cambias idioma desde el header (aunque el select ya exista)
         document.addEventListener("bausen:langchange", (ev) => {
           const lang = ev?.detail?.lang;
           if (!lang) return;
@@ -172,25 +208,23 @@
         footer.prepend(div);
       }
 
-      // 2) Botón principal: “¿Eres colaborador?”
+      // 2) CTA principal (respeta HTML o fuerza colaborador)
       const primary = footer.querySelector(".btn.btn--primary");
-      if (primary) {
+      if (!primary) return;
+
+      if (FORCE_MOBILE_PRIMARY_CTA_TO_COLLAB) {
         primary.textContent = "¿Eres colaborador?";
         primary.setAttribute("href", "#contacto-prensa");
-      } else {
-        const a = document.createElement("a");
-        a.className = "btn btn--primary btn--block";
-        a.href = "#contacto-prensa";
-        a.textContent = "¿Eres colaborador?";
-        footer.appendChild(a);
       }
     };
 
     const open = () => {
-      // Cierra el dropdown de idioma si estuviera abierto
-      if (langWrapper && typeof langWrapper.__closeLang === "function") langWrapper.__closeLang();
+      // Cierra dropdown idioma si estuviera abierto
+      if (langWrapper && typeof langWrapper.__closeLang === "function") {
+        langWrapper.__closeLang();
+      }
 
-      ensureMobileFooterUI();
+      // ensureMobileFooterUI();
 
       mobileMenu.classList.add("open");
       overlay.classList.add("show");
@@ -201,7 +235,6 @@
 
       lockScroll(true);
 
-      // Focus primer link
       setTimeout(() => {
         const first = $(".mobile-nav-link", mobileMenu) || $("#menuClose");
         if (first) first.focus();
@@ -228,15 +261,17 @@
     overlay.addEventListener("click", close);
     if (menuClose) menuClose.addEventListener("click", close);
 
-    // Cierra al hacer clic en un link del menú
+    // Cierra al hacer clic en un link del menú (solo anchors con href)
     mobileMenu.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
+      const a = e.target.closest("a[href]");
       if (!a) return;
       close();
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
+        close();
+      }
     });
 
     // Si cambias a desktop, cierra el menú
@@ -258,10 +293,9 @@
     REVEAL_IO = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
-          if (en.isIntersecting) {
-            en.target.classList.add("in-view");
-            REVEAL_IO.unobserve(en.target);
-          }
+          if (!en.isIntersecting) return;
+          en.target.classList.add("in-view");
+          REVEAL_IO.unobserve(en.target);
         });
       },
       { threshold: 0.12 }
@@ -295,8 +329,8 @@
     const els = Array.isArray(elements) ? elements : [elements];
     if (!els.length) return;
 
-    const isTouch = matchMedia("(pointer: coarse)").matches;
-    if (isTouch) return;
+    // No tilt en touch
+    if (matchMedia("(pointer: coarse)").matches) return;
 
     const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
@@ -383,13 +417,13 @@
     const yearSelect = $("#yearSelect");
     if (!grid || !empty || !meta || !searchInput || !yearSelect) return;
 
-    // Populate years
-    const existingYears = new Set($$("option", yearSelect).map((o) => o.value));
+    // Populate years (sin duplicar)
+    const existing = new Set($$("option", yearSelect).map((o) => o.value));
     const years = Array.from(new Set(PRESS_ITEMS.map((x) => x.year))).sort((a, b) => b - a);
 
     years.forEach((y) => {
       const v = String(y);
-      if (existingYears.has(v)) return;
+      if (existing.has(v)) return;
       const opt = document.createElement("option");
       opt.value = v;
       opt.textContent = v;
@@ -416,11 +450,14 @@
         const card = document.createElement("article");
         card.className = "press-card reveal";
         card.setAttribute("data-tilt", "");
+
+        const badgeLabel = item.featured ? "Destacado" : "Comunicado";
+
         card.innerHTML = `
           <div class="press-card__top">
             <span class="badge ${item.featured ? "badge--featured" : ""}">
               <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
-              ${item.featured ? "Destacado" : "Comunicado"}
+              ${badgeLabel}
             </span>
             <span class="press-card__date">${item.dateLabel}</span>
           </div>
@@ -435,7 +472,8 @@
               .slice(0, 3)
               .map((t) => `<span class="tag">${t}</span>`)
               .join("")}
-            <a class="btn btn--ghost btn--pill" href="#" style="margin-left:auto">
+
+            <a class="btn btn--ghost btn--pill press-card__cta" href="#">
               Ver comunicado <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </div>
@@ -480,6 +518,7 @@
       render(items);
     };
 
+    // Listeners (no duplicates por guard global)
     searchInput.addEventListener("input", applyFilters);
     yearSelect.addEventListener("change", applyFilters);
 
