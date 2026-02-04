@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0b1222" />
+  <title>Capital Humano | Bausen</title>
+  <link rel="icon" href="/images/logo.jpeg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Inter (moderna y similar a la referencia) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/inexservicios/capital.css" />
+  <script defer src="/inexservicios/capital.js"></script>
+</head>
+
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <!-- =========================
+       HEADER / NAVBAR (como imagen 1)
+  ========================== -->
+  <header class="site-header" id="top">
+    <div class="nav-shell">
+      <a class="brand" href="#" aria-label="Bausen - Inicio">
+        <img class="brand__logo" src="/images/bausenlogo.png" alt="Bausen" />
+      </a>
+
+      <!-- Links centrados (desktop) -->
+      <nav class="nav-center" aria-label="Navegación principal">
+        <a class="nav-link" href="index.html">inicio</a>
+        <a class="nav-link is-active" href="capital.html">Capital Humano</a>
+        <a class="nav-link" href="/inexservicios/servicios.html">Servicíos especializados</a>
+        <a class="nav-link" href="/inexservicios/impuestos.html">Servicios de impuestos</a>
+        <a class="nav-link" href="acerca.html">Acerca de</a>
+      </nav>
+      <!-- Acciones derecha -->
+      <div class="nav-actions">
+        <a class="pill-cta" href="">
+          ¿Eres colaborador?
+        </a>
+
+        <button class="icon-btn" type="button" id="themeToggle" aria-label="Cambiar tema">
+          <!-- icono luna/sol via CSS/JS -->
+          <span class="icon" aria-hidden="true">
+            <svg class="i-moon" viewBox="0 0 24 24" fill="none">
+              <path d="M21 14.2A8.6 8.6 0 0 1 9.8 3 7 7 0 1 0 21 14.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="i-sun" viewBox="0 0 24 24" fill="none">
+              <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M5 19l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+
+        <button class="lang-btn" type="button" aria-label="Idioma">
+          <span class="lang">ES</span>
+          <svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <!-- Hamburguesa (móvil) -->
+        <button class="burger" type="button" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navDrawer">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Drawer móvil -->
+    <div class="nav-drawer" id="navDrawer" hidden>
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menú">
+        <div class="drawer-top">
+          <span class="drawer-title">Menú</span>
+          <button class="icon-btn" type="button" id="navClose" aria-label="Cerrar menú">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="drawer-links" aria-label="Navegación móvil">
+          <a class="drawer-link" href="#prensa">inicio</a>
+          <a class="drawer-link is-active" href="#top">Capital Humano</a>
+          <a class="drawer-link" href="#servicios">Servicíos especializados</a>
+          <a class="drawer-link" href="#noticias">Servicios de impuestos</a>
+          <a class="drawer-link" href="#acerca">Acerca de</a>
+        </nav>
+        <div class="drawer-actions">
+          <a class="pill-cta w-full" href="#contacto">¿Eres colaborador?</a>
+          <div class="drawer-row">
+          </div>
+        </div>
+      </div>
+      <button class="drawer-backdrop" type="button" aria-label="Cerrar menú"></button>
+    </div>
+  </header>
+  <!-- =========================
+       MAIN
+  ========================== -->
+  <main id="contenido">
+    <!-- =========================
+         SECCIÓN 1 (como imagen 2) - Hero
+    ========================== -->
+    <section class="section hero" aria-label="Capital Humano">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <a class="back-btn" href="servicios.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14 6 8 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Volver a Servicios
+          </a>
+
+          <div class="badge">
+            <span class="badge__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3l1.2 3.4L17 7l-3 2.2.9 3.6-3-2-3 2 .9-3.6L7 7l3.8-.6L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M6 21c2-2 4-3 6-3s4 1 6 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+            Servicio Premium
+          </div>
+
+          <h1 class="hero-title">
+            <span class="grad">Capital</span> Humano
+          </h1>
+
+          <p class="hero-text">
+            Potencia el crecimiento y éxito de tu empresa con nuestros<br />
+            servicios de capital humano. ¡Transforma tu empresa con<br />
+            nuestro enfoque estratégico!
+          </p>
+
+          <a class="btn-primary" href="#contacto">
+            Contactar a BAUSEN
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="hero-right">
+          <figure class="media-card">
+            <!-- Reemplaza por tu imagen real -->
+            <img class="media-img" src="/images/capital1.png" alt="Equipo colaborando en oficina" loading="lazy" />
+            <div class="floating-square" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         SECCIÓN 2 (como imagen 3) - Cards servicios
+    ========================== -->
+    <section class="section section-curve" id="servicios" aria-label="Servicios Capital Humano">
+      <div class="container">
+        <h2 class="section-title">
+          <span>Servicios</span> <span class="grad2">Capital Humano</span>
+        </h2>
+
+        <div class="card-grid">
+          <article class="glass-card">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Servicios Especializados</h3>
+            <p>
+              Avalados por la STPS y registrados en el<br />
+              REPSE, garantizando transparencia y<br />
+              cumplimiento legal.
+            </p>
+            <a class="card-link" href="#">
+              Ver más
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+
+          <article class="glass-card">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 1v22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14.5a3.5 3.5 0 0 1 0 7H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Payrolling</h3>
+            <p>
+              Desde el alta hasta la desvinculación,<br />
+              incluyendo pagos de cuotas patronales, IMSS,<br />
+              Infonavit, e impuestos.
+            </p>
+            <a class="card-link" href="#">
+              Ver más
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+
+          <article class="glass-card">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M20 8l2 2-5 5-3-3 2-2 1 1 3-3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Atracción de Talento</h3>
+            <p>
+              Utilizamos estrategias selectivas y entrevistas<br />
+              exhaustivas para presentarte a los candidatos<br />
+              correctos.
+            </p>
+            <a class="card-link" href="#">
+              Ver más
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         SECCIÓN 3 (como imagen 4) - Beneficios
+    ========================== -->
+    <section class="section" aria-label="Beneficios de Capital Humano">
+      <div class="container two-col">
+        <div class="col-media">
+          <figure class="media-card large">
+            <img class="media-img" src="/images/capital2.png" alt="Equipo en reunión" loading="lazy" />
+          </figure>
+        </div>
+
+        <div class="col-content">
+          <div class="mini-badge">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M8 12l2.2 2.2L16 8.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Beneficios Exclusivos
+          </div>
+
+          <h2 class="big-title">
+            Beneficios de <span class="grad">Capital</span><br />
+            <span class="grad">Humano</span>
+          </h2>
+
+          <div class="benefits">
+            <article class="benefit">
+              <div class="benefit-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Acceso Exclusivo BTC</h3>
+                <p>Accede a nuestra agenda de cursos gratuitos, avalados por el Colegio de Contadores Públicos de la Ciudad de México.</p>
+              </div>
+            </article>
+
+            <article class="benefit">
+              <div class="benefit-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Reducción de Costos</h3>
+                <p>Optimiza los procesos de reclutamiento, selección y gestión de nómina con nuestras soluciones integrales.</p>
+              </div>
+            </article>
+
+            <article class="benefit">
+              <div class="benefit-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <h3>Asesoramiento Personalizado</h3>
+                <p>Sesiones de asesoramiento personalizado con expertos en Capital Humano para tu empresa.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         SECCIÓN 4 (como imagen 5) - CTA “Todos los servicios...”
+    ========================== -->
+    <section class="section cta" aria-label="Todos los servicios en un solo lugar">
+      <div class="container two-col cta-grid">
+        <div class="col-content">
+          <h2 class="big-title">
+            Todos los servicios en un<br />
+            solo lugar
+          </h2>
+
+          <p class="cta-text">
+            Solicita una reunión para más información sobre cómo podemos<br />
+            ayudarte a optimizar tu gestión de capital humano.
+          </p>
+
+          <div class="cta-actions">
+            <a class="btn-primary" href="#contacto">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8 7V3m8 4V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M5 6h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+              Agenda una cita
+            </a>
+
+            <a class="btn-ghost" href="#">
+  <i data-lucide="badge-plus" class="icon" aria-hidden="true"></i>
+  Ver casos de éxito
+</a>
+
+          </div>
+        </div>
+
+        <div class="col-media">
+          <figure class="media-card large">
+            <img class="media-img" src="/images/capital3.png" alt="Persona en llamada de negocio" loading="lazy" />
+            <div class="stat-badge" aria-hidden="true">
+              <span class="stat-ico">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M8 21h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M7 17h10l-1-11H8l-1 11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M9 6l3-3 3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div>
+                <div class="stat-num">500+</div>
+                <div class="stat-sub">Empresas</div>
+              </div>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         SECCIÓN 5 (como imagen 6) - Contacto (form)
+    ========================== -->
+    <section class="section contact" id="contacto" aria-label="Contacto">
+      <div class="container">
+        <div class="contact-top">
+          <span class="mini-badge">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
+              <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Contacto
+          </span>
+
+          <h2 class="section-title big">
+            Contáctanos <span class="grad2">Contáctanos</span>
+          </h2>
+          <p class="section-sub">Estamos listos para ayudarte a transformar tu empresa</p>
+        </div>
+
+        <form class="contact-card" action="#" method="post">
+          <div class="form-grid">
+            <label class="field">
+              <span class="sr-only">Tu nombre completo</span>
+              <span class="field-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </span>
+              <input type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name" />
+            </label>
+
+            <label class="field">
+              <span class="sr-only">Tu email</span>
+              <span class="field-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
+                  <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <input type="email" name="email" placeholder="tu@email.com" autocomplete="email" />
+            </label>
+
+            <label class="field field--full">
+              <span class="sr-only">Mensaje</span>
+              <span class="field-ico field-ico--top" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="2" />
+                  <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" rows="6"></textarea>
+            </label>
+          </div>
+
+          <button class="btn-primary" type="submit">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M22 2 11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Enviar mensaje
+          </button>
+        </form>
+
+        <div class="contact-direct">
+          <p>¿Prefieres contactarnos directamente?</p>
+          <a class="mail" href="mailto:contacto@bausen.com">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
+              <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            contacto@bausen.com
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================
+       FOOTER (como imagen final)
+  ========================== -->
+  <footer class="site-footer" aria-label="Pie de página">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="/images/bausenlogo.png" alt="Bausen" />
+        </div>
+        <p class="footer-desc">
+          Tu aliado estratégico en soluciones empresariales integrales.<br />
+          Transformamos organizaciones desde adentro.
+        </p>
+
+        <div class="footer-meta">
+          <div class="meta-row">
+            <span class="meta-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 22a10 10 0 1 0-10-10 10 10 0 0 0 10 10Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div>
+              <div class="meta-title">Horario de atención</div>
+              <div class="meta-sub">Lunes - Viernes: 9:00 - 18:00</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="social">
+          <div class="social-title">Síguenos en redes</div>
+          <div class="social-row">
+            <a class="social-btn" href="#" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M14 8h3V5h-3c-2.2 0-4 1.8-4 4v3H7v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1Z" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-btn" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6.5 6.8A1.8 1.8 0 1 0 6.5 3a1.8 1.8 0 0 0 0 3.8Z" fill="currentColor"/>
+                <path d="M5 21h3V9H5v12Z" fill="currentColor"/>
+                <path d="M10 21h3v-6.6c0-1.8 2-2 2 0V21h3v-7.6c0-4-4.3-3.9-5-1.9V9h-3v12Z" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-btn" href="#" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 8.2a3 3 0 0 0-2.1-2.1C17 5.6 12 5.6 12 5.6s-5 0-6.9.5A3 3 0 0 0 3 8.2 31 31 0 0 0 3 12a31 31 0 0 0 .1 3.8 3 3 0 0 0 2.1 2.1c1.9.5 6.9.5 6.9.5s5 0 6.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 21 12a31 31 0 0 0 0-3.8Z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M10 15V9l6 3-6 3Z" fill="currentColor"/>
+              </svg>
+            </a>
+            <a class="social-btn" href="#" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Empresa">
+        <h3>EMPRESA</h3>
+        <a href="#acerca">Acerca de</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#noticias">Noticias</a>
+        <a href="#prensa">Prensa</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <nav class="footer-col" aria-label="Servicios">
+        <h3>SERVICIOS</h3>
+        <a href="#top">Capital Humano</a>
+        <a href="#">Servicios Legales</a>
+        <a href="#">Servicios Contables</a>
+        <a href="#">Desarrollo Organizacional</a>
+      </nav>
+
+      <div class="footer-col footer-contact">
+        <h3>CONTACTO</h3>
+        <p class="soon">Próximamente. No se encontraron sucursales activas.</p>
+
+        <div class="contact-row">
+          <span class="contact-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3 5.2 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.7c.1.9.3 1.7.6 2.5a2 2 0 0 1-.5 2.1L9.6 11a16 16 0 0 0 3.4 3.4l1.7-1.5a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.5.6A2 2 0 0 1 22 16.9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div>
+            <div class="meta-title">Teléfono</div>
+            <div class="meta-sub">+65 65 524 5678</div>
+          </div>
+        </div>
+
+        <div class="contact-row">
+          <span class="contact-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.8" />
+              <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div>
+            <div class="meta-title">Email</div>
+            <div class="meta-sub">contact@bausen.com</div>
+          </div>
+        </div>
+
+        <a class="maps" href="#" target="_blank" rel="noopener">
+          Ver en Google Maps
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M10 14 21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container bottom-row">
+        <div class="copyright">© 2026 Bausen. Todos los derechos reservados</div>
+        <nav class="legal" aria-label="Legal">
+          <a href="#">Política de privacidad</a>
+          <a href="#">Términos de servicio</a>
+          <a href="#">Política de cookies</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>  
+  lucide.createIcons();
+</script>
+
+  <!-- Botoncito flotante (esquina inferior izquierda) como se ve en tu captura -->
+  <button class="fab" type="button" aria-label="Acción rápida">N</button>
+</body>
+</html>
