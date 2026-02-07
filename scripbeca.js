@@ -1,19 +1,19 @@
-/* scripbeca.js — BAUSEN (compatible con tu HTML/CSS actual)
+/* scripbeca.js — BAUSEN (con i18n + Netlify Forms)
    Incluye:
    - Loader (con failsafe)
    - Tema (persistente)
-   - Idioma (dropdown + select móvil, persistente)
+   - Idioma (i18n real + banderas + persistencia)
    - Menú móvil (overlay + ESC + bloqueo scroll)
-   - Active link por data-page (corrige indexbeca/index)
+   - Active link por data-page
    - Año en footer
    - Reveal on scroll (data-animate + data-delay)
-   - Scroll indicator (baja a la siguiente sección real)
-   - Cursor custom (desktop) + estados hover/interactive
-   - Parallax hero (media-card + orbs)
-   - Tabs Training Center (3 panels + dots)
-   - Carrusel Reconocimientos (scroll + drag + indicadores clic + auto update)
+   - Scroll indicator
+   - Cursor custom (desktop)
+   - Parallax hero
+   - Tabs Training Center (3 panels + dots + auto)
+   - Carrusel Reconocimientos (scroll + drag + indicadores)
    - Botón “Reintentar” del mapa (UI)
-   - Formulario contacto (validación simple + status)
+   - Formulario contacto: Netlify Forms + anti-spam + status
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -45,6 +45,128 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
+     i18n (traducción real + banderas)
+  ========================= */
+  const I18N = {
+    ES: {
+      "nav.home": "Inicio",
+      "nav.press": "Prensa",
+      "nav.services": "Servicios",
+      "nav.news": "Noticias",
+      "nav.training": "Centro de Formación",
+      "nav.about": "Acerca de",
+
+      "hero.pill": "Soluciones empresariales integrales",
+      "hero.title": "Impulsamos<br /><span class='hero-accent'>tu talento</span>",
+      "hero.subtitle": "Capital Humano, Desarrollo Organizacional y Management<br />Servicios para cada etapa de tu crecimiento.",
+      "hero.ctaServices": "Ver Servicios",
+      "hero.ctaContact": "Contactar",
+
+      "form.fullNamePh": "Tu nombre completo",
+      "form.emailPh": "tu@email.com",
+      "form.messagePh": "¿En qué podemos ayudarte?",
+      "form.send": "Enviar mensaje",
+
+      "form.err.required": "Por favor completa tu nombre, email y mensaje.",
+      "form.err.email": "Por favor ingresa un email válido.",
+      "form.ok": "Mensaje enviado. Nos pondremos en contacto a la brevedad.",
+      "form.sending": "Enviando…",
+      "form.fail": "Ocurrió un error. Por favor intenta de nuevo.",
+    },
+
+    EN: {
+      "nav.home": "Home",
+      "nav.press": "Press",
+      "nav.services": "Services",
+      "nav.news": "News",
+      "nav.training": "Training Center",
+      "nav.about": "About",
+
+      "hero.pill": "Integrated business solutions",
+      "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
+      "hero.subtitle": "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
+      "hero.ctaServices": "View Services",
+      "hero.ctaContact": "Contact",
+
+      "form.fullNamePh": "Full name",
+      "form.emailPh": "you@email.com",
+      "form.messagePh": "How can we help you?",
+      "form.send": "Send message",
+
+      "form.err.required": "Please complete your name, email and message.",
+      "form.err.email": "Please enter a valid email.",
+      "form.ok": "Message sent. We’ll contact you shortly.",
+      "form.sending": "Sending…",
+      "form.fail": "Something went wrong. Please try again.",
+    },
+  };
+
+  const FLAG_SVG = {
+    ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
+          <rect y="7" width="24" height="10" fill="#F1BF00"></rect>
+        </svg>`,
+    EN: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#012169"></rect>
+          <path d="M0 0 L24 24 M24 0 L0 24" stroke="#FFF" stroke-width="5"/>
+          <path d="M0 0 L24 24 M24 0 L0 24" stroke="#C8102E" stroke-width="3"/>
+        </svg>`,
+    DE: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#000"></rect>
+          <rect y="8" width="24" height="8" fill="#DD0000"></rect>
+          <rect y="16" width="24" height="8" fill="#FFCE00"></rect>
+        </svg>`,
+    PT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#006600"></rect>
+          <circle cx="10" cy="12" r="6" fill="#FF0000"></circle>
+        </svg>`,
+    FR: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#FFF"></rect>
+          <rect width="8" height="24" rx="6" fill="#0055A4"></rect>
+          <rect x="16" width="8" height="24" rx="6" fill="#EF4135"></rect>
+        </svg>`,
+    IT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#FFF"></rect>
+          <rect width="8" height="24" rx="6" fill="#009246"></rect>
+          <rect x="16" width="8" height="24" rx="6" fill="#CE2B37"></rect>
+        </svg>`
+  };
+
+  const t = (lang, key) => {
+    const L = I18N[lang] || I18N.ES;
+    return L[key] ?? (I18N.ES[key] ?? key);
+  };
+
+  function applyTranslations(lang) {
+    // textos
+    $$("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (!key) return;
+      el.innerHTML = t(lang, key);
+    });
+
+    // placeholders
+    $$("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (!key) return;
+      el.setAttribute("placeholder", t(lang, key));
+    });
+
+    // bandera del botón principal
+    const flagEl = $("#language-flag");
+    if (flagEl) flagEl.innerHTML = FLAG_SVG[lang] || FLAG_SVG.ES;
+
+    // banderas en dropdown
+    $$("[data-flag]").forEach((el) => {
+      const code = (el.getAttribute("data-flag") || "ES").toUpperCase();
+      el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
+    });
+
+    // lang attr
+    document.documentElement.setAttribute("lang", lang === "EN" ? "en" : "es");
+  }
+
+  /* =========================
      Elements
   ========================= */
   // Loader / Theme
@@ -57,30 +179,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const languageOptions = $$(".language-option");
   const languageCode = $("#language-code");
   const mobileLanguageSelect = $("#mobile-language-select");
-
-  // Mobile menu
-  // --- Cerrar menú al navegar y mantener la sección actual (sin saltos raros) ---
-document.querySelectorAll('.mobile-nav-link').forEach(link => {
-  link.addEventListener('click', () => {
-    // cierra drawer
-    document.body.classList.remove('menu-open');
-    document.querySelector('.mobile-menu-overlay')?.classList.remove('show');
-    document.querySelector('.mobile-menu')?.classList.remove('open');
-
-    // actualiza aria
-    const btn = document.getElementById('menu-toggle');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// Evita que el botón hamburguesa haga “jump” si por error es un <a> o si hay default
-const menuBtn = document.getElementById('menu-toggle');
-if (menuBtn) {
-  menuBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-  });
-}
-
 
   // Nav + footer year
   const mainNavLinks = $$(".nav-link, .mobile-nav-link");
@@ -114,7 +212,7 @@ if (menuBtn) {
   // Contact
   const contactForm = $("#contactForm");
   const formStatus = $("#formStatus");
-  const mapRetryBtn = $(".contact-map-retry");
+  const mapRetryBtn = $("#mapRetryBtn") || $(".contact-map-retry");
 
   /* =========================
      Loader
@@ -122,19 +220,14 @@ if (menuBtn) {
   function initLoader() {
     if (!pageLoader) return;
 
-    // Bloquea scroll mientras carga
     body.style.overflow = "hidden";
 
     const hide = () => {
-      // Evita múltiples ejecuciones
       if (pageLoader.classList.contains("hidden")) return;
-
-      // Transición suave: tu CSS maneja opacity/visibility
       pageLoader.classList.add("hidden");
       body.style.overflow = "";
     };
 
-    // Si ya cargó, ocultar; si no, al load
     if (document.readyState === "complete") {
       setTimeout(hide, prefersReducedMotion ? 120 : 350);
     } else {
@@ -144,8 +237,6 @@ if (menuBtn) {
         { once: true }
       );
     }
-
-    // Failsafe
     setTimeout(hide, 3500);
   }
 
@@ -153,7 +244,7 @@ if (menuBtn) {
      Theme (persist)
   ========================= */
   function initTheme() {
-    const KEY = "theme"; // mantengo tu key existente
+    const KEY = "theme";
 
     const apply = (mode) => {
       const isDark = mode === "dark";
@@ -161,7 +252,6 @@ if (menuBtn) {
       storage.set(KEY, isDark ? "dark" : "light");
     };
 
-    // Load saved or OS preference
     const saved = storage.get(KEY);
     if (saved === "dark" || saved === "light") {
       apply(saved);
@@ -180,16 +270,20 @@ if (menuBtn) {
   }
 
   /* =========================
-     Language (persist)
+     Language (persist + i18n)
   ========================= */
   function initLanguage() {
-    const KEY = "preferred-language"; // mantengo tu key existente
+    const KEY = "preferred-language";
 
     const setLang = (lang) => {
       const safe = String(lang || "ES").toUpperCase();
+
       storage.set(KEY, safe);
       if (languageCode) languageCode.textContent = safe;
       if (mobileLanguageSelect) mobileLanguageSelect.value = safe;
+
+      // ✅ Traduce y actualiza banderas
+      applyTranslations(safe);
     };
 
     // init
@@ -224,7 +318,6 @@ if (menuBtn) {
         });
       });
 
-      // Close outside + ESC
       document.addEventListener("click", (e) => {
         if (!languageDropdown.classList.contains("show")) return;
         if (languageBtn.contains(e.target) || languageDropdown.contains(e.target)) return;
@@ -242,116 +335,100 @@ if (menuBtn) {
     }
   }
 
- /* =========================
-   Mobile menu (FIX definitivo sin romper JS)
-========================= */
-function initMobileMenu() {
-  // Fallbacks: soporta IDs y clases alternas
-  const toggleBtn =
-    document.getElementById("menu-toggle") ||
-    document.querySelector(".menu-toggle") ||
-    document.querySelector(".nav__toggle");
+  /* =========================
+     Mobile menu (robusto)
+  ========================= */
+  function initMobileMenu() {
+    const toggleBtn =
+      document.getElementById("menu-toggle") ||
+      document.querySelector(".menu-toggle") ||
+      document.querySelector(".nav__toggle");
 
-  const panel =
-    document.getElementById("mobile-menu") ||
-    document.querySelector(".mobile-menu") ||
-    document.querySelector(".nav__panel");
+    const panel =
+      document.getElementById("mobile-menu") ||
+      document.querySelector(".mobile-menu") ||
+      document.querySelector(".nav__panel");
 
-  const overlay =
-    document.getElementById("mobile-menu-overlay") ||
-    document.querySelector(".mobile-menu-overlay") ||
-    document.querySelector(".nav__overlay");
+    const overlay =
+      document.getElementById("mobile-menu-overlay") ||
+      document.querySelector(".mobile-menu-overlay") ||
+      document.querySelector(".nav__overlay");
 
-  const closeBtn =
-    document.getElementById("close-menu") ||
-    document.querySelector(".close-menu") ||
-    document.querySelector(".nav__close");
+    const closeBtn =
+      document.getElementById("close-menu") ||
+      document.querySelector(".close-menu") ||
+      document.querySelector(".nav__close");
 
-  if (!toggleBtn || !panel || !overlay) return;
+    if (!toggleBtn || !panel || !overlay) return;
 
-  const bodyEl = document.body;
-  const rootEl = document.documentElement;
+    const bodyEl = document.body;
+    const rootEl = document.documentElement;
 
-  const setLocked = (locked) => {
-    // Scroll lock sólido
-    rootEl.style.overflow = locked ? "hidden" : "";
-    bodyEl.style.overflow = locked ? "hidden" : "";
-    bodyEl.classList.toggle("menu-open", locked);
-  };
+    const setLocked = (locked) => {
+      rootEl.style.overflow = locked ? "hidden" : "";
+      bodyEl.style.overflow = locked ? "hidden" : "";
+      bodyEl.classList.toggle("menu-open", locked);
+    };
 
-  const openMenu = () => {
-    panel.classList.add("open");
-    overlay.classList.add("show");
-    toggleBtn.setAttribute("aria-expanded", "true");
-    setLocked(true);
+    const openMenu = () => {
+      panel.classList.add("open");
+      overlay.classList.add("show");
+      toggleBtn.setAttribute("aria-expanded", "true");
+      setLocked(true);
 
-    // focus primer link (accesibilidad)
-    window.setTimeout(() => {
-      const firstLink =
-        panel.querySelector(".mobile-nav-link") ||
-        panel.querySelector("a[href]") ||
-        panel.querySelector("button");
-      if (firstLink) firstLink.focus();
-    }, 80);
-  };
+      window.setTimeout(() => {
+        const firstLink =
+          panel.querySelector(".mobile-nav-link") ||
+          panel.querySelector("a[href]") ||
+          panel.querySelector("button");
+        if (firstLink) firstLink.focus();
+      }, 80);
+    };
 
-  const closeMenuFn = () => {
-    panel.classList.remove("open");
-    overlay.classList.remove("show");
-    toggleBtn.setAttribute("aria-expanded", "false");
-    setLocked(false);
+    const closeMenuFn = () => {
+      panel.classList.remove("open");
+      overlay.classList.remove("show");
+      toggleBtn.setAttribute("aria-expanded", "false");
+      setLocked(false);
+      window.setTimeout(() => toggleBtn.focus(), 0);
+    };
 
-    // regresa focus al botón
-    window.setTimeout(() => toggleBtn.focus(), 0);
-  };
+    const toggleMenu = (e) => {
+      if (e) e.preventDefault();
+      panel.classList.contains("open") ? closeMenuFn() : openMenu();
+    };
 
-  const toggleMenu = (e) => {
-    if (e) e.preventDefault();
-    const isOpen = panel.classList.contains("open");
-    isOpen ? closeMenuFn() : openMenu();
-  };
+    toggleBtn.addEventListener("click", toggleMenu);
 
-  // Limpia listeners duplicados si recargas scripts (defensivo)
-  toggleBtn.removeEventListener("click", toggleMenu);
-  toggleBtn.addEventListener("click", toggleMenu);
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeMenuFn();
+      });
+    }
 
-  if (closeBtn) {
-    closeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      closeMenuFn();
+    overlay.addEventListener("click", closeMenuFn);
+
+    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
+      el.addEventListener("click", () => closeMenuFn());
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 980 && panel.classList.contains("open")) closeMenuFn();
     });
   }
 
-  overlay.addEventListener("click", closeMenuFn);
-
-  // Cierra al click en links del panel (solo si son links)
-  panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
-    el.addEventListener("click", () => closeMenuFn());
-  });
-
-  // ESC
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
-  });
-
-  // Si pasa a desktop, cierra y limpia
-  window.addEventListener("resize", () => {
-    if (window.innerWidth > 980 && panel.classList.contains("open")) {
-      closeMenuFn();
-    }
-  });
-}
-
-
   /* =========================
      Active link (data-page)
-     Corrige: indexbeca.html tiene data-page="index"
   ========================= */
   function initActiveLink() {
     const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
     const pageNoExt = file.replace(".html", "").replace(".htm", "");
 
-    // Normalizaciones típicas de tu proyecto
     const alias = {
       indexbeca: "index",
       index: "index",
@@ -380,14 +457,12 @@ function initMobileMenu() {
   }
 
   /* =========================
-     Reveal animations (data-animate + data-delay)
-     Tu CSS ya hace transición; aquí solo agregamos is-visible.
+     Reveal animations
   ========================= */
   function initReveal() {
     const els = $$("[data-animate]");
     if (!els.length) return;
 
-    // Aplica delay via inline (para que funcione incluso si cambias CSS)
     els.forEach((el) => {
       const d = parseInt(el.getAttribute("data-delay") || "0", 10);
       if (!Number.isNaN(d) && d > 0) el.style.transitionDelay = `${d}ms`;
@@ -413,13 +488,12 @@ function initMobileMenu() {
   }
 
   /* =========================
-     Scroll indicator -> siguiente sección real
+     Scroll indicator
   ========================= */
   function initScrollIndicator() {
     if (!scrollIndicator) return;
 
     scrollIndicator.addEventListener("click", () => {
-      // busca la siguiente sección después del hero
       const heroSection = hero || $(".hero");
       const next =
         (heroSection && heroSection.nextElementSibling) ||
@@ -439,8 +513,7 @@ function initMobileMenu() {
   }
 
   /* =========================
-     Custom Cursor (IMPORTANTE)
-     Tu CSS base usa translate(-50%,-50%), así que lo conservamos al setear transform.
+     Custom Cursor
   ========================= */
   function initCursor() {
     if (!cursorDot || !cursorRing) return;
@@ -450,10 +523,8 @@ function initMobileMenu() {
 
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
-    let dotX = mouseX,
-      dotY = mouseY;
-    let ringX = mouseX,
-      ringY = mouseY;
+    let dotX = mouseX, dotY = mouseY;
+    let ringX = mouseX, ringY = mouseY;
 
     let raf = null;
 
@@ -468,7 +539,6 @@ function initMobileMenu() {
     };
 
     const tick = () => {
-      // dot más pegado, ring más suave
       dotX += (mouseX - dotX) * 0.6;
       dotY += (mouseY - dotY) * 0.6;
       ringX += (mouseX - ringX) * 0.16;
@@ -481,22 +551,18 @@ function initMobileMenu() {
     };
 
     const isInteractive = (t) =>
-      !!t.closest(
-        "a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card"
-      );
+      !!t.closest("a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card");
 
     const isSoftInteractive = (t) =>
       !!t.closest(".media-card, .nav-link, .language-btn, .theme-toggle");
 
     const onOver = (e) => {
-      const t = e.target;
-      cursorRing.classList.toggle("hover", isInteractive(t));
-      cursorRing.classList.toggle("interactive", isSoftInteractive(t));
+      const tEl = e.target;
+      cursorRing.classList.toggle("hover", isInteractive(tEl));
+      cursorRing.classList.toggle("interactive", isSoftInteractive(tEl));
     };
 
-    const onOut = () => {
-      cursorRing.classList.remove("hover", "interactive");
-    };
+    const onOut = () => cursorRing.classList.remove("hover", "interactive");
 
     document.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseover", onOver, { passive: true });
@@ -504,15 +570,14 @@ function initMobileMenu() {
   }
 
   /* =========================
-     Hero parallax (media + orbs)
+     Hero parallax
   ========================= */
   function initHeroParallax() {
     if (!hero || !mediaCard) return;
     if (!hasFinePointer || prefersReducedMotion) return;
 
     let raf = null;
-    let tx = 0;
-    let ty = 0;
+    let tx = 0, ty = 0;
 
     const onMove = (e) => {
       const rect = hero.getBoundingClientRect();
@@ -525,11 +590,7 @@ function initMobileMenu() {
       if (raf) return;
       raf = requestAnimationFrame(() => {
         raf = null;
-
-        // Media card (ligero)
         mediaCard.style.transform = `translate3d(${tx * 12}px, ${ty * 9}px, 0)`;
-
-        // Orbs (más profundo)
         if (orb1) orb1.style.transform = `translate3d(${tx * 18}px, ${ty * 12}px, 0)`;
         if (orb2) orb2.style.transform = `translate3d(${tx * -14}px, ${ty * -10}px, 0)`;
         if (orb3) orb3.style.transform = `translate3d(${tx * 10}px, ${ty * -8}px, 0)`;
@@ -546,199 +607,139 @@ function initMobileMenu() {
     hero.addEventListener("mousemove", onMove, { passive: true });
     hero.addEventListener("mouseleave", onLeave, { passive: true });
   }
-// taning esta aprte es de la seccion 3  de  la apgina principal 
+
   /* =========================
-     Training tabs (3 panels)
+     Training tabs
   ========================= */
- function initTrainingTabs() {
-  if (!trainingRoot || !trainingTabs.length || !trainingPanels.length) return;
+  function initTrainingTabs() {
+    if (!trainingRoot || !trainingTabs.length || !trainingPanels.length) return;
 
-  const AUTO_MS = 5200; // tiempo de cambio automático
-  const FADE_MS = 280;
+    const AUTO_MS = 5200;
+    const FADE_MS = 280;
 
-  const progressBar = $(".training-progress-left .training-progress-bar", trainingRoot);
-  const dots = $$(".training-dot", trainingRoot);
+    const progressBar = $(".training-progress-left .training-progress-bar", trainingRoot);
+    const dots = $$(".training-dot", trainingRoot);
 
-  let currentKey = "becarios";
-  let timer = null;
+    let currentKey = "becarios";
+    let timer = null;
 
-  const keyFromId = (id) => {
-    const lower = String(id || "").toLowerCase();
-    if (lower.includes("eventos")) return "eventos";
-    if (lower.includes("webinars")) return "webinars";
-    if (lower.includes("becarios")) return "becarios";
-    return "";
-  };
+    const keyFromId = (id) => {
+      const lower = String(id || "").toLowerCase();
+      if (lower.includes("eventos")) return "eventos";
+      if (lower.includes("webinars")) return "webinars";
+      if (lower.includes("becarios")) return "becarios";
+      return "";
+    };
 
-  const tabLabelFromKey = (key) => {
-    const tab = trainingTabs.find((t) => (t.dataset.tab || "").toLowerCase() === key);
-    return tab ? (tab.querySelector("span")?.textContent || "").trim() : "";
-  };
+    const tabLabelFromKey = (key) => {
+      const tab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
+      return tab ? (tab.querySelector("span")?.textContent || "").trim() : "";
+    };
 
-  const setLeftTitle = (key) => {
-    const leftTitle = $(".training-image-title", trainingRoot);
-    const label = tabLabelFromKey(key);
-    if (leftTitle && label) leftTitle.textContent = label;
-  };
+    const setLeftTitle = (key) => {
+      const leftTitle = $(".training-image-title", trainingRoot);
+      const label = tabLabelFromKey(key);
+      if (leftTitle && label) leftTitle.textContent = label;
+    };
 
-  const setDotsActive = (key) => {
-    if (!dots.length) return;
-    dots.forEach((b) => {
-      b.classList.toggle("is-active", (b.dataset.go || "").toLowerCase() === key);
-    });
-  };
+    const setDotsActive = (key) => {
+      dots.forEach((b) => b.classList.toggle("is-active", (b.dataset.go || "").toLowerCase() === key));
+    };
 
-  const resetProgress = () => {
-    if (!progressBar || prefersReducedMotion) return;
+    const resetProgress = () => {
+      if (!progressBar || prefersReducedMotion) return;
+      progressBar.style.animation = "none";
+      progressBar.style.width = "0%";
+      progressBar.offsetHeight;
+      progressBar.style.animation = `trainingProgressFill ${AUTO_MS}ms linear forwards`;
+    };
 
-    progressBar.style.animation = "none";
-    progressBar.style.width = "0%";
-    progressBar.offsetHeight; // reflow
-    progressBar.style.animation = `trainingProgressFill ${AUTO_MS}ms linear forwards`;
-  };
+    const stopAuto = () => {
+      if (timer) clearTimeout(timer);
+      timer = null;
+    };
 
-  const stopAuto = () => {
-    if (timer) clearTimeout(timer);
-    timer = null;
-  };
+    const startAuto = () => {
+      if (prefersReducedMotion) return;
+      stopAuto();
+      timer = setTimeout(() => {
+        const order = ["eventos", "webinars", "becarios"];
+        const idx = order.indexOf(currentKey);
+        const next = order[(idx + 1) % order.length];
+        showPanel(next, true);
+      }, AUTO_MS);
+    };
 
-  const startAuto = () => {
-    if (prefersReducedMotion) return;
-    stopAuto();
-    timer = setTimeout(() => {
-      const order = ["eventos", "webinars", "becarios"];
-      const idx = order.indexOf(currentKey);
-      const next = order[(idx + 1) % order.length];
-      showPanel(next, true);
-    }, AUTO_MS);
-  };
+    const showPanel = (key) => {
+      currentKey = key;
 
-  const syncLeftIcon = (key) => {
-    const leftIconWrap = trainingRoot
-      ? trainingRoot.querySelector(".training-card-left .training-image-icon")
-      : null;
+      trainingTabs.forEach((tab) => {
+        const is = (tab.dataset.tab || "").toLowerCase() === key;
+        tab.classList.toggle("is-active", is);
+        tab.setAttribute("aria-selected", is ? "true" : "false");
+      });
 
-    const activeTab = trainingTabs.find(
-      (t) => (t.dataset.tab || "").toLowerCase() === key
-    );
-
-    if (leftIconWrap && activeTab && activeTab.dataset.icon) {
-      let leftI = leftIconWrap.querySelector("i");
-
-      if (!leftI) {
-        leftI = document.createElement("i");
-        leftI.setAttribute("aria-hidden", "true");
-        leftIconWrap.innerHTML = "";
-        leftIconWrap.appendChild(leftI);
+      // icono izquierdo grande (re-render robusto)
+      const leftIconWrap = trainingRoot.querySelector(".training-card-left .training-image-icon");
+      const activeTab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
+      if (leftIconWrap && activeTab && activeTab.dataset.icon) {
+        leftIconWrap.innerHTML = `<i class="${activeTab.dataset.icon}" aria-hidden="true"></i>`;
+        if (window.FontAwesome?.dom?.i2svg) window.FontAwesome.dom.i2svg({ node: leftIconWrap });
+        leftIconWrap.classList.add("is-swap");
+        setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
       }
 
-      leftI.className = activeTab.dataset.icon;
+      const currentActive = trainingPanels.find((p) => p.classList.contains("is-active"));
 
-      leftIconWrap.classList.add("is-swap");
-      setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
-    }
-  };
+      trainingPanels.forEach((panel) => {
+        const pKey = keyFromId(panel.id);
+        const shouldBeActive = pKey === key;
 
-  const showPanel = (key, fromAuto = false) => {
-    currentKey = key;
-
-    // Tabs active
-    trainingTabs.forEach((tab) => {
-      const is = (tab.dataset.tab || "").toLowerCase() === key;
-      tab.classList.toggle("is-active", is);
-      tab.setAttribute("aria-selected", is ? "true" : "false");
-    });
-    // === FIX DEFINITIVO: re-render del icono grande izquierdo ===
-const leftIconWrap = trainingRoot
-  ? trainingRoot.querySelector(".training-card-left .training-image-icon")
-  : null;
-
-const activeTab = trainingTabs.find(
-  (t) => (t.dataset.tab || "").toLowerCase() === key
-);
-
-if (leftIconWrap && activeTab && activeTab.dataset.icon) {
-  // 1) Reemplaza el contenido (esto funciona aunque FA convierta a SVG)
-  leftIconWrap.innerHTML = `<i class="${activeTab.dataset.icon}" aria-hidden="true"></i>`;
-
-  // 2) Si FontAwesome JS está activo, fuerza el refresh del nodo
-  if (window.FontAwesome && window.FontAwesome.dom && typeof window.FontAwesome.dom.i2svg === "function") {
-    window.FontAwesome.dom.i2svg({ node: leftIconWrap });
-  }
-
-  // 3) micro-swap opcional
-  leftIconWrap.classList.add("is-swap");
-  setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
-}
-console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
-
-
-    // ✅ Icono izquierdo sincronizado
-    syncLeftIcon(key);
-
-    // Panels fade
-    const currentActive = trainingPanels.find((p) => p.classList.contains("is-active"));
-
-    trainingPanels.forEach((panel) => {
-      const pKey = keyFromId(panel.id);
-      const shouldBeActive = pKey === key;
-
-      if (shouldBeActive) {
-        panel.removeAttribute("hidden");
-        panel.classList.remove("is-active");
-        panel.offsetHeight; // reflow
-        panel.classList.add("is-active");
-      } else {
-        if (panel === currentActive) {
+        if (shouldBeActive) {
+          panel.removeAttribute("hidden");
           panel.classList.remove("is-active");
-          setTimeout(() => panel.setAttribute("hidden", ""), FADE_MS);
+          panel.offsetHeight;
+          panel.classList.add("is-active");
         } else {
-          panel.classList.remove("is-active");
-          panel.setAttribute("hidden", "");
+          if (panel === currentActive) {
+            panel.classList.remove("is-active");
+            setTimeout(() => panel.setAttribute("hidden", ""), FADE_MS);
+          } else {
+            panel.classList.remove("is-active");
+            panel.setAttribute("hidden", "");
+          }
         }
-      }
+      });
+
+      setLeftTitle(key);
+      setDotsActive(key);
+      resetProgress();
+      startAuto();
+    };
+
+    trainingTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const key = (tab.dataset.tab || "").toLowerCase();
+        if (!key) return;
+        showPanel(key);
+      });
     });
 
-    // Title + dots + progress
-    setLeftTitle(key);
-    setDotsActive(key);
-    resetProgress();
-
-    // Auto
-    startAuto();
-  };
-
-  // Click tabs
-  trainingTabs.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      const key = (tab.dataset.tab || "").toLowerCase();
-      if (!key) return;
-      showPanel(key, false);
-    });
-  });
-
-  // Click dots
-  if (dots.length) {
     dots.forEach((b) => {
       b.addEventListener("click", (e) => {
         e.preventDefault();
-        e.stopPropagation();
         const key = (b.dataset.go || "").toLowerCase();
         if (!key) return;
-        showPanel(key, false);
+        showPanel(key);
       });
     });
+
+    const initialTab = trainingTabs.find((tEl) => tEl.classList.contains("is-active")) || trainingTabs[0];
+    showPanel((initialTab?.dataset.tab || "becarios").toLowerCase());
   }
 
-  // Init
-  const initialTab = trainingTabs.find((t) => t.classList.contains("is-active")) || trainingTabs[0];
-  const initialKey = (initialTab?.dataset.tab || "becarios").toLowerCase();
-  showPanel(initialKey, false);
-}
-
-
   /* =========================
-     Awards carousel (scroll + indicadores)
+     Awards carousel
   ========================= */
   function initAwardsCarousel() {
     if (!awardsTrack || !awardCards.length) return;
@@ -750,7 +751,6 @@ console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
       awardIndicators.forEach((d, i) => d.classList.toggle("is-active", i === idx));
     };
 
-    // Mapea cardIndex (0..cards-1) a dotIndex (0..dots-1)
     const mapCardToDot = (cardIndex) => {
       if (!awardIndicators.length) return 0;
       if (awardCards.length === 1) return 0;
@@ -783,12 +783,9 @@ console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
       setIndicator(mapCardToDot(cardIdx));
     };
 
-    // Click dots -> scroll a card aproximada
     if (awardIndicators.length) {
       awardIndicators.forEach((dot, i) => {
         dot.addEventListener("click", () => {
-          if (!awardCards.length) return;
-
           const targetCardIdx =
             awardIndicators.length === 1
               ? 0
@@ -808,7 +805,6 @@ console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
       });
     }
 
-    // Drag scroll (mouse)
     let isDown = false;
     let startX = 0;
     let startScroll = 0;
@@ -838,74 +834,72 @@ console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
     awardsTrack.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
 
-    // Touch drag
     let tDown = false;
     let tStartX = 0;
     let tStartScroll = 0;
 
-    awardsTrack.addEventListener(
-      "touchstart",
-      (e) => {
-        if (!canScroll()) return;
-        tDown = true;
-        tStartX = e.touches[0].clientX;
-        tStartScroll = awardsTrack.scrollLeft;
-      },
-      { passive: true }
-    );
+    awardsTrack.addEventListener("touchstart", (e) => {
+      if (!canScroll()) return;
+      tDown = true;
+      tStartX = e.touches[0].clientX;
+      tStartScroll = awardsTrack.scrollLeft;
+    }, { passive: true });
 
-    awardsTrack.addEventListener(
-      "touchmove",
-      (e) => {
-        if (!tDown) return;
-        const dx = e.touches[0].clientX - tStartX;
-        awardsTrack.scrollLeft = tStartScroll - dx;
-      },
-      { passive: true }
-    );
+    awardsTrack.addEventListener("touchmove", (e) => {
+      if (!tDown) return;
+      const dx = e.touches[0].clientX - tStartX;
+      awardsTrack.scrollLeft = tStartScroll - dx;
+    }, { passive: true });
 
-    awardsTrack.addEventListener(
-      "touchend",
-      () => {
-        if (!tDown) return;
-        tDown = false;
-        updateIndicators();
-      },
-      { passive: true }
-    );
+    awardsTrack.addEventListener("touchend", () => {
+      if (!tDown) return;
+      tDown = false;
+      updateIndicators();
+    }, { passive: true });
 
-    // Scroll -> update indicators (throttle)
     let st = null;
     awardsTrack.addEventListener("scroll", () => {
       if (st) clearTimeout(st);
       st = setTimeout(updateIndicators, 90);
     });
 
-    // init
     updateIndicators();
   }
 
   /* =========================
-     Map retry (solo UI)
+     Map retry (UI)
   ========================= */
   function initMapRetry() {
     if (!mapRetryBtn) return;
 
     mapRetryBtn.addEventListener("click", () => {
-      const old = mapRetryBtn.textContent;
-      mapRetryBtn.disabled = true;
-      mapRetryBtn.textContent = "Reintentando…";
+      const btn = mapRetryBtn;
+      if (btn.classList.contains("is-loading")) return;
+
+      btn.classList.add("is-loading");
+      btn.disabled = true;
+
+      const alertBox = document.querySelector(".contact-map-alert");
+      const title = alertBox?.querySelector(".contact-map-alert-title");
+      const DEFAULT_MSG = "No se encontraron sucursales activas";
+
+      if (title) title.textContent = "Buscando sucursales…";
 
       setTimeout(() => {
-        mapRetryBtn.disabled = false;
-        mapRetryBtn.textContent = old;
-      }, 900);
+        if (title) title.textContent = DEFAULT_MSG;
+        btn.classList.remove("is-loading");
+        btn.disabled = false;
+      }, 1100);
     });
   }
 
   /* =========================
-     Contact form validation (UI)
+     Contact form => Netlify Forms
   ========================= */
+  function encodeFormData(data) {
+    return new URLSearchParams(data).toString();
+  }
+
   function initContactForm() {
     if (!contactForm || !formStatus) return;
 
@@ -919,27 +913,61 @@ console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
 
     const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
 
-    contactForm.addEventListener("submit", (e) => {
+    contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      const lang = storage.get("preferred-language", "ES");
 
       const fullName = ($("#fullName")?.value || "").trim();
       const email = ($("#email")?.value || "").trim();
       const message = ($("#message")?.value || "").trim();
 
       if (!fullName || !email || !message) {
-        setStatus("Por favor completa tu nombre, email y mensaje.", false);
+        setStatus(t(lang, "form.err.required"), false);
         return;
       }
       if (!isEmail(email)) {
-        setStatus("Por favor ingresa un email válido.", false);
+        setStatus(t(lang, "form.err.email"), false);
         return;
       }
 
-      // Aquí conectas tu backend si quieres.
-      setStatus("Mensaje enviado. Nos pondremos en contacto a la brevedad.", true);
-      contactForm.reset();
+      const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
+      const oldBtnHTML = btn ? btn.innerHTML : "";
 
-      setTimeout(() => setStatus("", true), 4500);
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span>${t(lang, "form.sending")}</span>`;
+      }
+      setStatus("", true);
+
+      try {
+        const payload = {
+          "form-name": contactForm.getAttribute("name") || "contact",
+          fullName,
+          email,
+          message,
+        };
+
+        const res = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encodeFormData(payload),
+        });
+
+        if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
+
+        setStatus(t(lang, "form.ok"), true);
+        contactForm.reset();
+        setTimeout(() => setStatus("", true), 4500);
+      } catch (err) {
+        console.error(err);
+        setStatus(t(lang, "form.fail"), false);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = oldBtnHTML;
+        }
+      }
     });
   }
 
@@ -961,97 +989,3 @@ console.log("Icon key:", key, "icon:", activeTab?.dataset?.icon);
   initMapRetry();
   initContactForm();
 });
-// =========================
-// CONTACTO: Reintentar mapa + validación simple
-// =========================
-(() => {
-  // Reintentar mapa
-  const retryBtn = document.querySelector('.contact-map-retry');
-  const alertBox = document.querySelector('.contact-map-alert');
-  const mapIframe = document.querySelector('.contact-map-frame iframe');
-
-  if (retryBtn && mapIframe) {
-    retryBtn.addEventListener('click', () => {
-      // Oculta el aviso (si lo quieres permanente, elimina esta línea)
-      if (alertBox) alertBox.style.display = 'none';
-
-      // Recarga el iframe evitando caché
-      const src = mapIframe.getAttribute('src') || '';
-      const clean = src.split('&_t=')[0];
-      mapIframe.setAttribute('src', `${clean}&_t=${Date.now()}`);
-    });
-  }
-
-  // Validación mínima del formulario (si luego lo conectas a backend, mantén esto)
-  const form = document.getElementById('contactForm');
-  const status = document.getElementById('formStatus');
-
-  const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v).trim());
-
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const fullName = document.getElementById('fullName');
-      const email = document.getElementById('email');
-      const message = document.getElementById('message');
-
-      const nameVal = fullName?.value.trim() || '';
-      const emailVal = email?.value.trim() || '';
-      const msgVal = message?.value.trim() || '';
-
-      if (status) status.textContent = '';
-
-      // Reglas mínimas (ajusta si deseas)
-      if (nameVal.length < 3) {
-        if (status) status.textContent = 'Por favor, ingresa tu nombre completo.';
-        fullName?.focus();
-        return;
-      }
-      if (!isEmail(emailVal)) {
-        if (status) status.textContent = 'Por favor, ingresa un correo válido.';
-        email?.focus();
-        return;
-      }
-      if (msgVal.length < 10) {
-        if (status) status.textContent = 'Cuéntanos un poco más (mínimo 10 caracteres).';
-        message?.focus();
-        return;
-      }
-
-      // Placeholder: aquí luego conectas a tu backend / EmailJS / etc.
-      if (status) status.textContent = 'Listo. Tu mensaje está listo para enviarse (pendiente de integración).';
-      form.reset();
-    });
-  }
-})();
-// === CONTACT MAP: Retry button with loading + always "no branches" ===
-(() => {
-  const btn = document.getElementById("mapRetryBtn");
-  const alertBox = document.querySelector(".contact-map-alert");
-  const title = alertBox?.querySelector(".contact-map-alert-title");
-
-  if (!btn || !alertBox || !title) return;
-
-  const DEFAULT_MSG = "No se encontraron sucursales activas";
-
-  btn.addEventListener("click", () => {
-    if (btn.classList.contains("is-loading")) return;
-
-    // set loading
-    btn.classList.add("is-loading");
-    btn.disabled = true;
-
-    // opcional: feedback en el mensaje
-    title.textContent = "Buscando sucursales…";
-
-    // simula carga tipo "cargando página"
-    window.setTimeout(() => {
-      // no hay sucursales -> volvemos al estado original
-      title.textContent = DEFAULT_MSG;
-
-      btn.classList.remove("is-loading");
-      btn.disabled = false;
-    }, 1100);
-  });
-})();

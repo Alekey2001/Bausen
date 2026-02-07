@@ -2324,3 +2324,29 @@ body:not(.theme-dark) .service-card{
 /* Evita saltos raros en anclas + menú */
 html:focus-within{ scroll-behavior: smooth; }
 body.menu-open{ overscroll-behavior: none; }
+/* css de banderas */
+.language-flag,
+.lang-option-flag {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-btn .language-flag {
+  margin-right: 10px;
+}
+
+.language-dropdown .language-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang-option-flag svg,
+.language-flag svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
