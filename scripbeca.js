@@ -876,11 +876,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* =========================
-     Contact form => Netlify Forms (AJAX robusto)
-     - Envía TODOS los campos del form (incluye honeypot y form-name)
-     - Si bot-field trae contenido => no manda
-  ========================= */
   function initContactForm() {
   if (!contactForm || !formStatus) return;
 
@@ -918,7 +913,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Honeypot: si se llenó, es spam => no enviamos nada
+    // honeypot
     const botField = contactForm.querySelector("input[name='bot-field']");
     if (botField && String(botField.value || "").trim().length > 0) return;
 
@@ -932,19 +927,27 @@ document.addEventListener("DOMContentLoaded", () => {
     setStatus("", true);
 
     try {
-      // ✅ Enviar TODO el form (incluye form-name + bot-field)
       const formData = new FormData(contactForm);
 
-      const res = await fetch("/", {
+      // Enviar al action del form (evita redirects raros)
+      const action = contactForm.getAttribute("action") || "/";
+
+      const res = await fetch(action, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encodeFormData(formData),
       });
 
+      // Netlify suele responder 200/302/303 en flujos normales, pero con AJAX
+      // nos basta con que no sea error duro.
       if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
 
       setStatus(t(lang, "form.ok"), true);
       contactForm.reset();
+
+      // Si quieres: redirigir a /gracias/ de forma explícita:
+      // window.location.href = action;
+
       setTimeout(() => setStatus("", true), 4500);
     } catch (err) {
       console.error(err);
@@ -957,6 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 }
+
   /* =========================
      Boot
   ========================= */

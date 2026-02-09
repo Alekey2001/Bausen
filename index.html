@@ -704,18 +704,20 @@
   id="contactForm"
   name="contact"
   method="POST"
-  action="/"
+  action="/gracias/"
   data-netlify="true"
   data-netlify-honeypot="bot-field"
-  novalidate
 >
-  <!-- Campo requerido por Netlify -->
+  <!-- Honeypot anti-spam (Netlify) -->
+  <p style="display:none;">
+    <label>Don’t fill this out: <input name="bot-field" /></label>
+  </p>
+
+  <!-- REQUIRED: Netlify form name -->
   <input type="hidden" name="form-name" value="contact" />
 
-  <!-- Honeypot anti-spam -->
-  <p style="display:none;">
-    <label>Don’t fill this out: <input type="text" name="bot-field" /></label>
-  </p>
+  <!-- (Opcional) Asunto del correo en notificación -->
+  <input type="hidden" name="subject" value="Nuevo mensaje desde BAUSEN (Web)" />
 
   <div class="contact-row">
     <div class="field">
@@ -773,6 +775,7 @@
 
   <p class="form-status" id="formStatus" aria-live="polite"></p>
 </form>
+
 
         </div>
 
