@@ -13,7 +13,7 @@
    - Tabs Training Center (3 panels + dots + auto)
    - Carrusel Reconocimientos (scroll + drag + indicadores)
    - Botón “Reintentar” del mapa (UI)
-   - Formulario contacto: Netlify Forms + anti-spam + status
+   - Formulario contacto: Netlify Forms + honeypot + status (AJAX)
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -58,7 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       "hero.pill": "Soluciones empresariales integrales",
       "hero.title": "Impulsamos<br /><span class='hero-accent'>tu talento</span>",
-      "hero.subtitle": "Capital Humano, Desarrollo Organizacional y Management<br />Servicios para cada etapa de tu crecimiento.",
+      "hero.subtitle":
+        "Capital Humano, Desarrollo Organizacional y Management<br />Servicios para cada etapa de tu crecimiento.",
       "hero.ctaServices": "Ver Servicios",
       "hero.ctaContact": "Contactar",
 
@@ -84,7 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       "hero.pill": "Integrated business solutions",
       "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
-      "hero.subtitle": "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
+      "hero.subtitle":
+        "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
       "hero.ctaServices": "View Services",
       "hero.ctaContact": "Contact",
 
@@ -101,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
+  // Banderas SVG sencillas (ligeras)
   const FLAG_SVG = {
     ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
           <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
@@ -129,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <rect width="24" height="24" rx="6" fill="#FFF"></rect>
           <rect width="8" height="24" rx="6" fill="#009246"></rect>
           <rect x="16" width="8" height="24" rx="6" fill="#CE2B37"></rect>
-        </svg>`
+        </svg>`,
   };
 
   const t = (lang, key) => {
@@ -138,78 +141,69 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function applyTranslations(lang) {
-    // textos
+    // Textos (innerHTML para soportar <br />)
     $$("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       if (!key) return;
       el.innerHTML = t(lang, key);
     });
 
-    // placeholders
+    // Placeholders
     $$("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
       if (!key) return;
       el.setAttribute("placeholder", t(lang, key));
     });
 
-    // bandera del botón principal
+    // Bandera del botón principal (requiere #language-flag)
     const flagEl = $("#language-flag");
     if (flagEl) flagEl.innerHTML = FLAG_SVG[lang] || FLAG_SVG.ES;
 
-    // banderas en dropdown
+    // Banderas en dropdown: pon spans con data-flag="ES"/"EN"/...
     $$("[data-flag]").forEach((el) => {
       const code = (el.getAttribute("data-flag") || "ES").toUpperCase();
       el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
     });
 
-    // lang attr
+    // lang attr: mínimo viable
     document.documentElement.setAttribute("lang", lang === "EN" ? "en" : "es");
   }
 
   /* =========================
      Elements
   ========================= */
-  // Loader / Theme
   const pageLoader = $("#page-loader");
   const themeToggle = $("#theme-toggle");
 
-  // Language
   const languageBtn = $("#language-btn");
   const languageDropdown = $("#language-dropdown");
   const languageOptions = $$(".language-option");
   const languageCode = $("#language-code");
   const mobileLanguageSelect = $("#mobile-language-select");
 
-  // Nav + footer year
   const mainNavLinks = $$(".nav-link, .mobile-nav-link");
   const currentYear = $("#current-year");
 
-  // Cursor
   const cursorDot = $("#cursor-dot");
   const cursorRing = $("#cursor-ring");
 
-  // Hero
   const hero = $("#hero");
   const mediaCard = $("#media-card");
   const orb1 = $(".hero-orb-1");
   const orb2 = $(".hero-orb-2");
   const orb3 = $(".hero-orb-3");
 
-  // Scroll indicator
   const scrollIndicator = $(".scroll-indicator");
 
-  // Training
   const trainingRoot = $("#training");
   const trainingTabs = trainingRoot ? $$(".training-tab", trainingRoot) : [];
   const trainingPanels = trainingRoot ? $$(".training-panel", trainingRoot) : [];
 
-  // Awards
   const awardsRoot = $("#awards");
   const awardsTrack = awardsRoot ? $(".awards-track", awardsRoot) : null;
   const awardCards = awardsTrack ? $$(".award-card", awardsTrack) : [];
   const awardIndicators = awardsRoot ? $$(".award-indicator", awardsRoot) : [];
 
-  // Contact
   const contactForm = $("#contactForm");
   const formStatus = $("#formStatus");
   const mapRetryBtn = $("#mapRetryBtn") || $(".contact-map-retry");
@@ -231,12 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.readyState === "complete") {
       setTimeout(hide, prefersReducedMotion ? 120 : 350);
     } else {
-      window.addEventListener(
-        "load",
-        () => setTimeout(hide, prefersReducedMotion ? 120 : 350),
-        { once: true }
-      );
+      window.addEventListener("load", () => setTimeout(hide, prefersReducedMotion ? 120 : 350), { once: true });
     }
+
     setTimeout(hide, 3500);
   }
 
@@ -256,8 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (saved === "dark" || saved === "light") {
       apply(saved);
     } else {
-      const osDark = window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const osDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       apply(osDark ? "dark" : "light");
     }
 
@@ -277,19 +267,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const setLang = (lang) => {
       const safe = String(lang || "ES").toUpperCase();
-
       storage.set(KEY, safe);
+
       if (languageCode) languageCode.textContent = safe;
       if (mobileLanguageSelect) mobileLanguageSelect.value = safe;
 
-      // ✅ Traduce y actualiza banderas
       applyTranslations(safe);
     };
 
-    // init
     setLang(storage.get(KEY, "ES"));
 
-    // Desktop dropdown
     if (languageBtn && languageDropdown) {
       const open = () => {
         languageBtn.setAttribute("aria-expanded", "true");
@@ -329,7 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Mobile select
     if (mobileLanguageSelect) {
       mobileLanguageSelect.addEventListener("change", (e) => setLang(e.target.value));
     }
@@ -340,14 +326,10 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
   function initMobileMenu() {
     const toggleBtn =
-      document.getElementById("menu-toggle") ||
-      document.querySelector(".menu-toggle") ||
-      document.querySelector(".nav__toggle");
+      document.getElementById("menu-toggle") || document.querySelector(".menu-toggle") || document.querySelector(".nav__toggle");
 
     const panel =
-      document.getElementById("mobile-menu") ||
-      document.querySelector(".mobile-menu") ||
-      document.querySelector(".nav__panel");
+      document.getElementById("mobile-menu") || document.querySelector(".mobile-menu") || document.querySelector(".nav__panel");
 
     const overlay =
       document.getElementById("mobile-menu-overlay") ||
@@ -355,9 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".nav__overlay");
 
     const closeBtn =
-      document.getElementById("close-menu") ||
-      document.querySelector(".close-menu") ||
-      document.querySelector(".nav__close");
+      document.getElementById("close-menu") || document.querySelector(".close-menu") || document.querySelector(".nav__close");
 
     if (!toggleBtn || !panel || !overlay) return;
 
@@ -377,10 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setLocked(true);
 
       window.setTimeout(() => {
-        const firstLink =
-          panel.querySelector(".mobile-nav-link") ||
-          panel.querySelector("a[href]") ||
-          panel.querySelector("button");
+        const firstLink = panel.querySelector(".mobile-nav-link") || panel.querySelector("a[href]") || panel.querySelector("button");
         if (firstLink) firstLink.focus();
       }, 80);
     };
@@ -501,14 +478,8 @@ document.addEventListener("DOMContentLoaded", () => {
         $(".services") ||
         $("main section:nth-of-type(2)");
 
-      if (next) {
-        next.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
-      } else {
-        window.scrollTo({
-          top: window.innerHeight * 0.9,
-          behavior: prefersReducedMotion ? "auto" : "smooth",
-        });
-      }
+      if (next) next.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+      else window.scrollTo({ top: window.innerHeight * 0.9, behavior: prefersReducedMotion ? "auto" : "smooth" });
     });
   }
 
@@ -550,11 +521,11 @@ document.addEventListener("DOMContentLoaded", () => {
       raf = null;
     };
 
-    const isInteractive = (t) =>
-      !!t.closest("a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card");
+    const isInteractive = (tEl) =>
+      !!tEl.closest("a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card");
 
-    const isSoftInteractive = (t) =>
-      !!t.closest(".media-card, .nav-link, .language-btn, .theme-toggle");
+    const isSoftInteractive = (tEl) =>
+      !!tEl.closest(".media-card, .nav-link, .language-btn, .theme-toggle");
 
     const onOver = (e) => {
       const tEl = e.target;
@@ -666,7 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const order = ["eventos", "webinars", "becarios"];
         const idx = order.indexOf(currentKey);
         const next = order[(idx + 1) % order.length];
-        showPanel(next, true);
+        showPanel(next);
       }, AUTO_MS);
     };
 
@@ -679,7 +650,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.setAttribute("aria-selected", is ? "true" : "false");
       });
 
-      // icono izquierdo grande (re-render robusto)
+      // icono izquierdo grande
       const leftIconWrap = trainingRoot.querySelector(".training-card-left .training-image-icon");
       const activeTab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
       if (leftIconWrap && activeTab && activeTab.dataset.icon) {
@@ -838,24 +809,36 @@ document.addEventListener("DOMContentLoaded", () => {
     let tStartX = 0;
     let tStartScroll = 0;
 
-    awardsTrack.addEventListener("touchstart", (e) => {
-      if (!canScroll()) return;
-      tDown = true;
-      tStartX = e.touches[0].clientX;
-      tStartScroll = awardsTrack.scrollLeft;
-    }, { passive: true });
+    awardsTrack.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!canScroll()) return;
+        tDown = true;
+        tStartX = e.touches[0].clientX;
+        tStartScroll = awardsTrack.scrollLeft;
+      },
+      { passive: true }
+    );
 
-    awardsTrack.addEventListener("touchmove", (e) => {
-      if (!tDown) return;
-      const dx = e.touches[0].clientX - tStartX;
-      awardsTrack.scrollLeft = tStartScroll - dx;
-    }, { passive: true });
+    awardsTrack.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!tDown) return;
+        const dx = e.touches[0].clientX - tStartX;
+        awardsTrack.scrollLeft = tStartScroll - dx;
+      },
+      { passive: true }
+    );
 
-    awardsTrack.addEventListener("touchend", () => {
-      if (!tDown) return;
-      tDown = false;
-      updateIndicators();
-    }, { passive: true });
+    awardsTrack.addEventListener(
+      "touchend",
+      () => {
+        if (!tDown) return;
+        tDown = false;
+        updateIndicators();
+      },
+      { passive: true }
+    );
 
     let st = null;
     awardsTrack.addEventListener("scroll", () => {
@@ -894,12 +877,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Contact form => Netlify Forms
+     Contact form => Netlify Forms (AJAX robusto)
+     - Envía TODOS los campos del form (incluye honeypot y form-name)
+     - Si bot-field trae contenido => no manda
   ========================= */
-  function encodeFormData(data) {
-    return new URLSearchParams(data).toString();
-  }
-
   function initContactForm() {
     if (!contactForm || !formStatus) return;
 
@@ -912,6 +893,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
+
+    // Convierte FormData a x-www-form-urlencoded
+    const encodeFormData = (formData) => {
+      const params = new URLSearchParams();
+      for (const [k, v] of formData.entries()) params.append(k, v);
+      return params.toString();
+    };
 
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -931,6 +919,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+      // honeypot: si tiene contenido => bot
+      const botField = contactForm.querySelector("input[name='bot-field']");
+      if (botField && String(botField.value || "").trim().length > 0) {
+        // Silencioso (anti-spam)
+        return;
+      }
+
       const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
       const oldBtnHTML = btn ? btn.innerHTML : "";
 
@@ -941,17 +936,16 @@ document.addEventListener("DOMContentLoaded", () => {
       setStatus("", true);
 
       try {
-        const payload = {
-          "form-name": contactForm.getAttribute("name") || "contact",
-          fullName,
-          email,
-          message,
-        };
+        // Enviar TODO el form, incluyendo:
+        // - form-name (hidden)
+        // - bot-field (honeypot)
+        // - fullName/email/message
+        const formData = new FormData(contactForm);
 
         const res = await fetch("/", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encodeFormData(payload),
+          body: encodeFormData(formData),
         });
 
         if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
