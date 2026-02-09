@@ -882,89 +882,81 @@ document.addEventListener("DOMContentLoaded", () => {
      - Si bot-field trae contenido => no manda
   ========================= */
   function initContactForm() {
-    if (!contactForm || !formStatus) return;
+  if (!contactForm || !formStatus) return;
 
-    const setStatus = (msg, ok) => {
-      formStatus.textContent = msg || "";
-      formStatus.style.opacity = msg ? "1" : "0";
-      formStatus.style.marginTop = msg ? "12px" : "";
-      formStatus.style.fontWeight = "900";
-      formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
-    };
+  const setStatus = (msg, ok) => {
+    formStatus.textContent = msg || "";
+    formStatus.style.opacity = msg ? "1" : "0";
+    formStatus.style.marginTop = msg ? "12px" : "";
+    formStatus.style.fontWeight = "900";
+    formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
+  };
 
-    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
+  const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
 
-    // Convierte FormData a x-www-form-urlencoded
-    const encodeFormData = (formData) => {
-      const params = new URLSearchParams();
-      for (const [k, v] of formData.entries()) params.append(k, v);
-      return params.toString();
-    };
+  const encodeFormData = (formData) => {
+    const params = new URLSearchParams();
+    for (const [k, v] of formData.entries()) params.append(k, v);
+    return params.toString();
+  };
 
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const lang = storage.get("preferred-language", "ES");
+    const lang = storage.get("preferred-language", "ES");
 
-      const fullName = ($("#fullName")?.value || "").trim();
-      const email = ($("#email")?.value || "").trim();
-      const message = ($("#message")?.value || "").trim();
+    const fullName = ($("#fullName")?.value || "").trim();
+    const email = ($("#email")?.value || "").trim();
+    const message = ($("#message")?.value || "").trim();
 
-      if (!fullName || !email || !message) {
-        setStatus(t(lang, "form.err.required"), false);
-        return;
-      }
-      if (!isEmail(email)) {
-        setStatus(t(lang, "form.err.email"), false);
-        return;
-      }
+    if (!fullName || !email || !message) {
+      setStatus(t(lang, "form.err.required"), false);
+      return;
+    }
+    if (!isEmail(email)) {
+      setStatus(t(lang, "form.err.email"), false);
+      return;
+    }
 
-      // honeypot: si tiene contenido => bot
-      const botField = contactForm.querySelector("input[name='bot-field']");
-      if (botField && String(botField.value || "").trim().length > 0) {
-        // Silencioso (anti-spam)
-        return;
-      }
+    // Honeypot: si se llenó, es spam => no enviamos nada
+    const botField = contactForm.querySelector("input[name='bot-field']");
+    if (botField && String(botField.value || "").trim().length > 0) return;
 
-      const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
-      const oldBtnHTML = btn ? btn.innerHTML : "";
+    const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
+    const oldBtnHTML = btn ? btn.innerHTML : "";
 
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span>${t(lang, "form.sending")}</span>`;
+    }
+    setStatus("", true);
+
+    try {
+      // ✅ Enviar TODO el form (incluye form-name + bot-field)
+      const formData = new FormData(contactForm);
+
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData(formData),
+      });
+
+      if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
+
+      setStatus(t(lang, "form.ok"), true);
+      contactForm.reset();
+      setTimeout(() => setStatus("", true), 4500);
+    } catch (err) {
+      console.error(err);
+      setStatus(t(lang, "form.fail"), false);
+    } finally {
       if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = `<span>${t(lang, "form.sending")}</span>`;
+        btn.disabled = false;
+        btn.innerHTML = oldBtnHTML;
       }
-      setStatus("", true);
-
-      try {
-        // Enviar TODO el form, incluyendo:
-        // - form-name (hidden)
-        // - bot-field (honeypot)
-        // - fullName/email/message
-        const formData = new FormData(contactForm);
-
-        const res = await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encodeFormData(formData),
-        });
-
-        if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
-
-        setStatus(t(lang, "form.ok"), true);
-        contactForm.reset();
-        setTimeout(() => setStatus("", true), 4500);
-      } catch (err) {
-        console.error(err);
-        setStatus(t(lang, "form.fail"), false);
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = oldBtnHTML;
-        }
-      }
-    });
-  }
-
+    }
+  });
+}
   /* =========================
      Boot
   ========================= */

@@ -699,76 +699,81 @@
           <h3 class="contact-form-title">Envíanos un mensaje</h3>
           <p class="contact-form-subtitle">Completa el formulario y te contactaremos pronto.</p>
 
-          <form
-           class="contact-form"
+        <form
+  class="contact-form"
   id="contactForm"
   name="contact"
   method="POST"
+  action="/"
   data-netlify="true"
   data-netlify-honeypot="bot-field"
   novalidate
-          >
-          <!-- Campo requerido por Netlify -->
-           <input type="hidden" name="form-name" value="contact" />
-            <!-- Honeypot anti-spam -->
-            <p style="display:none;">
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
+>
+  <!-- Campo requerido por Netlify -->
+  <input type="hidden" name="form-name" value="contact" />
 
-            
+  <!-- Honeypot anti-spam -->
+  <p style="display:none;">
+    <label>Don’t fill this out: <input type="text" name="bot-field" /></label>
+  </p>
 
-            <div class="contact-row">
-              <div class="field">
-                <label class="visually-hidden" for="fullName">Tu nombre completo</label>
-                <div class="field-input">
-                  <i class="fa-regular fa-user" aria-hidden="true"></i>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    data-i18n-placeholder="form.fullNamePh"
-                    placeholder="Tu nombre completo"
-                    autocomplete="name"
-                  />
-                </div>
-              </div>
-              <div class="field">
-                <label class="visually-hidden" for="email">tu@email.com</label>
-                <div class="field-input">
-                  <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    data-i18n-placeholder="form.emailPh"
-                    placeholder="contacto@bausen.mx"
-                    autocomplete="email"
-                  />
-                </div>
-              </div>
-            </div>
+  <div class="contact-row">
+    <div class="field">
+      <label class="visually-hidden" for="fullName">Tu nombre completo</label>
+      <div class="field-input">
+        <i class="fa-regular fa-user" aria-hidden="true"></i>
+        <input
+          type="text"
+          id="fullName"
+          name="fullName"
+          data-i18n-placeholder="form.fullNamePh"
+          placeholder="Tu nombre completo"
+          autocomplete="name"
+          required
+        />
+      </div>
+    </div>
 
-            <div class="field">
-              <label class="visually-hidden" for="message">¿En qué podemos ayudarte?</label>
-              <div class="field-textarea">
-                <i class="fa-regular fa-message" aria-hidden="true"></i>
-                <textarea
-                  id="message"
-                  name="message"
-                  data-i18n-placeholder="form.messagePh"
-                  placeholder="¿En qué podemos ayudarte?"
-                  rows="6"
-                ></textarea>
-              </div>
-            </div>
+    <div class="field">
+      <label class="visually-hidden" for="email">tu@email.com</label>
+      <div class="field-input">
+        <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          data-i18n-placeholder="form.emailPh"
+          placeholder="tu@email.com"
+          autocomplete="email"
+          required
+        />
+      </div>
+    </div>
+  </div>
 
-            <button class="btn btn-primary btn-lg btn-icon" type="submit" id="contactSubmitBtn">
-              <i class="fa-regular fa-paper-plane" aria-hidden="true"></i>
-              <span data-i18n="form.send">Enviar mensaje</span>
-            </button>
+  <div class="field">
+    <label class="visually-hidden" for="message">¿En qué podemos ayudarte?</label>
+    <div class="field-textarea">
+      <i class="fa-regular fa-message" aria-hidden="true"></i>
+      <textarea
+        id="message"
+        name="message"
+        data-i18n-placeholder="form.messagePh"
+        placeholder="¿En qué podemos ayudarte?"
+        rows="6"
+        required
+      ></textarea>
+    </div>
+  </div>
 
-            <p class="form-status" id="formStatus" aria-live="polite"></p>
-          </form>
+  <button class="btn btn-primary btn-lg btn-icon" type="submit" id="contactSubmitBtn">
+    <i class="fa-regular fa-paper-plane" aria-hidden="true"></i>
+    <span data-i18n="form.send">Enviar mensaje</span>
+  </button>
+
+  <p class="form-status" id="formStatus" aria-live="polite"></p>
+</form>
+
         </div>
 
         <div class="contact-bottom">
