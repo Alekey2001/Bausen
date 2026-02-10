@@ -1,19 +1,10 @@
-/* scripbeca.js — BAUSEN (con i18n + Netlify Forms)
-   Incluye:
-   - Loader (con failsafe)
-   - Tema (persistente)
-   - Idioma (i18n real + banderas + persistencia)
-   - Menú móvil (overlay + ESC + bloqueo scroll)
-   - Active link por data-page
-   - Año en footer
-   - Reveal on scroll (data-animate + data-delay)
-   - Scroll indicator
-   - Cursor custom (desktop)
-   - Parallax hero
-   - Tabs Training Center (3 panels + dots + auto)
-   - Carrusel Reconocimientos (scroll + drag + indicadores)
-   - Botón “Reintentar” del mapa (UI)
-   - Formulario contacto: Netlify Forms + honeypot + status (AJAX)
+/* scripbeca.js — BAUSEN (i18n + Netlify Forms)
+   ✅ Mantiene:
+   - Netlify Forms (name/form-name/honeypot/POST) sin romper lógica
+   - Menú, tema, loader, tabs, carrusel, etc.
+   ✅ i18n:
+   - Traducción completa ES/EN
+   - Idiomas extra (DE/PT/FR/IT) se conservan en UI y hacen fallback a ES por ahora
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -45,10 +36,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-     i18n (traducción real + banderas)
+     i18n dictionaries (ES + EN)
   ========================= */
   const I18N = {
     ES: {
+      // NAV
       "nav.home": "Inicio",
       "nav.press": "Prensa",
       "nav.services": "Servicios",
@@ -56,6 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
 
+      // HEADER CTA
+      "header.collaborator": "¿Eres colaborador?",
+
+      // HERO
       "hero.pill": "Soluciones empresariales integrales",
       "hero.title": "Impulsamos<br /><span class='hero-accent'>tu talento</span>",
       "hero.subtitle":
@@ -63,6 +59,105 @@ document.addEventListener("DOMContentLoaded", () => {
       "hero.ctaServices": "Ver Servicios",
       "hero.ctaContact": "Contactar",
 
+      // Toast
+      "toast.title": "Certificados",
+      "toast.sub": "REPSE · ISO · NOM",
+
+      // KPIs
+      "kpi.years": "Años de experiencia",
+      "kpi.clients": "Clientes",
+      "kpi.satisfaction": "Satisfacción",
+
+      // SERVICES section
+      "services.kicker": "Lo que hacemos",
+      "services.title": "Nuestros Servicios",
+      "services.subtitle": "Soluciones integrales diseñadas para optimizar cada aspecto de tu organización",
+      "services.card1.title": "Capital humano",
+      "services.card1.text": "Aumenta la eficiencia y resultados de tu negocio.",
+      "services.card2.title": "Servicios especializados",
+      "services.card2.text": "Aumenta la eficiencia y resultados de tu negocio.",
+      "services.card3.title": "Servicios de Impuestos",
+      "services.card3.text": "Optimiza tu carga fiscal con expertos certificados.",
+      "services.more": "Conocer más",
+
+      // PRESS
+      "press.kicker": "Sala de prensa",
+      "press.title": "Comunicados de <span class='accent'>Prensa</span>",
+      "press.subtitle": "Mantente informado sobre las últimas noticias y anuncios de BAUSEN",
+      "press.cta": "Ver todos los comunicados",
+
+      // TRAINING
+      "training.kicker": "Formación de talento",
+      "training.subtitle":
+        "Formamos y conectamos el talento del futuro con las mejores<br />oportunidades",
+      "training.leftTitle": "Sistema de Becarios",
+      "training.tab.events": "Eventos",
+      "training.tab.webinars": "Webinars Institucionales",
+      "training.tab.interns": "Sistema de Becarios",
+      "training.panel.events.text": "Participación activa en eventos con escuelas y universidades",
+      "training.panel.webinars.text": "Capacitaciones y webinars especializados con instituciones educativas",
+      "training.panel.interns.text": "Programa integral de formación y desarrollo de talento joven",
+      "training.more": "Más información",
+      "training.dot.events": "Ir a Eventos",
+      "training.dot.webinars": "Ir a Webinars Institucionales",
+      "training.dot.interns": "Ir a Sistema de Becarios",
+
+      // NEWS
+      "news.kicker": "Blog y noticias",
+      "news.title": "Últimas <span class='accent'>Noticias</span>",
+      "news.subtitle": "Descubre artículos, casos de éxito y tendencias del sector",
+      "news.cta": "Ver todas las noticias",
+
+      // CONNECT
+      "connect.kicker": "Conecta con nosotros",
+      "connect.title": "Juntos trazamos<br /><span class='connect-accent'>tu camino al éxito</span>",
+      "connect.text":
+        "¿Listo para llevar tu negocio al siguiente nivel? Agenda una<br />reunión con nuestros especialistas y descubre cómo podemos<br />ayudarte.",
+      "connect.cta": "¡Agenda ahora!",
+      "connect.follow": "¡Síguenos en redes!",
+
+      // AWARDS
+      "awards.kicker": "Excelencia reconocida",
+      "awards.title": "Nuestros <span class='accent'>Reconocimientos</span>",
+      "awards.subtitle": "Certificaciones y alianzas que respaldan nuestro compromiso con la excelencia",
+
+      // Awards cards (carousel)
+      "awards.card1.kicker": "Reconocimiento 01",
+      "awards.card1.title": "Consejo de Recursos Humanos",
+      "awards.card2.kicker": "Reconocimiento 02",
+      "awards.card2.title": "Distintivo de Empresas Humanitarias",
+      "awards.card3.kicker": "Reconocimiento 03",
+      "awards.card3.title": "Certificación de Trabajo Digno",
+      "awards.card4.kicker": "Reconocimiento 04",
+      "awards.card4.title": "Registro de Especialistas Profesionales",
+      "awards.card5.kicker": "Reconocimiento 05",
+      "awards.card5.title": "Concilio de Recursos Humanos",
+      "awards.card6.kicker": "Reconocimiento 06",
+      "awards.card6.title": "Certificación ISO",
+      "awards.card7.kicker": "Reconocimiento 07",
+      "awards.card7.title": "Cumplimiento NOM",
+      "awards.card8.kicker": "Reconocimiento 08",
+      "awards.card8.title": "Registro REPSE",
+
+      // CONTACT section
+      "contact.kicker": "¿Listo para conectar?",
+      "contact.title": "Hablemos sobre <span class='contact-accent'>tu proyecto</span>",
+      "contact.subtitle":
+        "Cuéntanos tus ideas, necesidades o dudas y nuestro equipo te contactará a la<br />brevedad. ¡Estamos aquí para ayudarte a transformar tu operación!",
+      "contact.formTitle": "Envíanos un mensaje",
+      "contact.formSubtitle": "Completa el formulario y te contactaremos pronto.",
+
+      // Contact info block
+      "contact.infoTitle": "Información de Contacto",
+      "contact.phoneLabel": "Teléfono",
+      "contact.emailLabel": "Email",
+      "contact.locationLabel": "Ubicación",
+      "contact.locationValue": "Querétaro, México",
+      "contact.hoursLabel": "Horario",
+      "contact.hoursValue": "Lun - Vie: 9:00 - 18:00",
+      "contact.follow": "Síguenos en redes",
+
+      // FORM
       "form.fullNamePh": "Tu nombre completo",
       "form.emailPh": "tu@email.com",
       "form.messagePh": "¿En qué podemos ayudarte?",
@@ -73,9 +168,41 @@ document.addEventListener("DOMContentLoaded", () => {
       "form.ok": "Mensaje enviado. Nos pondremos en contacto a la brevedad.",
       "form.sending": "Enviando…",
       "form.fail": "Ocurrió un error. Por favor intenta de nuevo.",
+
+      // MAP
+      "map.kicker": "NUESTRAS UBICACIONES",
+
+      // FOOTER headings
+      "footer.company": "EMPRESA",
+      "footer.services": "SERVICIOS",
+
+      // FOOTER company links
+      "footer.link.about": "Acerca de",
+      "footer.link.services": "Servicios",
+      "footer.link.news": "Noticias",
+      "footer.link.press": "Prensa",
+      "footer.link.contact": "Contacto",
+
+      // FOOTER services links
+      "footer.svc.capital": "Capital Humano",
+      "footer.svc.legal": "Servicios Legales",
+      "footer.svc.accounting": "Servicios Contables",
+      "footer.svc.orgdev": "Desarrollo Organizacional",
+
+      // UI
+      "ui.openMenu": "Abrir menú",
+      "ui.closeMenu": "Cerrar menú",
+      "ui.retry": "Reintentar",
+      "ui.searching": "Buscando…",
+      "ui.noBranches": "No se encontraron sucursales activas",
+      "ui.scrollNext": "Bajar a la siguiente sección",
+      "ui.langSelect": "Seleccionar idioma",
+      "ui.goHome": "Ir a inicio",
+      "ui.toggleTheme": "Cambiar tema claro/oscuro",
     },
 
     EN: {
+      // NAV
       "nav.home": "Home",
       "nav.press": "Press",
       "nav.services": "Services",
@@ -83,6 +210,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "nav.training": "Training Center",
       "nav.about": "About",
 
+      // HEADER CTA
+      "header.collaborator": "Are you a collaborator?",
+
+      // HERO
       "hero.pill": "Integrated business solutions",
       "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
       "hero.subtitle":
@@ -90,6 +221,105 @@ document.addEventListener("DOMContentLoaded", () => {
       "hero.ctaServices": "View Services",
       "hero.ctaContact": "Contact",
 
+      // Toast
+      "toast.title": "Certified",
+      "toast.sub": "REPSE · ISO · NOM",
+
+      // KPIs
+      "kpi.years": "Years of experience",
+      "kpi.clients": "Clients",
+      "kpi.satisfaction": "Satisfaction",
+
+      // SERVICES section
+      "services.kicker": "What we do",
+      "services.title": "Our Services",
+      "services.subtitle": "Integrated solutions designed to optimize every aspect of your organization",
+      "services.card1.title": "Human Capital",
+      "services.card1.text": "Boost efficiency and results for your business.",
+      "services.card2.title": "Specialized Services",
+      "services.card2.text": "Boost efficiency and results for your business.",
+      "services.card3.title": "Tax Services",
+      "services.card3.text": "Optimize your tax burden with certified experts.",
+      "services.more": "Learn more",
+
+      // PRESS
+      "press.kicker": "Press room",
+      "press.title": "Press <span class='accent'>Releases</span>",
+      "press.subtitle": "Stay informed about the latest BAUSEN news and announcements",
+      "press.cta": "View all releases",
+
+      // TRAINING
+      "training.kicker": "Talent development",
+      "training.subtitle":
+        "We train and connect future talent with the best<br />opportunities",
+      "training.leftTitle": "Internship Program",
+      "training.tab.events": "Events",
+      "training.tab.webinars": "Institutional Webinars",
+      "training.tab.interns": "Internship Program",
+      "training.panel.events.text": "Active participation in events with schools and universities",
+      "training.panel.webinars.text": "Specialized training and webinars with educational institutions",
+      "training.panel.interns.text": "Comprehensive program for training and developing young talent",
+      "training.more": "Learn more",
+      "training.dot.events": "Go to Events",
+      "training.dot.webinars": "Go to Institutional Webinars",
+      "training.dot.interns": "Go to Internship Program",
+
+      // NEWS
+      "news.kicker": "Blog & news",
+      "news.title": "Latest <span class='accent'>News</span>",
+      "news.subtitle": "Discover articles, success stories and industry trends",
+      "news.cta": "View all news",
+
+      // CONNECT
+      "connect.kicker": "Connect with us",
+      "connect.title": "Together we shape<br /><span class='connect-accent'>your path to success</span>",
+      "connect.text":
+        "Ready to take your business to the next level? Schedule a<br />meeting with our specialists and discover how we can<br />help you.",
+      "connect.cta": "Schedule now!",
+      "connect.follow": "Follow us on social!",
+
+      // AWARDS
+      "awards.kicker": "Recognized excellence",
+      "awards.title": "Our <span class='accent'>Recognitions</span>",
+      "awards.subtitle": "Certifications and partnerships that back our commitment to excellence",
+
+      // Awards cards (carousel)
+      "awards.card1.kicker": "Recognition 01",
+      "awards.card1.title": "Human Resources Council",
+      "awards.card2.kicker": "Recognition 02",
+      "awards.card2.title": "Humanitarian Companies Distinction",
+      "awards.card3.kicker": "Recognition 03",
+      "awards.card3.title": "Decent Work Certification",
+      "awards.card4.kicker": "Recognition 04",
+      "awards.card4.title": "Professional Specialists Registry",
+      "awards.card5.kicker": "Recognition 05",
+      "awards.card5.title": "Human Resources Council",
+      "awards.card6.kicker": "Recognition 06",
+      "awards.card6.title": "ISO Certification",
+      "awards.card7.kicker": "Recognition 07",
+      "awards.card7.title": "NOM Compliance",
+      "awards.card8.kicker": "Recognition 08",
+      "awards.card8.title": "REPSE Registry",
+
+      // CONTACT section
+      "contact.kicker": "Ready to connect?",
+      "contact.title": "Let’s talk about <span class='contact-accent'>your project</span>",
+      "contact.subtitle":
+        "Tell us your ideas, needs or questions and our team will contact you<br />shortly. We’re here to help you transform your operations!",
+      "contact.formTitle": "Send us a message",
+      "contact.formSubtitle": "Fill out the form and we’ll contact you soon.",
+
+      // Contact info block
+      "contact.infoTitle": "Contact Information",
+      "contact.phoneLabel": "Phone",
+      "contact.emailLabel": "Email",
+      "contact.locationLabel": "Location",
+      "contact.locationValue": "Querétaro, Mexico",
+      "contact.hoursLabel": "Hours",
+      "contact.hoursValue": "Mon - Fri: 9:00 - 18:00",
+      "contact.follow": "Follow us on social",
+
+      // FORM
       "form.fullNamePh": "Full name",
       "form.emailPh": "you@email.com",
       "form.messagePh": "How can we help you?",
@@ -100,10 +330,41 @@ document.addEventListener("DOMContentLoaded", () => {
       "form.ok": "Message sent. We’ll contact you shortly.",
       "form.sending": "Sending…",
       "form.fail": "Something went wrong. Please try again.",
+
+      // MAP
+      "map.kicker": "OUR LOCATIONS",
+
+      // FOOTER headings
+      "footer.company": "COMPANY",
+      "footer.services": "SERVICES",
+
+      // FOOTER company links
+      "footer.link.about": "About",
+      "footer.link.services": "Services",
+      "footer.link.news": "News",
+      "footer.link.press": "Press",
+      "footer.link.contact": "Contact",
+
+      // FOOTER services links
+      "footer.svc.capital": "Human Capital",
+      "footer.svc.legal": "Legal Services",
+      "footer.svc.accounting": "Accounting Services",
+      "footer.svc.orgdev": "Organizational Development",
+
+      // UI
+      "ui.openMenu": "Open menu",
+      "ui.closeMenu": "Close menu",
+      "ui.retry": "Retry",
+      "ui.searching": "Searching…",
+      "ui.noBranches": "No active branches found",
+      "ui.scrollNext": "Scroll to next section",
+      "ui.langSelect": "Select language",
+      "ui.goHome": "Go to home",
+      "ui.toggleTheme": "Toggle light/dark theme",
     },
   };
 
-  // Banderas SVG sencillas (ligeras)
+  // Banderas SVG (conservar todas)
   const FLAG_SVG = {
     ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
           <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
@@ -135,38 +396,166 @@ document.addEventListener("DOMContentLoaded", () => {
         </svg>`,
   };
 
-  const t = (lang, key) => {
-    const L = I18N[lang] || I18N.ES;
-    return L[key] ?? (I18N.ES[key] ?? key);
+  // Solo ES/EN traducen. Otros => fallback a ES, pero se conservan en UI.
+  const normalizeLang = (lang) => {
+    const L = String(lang || "ES").toUpperCase();
+    return L === "EN" ? "EN" : L; // DE/PT/FR/IT se quedan como valor, traducción => ES
   };
 
+  const t = (lang, key) => {
+    const L = normalizeLang(lang);
+    const dict = I18N[L] || I18N.ES;
+    return dict[key] ?? (I18N.ES[key] ?? key);
+  };
+
+  const setTextOrHTML = (el, value) => {
+    if (!el) return;
+    if (/<[a-z][\s\S]*>/i.test(value)) el.innerHTML = value;
+    else el.textContent = value;
+  };
+
+  // ✅ i18n por selectores (para texto que NO tiene data-i18n)
+  const I18N_BY_SELECTOR = {
+    ES: {
+      // ARIA / UI
+      ".logo-link[aria-label]": { attr: "aria-label", key: "ui.goHome" },
+      "#theme-toggle[aria-label]": { attr: "aria-label", key: "ui.toggleTheme" },
+      "#menu-toggle[aria-label]": { attr: "aria-label", key: "ui.openMenu" },
+      "#close-menu[aria-label]": { attr: "aria-label", key: "ui.closeMenu" },
+      ".scroll-indicator[aria-label]": { attr: "aria-label", key: "ui.scrollNext" },
+      "#language-btn[aria-label]": { attr: "aria-label", key: "ui.langSelect" },
+
+      // HEADER CTA
+      ".header-controls a[href='acceso.html']": { text: "header.collaborator" },
+
+      // CONTACT INFO title/labels
+      "#contacto .contact-info-title": { text: "contact.infoTitle" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(1) .contact-info-label": { text: "contact.phoneLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(2) .contact-info-label": { text: "contact.emailLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-label": { text: "contact.locationLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-value": { text: "contact.locationValue" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-label": { text: "contact.hoursLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-value": { text: "contact.hoursValue" },
+      "#contacto .contact-social-title": { text: "contact.follow" },
+
+      // FOOTER headings
+      "nav[aria-label='Empresa'] h4": { text: "footer.company" },
+      "nav[aria-label='Servicios'] h4": { text: "footer.services" },
+
+      // FOOTER: COMPANY links (por href)
+      "nav[aria-label='Empresa'] a[href='acercade.html']": { text: "footer.link.about" },
+      "nav[aria-label='Empresa'] a[href='acerca.html']": { text: "footer.link.about" }, // por si existe
+      "nav[aria-label='Empresa'] a[href='servicios.html']": { text: "footer.link.services" },
+      "nav[aria-label='Empresa'] a[href='noticias.html']": { text: "footer.link.news" },
+      "nav[aria-label='Empresa'] a[href='prensa.html']": { text: "footer.link.press" },
+      "nav[aria-label='Empresa'] a[href='contacto.html']": { text: "footer.link.contact" },
+
+      // FOOTER: SERVICES links (por href + anchors)
+      "nav[aria-label='Servicios'] a[href='servicios.html#capital-humano']": { text: "footer.svc.capital" },
+      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-legales']": { text: "footer.svc.legal" },
+      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-contables']": { text: "footer.svc.accounting" },
+      "nav[aria-label='Servicios'] a[href='servicios.html#desarrollo-organizacional']": { text: "footer.svc.orgdev" },
+    },
+
+    EN: {
+      // ARIA / UI
+      ".logo-link[aria-label]": { attr: "aria-label", key: "ui.goHome" },
+      "#theme-toggle[aria-label]": { attr: "aria-label", key: "ui.toggleTheme" },
+      "#menu-toggle[aria-label]": { attr: "aria-label", key: "ui.openMenu" },
+      "#close-menu[aria-label]": { attr: "aria-label", key: "ui.closeMenu" },
+      ".scroll-indicator[aria-label]": { attr: "aria-label", key: "ui.scrollNext" },
+      "#language-btn[aria-label]": { attr: "aria-label", key: "ui.langSelect" },
+
+      // HEADER CTA
+      ".header-controls a[href='acceso.html']": { text: "header.collaborator" },
+
+      // CONTACT INFO title/labels
+      "#contacto .contact-info-title": { text: "contact.infoTitle" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(1) .contact-info-label": { text: "contact.phoneLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(2) .contact-info-label": { text: "contact.emailLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-label": { text: "contact.locationLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-value": { text: "contact.locationValue" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-label": { text: "contact.hoursLabel" },
+      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-value": { text: "contact.hoursValue" },
+      "#contacto .contact-social-title": { text: "contact.follow" },
+
+      // FOOTER headings
+      "nav[aria-label='Empresa'] h4": { text: "footer.company" },
+      "nav[aria-label='Servicios'] h4": { text: "footer.services" },
+
+      // FOOTER: COMPANY links (por href)
+      "nav[aria-label='Empresa'] a[href='acercade.html']": { text: "footer.link.about" },
+      "nav[aria-label='Empresa'] a[href='acerca.html']": { text: "footer.link.about" }, // por si existe
+      "nav[aria-label='Empresa'] a[href='servicios.html']": { text: "footer.link.services" },
+      "nav[aria-label='Empresa'] a[href='noticias.html']": { text: "footer.link.news" },
+      "nav[aria-label='Empresa'] a[href='prensa.html']": { text: "footer.link.press" },
+      "nav[aria-label='Empresa'] a[href='contacto.html']": { text: "footer.link.contact" },
+
+      // FOOTER: SERVICES links (por href + anchors)
+      "nav[aria-label='Servicios'] a[href='servicios.html#capital-humano']": { text: "footer.svc.capital" },
+      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-legales']": { text: "footer.svc.legal" },
+      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-contables']": { text: "footer.svc.accounting" },
+      "nav[aria-label='Servicios'] a[href='servicios.html#desarrollo-organizacional']": { text: "footer.svc.orgdev" },
+    },
+  };
+
+  function applySelectorTranslations(lang) {
+    const L = normalizeLang(lang);
+    const map = I18N_BY_SELECTOR[L] || I18N_BY_SELECTOR.ES;
+
+    Object.entries(map).forEach(([selector, rule]) => {
+      const els = $$(selector);
+      if (!els.length) return;
+
+      els.forEach((el) => {
+        if (!el) return;
+
+        if (rule.attr) {
+          const value = t(L, rule.key);
+          el.setAttribute(rule.attr, value);
+          return;
+        }
+        if (rule.text) {
+          const value = t(L, rule.text);
+          setTextOrHTML(el, value);
+          return;
+        }
+      });
+    });
+  }
+
   function applyTranslations(lang) {
-    // Textos (innerHTML para soportar <br />)
+    const L = normalizeLang(lang);
+
+    // data-i18n
     $$("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       if (!key) return;
-      el.innerHTML = t(lang, key);
+      el.innerHTML = t(L, key);
     });
 
-    // Placeholders
+    // placeholders
     $$("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
       if (!key) return;
-      el.setAttribute("placeholder", t(lang, key));
+      el.setAttribute("placeholder", t(L, key));
     });
 
-    // Bandera del botón principal (requiere #language-flag)
+    // bandera principal
     const flagEl = $("#language-flag");
-    if (flagEl) flagEl.innerHTML = FLAG_SVG[lang] || FLAG_SVG.ES;
+    if (flagEl) flagEl.innerHTML = FLAG_SVG[L] || FLAG_SVG.ES;
 
-    // Banderas en dropdown: pon spans con data-flag="ES"/"EN"/...
+    // banderas dropdown (todas)
     $$("[data-flag]").forEach((el) => {
       const code = (el.getAttribute("data-flag") || "ES").toUpperCase();
       el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
     });
 
-    // lang attr: mínimo viable
-    document.documentElement.setAttribute("lang", lang === "EN" ? "en" : "es");
+    // lang attr del documento
+    document.documentElement.setAttribute("lang", L === "EN" ? "en" : "es");
+
+    // traducciones por selectores (footer + extras)
+    applySelectorTranslations(L);
   }
 
   /* =========================
@@ -244,9 +633,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const saved = storage.get(KEY);
-    if (saved === "dark" || saved === "light") {
-      apply(saved);
-    } else {
+    if (saved === "dark" || saved === "light") apply(saved);
+    else {
       const osDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
       apply(osDark ? "dark" : "light");
     }
@@ -286,15 +674,11 @@ document.addEventListener("DOMContentLoaded", () => {
         languageBtn.setAttribute("aria-expanded", "false");
         languageDropdown.classList.remove("show");
       };
-      const toggle = () => {
-        const expanded = languageBtn.getAttribute("aria-expanded") === "true";
-        expanded ? close() : open();
-      };
 
       languageBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggle();
+        languageBtn.getAttribute("aria-expanded") === "true" ? close() : open();
       });
 
       languageOptions.forEach((opt) => {
@@ -326,10 +710,14 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
   function initMobileMenu() {
     const toggleBtn =
-      document.getElementById("menu-toggle") || document.querySelector(".menu-toggle") || document.querySelector(".nav__toggle");
+      document.getElementById("menu-toggle") ||
+      document.querySelector(".menu-toggle") ||
+      document.querySelector(".nav__toggle");
 
     const panel =
-      document.getElementById("mobile-menu") || document.querySelector(".mobile-menu") || document.querySelector(".nav__panel");
+      document.getElementById("mobile-menu") ||
+      document.querySelector(".mobile-menu") ||
+      document.querySelector(".nav__panel");
 
     const overlay =
       document.getElementById("mobile-menu-overlay") ||
@@ -337,7 +725,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.querySelector(".nav__overlay");
 
     const closeBtn =
-      document.getElementById("close-menu") || document.querySelector(".close-menu") || document.querySelector(".nav__close");
+      document.getElementById("close-menu") ||
+      document.querySelector(".close-menu") ||
+      document.querySelector(".nav__close");
 
     if (!toggleBtn || !panel || !overlay) return;
 
@@ -355,9 +745,8 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.classList.add("show");
       toggleBtn.setAttribute("aria-expanded", "true");
       setLocked(true);
-
       window.setTimeout(() => {
-        const firstLink = panel.querySelector(".mobile-nav-link") || panel.querySelector("a[href]") || panel.querySelector("button");
+        const firstLink = panel.querySelector("a[href], button");
         if (firstLink) firstLink.focus();
       }, 80);
     };
@@ -370,25 +759,15 @@ document.addEventListener("DOMContentLoaded", () => {
       window.setTimeout(() => toggleBtn.focus(), 0);
     };
 
-    const toggleMenu = (e) => {
-      if (e) e.preventDefault();
+    toggleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
       panel.classList.contains("open") ? closeMenuFn() : openMenu();
-    };
+    });
 
-    toggleBtn.addEventListener("click", toggleMenu);
-
-    if (closeBtn) {
-      closeBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        closeMenuFn();
-      });
-    }
-
+    if (closeBtn) closeBtn.addEventListener("click", (e) => (e.preventDefault(), closeMenuFn()));
     overlay.addEventListener("click", closeMenuFn);
 
-    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
-      el.addEventListener("click", () => closeMenuFn());
-    });
+    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => el.addEventListener("click", closeMenuFn));
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
@@ -468,10 +847,11 @@ document.addEventListener("DOMContentLoaded", () => {
      Scroll indicator
   ========================= */
   function initScrollIndicator() {
+    const scrollIndicator = $(".scroll-indicator");
     if (!scrollIndicator) return;
 
     scrollIndicator.addEventListener("click", () => {
-      const heroSection = hero || $(".hero");
+      const heroSection = $("#hero") || $(".hero");
       const next =
         (heroSection && heroSection.nextElementSibling) ||
         $("#services") ||
@@ -496,7 +876,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let mouseY = window.innerHeight / 2;
     let dotX = mouseX, dotY = mouseY;
     let ringX = mouseX, ringY = mouseY;
-
     let raf = null;
 
     const setPos = (el, x, y) => {
@@ -514,18 +893,17 @@ document.addEventListener("DOMContentLoaded", () => {
       dotY += (mouseY - dotY) * 0.6;
       ringX += (mouseX - ringX) * 0.16;
       ringY += (mouseY - ringY) * 0.16;
-
       setPos(cursorDot, dotX, dotY);
       setPos(cursorRing, ringX, ringY);
-
       raf = null;
     };
 
     const isInteractive = (tEl) =>
-      !!tEl.closest("a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card");
+      !!tEl.closest(
+        "a, button, input, textarea, select, .btn, [role='button'], .service-card, .social-card, .training-tab, .award-card"
+      );
 
-    const isSoftInteractive = (tEl) =>
-      !!tEl.closest(".media-card, .nav-link, .language-btn, .theme-toggle");
+    const isSoftInteractive = (tEl) => !!tEl.closest(".media-card, .nav-link, .language-btn, .theme-toggle");
 
     const onOver = (e) => {
       const tEl = e.target;
@@ -544,11 +922,17 @@ document.addEventListener("DOMContentLoaded", () => {
      Hero parallax
   ========================= */
   function initHeroParallax() {
+    const hero = $("#hero");
+    const mediaCard = $("#media-card");
     if (!hero || !mediaCard) return;
     if (!hasFinePointer || prefersReducedMotion) return;
 
     let raf = null;
     let tx = 0, ty = 0;
+
+    const orb1 = $(".hero-orb-1");
+    const orb2 = $(".hero-orb-2");
+    const orb3 = $(".hero-orb-3");
 
     const onMove = (e) => {
       const rect = hero.getBoundingClientRect();
@@ -580,137 +964,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Training tabs
-  ========================= */
-  function initTrainingTabs() {
-    if (!trainingRoot || !trainingTabs.length || !trainingPanels.length) return;
-
-    const AUTO_MS = 5200;
-    const FADE_MS = 280;
-
-    const progressBar = $(".training-progress-left .training-progress-bar", trainingRoot);
-    const dots = $$(".training-dot", trainingRoot);
-
-    let currentKey = "becarios";
-    let timer = null;
-
-    const keyFromId = (id) => {
-      const lower = String(id || "").toLowerCase();
-      if (lower.includes("eventos")) return "eventos";
-      if (lower.includes("webinars")) return "webinars";
-      if (lower.includes("becarios")) return "becarios";
-      return "";
-    };
-
-    const tabLabelFromKey = (key) => {
-      const tab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
-      return tab ? (tab.querySelector("span")?.textContent || "").trim() : "";
-    };
-
-    const setLeftTitle = (key) => {
-      const leftTitle = $(".training-image-title", trainingRoot);
-      const label = tabLabelFromKey(key);
-      if (leftTitle && label) leftTitle.textContent = label;
-    };
-
-    const setDotsActive = (key) => {
-      dots.forEach((b) => b.classList.toggle("is-active", (b.dataset.go || "").toLowerCase() === key));
-    };
-
-    const resetProgress = () => {
-      if (!progressBar || prefersReducedMotion) return;
-      progressBar.style.animation = "none";
-      progressBar.style.width = "0%";
-      progressBar.offsetHeight;
-      progressBar.style.animation = `trainingProgressFill ${AUTO_MS}ms linear forwards`;
-    };
-
-    const stopAuto = () => {
-      if (timer) clearTimeout(timer);
-      timer = null;
-    };
-
-    const startAuto = () => {
-      if (prefersReducedMotion) return;
-      stopAuto();
-      timer = setTimeout(() => {
-        const order = ["eventos", "webinars", "becarios"];
-        const idx = order.indexOf(currentKey);
-        const next = order[(idx + 1) % order.length];
-        showPanel(next);
-      }, AUTO_MS);
-    };
-
-    const showPanel = (key) => {
-      currentKey = key;
-
-      trainingTabs.forEach((tab) => {
-        const is = (tab.dataset.tab || "").toLowerCase() === key;
-        tab.classList.toggle("is-active", is);
-        tab.setAttribute("aria-selected", is ? "true" : "false");
-      });
-
-      // icono izquierdo grande
-      const leftIconWrap = trainingRoot.querySelector(".training-card-left .training-image-icon");
-      const activeTab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
-      if (leftIconWrap && activeTab && activeTab.dataset.icon) {
-        leftIconWrap.innerHTML = `<i class="${activeTab.dataset.icon}" aria-hidden="true"></i>`;
-        if (window.FontAwesome?.dom?.i2svg) window.FontAwesome.dom.i2svg({ node: leftIconWrap });
-        leftIconWrap.classList.add("is-swap");
-        setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
-      }
-
-      const currentActive = trainingPanels.find((p) => p.classList.contains("is-active"));
-
-      trainingPanels.forEach((panel) => {
-        const pKey = keyFromId(panel.id);
-        const shouldBeActive = pKey === key;
-
-        if (shouldBeActive) {
-          panel.removeAttribute("hidden");
-          panel.classList.remove("is-active");
-          panel.offsetHeight;
-          panel.classList.add("is-active");
-        } else {
-          if (panel === currentActive) {
-            panel.classList.remove("is-active");
-            setTimeout(() => panel.setAttribute("hidden", ""), FADE_MS);
-          } else {
-            panel.classList.remove("is-active");
-            panel.setAttribute("hidden", "");
-          }
-        }
-      });
-
-      setLeftTitle(key);
-      setDotsActive(key);
-      resetProgress();
-      startAuto();
-    };
-
-    trainingTabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const key = (tab.dataset.tab || "").toLowerCase();
-        if (!key) return;
-        showPanel(key);
-      });
-    });
-
-    dots.forEach((b) => {
-      b.addEventListener("click", (e) => {
-        e.preventDefault();
-        const key = (b.dataset.go || "").toLowerCase();
-        if (!key) return;
-        showPanel(key);
-      });
-    });
-
-    const initialTab = trainingTabs.find((tEl) => tEl.classList.contains("is-active")) || trainingTabs[0];
-    showPanel((initialTab?.dataset.tab || "becarios").toLowerCase());
-  }
-
-  /* =========================
-     Awards carousel
+     Awards carousel (mantener)
   ========================= */
   function initAwardsCarousel() {
     if (!awardsTrack || !awardCards.length) return;
@@ -862,104 +1116,103 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("is-loading");
       btn.disabled = true;
 
-      const alertBox = document.querySelector(".contact-map-alert");
-      const title = alertBox?.querySelector(".contact-map-alert-title");
-      const DEFAULT_MSG = "No se encontraron sucursales activas";
+      const title = document.querySelector(".contact-map-alert-title");
 
-      if (title) title.textContent = "Buscando sucursales…";
+      const lang = storage.get("preferred-language", "ES");
+      const searchingMsg = t(lang, "ui.searching");
+      const defaultMsg = t(lang, "ui.noBranches");
+
+      if (title) title.textContent = searchingMsg;
 
       setTimeout(() => {
-        if (title) title.textContent = DEFAULT_MSG;
+        if (title) title.textContent = defaultMsg;
         btn.classList.remove("is-loading");
         btn.disabled = false;
       }, 1100);
     });
   }
 
+  /* =========================
+     Contact form (Netlify + AJAX)
+     ✅ No rompe Netlify
+  ========================= */
   function initContactForm() {
-  if (!contactForm || !formStatus) return;
+    if (!contactForm || !formStatus) return;
 
-  const setStatus = (msg, ok) => {
-    formStatus.textContent = msg || "";
-    formStatus.style.opacity = msg ? "1" : "0";
-    formStatus.style.marginTop = msg ? "12px" : "";
-    formStatus.style.fontWeight = "900";
-    formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
-  };
+    const setStatus = (msg, ok) => {
+      formStatus.textContent = msg || "";
+      formStatus.style.opacity = msg ? "1" : "0";
+      formStatus.style.marginTop = msg ? "12px" : "";
+      formStatus.style.fontWeight = "900";
+      formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
+    };
 
-  const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
+    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
 
-  const encodeFormData = (formData) => {
-    const params = new URLSearchParams();
-    for (const [k, v] of formData.entries()) params.append(k, v);
-    return params.toString();
-  };
+    const encodeFormData = (formData) => {
+      const params = new URLSearchParams();
+      for (const [k, v] of formData.entries()) params.append(k, v);
+      return params.toString();
+    };
 
-  contactForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const lang = storage.get("preferred-language", "ES");
+      const lang = storage.get("preferred-language", "ES");
 
-    const fullName = ($("#fullName")?.value || "").trim();
-    const email = ($("#email")?.value || "").trim();
-    const message = ($("#message")?.value || "").trim();
+      const fullName = ($("#fullName")?.value || "").trim();
+      const email = ($("#email")?.value || "").trim();
+      const message = ($("#message")?.value || "").trim();
 
-    if (!fullName || !email || !message) {
-      setStatus(t(lang, "form.err.required"), false);
-      return;
-    }
-    if (!isEmail(email)) {
-      setStatus(t(lang, "form.err.email"), false);
-      return;
-    }
-
-    // honeypot
-    const botField = contactForm.querySelector("input[name='bot-field']");
-    if (botField && String(botField.value || "").trim().length > 0) return;
-
-    const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
-    const oldBtnHTML = btn ? btn.innerHTML : "";
-
-    if (btn) {
-      btn.disabled = true;
-      btn.innerHTML = `<span>${t(lang, "form.sending")}</span>`;
-    }
-    setStatus("", true);
-
-    try {
-      const formData = new FormData(contactForm);
-
-      // Enviar al action del form (evita redirects raros)
-      const action = contactForm.getAttribute("action") || "/";
-
-      const res = await fetch(action, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encodeFormData(formData),
-      });
-
-      // Netlify suele responder 200/302/303 en flujos normales, pero con AJAX
-      // nos basta con que no sea error duro.
-      if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
-
-      setStatus(t(lang, "form.ok"), true);
-      contactForm.reset();
-
-      // Si quieres: redirigir a /gracias/ de forma explícita:
-      // window.location.href = action;
-
-      setTimeout(() => setStatus("", true), 4500);
-    } catch (err) {
-      console.error(err);
-      setStatus(t(lang, "form.fail"), false);
-    } finally {
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = oldBtnHTML;
+      if (!fullName || !email || !message) {
+        setStatus(t(lang, "form.err.required"), false);
+        return;
       }
-    }
-  });
-}
+      if (!isEmail(email)) {
+        setStatus(t(lang, "form.err.email"), false);
+        return;
+      }
+
+      // honeypot
+      const botField = contactForm.querySelector("input[name='bot-field']");
+      if (botField && String(botField.value || "").trim().length > 0) return;
+
+      const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
+      const oldBtnHTML = btn ? btn.innerHTML : "";
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span>${t(lang, "form.sending")}</span>`;
+      }
+      setStatus("", true);
+
+      try {
+        const formData = new FormData(contactForm);
+        const action = contactForm.getAttribute("action") || "/";
+
+        const res = await fetch(action, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: encodeFormData(formData),
+        });
+
+        if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
+
+        setStatus(t(lang, "form.ok"), true);
+        contactForm.reset();
+
+        setTimeout(() => setStatus("", true), 4500);
+      } catch (err) {
+        console.error(err);
+        setStatus(t(lang, "form.fail"), false);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = oldBtnHTML;
+        }
+      }
+    });
+  }
 
   /* =========================
      Boot
@@ -974,7 +1227,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollIndicator();
   initCursor();
   initHeroParallax();
-  initTrainingTabs();
   initAwardsCarousel();
   initMapRetry();
   initContactForm();
