@@ -3,8 +3,8 @@
    - Netlify Forms (name/form-name/honeypot/POST) sin romper lógica
    - Menú, tema, loader, tabs, carrusel, etc.
    ✅ i18n:
-   - Traducción completa ES/EN
-   - Idiomas extra (DE/PT/FR/IT) se conservan en UI y hacen fallback a ES por ahora
+   - Traducción completa ES y EN
+   - Idiomas extra (DE/PT/FR/IT) se conservan en UI y hacen fallback a ES
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,39 +36,32 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-     i18n dictionaries (ES + EN)
+     i18n dictionaries
   ========================= */
   const I18N = {
     ES: {
-      // NAV
+      // Header/Nav
       "nav.home": "Inicio",
       "nav.press": "Prensa",
       "nav.services": "Servicios",
       "nav.news": "Noticias",
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
+      "header.collab": "¿Eres colaborador?",
 
-      // HEADER CTA
-      "header.collaborator": "¿Eres colaborador?",
-
-      // HERO
+      // Hero
       "hero.pill": "Soluciones empresariales integrales",
       "hero.title": "Impulsamos<br /><span class='hero-accent'>tu talento</span>",
       "hero.subtitle":
         "Capital Humano, Desarrollo Organizacional y Management<br />Servicios para cada etapa de tu crecimiento.",
       "hero.ctaServices": "Ver Servicios",
       "hero.ctaContact": "Contactar",
-
-      // Toast
-      "toast.title": "Certificados",
-      "toast.sub": "REPSE · ISO · NOM",
-
-      // KPIs
       "kpi.years": "Años de experiencia",
       "kpi.clients": "Clientes",
-      "kpi.satisfaction": "Satisfacción",
+      "kpi.sat": "Satisfacción",
+      "toast.title": "Certificados",
 
-      // SERVICES section
+      // Services section
       "services.kicker": "Lo que hacemos",
       "services.title": "Nuestros Servicios",
       "services.subtitle": "Soluciones integrales diseñadas para optimizar cada aspecto de tu organización",
@@ -80,35 +73,37 @@ document.addEventListener("DOMContentLoaded", () => {
       "services.card3.text": "Optimiza tu carga fiscal con expertos certificados.",
       "services.more": "Conocer más",
 
-      // PRESS
+      // Press section
       "press.kicker": "Sala de prensa",
       "press.title": "Comunicados de <span class='accent'>Prensa</span>",
       "press.subtitle": "Mantente informado sobre las últimas noticias y anuncios de BAUSEN",
       "press.cta": "Ver todos los comunicados",
 
-      // TRAINING
+      // Training
       "training.kicker": "Formación de talento",
-      "training.subtitle":
-        "Formamos y conectamos el talento del futuro con las mejores<br />oportunidades",
-      "training.leftTitle": "Sistema de Becarios",
+      "training.title": "BAUSEN Training Center",
+      "training.subtitle": "Formamos y conectamos el talento del futuro con las mejores<br />oportunidades",
       "training.tab.events": "Eventos",
       "training.tab.webinars": "Webinars Institucionales",
       "training.tab.interns": "Sistema de Becarios",
+      "training.leftTitle.events": "Eventos",
+      "training.leftTitle.webinars": "Webinars Institucionales",
+      "training.leftTitle.interns": "Sistema de Becarios",
+      "training.panel.events.title": "Eventos",
       "training.panel.events.text": "Participación activa en eventos con escuelas y universidades",
+      "training.panel.webinars.title": "Webinars Institucionales",
       "training.panel.webinars.text": "Capacitaciones y webinars especializados con instituciones educativas",
+      "training.panel.interns.title": "Sistema de Becarios",
       "training.panel.interns.text": "Programa integral de formación y desarrollo de talento joven",
       "training.more": "Más información",
-      "training.dot.events": "Ir a Eventos",
-      "training.dot.webinars": "Ir a Webinars Institucionales",
-      "training.dot.interns": "Ir a Sistema de Becarios",
 
-      // NEWS
+      // News section
       "news.kicker": "Blog y noticias",
       "news.title": "Últimas <span class='accent'>Noticias</span>",
       "news.subtitle": "Descubre artículos, casos de éxito y tendencias del sector",
       "news.cta": "Ver todas las noticias",
 
-      // CONNECT
+      // Connect section
       "connect.kicker": "Conecta con nosotros",
       "connect.title": "Juntos trazamos<br /><span class='connect-accent'>tu camino al éxito</span>",
       "connect.text":
@@ -116,78 +111,68 @@ document.addEventListener("DOMContentLoaded", () => {
       "connect.cta": "¡Agenda ahora!",
       "connect.follow": "¡Síguenos en redes!",
 
-      // AWARDS
+      // Awards section
       "awards.kicker": "Excelencia reconocida",
       "awards.title": "Nuestros <span class='accent'>Reconocimientos</span>",
       "awards.subtitle": "Certificaciones y alianzas que respaldan nuestro compromiso con la excelencia",
 
-      // Awards cards (carousel)
-      "awards.card1.kicker": "Reconocimiento 01",
-      "awards.card1.title": "Consejo de Recursos Humanos",
-      "awards.card2.kicker": "Reconocimiento 02",
-      "awards.card2.title": "Distintivo de Empresas Humanitarias",
-      "awards.card3.kicker": "Reconocimiento 03",
-      "awards.card3.title": "Certificación de Trabajo Digno",
-      "awards.card4.kicker": "Reconocimiento 04",
-      "awards.card4.title": "Registro de Especialistas Profesionales",
-      "awards.card5.kicker": "Reconocimiento 05",
-      "awards.card5.title": "Concilio de Recursos Humanos",
-      "awards.card6.kicker": "Reconocimiento 06",
-      "awards.card6.title": "Certificación ISO",
-      "awards.card7.kicker": "Reconocimiento 07",
-      "awards.card7.title": "Cumplimiento NOM",
-      "awards.card8.kicker": "Reconocimiento 08",
-      "awards.card8.title": "Registro REPSE",
+      "awards.card1.k": "Reconocimiento 01",
+      "awards.card1.t": "Consejo de Recursos Humanos",
+      "awards.card2.k": "Reconocimiento 02",
+      "awards.card2.t": "Distintivo de Empresas Humanitarias",
+      "awards.card3.k": "Reconocimiento 03",
+      "awards.card3.t": "Certificación de Trabajo Digno",
+      "awards.card4.k": "Reconocimiento 04",
+      "awards.card4.t": "Registro de Especialistas Profesionales",
+      "awards.card5.k": "Reconocimiento 05",
+      "awards.card5.t": "Concilio de Recursos Humanos",
+      "awards.card6.k": "Reconocimiento 06",
+      "awards.card6.t": "Certificación ISO",
+      "awards.card7.k": "Reconocimiento 07",
+      "awards.card7.t": "Cumplimiento NOM",
+      "awards.card8.k": "Reconocimiento 08",
+      "awards.card8.t": "Registro REPSE",
 
-      // CONTACT section
+      // Contact section
       "contact.kicker": "¿Listo para conectar?",
       "contact.title": "Hablemos sobre <span class='contact-accent'>tu proyecto</span>",
       "contact.subtitle":
         "Cuéntanos tus ideas, necesidades o dudas y nuestro equipo te contactará a la<br />brevedad. ¡Estamos aquí para ayudarte a transformar tu operación!",
       "contact.formTitle": "Envíanos un mensaje",
       "contact.formSubtitle": "Completa el formulario y te contactaremos pronto.",
-
-      // Contact info block
       "contact.infoTitle": "Información de Contacto",
-      "contact.phoneLabel": "Teléfono",
-      "contact.emailLabel": "Email",
-      "contact.locationLabel": "Ubicación",
+      "contact.phone": "Teléfono",
+      "contact.email": "Email",
+      "contact.location": "Ubicación",
       "contact.locationValue": "Querétaro, México",
-      "contact.hoursLabel": "Horario",
+      "contact.hours": "Horario",
       "contact.hoursValue": "Lun - Vie: 9:00 - 18:00",
       "contact.follow": "Síguenos en redes",
+      "map.kicker": "NUESTRAS UBICACIONES",
 
-      // FORM
+      // Footer (company/services)
+      "footer.company": "EMPRESA",
+      "footer.services": "SERVICIOS",
+      "footer.about": "Acerca de",
+      "footer.servicesLink": "Servicios",
+      "footer.news": "Noticias",
+      "footer.press": "Prensa",
+      "footer.contact": "Contacto",
+      "footer.svc.capital": "Capital Humano",
+      "footer.svc.legal": "Servicios Legales",
+      "footer.svc.accounting": "Servicios Contables",
+      "footer.svc.orgdev": "Desarrollo Organizacional",
+
+      // Form
       "form.fullNamePh": "Tu nombre completo",
       "form.emailPh": "tu@email.com",
       "form.messagePh": "¿En qué podemos ayudarte?",
       "form.send": "Enviar mensaje",
-
       "form.err.required": "Por favor completa tu nombre, email y mensaje.",
       "form.err.email": "Por favor ingresa un email válido.",
       "form.ok": "Mensaje enviado. Nos pondremos en contacto a la brevedad.",
       "form.sending": "Enviando…",
       "form.fail": "Ocurrió un error. Por favor intenta de nuevo.",
-
-      // MAP
-      "map.kicker": "NUESTRAS UBICACIONES",
-
-      // FOOTER headings
-      "footer.company": "EMPRESA",
-      "footer.services": "SERVICIOS",
-
-      // FOOTER company links
-      "footer.link.about": "Acerca de",
-      "footer.link.services": "Servicios",
-      "footer.link.news": "Noticias",
-      "footer.link.press": "Prensa",
-      "footer.link.contact": "Contacto",
-
-      // FOOTER services links
-      "footer.svc.capital": "Capital Humano",
-      "footer.svc.legal": "Servicios Legales",
-      "footer.svc.accounting": "Servicios Contables",
-      "footer.svc.orgdev": "Desarrollo Organizacional",
 
       // UI
       "ui.openMenu": "Abrir menú",
@@ -202,35 +187,28 @@ document.addEventListener("DOMContentLoaded", () => {
     },
 
     EN: {
-      // NAV
+      // Header/Nav
       "nav.home": "Home",
       "nav.press": "Press",
       "nav.services": "Services",
       "nav.news": "News",
       "nav.training": "Training Center",
       "nav.about": "About",
+      "header.collab": "Are you a collaborator?",
 
-      // HEADER CTA
-      "header.collaborator": "Are you a collaborator?",
-
-      // HERO
+      // Hero
       "hero.pill": "Integrated business solutions",
       "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
       "hero.subtitle":
         "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
       "hero.ctaServices": "View Services",
       "hero.ctaContact": "Contact",
-
-      // Toast
-      "toast.title": "Certified",
-      "toast.sub": "REPSE · ISO · NOM",
-
-      // KPIs
       "kpi.years": "Years of experience",
       "kpi.clients": "Clients",
-      "kpi.satisfaction": "Satisfaction",
+      "kpi.sat": "Satisfaction",
+      "toast.title": "Certified",
 
-      // SERVICES section
+      // Services section
       "services.kicker": "What we do",
       "services.title": "Our Services",
       "services.subtitle": "Integrated solutions designed to optimize every aspect of your organization",
@@ -242,35 +220,37 @@ document.addEventListener("DOMContentLoaded", () => {
       "services.card3.text": "Optimize your tax burden with certified experts.",
       "services.more": "Learn more",
 
-      // PRESS
+      // Press section
       "press.kicker": "Press room",
       "press.title": "Press <span class='accent'>Releases</span>",
       "press.subtitle": "Stay informed about the latest BAUSEN news and announcements",
       "press.cta": "View all releases",
 
-      // TRAINING
+      // Training
       "training.kicker": "Talent development",
-      "training.subtitle":
-        "We train and connect future talent with the best<br />opportunities",
-      "training.leftTitle": "Internship Program",
+      "training.title": "BAUSEN Training Center",
+      "training.subtitle": "We train and connect future talent with the best<br />opportunities",
       "training.tab.events": "Events",
       "training.tab.webinars": "Institutional Webinars",
       "training.tab.interns": "Internship Program",
+      "training.leftTitle.events": "Events",
+      "training.leftTitle.webinars": "Institutional Webinars",
+      "training.leftTitle.interns": "Internship Program",
+      "training.panel.events.title": "Events",
       "training.panel.events.text": "Active participation in events with schools and universities",
+      "training.panel.webinars.title": "Institutional Webinars",
       "training.panel.webinars.text": "Specialized training and webinars with educational institutions",
+      "training.panel.interns.title": "Internship Program",
       "training.panel.interns.text": "Comprehensive program for training and developing young talent",
       "training.more": "Learn more",
-      "training.dot.events": "Go to Events",
-      "training.dot.webinars": "Go to Institutional Webinars",
-      "training.dot.interns": "Go to Internship Program",
 
-      // NEWS
+      // News section
       "news.kicker": "Blog & news",
       "news.title": "Latest <span class='accent'>News</span>",
       "news.subtitle": "Discover articles, success stories and industry trends",
       "news.cta": "View all news",
 
-      // CONNECT
+      // Connect section
       "connect.kicker": "Connect with us",
       "connect.title": "Together we shape<br /><span class='connect-accent'>your path to success</span>",
       "connect.text":
@@ -278,78 +258,68 @@ document.addEventListener("DOMContentLoaded", () => {
       "connect.cta": "Schedule now!",
       "connect.follow": "Follow us on social!",
 
-      // AWARDS
+      // Awards section
       "awards.kicker": "Recognized excellence",
       "awards.title": "Our <span class='accent'>Recognitions</span>",
       "awards.subtitle": "Certifications and partnerships that back our commitment to excellence",
 
-      // Awards cards (carousel)
-      "awards.card1.kicker": "Recognition 01",
-      "awards.card1.title": "Human Resources Council",
-      "awards.card2.kicker": "Recognition 02",
-      "awards.card2.title": "Humanitarian Companies Distinction",
-      "awards.card3.kicker": "Recognition 03",
-      "awards.card3.title": "Decent Work Certification",
-      "awards.card4.kicker": "Recognition 04",
-      "awards.card4.title": "Professional Specialists Registry",
-      "awards.card5.kicker": "Recognition 05",
-      "awards.card5.title": "Human Resources Council",
-      "awards.card6.kicker": "Recognition 06",
-      "awards.card6.title": "ISO Certification",
-      "awards.card7.kicker": "Recognition 07",
-      "awards.card7.title": "NOM Compliance",
-      "awards.card8.kicker": "Recognition 08",
-      "awards.card8.title": "REPSE Registry",
+      "awards.card1.k": "Recognition 01",
+      "awards.card1.t": "Human Resources Council",
+      "awards.card2.k": "Recognition 02",
+      "awards.card2.t": "Humanitarian Companies Distinction",
+      "awards.card3.k": "Recognition 03",
+      "awards.card3.t": "Decent Work Certification",
+      "awards.card4.k": "Recognition 04",
+      "awards.card4.t": "Professional Specialists Registry",
+      "awards.card5.k": "Recognition 05",
+      "awards.card5.t": "Human Resources Council",
+      "awards.card6.k": "Recognition 06",
+      "awards.card6.t": "ISO Certification",
+      "awards.card7.k": "Recognition 07",
+      "awards.card7.t": "NOM Compliance",
+      "awards.card8.k": "Recognition 08",
+      "awards.card8.t": "REPSE Registry",
 
-      // CONTACT section
+      // Contact section
       "contact.kicker": "Ready to connect?",
       "contact.title": "Let’s talk about <span class='contact-accent'>your project</span>",
       "contact.subtitle":
         "Tell us your ideas, needs or questions and our team will contact you<br />shortly. We’re here to help you transform your operations!",
       "contact.formTitle": "Send us a message",
       "contact.formSubtitle": "Fill out the form and we’ll contact you soon.",
-
-      // Contact info block
       "contact.infoTitle": "Contact Information",
-      "contact.phoneLabel": "Phone",
-      "contact.emailLabel": "Email",
-      "contact.locationLabel": "Location",
+      "contact.phone": "Phone",
+      "contact.email": "Email",
+      "contact.location": "Location",
       "contact.locationValue": "Querétaro, Mexico",
-      "contact.hoursLabel": "Hours",
+      "contact.hours": "Hours",
       "contact.hoursValue": "Mon - Fri: 9:00 - 18:00",
       "contact.follow": "Follow us on social",
+      "map.kicker": "OUR LOCATIONS",
 
-      // FORM
+      // Footer (company/services)
+      "footer.company": "COMPANY",
+      "footer.services": "SERVICES",
+      "footer.about": "About",
+      "footer.servicesLink": "Services",
+      "footer.news": "News",
+      "footer.press": "Press",
+      "footer.contact": "Contact",
+      "footer.svc.capital": "Human Capital",
+      "footer.svc.legal": "Legal Services",
+      "footer.svc.accounting": "Accounting Services",
+      "footer.svc.orgdev": "Organizational Development",
+
+      // Form
       "form.fullNamePh": "Full name",
       "form.emailPh": "you@email.com",
       "form.messagePh": "How can we help you?",
       "form.send": "Send message",
-
       "form.err.required": "Please complete your name, email and message.",
       "form.err.email": "Please enter a valid email.",
       "form.ok": "Message sent. We’ll contact you shortly.",
       "form.sending": "Sending…",
       "form.fail": "Something went wrong. Please try again.",
-
-      // MAP
-      "map.kicker": "OUR LOCATIONS",
-
-      // FOOTER headings
-      "footer.company": "COMPANY",
-      "footer.services": "SERVICES",
-
-      // FOOTER company links
-      "footer.link.about": "About",
-      "footer.link.services": "Services",
-      "footer.link.news": "News",
-      "footer.link.press": "Press",
-      "footer.link.contact": "Contact",
-
-      // FOOTER services links
-      "footer.svc.capital": "Human Capital",
-      "footer.svc.legal": "Legal Services",
-      "footer.svc.accounting": "Accounting Services",
-      "footer.svc.orgdev": "Organizational Development",
 
       // UI
       "ui.openMenu": "Open menu",
@@ -364,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-  // Banderas SVG (conservar todas)
+  // Flags (keep all)
   const FLAG_SVG = {
     ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
           <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
@@ -396,15 +366,15 @@ document.addEventListener("DOMContentLoaded", () => {
         </svg>`,
   };
 
-  // Solo ES/EN traducen. Otros => fallback a ES, pero se conservan en UI.
+  // ES/EN are real; other codes stay in UI but fallback to ES content
   const normalizeLang = (lang) => {
     const L = String(lang || "ES").toUpperCase();
-    return L === "EN" ? "EN" : L; // DE/PT/FR/IT se quedan como valor, traducción => ES
+    return L; // keep raw code (ES/EN/DE/PT/FR/IT) for UI
   };
 
   const t = (lang, key) => {
     const L = normalizeLang(lang);
-    const dict = I18N[L] || I18N.ES;
+    const dict = I18N[L] || I18N.ES; // fallback to ES
     return dict[key] ?? (I18N.ES[key] ?? key);
   };
 
@@ -414,193 +384,369 @@ document.addEventListener("DOMContentLoaded", () => {
     else el.textContent = value;
   };
 
-  // ✅ i18n por selectores (para texto que NO tiene data-i18n)
-  const I18N_BY_SELECTOR = {
-    ES: {
-      // ARIA / UI
-      ".logo-link[aria-label]": { attr: "aria-label", key: "ui.goHome" },
-      "#theme-toggle[aria-label]": { attr: "aria-label", key: "ui.toggleTheme" },
-      "#menu-toggle[aria-label]": { attr: "aria-label", key: "ui.openMenu" },
-      "#close-menu[aria-label]": { attr: "aria-label", key: "ui.closeMenu" },
-      ".scroll-indicator[aria-label]": { attr: "aria-label", key: "ui.scrollNext" },
-      "#language-btn[aria-label]": { attr: "aria-label", key: "ui.langSelect" },
-
-      // HEADER CTA
-      ".header-controls a[href='acceso.html']": { text: "header.collaborator" },
-
-      // CONTACT INFO title/labels
-      "#contacto .contact-info-title": { text: "contact.infoTitle" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(1) .contact-info-label": { text: "contact.phoneLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(2) .contact-info-label": { text: "contact.emailLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-label": { text: "contact.locationLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-value": { text: "contact.locationValue" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-label": { text: "contact.hoursLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-value": { text: "contact.hoursValue" },
-      "#contacto .contact-social-title": { text: "contact.follow" },
-
-      // FOOTER headings
-      "nav[aria-label='Empresa'] h4": { text: "footer.company" },
-      "nav[aria-label='Servicios'] h4": { text: "footer.services" },
-
-      // FOOTER: COMPANY links (por href)
-      "nav[aria-label='Empresa'] a[href='acercade.html']": { text: "footer.link.about" },
-      "nav[aria-label='Empresa'] a[href='acerca.html']": { text: "footer.link.about" }, // por si existe
-      "nav[aria-label='Empresa'] a[href='servicios.html']": { text: "footer.link.services" },
-      "nav[aria-label='Empresa'] a[href='noticias.html']": { text: "footer.link.news" },
-      "nav[aria-label='Empresa'] a[href='prensa.html']": { text: "footer.link.press" },
-      "nav[aria-label='Empresa'] a[href='contacto.html']": { text: "footer.link.contact" },
-
-      // FOOTER: SERVICES links (por href + anchors)
-      "nav[aria-label='Servicios'] a[href='servicios.html#capital-humano']": { text: "footer.svc.capital" },
-      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-legales']": { text: "footer.svc.legal" },
-      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-contables']": { text: "footer.svc.accounting" },
-      "nav[aria-label='Servicios'] a[href='servicios.html#desarrollo-organizacional']": { text: "footer.svc.orgdev" },
-    },
-
-    EN: {
-      // ARIA / UI
-      ".logo-link[aria-label]": { attr: "aria-label", key: "ui.goHome" },
-      "#theme-toggle[aria-label]": { attr: "aria-label", key: "ui.toggleTheme" },
-      "#menu-toggle[aria-label]": { attr: "aria-label", key: "ui.openMenu" },
-      "#close-menu[aria-label]": { attr: "aria-label", key: "ui.closeMenu" },
-      ".scroll-indicator[aria-label]": { attr: "aria-label", key: "ui.scrollNext" },
-      "#language-btn[aria-label]": { attr: "aria-label", key: "ui.langSelect" },
-
-      // HEADER CTA
-      ".header-controls a[href='acceso.html']": { text: "header.collaborator" },
-
-      // CONTACT INFO title/labels
-      "#contacto .contact-info-title": { text: "contact.infoTitle" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(1) .contact-info-label": { text: "contact.phoneLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(2) .contact-info-label": { text: "contact.emailLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-label": { text: "contact.locationLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(3) .contact-info-value": { text: "contact.locationValue" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-label": { text: "contact.hoursLabel" },
-      "#contacto .contact-info-list .contact-info-item:nth-child(4) .contact-info-value": { text: "contact.hoursValue" },
-      "#contacto .contact-social-title": { text: "contact.follow" },
-
-      // FOOTER headings
-      "nav[aria-label='Empresa'] h4": { text: "footer.company" },
-      "nav[aria-label='Servicios'] h4": { text: "footer.services" },
-
-      // FOOTER: COMPANY links (por href)
-      "nav[aria-label='Empresa'] a[href='acercade.html']": { text: "footer.link.about" },
-      "nav[aria-label='Empresa'] a[href='acerca.html']": { text: "footer.link.about" }, // por si existe
-      "nav[aria-label='Empresa'] a[href='servicios.html']": { text: "footer.link.services" },
-      "nav[aria-label='Empresa'] a[href='noticias.html']": { text: "footer.link.news" },
-      "nav[aria-label='Empresa'] a[href='prensa.html']": { text: "footer.link.press" },
-      "nav[aria-label='Empresa'] a[href='contacto.html']": { text: "footer.link.contact" },
-
-      // FOOTER: SERVICES links (por href + anchors)
-      "nav[aria-label='Servicios'] a[href='servicios.html#capital-humano']": { text: "footer.svc.capital" },
-      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-legales']": { text: "footer.svc.legal" },
-      "nav[aria-label='Servicios'] a[href='servicios.html#servicios-contables']": { text: "footer.svc.accounting" },
-      "nav[aria-label='Servicios'] a[href='servicios.html#desarrollo-organizacional']": { text: "footer.svc.orgdev" },
-    },
-  };
-
-  function applySelectorTranslations(lang) {
-    const L = normalizeLang(lang);
-    const map = I18N_BY_SELECTOR[L] || I18N_BY_SELECTOR.ES;
-
-    Object.entries(map).forEach(([selector, rule]) => {
-      const els = $$(selector);
-      if (!els.length) return;
-
-      els.forEach((el) => {
-        if (!el) return;
-
-        if (rule.attr) {
-          const value = t(L, rule.key);
-          el.setAttribute(rule.attr, value);
-          return;
-        }
-        if (rule.text) {
-          const value = t(L, rule.text);
-          setTextOrHTML(el, value);
-          return;
-        }
-      });
-    });
-  }
-
-  function applyTranslations(lang) {
+  /* =========================
+     Translator: robust mapping (no fragile text matching)
+  ========================= */
+  function applyWholePageTranslations(lang) {
     const L = normalizeLang(lang);
 
-    // data-i18n
-    $$("[data-i18n]").forEach((el) => {
-      const key = el.getAttribute("data-i18n");
-      if (!key) return;
-      el.innerHTML = t(L, key);
-    });
-
-    // placeholders
-    $$("[data-i18n-placeholder]").forEach((el) => {
-      const key = el.getAttribute("data-i18n-placeholder");
-      if (!key) return;
-      el.setAttribute("placeholder", t(L, key));
-    });
-
-    // bandera principal
-    const flagEl = $("#language-flag");
-    if (flagEl) flagEl.innerHTML = FLAG_SVG[L] || FLAG_SVG.ES;
-
-    // banderas dropdown (todas)
-    $$("[data-flag]").forEach((el) => {
-      const code = (el.getAttribute("data-flag") || "ES").toUpperCase();
-      el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
-    });
-
-    // lang attr del documento
+    // HTML lang attribute
     document.documentElement.setAttribute("lang", L === "EN" ? "en" : "es");
 
-    // traducciones por selectores (footer + extras)
-    applySelectorTranslations(L);
+    // Header CTA
+    const collabBtn = $(".header-controls a[href='acceso.html']");
+    if (collabBtn) setTextOrHTML(collabBtn, t(L, "header.collab"));
+
+    // Nav items (already have data-i18n in your HTML, but this ensures coverage)
+    $$("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (key) el.innerHTML = t(L, key);
+    });
+
+    $$("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (key) el.setAttribute("placeholder", t(L, key));
+    });
+
+    // ARIA (menu/theme/lang/scroll/home)
+    const menuToggle = $("#menu-toggle");
+    if (menuToggle) menuToggle.setAttribute("aria-label", t(L, "ui.openMenu"));
+    const closeMenu = $("#close-menu");
+    if (closeMenu) closeMenu.setAttribute("aria-label", t(L, "ui.closeMenu"));
+    const themeToggle = $("#theme-toggle");
+    if (themeToggle) themeToggle.setAttribute("aria-label", t(L, "ui.toggleTheme"));
+    const langBtn = $("#language-btn");
+    if (langBtn) langBtn.setAttribute("aria-label", t(L, "ui.langSelect"));
+    const logoLink = $(".logo-link");
+    if (logoLink) logoLink.setAttribute("aria-label", t(L, "ui.goHome"));
+    const scrollBtn = $(".scroll-indicator");
+    if (scrollBtn) scrollBtn.setAttribute("aria-label", t(L, "ui.scrollNext"));
+
+    // Hero KPI labels
+    const kpi1 = $(".hero-kpis .kpi:nth-child(1) .kpi-label");
+    const kpi2 = $(".hero-kpis .kpi:nth-child(2) .kpi-label");
+    const kpi3 = $(".hero-kpis .kpi:nth-child(3) .kpi-label");
+    if (kpi1) setTextOrHTML(kpi1, t(L, "kpi.years"));
+    if (kpi2) setTextOrHTML(kpi2, t(L, "kpi.clients"));
+    if (kpi3) setTextOrHTML(kpi3, t(L, "kpi.sat"));
+
+    // Toast in hero
+    const toastTitle = $("#toast-card .toast-title");
+    if (toastTitle) setTextOrHTML(toastTitle, t(L, "toast.title"));
+
+    // Services section headings
+    const services = $("#services");
+    if (services) {
+      const kicker = $(".section-head .section-pill", services);
+      const title = $(".section-head .section-title", services);
+      const sub = $(".section-head .section-subtitle", services);
+      if (kicker) setTextOrHTML(kicker, t(L, "services.kicker"));
+      if (title) setTextOrHTML(title, t(L, "services.title"));
+      if (sub) setTextOrHTML(sub, t(L, "services.subtitle"));
+
+      // service cards
+      const cards = $$(".services-grid .service-card", services);
+      if (cards[0]) {
+        const h3 = $(".service-title", cards[0]);
+        const p = $(".service-text", cards[0]);
+        const a = $(".service-link", cards[0]);
+        if (h3) setTextOrHTML(h3, t(L, "services.card1.title"));
+        if (p) setTextOrHTML(p, t(L, "services.card1.text"));
+        if (a) a.innerHTML = `${t(L, "services.more")} <i class="fas fa-arrow-right"></i>`;
+      }
+      if (cards[1]) {
+        const h3 = $(".service-title", cards[1]);
+        const p = $(".service-text", cards[1]);
+        const a = $(".service-link", cards[1]);
+        if (h3) setTextOrHTML(h3, t(L, "services.card2.title"));
+        if (p) setTextOrHTML(p, t(L, "services.card2.text"));
+        if (a) a.innerHTML = `${t(L, "services.more")} <i class="fas fa-arrow-right"></i>`;
+      }
+      if (cards[2]) {
+        const h3 = $(".service-title", cards[2]);
+        const p = $(".service-text", cards[2]);
+        const a = $(".service-link", cards[2]);
+        if (h3) setTextOrHTML(h3, t(L, "services.card3.title"));
+        if (p) setTextOrHTML(p, t(L, "services.card3.text"));
+        if (a) a.innerHTML = `${t(L, "services.more")} <i class="fas fa-arrow-right"></i>`;
+      }
+    }
+
+    // Press section
+    const press = $("#press");
+    if (press) {
+      const kicker = $(".section-pill span", press) || $(".section-pill", press);
+      const title = $(".section-title", press);
+      const sub = $(".section-subtitle", press);
+      const cta = $(".btn.btn-primary span", press);
+      if (kicker) setTextOrHTML(kicker, t(L, "press.kicker"));
+      if (title) setTextOrHTML(title, t(L, "press.title"));
+      if (sub) setTextOrHTML(sub, t(L, "press.subtitle"));
+      if (cta) setTextOrHTML(cta, t(L, "press.cta"));
+    }
+
+    // Training section
+    const training = $("#training");
+    if (training) {
+      const pillSpan = $(".training-pill span", training);
+      const title = $(".training-title", training);
+      const sub = $(".training-subtitle", training);
+      if (pillSpan) setTextOrHTML(pillSpan, t(L, "training.kicker"));
+      if (title) setTextOrHTML(title, t(L, "training.title"));
+      if (sub) setTextOrHTML(sub, t(L, "training.subtitle"));
+
+      const tabEvents = $("#tab-eventos span");
+      const tabWeb = $("#tab-webinars span");
+      const tabBec = $("#tab-becarios span");
+      if (tabEvents) setTextOrHTML(tabEvents, t(L, "training.tab.events"));
+      if (tabWeb) setTextOrHTML(tabWeb, t(L, "training.tab.webinars"));
+      if (tabBec) setTextOrHTML(tabBec, t(L, "training.tab.interns"));
+
+      const panelEventsTitle = $("#panel-eventos .training-panel-title");
+      const panelEventsText = $("#panel-eventos .training-panel-text");
+      const panelWebTitle = $("#panel-webinars .training-panel-title");
+      const panelWebText = $("#panel-webinars .training-panel-text");
+      const panelBecTitle = $("#panel-becarios .training-panel-title");
+      const panelBecText = $("#panel-becarios .training-panel-text");
+
+      if (panelEventsTitle) setTextOrHTML(panelEventsTitle, t(L, "training.panel.events.title"));
+      if (panelEventsText) setTextOrHTML(panelEventsText, t(L, "training.panel.events.text"));
+      if (panelWebTitle) setTextOrHTML(panelWebTitle, t(L, "training.panel.webinars.title"));
+      if (panelWebText) setTextOrHTML(panelWebText, t(L, "training.panel.webinars.text"));
+      if (panelBecTitle) setTextOrHTML(panelBecTitle, t(L, "training.panel.interns.title"));
+      if (panelBecText) setTextOrHTML(panelBecText, t(L, "training.panel.interns.text"));
+
+      $$("#panel-eventos a.btn span, #panel-webinars a.btn span, #panel-becarios a.btn span").forEach((s) => {
+        setTextOrHTML(s, t(L, "training.more"));
+      });
+
+      // Left card title (dynamic via initTrainingTabs too)
+      const leftTitle = $(".training-image-title", training);
+      if (leftTitle) {
+        const activeKey =
+          $("#tab-eventos")?.classList.contains("is-active") ? "events" :
+          $("#tab-webinars")?.classList.contains("is-active") ? "webinars" : "interns";
+        const map = {
+          events: "training.leftTitle.events",
+          webinars: "training.leftTitle.webinars",
+          interns: "training.leftTitle.interns",
+        };
+        setTextOrHTML(leftTitle, t(L, map[activeKey] || "training.leftTitle.interns"));
+      }
+    }
+
+    // News section
+    const news = $("#news");
+    if (news) {
+      const pillSpan = $(".section-pill span", news) || $(".section-pill", news);
+      const title = $(".section-title", news);
+      const sub = $(".section-subtitle", news);
+      const cta = $(".btn.btn-primary span", news);
+      if (pillSpan) setTextOrHTML(pillSpan, t(L, "news.kicker"));
+      if (title) setTextOrHTML(title, t(L, "news.title"));
+      if (sub) setTextOrHTML(sub, t(L, "news.subtitle"));
+      if (cta) setTextOrHTML(cta, t(L, "news.cta"));
+    }
+
+    // Connect section
+    const connect = $("#connect");
+    if (connect) {
+      const pillSpan = $(".connect-pill span", connect);
+      const title = $(".connect-title", connect);
+      const text = $(".connect-text", connect);
+      const ctaSpan = $(".btn.btn-primary span", connect);
+      const follow = $(".connect-right-title", connect);
+      if (pillSpan) setTextOrHTML(pillSpan, t(L, "connect.kicker"));
+      if (title) setTextOrHTML(title, t(L, "connect.title"));
+      if (text) setTextOrHTML(text, t(L, "connect.text"));
+      if (ctaSpan) setTextOrHTML(ctaSpan, t(L, "connect.cta"));
+      if (follow) setTextOrHTML(follow, t(L, "connect.follow"));
+    }
+
+    // Awards section + cards content
+    const awards = $("#awards");
+    if (awards) {
+      const pillSpan = $(".section-pill span", awards) || $(".section-pill", awards);
+      const title = $(".section-title", awards);
+      const sub = $(".section-subtitle", awards);
+      if (pillSpan) setTextOrHTML(pillSpan, t(L, "awards.kicker"));
+      if (title) setTextOrHTML(title, t(L, "awards.title"));
+      if (sub) setTextOrHTML(sub, t(L, "awards.subtitle"));
+
+      const cards = $$("#awardsTrack .award-card");
+      const map = [
+        ["awards.card1.k", "awards.card1.t"],
+        ["awards.card2.k", "awards.card2.t"],
+        ["awards.card3.k", "awards.card3.t"],
+        ["awards.card4.k", "awards.card4.t"],
+        ["awards.card5.k", "awards.card5.t"],
+        ["awards.card6.k", "awards.card6.t"],
+        ["awards.card7.k", "awards.card7.t"],
+        ["awards.card8.k", "awards.card8.t"],
+      ];
+      cards.forEach((card, idx) => {
+        const k = $(".award-kicker", card);
+        const h = $(".award-title", card);
+        const keys = map[idx];
+        if (!keys) return;
+        if (k) setTextOrHTML(k, t(L, keys[0]));
+        if (h) setTextOrHTML(h, t(L, keys[1]));
+      });
+    }
+
+    // Contact section headings + info labels
+    const contact = $("#contacto");
+    if (contact) {
+      const pillSpan = $(".contact-pill span", contact);
+      const title = $(".contact-title", contact);
+      const sub = $(".contact-subtitle", contact);
+      const formTitle = $(".contact-form-title", contact);
+      const formSub = $(".contact-form-subtitle", contact);
+      if (pillSpan) setTextOrHTML(pillSpan, t(L, "contact.kicker"));
+      if (title) setTextOrHTML(title, t(L, "contact.title"));
+      if (sub) setTextOrHTML(sub, t(L, "contact.subtitle"));
+      if (formTitle) setTextOrHTML(formTitle, t(L, "contact.formTitle"));
+      if (formSub) setTextOrHTML(formSub, t(L, "contact.formSubtitle"));
+
+      const infoTitle = $(".contact-info-title", contact);
+      if (infoTitle) setTextOrHTML(infoTitle, t(L, "contact.infoTitle"));
+
+      const phoneLabel = $(".contact-info-item:nth-child(1) .contact-info-label", contact);
+      const emailLabel = $(".contact-info-item:nth-child(2) .contact-info-label", contact);
+      const locLabel = $(".contact-info-item:nth-child(3) .contact-info-label", contact);
+      const locValue = $(".contact-info-item:nth-child(3) .contact-info-value", contact);
+      const hoursLabel = $(".contact-info-item:nth-child(4) .contact-info-label", contact);
+      const hoursValue = $(".contact-info-item:nth-child(4) .contact-info-value", contact);
+
+      if (phoneLabel) setTextOrHTML(phoneLabel, t(L, "contact.phone"));
+      if (emailLabel) setTextOrHTML(emailLabel, t(L, "contact.email"));
+      if (locLabel) setTextOrHTML(locLabel, t(L, "contact.location"));
+      if (locValue) setTextOrHTML(locValue, t(L, "contact.locationValue"));
+      if (hoursLabel) setTextOrHTML(hoursLabel, t(L, "contact.hours"));
+      if (hoursValue) setTextOrHTML(hoursValue, t(L, "contact.hoursValue"));
+
+      const follow = $(".contact-social-title", contact);
+      if (follow) setTextOrHTML(follow, t(L, "contact.follow"));
+
+      const mapKicker = $(".contact-map-kicker", contact);
+      if (mapKicker) setTextOrHTML(mapKicker, t(L, "map.kicker"));
+    }
+
+    // Footer headings + link texts
+    const footerCompanyH4 = $("nav[aria-label='Empresa'] h4");
+    const footerServicesH4 = $("nav[aria-label='Servicios'] h4");
+    if (footerCompanyH4) setTextOrHTML(footerCompanyH4, t(L, "footer.company"));
+    if (footerServicesH4) setTextOrHTML(footerServicesH4, t(L, "footer.services"));
+
+    // Footer links (by href to avoid breaking structure)
+    const setFooterLink = (href, key) => {
+      const a = $(`nav[aria-label='Empresa'] a[href='${href}']`) || $(`nav[aria-label='Servicios'] a[href='${href}']`);
+      if (a) setTextOrHTML(a, t(L, key));
+    };
+
+    // Company links
+    setFooterLink("acercade.html", "footer.about");
+    setFooterLink("acerca.html", "footer.about"); // if exists
+    setFooterLink("servicios.html", "footer.servicesLink");
+    setFooterLink("noticias.html", "footer.news");
+    setFooterLink("prensa.html", "footer.press");
+    setFooterLink("contacto.html", "footer.contact");
+
+    // Services links (anchors)
+    setFooterLink("servicios.html#capital-humano", "footer.svc.capital");
+    setFooterLink("servicios.html#servicios-legales", "footer.svc.legal");
+    setFooterLink("servicios.html#servicios-contables", "footer.svc.accounting");
+    setFooterLink("servicios.html#desarrollo-organizacional", "footer.svc.orgdev");
   }
 
   /* =========================
-     Elements
+     Language UI + persist
   ========================= */
-  const pageLoader = $("#page-loader");
-  const themeToggle = $("#theme-toggle");
+  function initLanguage() {
+    const KEY = "preferred-language";
 
-  const languageBtn = $("#language-btn");
-  const languageDropdown = $("#language-dropdown");
-  const languageOptions = $$(".language-option");
-  const languageCode = $("#language-code");
-  const mobileLanguageSelect = $("#mobile-language-select");
+    const languageBtn = $("#language-btn");
+    const languageDropdown = $("#language-dropdown");
+    const languageOptions = $$(".language-option");
+    const languageCode = $("#language-code");
+    const mobileLanguageSelect = $("#mobile-language-select");
 
-  const mainNavLinks = $$(".nav-link, .mobile-nav-link");
-  const currentYear = $("#current-year");
+    const setLang = (lang) => {
+      const safe = String(lang || "ES").toUpperCase();
+      storage.set(KEY, safe);
 
-  const cursorDot = $("#cursor-dot");
-  const cursorRing = $("#cursor-ring");
+      if (languageCode) languageCode.textContent = safe;
+      if (mobileLanguageSelect) mobileLanguageSelect.value = safe;
 
-  const hero = $("#hero");
-  const mediaCard = $("#media-card");
-  const orb1 = $(".hero-orb-1");
-  const orb2 = $(".hero-orb-2");
-  const orb3 = $(".hero-orb-3");
+      // main flag
+      const flagEl = $("#language-flag");
+      if (flagEl) flagEl.innerHTML = FLAG_SVG[safe] || FLAG_SVG.ES;
 
-  const scrollIndicator = $(".scroll-indicator");
+      // dropdown flags
+      $$("[data-flag]").forEach((el) => {
+        const code = (el.getAttribute("data-flag") || "ES").toUpperCase();
+        el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
+      });
 
-  const trainingRoot = $("#training");
-  const trainingTabs = trainingRoot ? $$(".training-tab", trainingRoot) : [];
-  const trainingPanels = trainingRoot ? $$(".training-panel", trainingRoot) : [];
+      // apply translations (ES/EN full; others fallback ES)
+      try {
+        applyWholePageTranslations(safe);
+      } catch (e) {
+        console.error("i18n apply error:", e);
+      }
+    };
 
-  const awardsRoot = $("#awards");
-  const awardsTrack = awardsRoot ? $(".awards-track", awardsRoot) : null;
-  const awardCards = awardsTrack ? $$(".award-card", awardsTrack) : [];
-  const awardIndicators = awardsRoot ? $$(".award-indicator", awardsRoot) : [];
+    // init
+    setLang(storage.get(KEY, "ES"));
 
-  const contactForm = $("#contactForm");
-  const formStatus = $("#formStatus");
-  const mapRetryBtn = $("#mapRetryBtn") || $(".contact-map-retry");
+    // desktop dropdown
+    if (languageBtn && languageDropdown) {
+      const open = () => {
+        languageBtn.setAttribute("aria-expanded", "true");
+        languageDropdown.classList.add("show");
+      };
+      const close = () => {
+        languageBtn.setAttribute("aria-expanded", "false");
+        languageDropdown.classList.remove("show");
+      };
+
+      languageBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const expanded = languageBtn.getAttribute("aria-expanded") === "true";
+        expanded ? close() : open();
+      });
+
+      languageOptions.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const lang = opt.getAttribute("data-lang") || "ES";
+          setLang(lang);
+          close();
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!languageDropdown.classList.contains("show")) return;
+        if (languageBtn.contains(e.target) || languageDropdown.contains(e.target)) return;
+        close();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
+    }
+
+    // mobile select
+    if (mobileLanguageSelect) {
+      mobileLanguageSelect.addEventListener("change", (e) => setLang(e.target.value));
+    }
+  }
 
   /* =========================
      Loader
   ========================= */
   function initLoader() {
+    const pageLoader = $("#page-loader");
     if (!pageLoader) return;
 
     body.style.overflow = "hidden";
@@ -621,10 +767,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Theme (persist)
+     Theme
   ========================= */
   function initTheme() {
     const KEY = "theme";
+    const themeToggle = $("#theme-toggle");
 
     const apply = (mode) => {
       const isDark = mode === "dark";
@@ -648,65 +795,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Language (persist + i18n)
-  ========================= */
-  function initLanguage() {
-    const KEY = "preferred-language";
-
-    const setLang = (lang) => {
-      const safe = String(lang || "ES").toUpperCase();
-      storage.set(KEY, safe);
-
-      if (languageCode) languageCode.textContent = safe;
-      if (mobileLanguageSelect) mobileLanguageSelect.value = safe;
-
-      applyTranslations(safe);
-    };
-
-    setLang(storage.get(KEY, "ES"));
-
-    if (languageBtn && languageDropdown) {
-      const open = () => {
-        languageBtn.setAttribute("aria-expanded", "true");
-        languageDropdown.classList.add("show");
-      };
-      const close = () => {
-        languageBtn.setAttribute("aria-expanded", "false");
-        languageDropdown.classList.remove("show");
-      };
-
-      languageBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        languageBtn.getAttribute("aria-expanded") === "true" ? close() : open();
-      });
-
-      languageOptions.forEach((opt) => {
-        opt.addEventListener("click", () => {
-          const lang = opt.getAttribute("data-lang") || "ES";
-          setLang(lang);
-          close();
-        });
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!languageDropdown.classList.contains("show")) return;
-        if (languageBtn.contains(e.target) || languageDropdown.contains(e.target)) return;
-        close();
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
-      });
-    }
-
-    if (mobileLanguageSelect) {
-      mobileLanguageSelect.addEventListener("change", (e) => setLang(e.target.value));
-    }
-  }
-
-  /* =========================
-     Mobile menu (robusto)
+     Mobile menu
   ========================= */
   function initMobileMenu() {
     const toggleBtn =
@@ -731,13 +820,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!toggleBtn || !panel || !overlay) return;
 
-    const bodyEl = document.body;
     const rootEl = document.documentElement;
 
     const setLocked = (locked) => {
       rootEl.style.overflow = locked ? "hidden" : "";
-      bodyEl.style.overflow = locked ? "hidden" : "";
-      bodyEl.classList.toggle("menu-open", locked);
+      body.style.overflow = locked ? "hidden" : "";
+      body.classList.toggle("menu-open", locked);
     };
 
     const openMenu = () => {
@@ -745,8 +833,9 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.classList.add("show");
       toggleBtn.setAttribute("aria-expanded", "true");
       setLocked(true);
+
       window.setTimeout(() => {
-        const firstLink = panel.querySelector("a[href], button");
+        const firstLink = panel.querySelector(".mobile-nav-link") || panel.querySelector("a[href]") || panel.querySelector("button");
         if (firstLink) firstLink.focus();
       }, 80);
     };
@@ -764,10 +853,18 @@ document.addEventListener("DOMContentLoaded", () => {
       panel.classList.contains("open") ? closeMenuFn() : openMenu();
     });
 
-    if (closeBtn) closeBtn.addEventListener("click", (e) => (e.preventDefault(), closeMenuFn()));
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeMenuFn();
+      });
+    }
+
     overlay.addEventListener("click", closeMenuFn);
 
-    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => el.addEventListener("click", closeMenuFn));
+    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
+      el.addEventListener("click", () => closeMenuFn());
+    });
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
@@ -782,6 +879,7 @@ document.addEventListener("DOMContentLoaded", () => {
      Active link (data-page)
   ========================= */
   function initActiveLink() {
+    const mainNavLinks = $$(".nav-link, .mobile-nav-link");
     const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
     const pageNoExt = file.replace(".html", "").replace(".htm", "");
 
@@ -809,6 +907,7 @@ document.addEventListener("DOMContentLoaded", () => {
      Footer year
   ========================= */
   function initYear() {
+    const currentYear = $("#current-year");
     if (currentYear) currentYear.textContent = String(new Date().getFullYear());
   }
 
@@ -867,6 +966,8 @@ document.addEventListener("DOMContentLoaded", () => {
      Custom Cursor
   ========================= */
   function initCursor() {
+    const cursorDot = $("#cursor-dot");
+    const cursorRing = $("#cursor-ring");
     if (!cursorDot || !cursorRing) return;
     if (!hasFinePointer || prefersReducedMotion) return;
 
@@ -876,6 +977,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let mouseY = window.innerHeight / 2;
     let dotX = mouseX, dotY = mouseY;
     let ringX = mouseX, ringY = mouseY;
+
     let raf = null;
 
     const setPos = (el, x, y) => {
@@ -893,8 +995,10 @@ document.addEventListener("DOMContentLoaded", () => {
       dotY += (mouseY - dotY) * 0.6;
       ringX += (mouseX - ringX) * 0.16;
       ringY += (mouseY - ringY) * 0.16;
+
       setPos(cursorDot, dotX, dotY);
       setPos(cursorRing, ringX, ringY);
+
       raf = null;
     };
 
@@ -964,9 +1068,156 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Awards carousel (mantener)
+     Training tabs (NO se rompe)
+  ========================= */
+  function initTrainingTabs() {
+    const trainingRoot = $("#training");
+    if (!trainingRoot) return;
+
+    const trainingTabs = $$(".training-tab", trainingRoot);
+    const trainingPanels = $$(".training-panel", trainingRoot);
+
+    if (!trainingTabs.length || !trainingPanels.length) return;
+
+    const AUTO_MS = 5200;
+    const FADE_MS = 280;
+
+    const progressBar = $(".training-progress-left .training-progress-bar", trainingRoot);
+    const dots = $$(".training-dot", trainingRoot);
+
+    let currentKey = "becarios";
+    let timer = null;
+
+    const keyFromId = (id) => {
+      const lower = String(id || "").toLowerCase();
+      if (lower.includes("eventos")) return "eventos";
+      if (lower.includes("webinars")) return "webinars";
+      if (lower.includes("becarios")) return "becarios";
+      return "";
+    };
+
+    const tabLabelFromKey = (key) => {
+      const tab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
+      return tab ? (tab.querySelector("span")?.textContent || "").trim() : "";
+    };
+
+    const setLeftTitle = () => {
+      const leftTitle = $(".training-image-title", trainingRoot);
+      const label = tabLabelFromKey(currentKey);
+      if (leftTitle && label) leftTitle.textContent = label;
+    };
+
+    const setDotsActive = (key) => {
+      dots.forEach((b) => b.classList.toggle("is-active", (b.dataset.go || "").toLowerCase() === key));
+    };
+
+    const resetProgress = () => {
+      if (!progressBar || prefersReducedMotion) return;
+      progressBar.style.animation = "none";
+      progressBar.style.width = "0%";
+      progressBar.offsetHeight;
+      progressBar.style.animation = `trainingProgressFill ${AUTO_MS}ms linear forwards`;
+    };
+
+    const stopAuto = () => {
+      if (timer) clearTimeout(timer);
+      timer = null;
+    };
+
+    const startAuto = () => {
+      if (prefersReducedMotion) return;
+      stopAuto();
+      timer = setTimeout(() => {
+        const order = ["eventos", "webinars", "becarios"];
+        const idx = order.indexOf(currentKey);
+        const next = order[(idx + 1) % order.length];
+        showPanel(next);
+      }, AUTO_MS);
+    };
+
+    const showPanel = (key) => {
+      currentKey = key;
+
+      trainingTabs.forEach((tab) => {
+        const is = (tab.dataset.tab || "").toLowerCase() === key;
+        tab.classList.toggle("is-active", is);
+        tab.setAttribute("aria-selected", is ? "true" : "false");
+      });
+
+      // Left big icon swap
+      const leftIconWrap = trainingRoot.querySelector(".training-card-left .training-image-icon");
+      const activeTab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
+      if (leftIconWrap && activeTab && activeTab.dataset.icon) {
+        leftIconWrap.innerHTML = `<i class="${activeTab.dataset.icon}" aria-hidden="true"></i>`;
+        if (window.FontAwesome?.dom?.i2svg) window.FontAwesome.dom.i2svg({ node: leftIconWrap });
+        leftIconWrap.classList.add("is-swap");
+        setTimeout(() => leftIconWrap.classList.remove("is-swap"), 180);
+      }
+
+      const currentActive = trainingPanels.find((p) => p.classList.contains("is-active"));
+
+      trainingPanels.forEach((panel) => {
+        const pKey = keyFromId(panel.id);
+        const shouldBeActive = pKey === key;
+
+        if (shouldBeActive) {
+          panel.removeAttribute("hidden");
+          panel.classList.remove("is-active");
+          panel.offsetHeight;
+          panel.classList.add("is-active");
+        } else {
+          if (panel === currentActive) {
+            panel.classList.remove("is-active");
+            setTimeout(() => panel.setAttribute("hidden", ""), FADE_MS);
+          } else {
+            panel.classList.remove("is-active");
+            panel.setAttribute("hidden", "");
+          }
+        }
+      });
+
+      setLeftTitle();
+      setDotsActive(key);
+      resetProgress();
+      startAuto();
+
+      // Re-apply translations for the left title (language may be EN)
+      const lang = storage.get("preferred-language", "ES");
+      try {
+        applyWholePageTranslations(lang);
+      } catch {}
+    };
+
+    trainingTabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const key = (tab.dataset.tab || "").toLowerCase();
+        if (!key) return;
+        showPanel(key);
+      });
+    });
+
+    dots.forEach((b) => {
+      b.addEventListener("click", (e) => {
+        e.preventDefault();
+        const key = (b.dataset.go || "").toLowerCase();
+        if (!key) return;
+        showPanel(key);
+      });
+    });
+
+    const initialTab = trainingTabs.find((tEl) => tEl.classList.contains("is-active")) || trainingTabs[0];
+    showPanel((initialTab?.dataset.tab || "becarios").toLowerCase());
+  }
+
+  /* =========================
+     Awards carousel
   ========================= */
   function initAwardsCarousel() {
+    const awardsRoot = $("#awards");
+    const awardsTrack = awardsRoot ? $(".awards-track", awardsRoot) : null;
+    const awardCards = awardsTrack ? $$(".award-card", awardsTrack) : [];
+    const awardIndicators = awardsRoot ? $$(".award-indicator", awardsRoot) : [];
+
     if (!awardsTrack || !awardCards.length) return;
 
     const canScroll = () => awardsTrack.scrollWidth > awardsTrack.clientWidth + 5;
@@ -1107,6 +1358,7 @@ document.addEventListener("DOMContentLoaded", () => {
      Map retry (UI)
   ========================= */
   function initMapRetry() {
+    const mapRetryBtn = $("#mapRetryBtn") || $(".contact-map-retry");
     if (!mapRetryBtn) return;
 
     mapRetryBtn.addEventListener("click", () => {
@@ -1117,15 +1369,12 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.disabled = true;
 
       const title = document.querySelector(".contact-map-alert-title");
-
       const lang = storage.get("preferred-language", "ES");
-      const searchingMsg = t(lang, "ui.searching");
-      const defaultMsg = t(lang, "ui.noBranches");
 
-      if (title) title.textContent = searchingMsg;
+      if (title) title.textContent = t(lang, "ui.searching");
 
       setTimeout(() => {
-        if (title) title.textContent = defaultMsg;
+        if (title) title.textContent = t(lang, "ui.noBranches");
         btn.classList.remove("is-loading");
         btn.disabled = false;
       }, 1100);
@@ -1134,9 +1383,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
      Contact form (Netlify + AJAX)
-     ✅ No rompe Netlify
+     ✅ No rompe Netlify (form-name, name="contact", honeypot)
   ========================= */
   function initContactForm() {
+    const contactForm = $("#contactForm");
+    const formStatus = $("#formStatus");
     if (!contactForm || !formStatus) return;
 
     const setStatus = (msg, ok) => {
@@ -1227,6 +1478,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollIndicator();
   initCursor();
   initHeroParallax();
+  initTrainingTabs();
   initAwardsCarousel();
   initMapRetry();
   initContactForm();
