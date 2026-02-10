@@ -1,10 +1,12 @@
-/* scripbeca.js — BAUSEN (i18n + Netlify Forms)
+/* scripbeca.js — BAUSEN (ONE i18n ENGINE + Netlify Forms)
    ✅ Mantiene:
    - Netlify Forms (name/form-name/honeypot/POST) sin romper lógica
    - Menú, tema, loader, tabs, carrusel, etc.
    ✅ i18n:
-   - Traducción completa ES y EN
-   - Idiomas extra (DE/PT/FR/IT) se conservan en UI y hacen fallback a ES
+   - Un solo motor (data-i18n / data-i18n-text / data-i18n-placeholder)
+   - storage key única: bausen_lang (compat: preferred-language)
+   - Default: EN
+   ✅ Footer incluido y estable
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   /* =========================
-     i18n dictionaries
+     i18n dictionaries (ES/EN full)
   ========================= */
   const I18N = {
     ES: {
@@ -61,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "kpi.sat": "Satisfacción",
       "toast.title": "Certificados",
 
-      // Services section
+      // Services
       "services.kicker": "Lo que hacemos",
       "services.title": "Nuestros Servicios",
       "services.subtitle": "Soluciones integrales diseñadas para optimizar cada aspecto de tu organización",
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "services.card3.text": "Optimiza tu carga fiscal con expertos certificados.",
       "services.more": "Conocer más",
 
-      // Press section
+      // Press
       "press.kicker": "Sala de prensa",
       "press.title": "Comunicados de <span class='accent'>Prensa</span>",
       "press.subtitle": "Mantente informado sobre las últimas noticias y anuncios de BAUSEN",
@@ -97,13 +99,13 @@ document.addEventListener("DOMContentLoaded", () => {
       "training.panel.interns.text": "Programa integral de formación y desarrollo de talento joven",
       "training.more": "Más información",
 
-      // News section
+      // News
       "news.kicker": "Blog y noticias",
       "news.title": "Últimas <span class='accent'>Noticias</span>",
       "news.subtitle": "Descubre artículos, casos de éxito y tendencias del sector",
       "news.cta": "Ver todas las noticias",
 
-      // Connect section
+      // Connect
       "connect.kicker": "Conecta con nosotros",
       "connect.title": "Juntos trazamos<br /><span class='connect-accent'>tu camino al éxito</span>",
       "connect.text":
@@ -111,11 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "connect.cta": "¡Agenda ahora!",
       "connect.follow": "¡Síguenos en redes!",
 
-      // Awards section
+      // Awards
       "awards.kicker": "Excelencia reconocida",
       "awards.title": "Nuestros <span class='accent'>Reconocimientos</span>",
       "awards.subtitle": "Certificaciones y alianzas que respaldan nuestro compromiso con la excelencia",
-
       "awards.card1.k": "Reconocimiento 01",
       "awards.card1.t": "Consejo de Recursos Humanos",
       "awards.card2.k": "Reconocimiento 02",
@@ -133,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "awards.card8.k": "Reconocimiento 08",
       "awards.card8.t": "Registro REPSE",
 
-      // Contact section
+      // Contact
       "contact.kicker": "¿Listo para conectar?",
       "contact.title": "Hablemos sobre <span class='contact-accent'>tu proyecto</span>",
       "contact.subtitle":
@@ -148,9 +149,19 @@ document.addEventListener("DOMContentLoaded", () => {
       "contact.hours": "Horario",
       "contact.hoursValue": "Lun - Vie: 9:00 - 18:00",
       "contact.follow": "Síguenos en redes",
-      "map.kicker": "NUESTRAS UBICACIONES",
 
-      // Footer (company/services)
+      // Map
+      "map.kicker": "NUESTRAS UBICACIONES",
+      "map.noBranches": "No se encontraron sucursales activas",
+      "map.retry": "Reintentar",
+      "map.searching": "Buscando…",
+
+      // Footer
+      "footer.brandText":
+        "Tu aliado estratégico en soluciones empresariales integrales.<br />Transformamos organizaciones desde adentro.",
+      "footer.hoursLabel": "Horario de atención",
+      "footer.hoursValue": "Lunes - Viernes: 9:00 - 18:00",
+      "footer.follow": "Síguenos en redes",
       "footer.company": "EMPRESA",
       "footer.services": "SERVICIOS",
       "footer.about": "Acerca de",
@@ -162,6 +173,15 @@ document.addEventListener("DOMContentLoaded", () => {
       "footer.svc.legal": "Servicios Legales",
       "footer.svc.accounting": "Servicios Contables",
       "footer.svc.orgdev": "Desarrollo Organizacional",
+      "footer.contactTitle": "CONTACTO",
+      "footer.note": "Próximamente. No se encontraron sucursales activas.",
+      "footer.phoneLabel": "Teléfono",
+      "footer.emailLabel": "Email",
+      "footer.maps": "Ver en Google Maps",
+      "footer.rights": "Todos los derechos reservados",
+      "footer.privacy": "Política de privacidad",
+      "footer.terms": "Términos de servicio",
+      "footer.cookies": "Política de cookies",
 
       // Form
       "form.fullNamePh": "Tu nombre completo",
@@ -177,13 +197,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // UI
       "ui.openMenu": "Abrir menú",
       "ui.closeMenu": "Cerrar menú",
-      "ui.retry": "Reintentar",
-      "ui.searching": "Buscando…",
-      "ui.noBranches": "No se encontraron sucursales activas",
-      "ui.scrollNext": "Bajar a la siguiente sección",
       "ui.langSelect": "Seleccionar idioma",
       "ui.goHome": "Ir a inicio",
       "ui.toggleTheme": "Cambiar tema claro/oscuro",
+      "ui.scrollNext": "Bajar a la siguiente sección",
     },
 
     EN: {
@@ -208,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "kpi.sat": "Satisfaction",
       "toast.title": "Certified",
 
-      // Services section
+      // Services
       "services.kicker": "What we do",
       "services.title": "Our Services",
       "services.subtitle": "Integrated solutions designed to optimize every aspect of your organization",
@@ -220,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "services.card3.text": "Optimize your tax burden with certified experts.",
       "services.more": "Learn more",
 
-      // Press section
+      // Press
       "press.kicker": "Press room",
       "press.title": "Press <span class='accent'>Releases</span>",
       "press.subtitle": "Stay informed about the latest BAUSEN news and announcements",
@@ -244,13 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
       "training.panel.interns.text": "Comprehensive program for training and developing young talent",
       "training.more": "Learn more",
 
-      // News section
+      // News
       "news.kicker": "Blog & news",
       "news.title": "Latest <span class='accent'>News</span>",
       "news.subtitle": "Discover articles, success stories and industry trends",
       "news.cta": "View all news",
 
-      // Connect section
+      // Connect
       "connect.kicker": "Connect with us",
       "connect.title": "Together we shape<br /><span class='connect-accent'>your path to success</span>",
       "connect.text":
@@ -258,11 +275,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "connect.cta": "Schedule now!",
       "connect.follow": "Follow us on social!",
 
-      // Awards section
+      // Awards
       "awards.kicker": "Recognized excellence",
       "awards.title": "Our <span class='accent'>Recognitions</span>",
       "awards.subtitle": "Certifications and partnerships that back our commitment to excellence",
-
       "awards.card1.k": "Recognition 01",
       "awards.card1.t": "Human Resources Council",
       "awards.card2.k": "Recognition 02",
@@ -280,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "awards.card8.k": "Recognition 08",
       "awards.card8.t": "REPSE Registry",
 
-      // Contact section
+      // Contact
       "contact.kicker": "Ready to connect?",
       "contact.title": "Let’s talk about <span class='contact-accent'>your project</span>",
       "contact.subtitle":
@@ -295,9 +311,19 @@ document.addEventListener("DOMContentLoaded", () => {
       "contact.hours": "Hours",
       "contact.hoursValue": "Mon - Fri: 9:00 - 18:00",
       "contact.follow": "Follow us on social",
-      "map.kicker": "OUR LOCATIONS",
 
-      // Footer (company/services)
+      // Map
+      "map.kicker": "OUR LOCATIONS",
+      "map.noBranches": "No active branches found",
+      "map.retry": "Retry",
+      "map.searching": "Searching…",
+
+      // Footer
+      "footer.brandText":
+        "Your strategic ally in integrated business solutions.<br />We transform organizations from the inside out.",
+      "footer.hoursLabel": "Business hours",
+      "footer.hoursValue": "Mon - Fri: 9:00 - 18:00",
+      "footer.follow": "Follow us on social",
       "footer.company": "COMPANY",
       "footer.services": "SERVICES",
       "footer.about": "About",
@@ -309,6 +335,15 @@ document.addEventListener("DOMContentLoaded", () => {
       "footer.svc.legal": "Legal Services",
       "footer.svc.accounting": "Accounting Services",
       "footer.svc.orgdev": "Organizational Development",
+      "footer.contactTitle": "CONTACT",
+      "footer.note": "Coming soon. No active branches found.",
+      "footer.phoneLabel": "Phone",
+      "footer.emailLabel": "Email",
+      "footer.maps": "View on Google Maps",
+      "footer.rights": "All rights reserved",
+      "footer.privacy": "Privacy Policy",
+      "footer.terms": "Terms of Service",
+      "footer.cookies": "Cookie Policy",
 
       // Form
       "form.fullNamePh": "Full name",
@@ -324,17 +359,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // UI
       "ui.openMenu": "Open menu",
       "ui.closeMenu": "Close menu",
-      "ui.retry": "Retry",
-      "ui.searching": "Searching…",
-      "ui.noBranches": "No active branches found",
-      "ui.scrollNext": "Scroll to next section",
       "ui.langSelect": "Select language",
       "ui.goHome": "Go to home",
       "ui.toggleTheme": "Toggle light/dark theme",
+      "ui.scrollNext": "Scroll to next section",
     },
   };
 
-  // Flags (keep all)
+  /* =========================
+     Flags (keep all)
+  ========================= */
   const FLAG_SVG = {
     ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
           <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
@@ -366,49 +400,77 @@ document.addEventListener("DOMContentLoaded", () => {
         </svg>`,
   };
 
-  // ES/EN are real; other codes stay in UI but fallback to ES content
+  /* =========================
+     ONE language source of truth
+  ========================= */
+  const LANG_KEY = "bausen_lang";
+
   const normalizeLang = (lang) => {
-    const L = String(lang || "ES").toUpperCase();
-    return L; // keep raw code (ES/EN/DE/PT/FR/IT) for UI
+    const v = String(lang || "").trim();
+    const up = v.toUpperCase();
+
+    // accept common variants
+    if (up === "EN" || up === "ES" || up === "DE" || up === "PT" || up === "FR" || up === "IT") return up;
+    if (v.toLowerCase().startsWith("en")) return "EN";
+    if (v.toLowerCase().startsWith("es")) return "ES";
+    if (v.toLowerCase().startsWith("pt")) return "PT";
+    if (v.toLowerCase().startsWith("fr")) return "FR";
+    if (v.toLowerCase().startsWith("it")) return "IT";
+    if (v.toLowerCase().startsWith("de")) return "DE";
+    return "EN"; // ✅ default site language
+  };
+
+  const getLang = () => {
+    // compat: if you previously stored preferred-language
+    const saved = storage.get(LANG_KEY, null) || storage.get("preferred-language", null);
+    return normalizeLang(saved || "EN");
+  };
+
+  const setLang = (lang) => {
+    const L = normalizeLang(lang);
+    storage.set(LANG_KEY, L);
+    // compat keep
+    storage.set("preferred-language", L);
+    applyTranslations(L);
   };
 
   const t = (lang, key) => {
     const L = normalizeLang(lang);
-    const dict = I18N[L] || I18N.ES; // fallback to ES
+    const dict = I18N[L] || I18N.ES; // fallback ES for non-EN/ES
     return dict[key] ?? (I18N.ES[key] ?? key);
   };
 
-  const setTextOrHTML = (el, value) => {
-    if (!el) return;
-    if (/<[a-z][\s\S]*>/i.test(value)) el.innerHTML = value;
-    else el.textContent = value;
-  };
-
   /* =========================
-     Translator: robust mapping (no fragile text matching)
+     Translator (ONLY data-i18n*)
   ========================= */
-  function applyWholePageTranslations(lang) {
+  function applyTranslations(lang) {
     const L = normalizeLang(lang);
 
-    // HTML lang attribute
+    // semantic html lang
     document.documentElement.setAttribute("lang", L === "EN" ? "en" : "es");
 
-    // Header CTA
-    const collabBtn = $(".header-controls a[href='acceso.html']");
-    if (collabBtn) setTextOrHTML(collabBtn, t(L, "header.collab"));
-
-    // Nav items (already have data-i18n in your HTML, but this ensures coverage)
+    // translate innerHTML
     $$("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
-      if (key) el.innerHTML = t(L, key);
+      if (!key) return;
+      el.innerHTML = t(L, key);
     });
 
+    // translate textContent
+    $$("[data-i18n-text]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-text");
+      if (!key) return;
+      el.textContent = t(L, key);
+    });
+
+    // placeholders
     $$("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
-      if (key) el.setAttribute("placeholder", t(L, key));
+      if (!key) return;
+      el.setAttribute("placeholder", t(L, key));
     });
 
-    // ARIA (menu/theme/lang/scroll/home)
+    // ARIA / UI labels (stable)
     const menuToggle = $("#menu-toggle");
     if (menuToggle) menuToggle.setAttribute("aria-label", t(L, "ui.openMenu"));
     const closeMenu = $("#close-menu");
@@ -422,282 +484,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollBtn = $(".scroll-indicator");
     if (scrollBtn) scrollBtn.setAttribute("aria-label", t(L, "ui.scrollNext"));
 
-    // Hero KPI labels
-    const kpi1 = $(".hero-kpis .kpi:nth-child(1) .kpi-label");
-    const kpi2 = $(".hero-kpis .kpi:nth-child(2) .kpi-label");
-    const kpi3 = $(".hero-kpis .kpi:nth-child(3) .kpi-label");
-    if (kpi1) setTextOrHTML(kpi1, t(L, "kpi.years"));
-    if (kpi2) setTextOrHTML(kpi2, t(L, "kpi.clients"));
-    if (kpi3) setTextOrHTML(kpi3, t(L, "kpi.sat"));
+    // sync language code + flag
+    const languageCode = $("#language-code");
+    const mobileSelect = $("#mobile-language-select");
+    if (languageCode) languageCode.textContent = L;
+    if (mobileSelect) mobileSelect.value = L;
 
-    // Toast in hero
-    const toastTitle = $("#toast-card .toast-title");
-    if (toastTitle) setTextOrHTML(toastTitle, t(L, "toast.title"));
+    const flagEl = $("#language-flag");
+    if (flagEl) flagEl.innerHTML = FLAG_SVG[L] || FLAG_SVG.ES;
 
-    // Services section headings
-    const services = $("#services");
-    if (services) {
-      const kicker = $(".section-head .section-pill", services);
-      const title = $(".section-head .section-title", services);
-      const sub = $(".section-head .section-subtitle", services);
-      if (kicker) setTextOrHTML(kicker, t(L, "services.kicker"));
-      if (title) setTextOrHTML(title, t(L, "services.title"));
-      if (sub) setTextOrHTML(sub, t(L, "services.subtitle"));
-
-      // service cards
-      const cards = $$(".services-grid .service-card", services);
-      if (cards[0]) {
-        const h3 = $(".service-title", cards[0]);
-        const p = $(".service-text", cards[0]);
-        const a = $(".service-link", cards[0]);
-        if (h3) setTextOrHTML(h3, t(L, "services.card1.title"));
-        if (p) setTextOrHTML(p, t(L, "services.card1.text"));
-        if (a) a.innerHTML = `${t(L, "services.more")} <i class="fas fa-arrow-right"></i>`;
-      }
-      if (cards[1]) {
-        const h3 = $(".service-title", cards[1]);
-        const p = $(".service-text", cards[1]);
-        const a = $(".service-link", cards[1]);
-        if (h3) setTextOrHTML(h3, t(L, "services.card2.title"));
-        if (p) setTextOrHTML(p, t(L, "services.card2.text"));
-        if (a) a.innerHTML = `${t(L, "services.more")} <i class="fas fa-arrow-right"></i>`;
-      }
-      if (cards[2]) {
-        const h3 = $(".service-title", cards[2]);
-        const p = $(".service-text", cards[2]);
-        const a = $(".service-link", cards[2]);
-        if (h3) setTextOrHTML(h3, t(L, "services.card3.title"));
-        if (p) setTextOrHTML(p, t(L, "services.card3.text"));
-        if (a) a.innerHTML = `${t(L, "services.more")} <i class="fas fa-arrow-right"></i>`;
-      }
-    }
-
-    // Press section
-    const press = $("#press");
-    if (press) {
-      const kicker = $(".section-pill span", press) || $(".section-pill", press);
-      const title = $(".section-title", press);
-      const sub = $(".section-subtitle", press);
-      const cta = $(".btn.btn-primary span", press);
-      if (kicker) setTextOrHTML(kicker, t(L, "press.kicker"));
-      if (title) setTextOrHTML(title, t(L, "press.title"));
-      if (sub) setTextOrHTML(sub, t(L, "press.subtitle"));
-      if (cta) setTextOrHTML(cta, t(L, "press.cta"));
-    }
-
-    // Training section
-    const training = $("#training");
-    if (training) {
-      const pillSpan = $(".training-pill span", training);
-      const title = $(".training-title", training);
-      const sub = $(".training-subtitle", training);
-      if (pillSpan) setTextOrHTML(pillSpan, t(L, "training.kicker"));
-      if (title) setTextOrHTML(title, t(L, "training.title"));
-      if (sub) setTextOrHTML(sub, t(L, "training.subtitle"));
-
-      const tabEvents = $("#tab-eventos span");
-      const tabWeb = $("#tab-webinars span");
-      const tabBec = $("#tab-becarios span");
-      if (tabEvents) setTextOrHTML(tabEvents, t(L, "training.tab.events"));
-      if (tabWeb) setTextOrHTML(tabWeb, t(L, "training.tab.webinars"));
-      if (tabBec) setTextOrHTML(tabBec, t(L, "training.tab.interns"));
-
-      const panelEventsTitle = $("#panel-eventos .training-panel-title");
-      const panelEventsText = $("#panel-eventos .training-panel-text");
-      const panelWebTitle = $("#panel-webinars .training-panel-title");
-      const panelWebText = $("#panel-webinars .training-panel-text");
-      const panelBecTitle = $("#panel-becarios .training-panel-title");
-      const panelBecText = $("#panel-becarios .training-panel-text");
-
-      if (panelEventsTitle) setTextOrHTML(panelEventsTitle, t(L, "training.panel.events.title"));
-      if (panelEventsText) setTextOrHTML(panelEventsText, t(L, "training.panel.events.text"));
-      if (panelWebTitle) setTextOrHTML(panelWebTitle, t(L, "training.panel.webinars.title"));
-      if (panelWebText) setTextOrHTML(panelWebText, t(L, "training.panel.webinars.text"));
-      if (panelBecTitle) setTextOrHTML(panelBecTitle, t(L, "training.panel.interns.title"));
-      if (panelBecText) setTextOrHTML(panelBecText, t(L, "training.panel.interns.text"));
-
-      $$("#panel-eventos a.btn span, #panel-webinars a.btn span, #panel-becarios a.btn span").forEach((s) => {
-        setTextOrHTML(s, t(L, "training.more"));
-      });
-
-      // Left card title (dynamic via initTrainingTabs too)
-      const leftTitle = $(".training-image-title", training);
-      if (leftTitle) {
-        const activeKey =
-          $("#tab-eventos")?.classList.contains("is-active") ? "events" :
-          $("#tab-webinars")?.classList.contains("is-active") ? "webinars" : "interns";
-        const map = {
-          events: "training.leftTitle.events",
-          webinars: "training.leftTitle.webinars",
-          interns: "training.leftTitle.interns",
-        };
-        setTextOrHTML(leftTitle, t(L, map[activeKey] || "training.leftTitle.interns"));
-      }
-    }
-
-    // News section
-    const news = $("#news");
-    if (news) {
-      const pillSpan = $(".section-pill span", news) || $(".section-pill", news);
-      const title = $(".section-title", news);
-      const sub = $(".section-subtitle", news);
-      const cta = $(".btn.btn-primary span", news);
-      if (pillSpan) setTextOrHTML(pillSpan, t(L, "news.kicker"));
-      if (title) setTextOrHTML(title, t(L, "news.title"));
-      if (sub) setTextOrHTML(sub, t(L, "news.subtitle"));
-      if (cta) setTextOrHTML(cta, t(L, "news.cta"));
-    }
-
-    // Connect section
-    const connect = $("#connect");
-    if (connect) {
-      const pillSpan = $(".connect-pill span", connect);
-      const title = $(".connect-title", connect);
-      const text = $(".connect-text", connect);
-      const ctaSpan = $(".btn.btn-primary span", connect);
-      const follow = $(".connect-right-title", connect);
-      if (pillSpan) setTextOrHTML(pillSpan, t(L, "connect.kicker"));
-      if (title) setTextOrHTML(title, t(L, "connect.title"));
-      if (text) setTextOrHTML(text, t(L, "connect.text"));
-      if (ctaSpan) setTextOrHTML(ctaSpan, t(L, "connect.cta"));
-      if (follow) setTextOrHTML(follow, t(L, "connect.follow"));
-    }
-
-    // Awards section + cards content
-    const awards = $("#awards");
-    if (awards) {
-      const pillSpan = $(".section-pill span", awards) || $(".section-pill", awards);
-      const title = $(".section-title", awards);
-      const sub = $(".section-subtitle", awards);
-      if (pillSpan) setTextOrHTML(pillSpan, t(L, "awards.kicker"));
-      if (title) setTextOrHTML(title, t(L, "awards.title"));
-      if (sub) setTextOrHTML(sub, t(L, "awards.subtitle"));
-
-      const cards = $$("#awardsTrack .award-card");
-      const map = [
-        ["awards.card1.k", "awards.card1.t"],
-        ["awards.card2.k", "awards.card2.t"],
-        ["awards.card3.k", "awards.card3.t"],
-        ["awards.card4.k", "awards.card4.t"],
-        ["awards.card5.k", "awards.card5.t"],
-        ["awards.card6.k", "awards.card6.t"],
-        ["awards.card7.k", "awards.card7.t"],
-        ["awards.card8.k", "awards.card8.t"],
-      ];
-      cards.forEach((card, idx) => {
-        const k = $(".award-kicker", card);
-        const h = $(".award-title", card);
-        const keys = map[idx];
-        if (!keys) return;
-        if (k) setTextOrHTML(k, t(L, keys[0]));
-        if (h) setTextOrHTML(h, t(L, keys[1]));
-      });
-    }
-
-    // Contact section headings + info labels
-    const contact = $("#contacto");
-    if (contact) {
-      const pillSpan = $(".contact-pill span", contact);
-      const title = $(".contact-title", contact);
-      const sub = $(".contact-subtitle", contact);
-      const formTitle = $(".contact-form-title", contact);
-      const formSub = $(".contact-form-subtitle", contact);
-      if (pillSpan) setTextOrHTML(pillSpan, t(L, "contact.kicker"));
-      if (title) setTextOrHTML(title, t(L, "contact.title"));
-      if (sub) setTextOrHTML(sub, t(L, "contact.subtitle"));
-      if (formTitle) setTextOrHTML(formTitle, t(L, "contact.formTitle"));
-      if (formSub) setTextOrHTML(formSub, t(L, "contact.formSubtitle"));
-
-      const infoTitle = $(".contact-info-title", contact);
-      if (infoTitle) setTextOrHTML(infoTitle, t(L, "contact.infoTitle"));
-
-      const phoneLabel = $(".contact-info-item:nth-child(1) .contact-info-label", contact);
-      const emailLabel = $(".contact-info-item:nth-child(2) .contact-info-label", contact);
-      const locLabel = $(".contact-info-item:nth-child(3) .contact-info-label", contact);
-      const locValue = $(".contact-info-item:nth-child(3) .contact-info-value", contact);
-      const hoursLabel = $(".contact-info-item:nth-child(4) .contact-info-label", contact);
-      const hoursValue = $(".contact-info-item:nth-child(4) .contact-info-value", contact);
-
-      if (phoneLabel) setTextOrHTML(phoneLabel, t(L, "contact.phone"));
-      if (emailLabel) setTextOrHTML(emailLabel, t(L, "contact.email"));
-      if (locLabel) setTextOrHTML(locLabel, t(L, "contact.location"));
-      if (locValue) setTextOrHTML(locValue, t(L, "contact.locationValue"));
-      if (hoursLabel) setTextOrHTML(hoursLabel, t(L, "contact.hours"));
-      if (hoursValue) setTextOrHTML(hoursValue, t(L, "contact.hoursValue"));
-
-      const follow = $(".contact-social-title", contact);
-      if (follow) setTextOrHTML(follow, t(L, "contact.follow"));
-
-      const mapKicker = $(".contact-map-kicker", contact);
-      if (mapKicker) setTextOrHTML(mapKicker, t(L, "map.kicker"));
-    }
-
-    // Footer headings + link texts
-    const footerCompanyH4 = $("nav[aria-label='Empresa'] h4");
-    const footerServicesH4 = $("nav[aria-label='Servicios'] h4");
-    if (footerCompanyH4) setTextOrHTML(footerCompanyH4, t(L, "footer.company"));
-    if (footerServicesH4) setTextOrHTML(footerServicesH4, t(L, "footer.services"));
-
-    // Footer links (by href to avoid breaking structure)
-    const setFooterLink = (href, key) => {
-      const a = $(`nav[aria-label='Empresa'] a[href='${href}']`) || $(`nav[aria-label='Servicios'] a[href='${href}']`);
-      if (a) setTextOrHTML(a, t(L, key));
-    };
-
-    // Company links
-    setFooterLink("acercade.html", "footer.about");
-    setFooterLink("acerca.html", "footer.about"); // if exists
-    setFooterLink("servicios.html", "footer.servicesLink");
-    setFooterLink("noticias.html", "footer.news");
-    setFooterLink("prensa.html", "footer.press");
-    setFooterLink("contacto.html", "footer.contact");
-
-    // Services links (anchors)
-    setFooterLink("servicios.html#capital-humano", "footer.svc.capital");
-    setFooterLink("servicios.html#servicios-legales", "footer.svc.legal");
-    setFooterLink("servicios.html#servicios-contables", "footer.svc.accounting");
-    setFooterLink("servicios.html#desarrollo-organizacional", "footer.svc.orgdev");
+    $$("[data-flag]").forEach((el) => {
+      const code = normalizeLang(el.getAttribute("data-flag") || "ES");
+      el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
+    });
   }
 
   /* =========================
-     Language UI + persist
+     Language UI
   ========================= */
   function initLanguage() {
-    const KEY = "preferred-language";
-
     const languageBtn = $("#language-btn");
     const languageDropdown = $("#language-dropdown");
     const languageOptions = $$(".language-option");
-    const languageCode = $("#language-code");
     const mobileLanguageSelect = $("#mobile-language-select");
 
-    const setLang = (lang) => {
-      const safe = String(lang || "ES").toUpperCase();
-      storage.set(KEY, safe);
-
-      if (languageCode) languageCode.textContent = safe;
-      if (mobileLanguageSelect) mobileLanguageSelect.value = safe;
-
-      // main flag
-      const flagEl = $("#language-flag");
-      if (flagEl) flagEl.innerHTML = FLAG_SVG[safe] || FLAG_SVG.ES;
-
-      // dropdown flags
-      $$("[data-flag]").forEach((el) => {
-        const code = (el.getAttribute("data-flag") || "ES").toUpperCase();
-        el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
-      });
-
-      // apply translations (ES/EN full; others fallback ES)
-      try {
-        applyWholePageTranslations(safe);
-      } catch (e) {
-        console.error("i18n apply error:", e);
-      }
-    };
-
-    // init
-    setLang(storage.get(KEY, "ES"));
+    // init apply
+    applyTranslations(getLang());
 
     // desktop dropdown
     if (languageBtn && languageDropdown) {
@@ -719,7 +531,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       languageOptions.forEach((opt) => {
         opt.addEventListener("click", () => {
-          const lang = opt.getAttribute("data-lang") || "ES";
+          const lang = opt.getAttribute("data-lang") || "EN";
           setLang(lang);
           close();
         });
@@ -1068,7 +880,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Training tabs (NO se rompe)
+     Training tabs (robusto + i18n)
   ========================= */
   function initTrainingTabs() {
     const trainingRoot = $("#training");
@@ -1096,15 +908,17 @@ document.addEventListener("DOMContentLoaded", () => {
       return "";
     };
 
-    const tabLabelFromKey = (key) => {
-      const tab = trainingTabs.find((tEl) => (tEl.dataset.tab || "").toLowerCase() === key);
-      return tab ? (tab.querySelector("span")?.textContent || "").trim() : "";
+    const leftTitleKey = (key) => {
+      if (key === "eventos") return "training.leftTitle.events";
+      if (key === "webinars") return "training.leftTitle.webinars";
+      return "training.leftTitle.interns";
     };
 
     const setLeftTitle = () => {
-      const leftTitle = $(".training-image-title", trainingRoot);
-      const label = tabLabelFromKey(currentKey);
-      if (leftTitle && label) leftTitle.textContent = label;
+      const leftTitle = $("#trainingLeftTitle") || $(".training-image-title", trainingRoot);
+      if (!leftTitle) return;
+      const lang = getLang();
+      leftTitle.textContent = t(lang, leftTitleKey(currentKey));
     };
 
     const setDotsActive = (key) => {
@@ -1181,11 +995,8 @@ document.addEventListener("DOMContentLoaded", () => {
       resetProgress();
       startAuto();
 
-      // Re-apply translations for the left title (language may be EN)
-      const lang = storage.get("preferred-language", "ES");
-      try {
-        applyWholePageTranslations(lang);
-      } catch {}
+      // Re-apply translations to keep everything consistent
+      applyTranslations(getLang());
     };
 
     trainingTabs.forEach((tab) => {
@@ -1355,7 +1166,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Map retry (UI)
+     Map retry (i18n stable)
   ========================= */
   function initMapRetry() {
     const mapRetryBtn = $("#mapRetryBtn") || $(".contact-map-retry");
@@ -1369,12 +1180,12 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.disabled = true;
 
       const title = document.querySelector(".contact-map-alert-title");
-      const lang = storage.get("preferred-language", "ES");
+      const lang = getLang();
 
-      if (title) title.textContent = t(lang, "ui.searching");
+      if (title) title.textContent = t(lang, "map.searching");
 
       setTimeout(() => {
-        if (title) title.textContent = t(lang, "ui.noBranches");
+        if (title) title.textContent = t(lang, "map.noBranches");
         btn.classList.remove("is-loading");
         btn.disabled = false;
       }, 1100);
@@ -1383,7 +1194,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* =========================
      Contact form (Netlify + AJAX)
-     ✅ No rompe Netlify (form-name, name="contact", honeypot)
+     ✅ POST robusto a "/"
   ========================= */
   function initContactForm() {
     const contactForm = $("#contactForm");
@@ -1409,7 +1220,7 @@ document.addEventListener("DOMContentLoaded", () => {
     contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const lang = storage.get("preferred-language", "ES");
+      const lang = getLang();
 
       const fullName = ($("#fullName")?.value || "").trim();
       const email = ($("#email")?.value || "").trim();
@@ -1439,9 +1250,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const formData = new FormData(contactForm);
-        const action = contactForm.getAttribute("action") || "/";
 
-        const res = await fetch(action, {
+        // ✅ Netlify Forms recomendado para AJAX: POST a "/"
+        const postUrl = "/";
+
+        const res = await fetch(postUrl, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: encodeFormData(formData),
