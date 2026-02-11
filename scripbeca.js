@@ -1260,12 +1260,13 @@ document.addEventListener("DOMContentLoaded", () => {
           body: encodeFormData(formData),
         });
 
-        if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
+       if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
 
-        setStatus(t(lang, "form.ok"), true);
-        contactForm.reset();
+setStatus(t(lang, "form.ok"), true);
 
-        setTimeout(() => setStatus("", true), 4500);
+// ✅ redirección real al "action" del form
+const redirectTo = contactForm.getAttribute("action") || "/gracias/index.html";
+window.location.assign(redirectTo);
       } catch (err) {
         console.error(err);
         setStatus(t(lang, "form.fail"), false);
