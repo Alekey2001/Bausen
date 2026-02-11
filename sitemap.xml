@@ -9,21 +9,16 @@
   <url><loc>https://bausenweb.netlify.app/centro.html</loc></url>
   <url><loc>https://bausenweb.netlify.app/acerca.html</loc></url>
 
-  <url><loc>https://bausenweb.netlify.app/acceso.html</loc></url>
-
   <url><loc>https://bausenweb.netlify.app/capital.html</loc></url>
   <url><loc>https://bausenweb.netlify.app/inexservicios/servicios.html</loc></url>
   <url><loc>https://bausenweb.netlify.app/inexservicios/impuestos.html</loc></url>
 
-  <!-- Training (solo las que están bien) -->
-  <url><loc>https://bausenweb.netlify.app/training/eventos</loc></url>
-  <url><loc>https://bausenweb.netlify.app/training/becarios</loc></url>
+  <url><loc>https://bausenweb.netlify.app/Training/eventos.html</loc></url>
+  <url><loc>https://bausenweb.netlify.app/Training/webinars.html</loc></url>
+  <url><loc>https://bausenweb.netlify.app/Training/becarios.html</loc></url>
 
-  <!-- Legal (rutas reales actuales) -->
-  <url><loc>https://bausenweb.netlify.app/term/privacidad</loc></url>
-  <url><loc>https://bausenweb.netlify.app/term/terminos</loc></url>
-  <url><loc>https://bausenweb.netlify.app/term/cookies</loc></url>
-
-  <url><loc>https://bausenweb.netlify.app/gracias/</loc></url>
+  <url><loc>https://bausenweb.netlify.app/term/privacidad.html</loc></url>
+  <url><loc>https://bausenweb.netlify.app/term/terminos.html</loc></url>
+  <url><loc>https://bausenweb.netlify.app/term/cookies.html</loc></url>
 
 </urlset>
