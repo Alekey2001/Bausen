@@ -1197,87 +1197,95 @@ document.addEventListener("DOMContentLoaded", () => {
      ✅ POST robusto a "/"
   ========================= */
   function initContactForm() {
-    const contactForm = $("#contactForm");
-    const formStatus = $("#formStatus");
-    if (!contactForm || !formStatus) return;
+  const contactForm = document.getElementById("contactForm");
+  const formStatus = document.getElementById("formStatus");
+  if (!contactForm || !formStatus) return;
 
-    const setStatus = (msg, ok) => {
-      formStatus.textContent = msg || "";
-      formStatus.style.opacity = msg ? "1" : "0";
-      formStatus.style.marginTop = msg ? "12px" : "";
-      formStatus.style.fontWeight = "900";
-      formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
-    };
+  const setStatus = (msg, ok) => {
+    formStatus.textContent = msg || "";
+    formStatus.style.opacity = msg ? "1" : "0";
+    formStatus.style.marginTop = msg ? "12px" : "";
+    formStatus.style.fontWeight = "900";
+    formStatus.style.color = ok ? "rgba(16,185,129,0.95)" : "rgba(239,68,68,0.95)";
+  };
 
-    const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
+  const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || "").trim());
 
-    const encodeFormData = (formData) => {
-      const params = new URLSearchParams();
-      for (const [k, v] of formData.entries()) params.append(k, v);
-      return params.toString();
-    };
+  const encodeFormData = (formData) => {
+    const params = new URLSearchParams();
+    for (const [k, v] of formData.entries()) params.append(k, v);
+    return params.toString();
+  };
 
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      const lang = getLang();
+    const lang = (typeof getLang === "function") ? getLang() : "EN";
 
-      const fullName = ($("#fullName")?.value || "").trim();
-      const email = ($("#email")?.value || "").trim();
-      const message = ($("#message")?.value || "").trim();
+    const fullName = (document.getElementById("fullName")?.value || "").trim();
+    const email = (document.getElementById("email")?.value || "").trim();
+    const message = (document.getElementById("message")?.value || "").trim();
 
-      if (!fullName || !email || !message) {
-        setStatus(t(lang, "form.err.required"), false);
-        return;
+    if (!fullName || !email || !message) {
+      setStatus(typeof t === "function" ? t(lang, "form.err.required") : "Completa los campos.", false);
+      return;
+    }
+    if (!isEmail(email)) {
+      setStatus(typeof t === "function" ? t(lang, "form.err.email") : "Email inválido.", false);
+      return;
+    }
+
+    // Honeypot
+    const botField = contactForm.querySelector("input[name='bot-field']");
+    if (botField && String(botField.value || "").trim().length > 0) return;
+
+    const btn = document.getElementById("contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
+    const oldBtnHTML = btn ? btn.innerHTML : "";
+
+    let redirected = false;
+
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span>${typeof t === "function" ? t(lang, "form.sending") : "Enviando…"}</span>`;
+    }
+    setStatus("", true);
+
+    try {
+      const formData = new FormData(contactForm);
+
+      // Asegura que Netlify detecte el form
+      // (ya lo tienes, pero esto evita casos raros si alguien lo borra)
+      if (!formData.get("form-name")) formData.set("form-name", contactForm.getAttribute("name") || "contact");
+
+      const res = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData(formData),
+      });
+
+      if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
+
+      setStatus(typeof t === "function" ? t(lang, "form.ok") : "Enviado.", true);
+
+      // ✅ Redirect ABSOLUTO (evita líos de rutas relativas)
+      const action = contactForm.getAttribute("action") || "/gracias/";
+      const redirectTo = new URL(action, window.location.origin).toString();
+
+      redirected = true;
+      window.location.replace(redirectTo); // replace = más limpio que assign
+      return;
+    } catch (err) {
+      console.error("FORM SUBMIT ERROR:", err);
+      setStatus(typeof t === "function" ? t(lang, "form.fail") : "Error al enviar.", false);
+    } finally {
+      // Si ya estás redirigiendo, no tiene sentido “restaurar” UI
+      if (!redirected && btn) {
+        btn.disabled = false;
+        btn.innerHTML = oldBtnHTML;
       }
-      if (!isEmail(email)) {
-        setStatus(t(lang, "form.err.email"), false);
-        return;
-      }
-
-      // honeypot
-      const botField = contactForm.querySelector("input[name='bot-field']");
-      if (botField && String(botField.value || "").trim().length > 0) return;
-
-      const btn = $("#contactSubmitBtn") || contactForm.querySelector("button[type='submit']");
-      const oldBtnHTML = btn ? btn.innerHTML : "";
-
-      if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = `<span>${t(lang, "form.sending")}</span>`;
-      }
-      setStatus("", true);
-
-      try {
-        const formData = new FormData(contactForm);
-
-        // ✅ Netlify Forms recomendado para AJAX: POST a "/"
-        const postUrl = "/";
-
-        const res = await fetch(postUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: encodeFormData(formData),
-        });
-
-       if (!res.ok) throw new Error(`Netlify form error: ${res.status}`);
-
-setStatus(t(lang, "form.ok"), true);
-
-// ✅ redirección real al "action" del form
-const redirectTo = contactForm.getAttribute("action") || "/gracias/index.html";
-window.location.assign(redirectTo);
-      } catch (err) {
-        console.error(err);
-        setStatus(t(lang, "form.fail"), false);
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.innerHTML = oldBtnHTML;
-        }
-      }
-    });
-  }
+    }
+  });
+}
 
   /* =========================
      Boot
