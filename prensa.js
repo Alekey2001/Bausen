@@ -1,12 +1,4 @@
-/* =========================
-   Prensa - JS (robusto)
-   - Tema claro/oscuro (persistente)
-   - Menú móvil (sin estados raros + UI footer configurable)
-   - Selector de idioma (UI)
-   - Reveal on scroll (single observer)
-   - Tilt 3D suave (no duplicates)
-   - Buscador + filtro por año (demo lista)
-========================= */
+
 
 (() => {
   // Evita doble inicialización si por error cargas el script 2 veces
@@ -14,6 +6,7 @@
   window.__bausen_prensa_inited = true;
 
   const root = document.documentElement;
+  const body = document.body;
   root.classList.remove("no-js");
   root.classList.add("js");
 
@@ -28,259 +21,524 @@
      Theme
   ========================= */
   function initTheme() {
-    const btn = $("#themeToggle");
-    if (!btn) return;
+    // Keep compatibility with BOTH implementations:
+    // - reference uses storage key "theme" + body.theme-dark
+    // - destino used html[data-theme] + "bausen_theme"
+    const KEY = "bausen_theme";
+    const KEY_COMPAT = "theme";
+    const themeToggle = $("#theme-toggle") || $("#themeToggle");
 
-    const stored = localStorage.getItem("bausen_theme");
-    if (stored === "light" || stored === "dark") {
-      root.setAttribute("data-theme", stored);
+    const apply = (mode) => {
+      const next = mode === "light" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      body.classList.toggle("theme-dark", next === "dark");
+
+      // persist (both keys for backwards compatibility)
+      storage.set(KEY, next);
+      storage.set(KEY_COMPAT, next);
+    };
+
+    const saved = storage.get(KEY, null) || storage.get(KEY_COMPAT, null);
+    if (saved === "dark" || saved === "light") apply(saved);
+    else {
+      const attr = root.getAttribute("data-theme");
+      if (attr === "dark" || attr === "light") apply(attr);
+      else {
+        const osDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        apply(osDark ? "dark" : "light");
+      }
     }
 
-    const syncIcon = () => {
-      const isDark = root.getAttribute("data-theme") !== "light";
-      btn.setAttribute("aria-pressed", String(isDark));
-
-      const icon = $(".theme-toggle__icon i", btn);
-      if (icon) icon.className = isDark ? "fa-solid fa-moon" : "fa-solid fa-sun";
-    };
-
-    syncIcon();
-
-    btn.addEventListener("click", () => {
-      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-      root.setAttribute("data-theme", next);
-      localStorage.setItem("bausen_theme", next);
-      syncIcon();
-    });
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const current = root.getAttribute("data-theme") || (body.classList.contains("theme-dark") ? "dark" : "light");
+        apply(current === "dark" ? "light" : "dark");
+      });
+    }
   }
 
-  /* =========================
-     Language dropdown (UI only)
+    /* =========================
+     Language (i18n) - copied from reference
   ========================= */
-  function initLang() {
-    const wrapper = $(".lang");
-    const btn = $("#langBtn");
-    const list = $("#langList");
-    if (!wrapper || !btn || !list) return;
-
-    const items = () => $$("li[data-lang]", list);
-    const isOpen = () => wrapper.classList.contains("is-open");
-
-    const close = () => {
-      wrapper.classList.remove("is-open");
-      btn.setAttribute("aria-expanded", "false");
-    };
-
-    const open = () => {
-      wrapper.classList.add("is-open");
-      btn.setAttribute("aria-expanded", "true");
-    };
-
-    const setLang = (lang) => {
-      const li =
-        $(`#langList li[data-lang="${lang}"]`) ||
-        items().find((x) => x.dataset.lang === lang);
-
-      if (!li) return;
-
-      items().forEach((x) => x.setAttribute("aria-selected", "false"));
-      li.setAttribute("aria-selected", "true");
-
-      const tag = $(".lang__tag", btn);
-      if (tag) tag.textContent = (lang || "es").toUpperCase();
-
-      document.dispatchEvent(new CustomEvent("bausen:langchange", { detail: { lang } }));
-    };
-
-    // Click toggle
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      isOpen() ? close() : open();
-    });
-
-    // Click select
-    list.addEventListener("click", (e) => {
-      const li = e.target.closest("li[data-lang]");
-      if (!li) return;
-      setLang(li.dataset.lang || "es");
-      close();
-    });
-
-    // ✅ Teclado: Esc para cerrar, Enter/Espacio para seleccionar en foco
-    document.addEventListener("keydown", (e) => {
-      if (!isOpen()) {
-        // abrir con Enter/Espacio si el foco está en el botón
-        if ((e.key === "Enter" || e.key === " ") && document.activeElement === btn) {
-          e.preventDefault();
-          open();
-        }
-        return;
+  const storage = {
+    get(key, fallback = null) {
+      try {
+        const v = localStorage.getItem(key);
+        return v === null ? fallback : v;
+      } catch {
+        return fallback;
       }
+    },
+    set(key, val) {
+      try {
+        localStorage.setItem(key, String(val));
+      } catch {}
+    },
+  };
 
-      if (e.key === "Escape") {
-        close();
-        return;
-      }
+  /* =========================
+     i18n dictionaries (ES/EN full)
+     NOTE: reference keys preserved; page-specific keys appended with presspage.*
+  ========================= */
+  const I18N = {
+    ES: {
+      // Header/Nav
+      "nav.home": "Inicio",
+      "nav.press": "Prensa",
+      "nav.services": "Servicios",
+      "nav.news": "Noticias",
+      "nav.training": "Centro de Formación",
+      "nav.about": "Acerca de",
+      "header.collab": "¿Eres colaborador?",
 
-      if (e.key === "Enter" || e.key === " ") {
-        const active = document.activeElement;
-        if (active && active.matches && active.matches("#langList li[data-lang]")) {
-          e.preventDefault();
-          setLang(active.dataset.lang || "es");
-          close();
-        }
-      }
+      // UI
+      "ui.openMenu": "Abrir menú",
+      "ui.closeMenu": "Cerrar menú",
+      "ui.langSelect": "Seleccionar idioma",
+      "ui.goHome": "Ir a inicio",
+      "ui.toggleTheme": "Cambiar tema claro/oscuro",
+      "ui.scrollNext": "Bajar a la siguiente sección",
+
+      // Footer (shared)
+      "footer.brandText":
+        "Tu aliado estratégico en soluciones empresariales integrales.<br />Transformamos organizaciones desde adentro.",
+      "footer.hoursLabel": "Horario de atención",
+      "footer.hoursValue": "Lunes - Viernes: 9:00 - 18:00",
+      "footer.follow": "Síguenos en redes",
+      "footer.company": "EMPRESA",
+      "footer.services": "SERVICIOS",
+      "footer.about": "Acerca de",
+      "footer.servicesLink": "Servicios",
+      "footer.news": "Noticias",
+      "footer.press": "Prensa",
+      "footer.contact": "Contacto",
+      "footer.svc.capital": "Capital Humano",
+      "footer.svc.legal": "Servicios Legales",
+      "footer.svc.accounting": "Servicios Contables",
+      "footer.svc.orgdev": "Desarrollo Organizacional",
+      "footer.contactTitle": "CONTACTO",
+      "footer.phoneLabel": "Teléfono",
+      "footer.emailLabel": "Email",
+      "footer.maps": "Ver en Google Maps",
+      "footer.privacy": "Política de privacidad",
+      "footer.terms": "Términos de servicio",
+      "footer.cookies": "Política de cookies",
+
+      /* =========================
+         Press page (this file) - appended
+      ========================= */
+      "presspage.pill": "Comunicados Oficiales",
+      "presspage.heroTitle": "Sala de<br />Prensa",
+      "presspage.heroSubtitle": "Información institucional, novedades y comunicados oficiales.",
+      "presspage.ctaContact": "Contacto de Prensa",
+      "presspage.ctaView": "Ver Comunicados",
+      "presspage.kpi.comms": "Comunicados emitidos",
+      "presspage.kpi.years": "Años de trayectoria",
+      "presspage.kpi.media": "Cobertura mediática",
+      "presspage.kpi.commit": "Compromiso",
+      "presspage.panelChip": "Transparencia",
+      "presspage.panelText":
+        "Publicamos información verificada y oportuna para medios, aliados y comunidad.",
+      "presspage.listTitle": "Nuestros <span class='grad'>Comunicados</span>",
+      "presspage.listSubtitle": "Información oficial sobre nuestras actividades, logros y novedades.",
+      "presspage.searchPh": "Buscar por título o contenido...",
+      "presspage.yearFilterAria": "Filtrar por año",
+      "presspage.yearAll": "Todos los años",
+      "presspage.emptyTitle": "No hay comunicados disponibles",
+      "presspage.emptyText": "Cuando publiquemos un nuevo contenido aparecerá aquí automáticamente.",
+      "presspage.emptyPlaceholder": "Área reservada para futuros comunicados",
+      "presspage.resultsMeta": "Mostrando {n} comunicados",
+      "presspage.contactTitle": "¿Eres medio de <span class='grad'>comunicación</span>?",
+      "presspage.contactText":
+        "Contáctanos para solicitar información, entrevistas o material de prensa. Nuestro equipo de comunicación está disponible para atenderte.",
+      "presspage.contactCtaNews": "Ver comunicados",
+      "presspage.footerSoon": "Próximamente.",
+      "presspage.footerNoteRest": "No se encontraron sucursales activas.",
+      "presspage.footerRights": "© 2026 Bausen. Todos los derechos reservados",
+      "presspage.mobileMenuTitle": "Menú",
+      "presspage.cardCta": "Ver comunicado",
+      "presspage.badgeFeatured": "Destacado",
+      "presspage.badgeDefault": "Comunicado",
+    },
+
+    EN: {
+      // Header/Nav
+      "nav.home": "Home",
+      "nav.press": "Press",
+      "nav.services": "Services",
+      "nav.news": "News",
+      "nav.training": "Training Center",
+      "nav.about": "About",
+      "header.collab": "Are you a collaborator?",
+
+      // UI
+      "ui.openMenu": "Open menu",
+      "ui.closeMenu": "Close menu",
+      "ui.langSelect": "Select language",
+      "ui.goHome": "Go to home",
+      "ui.toggleTheme": "Toggle light/dark theme",
+      "ui.scrollNext": "Scroll to next section",
+
+      // Footer (shared)
+      "footer.brandText":
+        "Your strategic ally in integrated business solutions.<br />We transform organizations from the inside out.",
+      "footer.hoursLabel": "Business hours",
+      "footer.hoursValue": "Mon - Fri: 9:00 - 18:00",
+      "footer.follow": "Follow us on social",
+      "footer.company": "COMPANY",
+      "footer.services": "SERVICES",
+      "footer.about": "About",
+      "footer.servicesLink": "Services",
+      "footer.news": "News",
+      "footer.press": "Press",
+      "footer.contact": "Contact",
+      "footer.svc.capital": "Human Capital",
+      "footer.svc.legal": "Legal Services",
+      "footer.svc.accounting": "Accounting Services",
+      "footer.svc.orgdev": "Organizational Development",
+      "footer.contactTitle": "CONTACT",
+      "footer.phoneLabel": "Phone",
+      "footer.emailLabel": "Email",
+      "footer.maps": "View on Google Maps",
+      "footer.privacy": "Privacy Policy",
+      "footer.terms": "Terms of Service",
+      "footer.cookies": "Cookie Policy",
+
+      /* =========================
+         Press page (this file) - appended
+      ========================= */
+      "presspage.pill": "Official Releases",
+      "presspage.heroTitle": "Press<br />Room",
+      "presspage.heroSubtitle": "Institutional updates and official announcements.",
+      "presspage.ctaContact": "Press Contact",
+      "presspage.ctaView": "View Releases",
+      "presspage.kpi.comms": "Releases published",
+      "presspage.kpi.years": "Years of track record",
+      "presspage.kpi.media": "Media coverage",
+      "presspage.kpi.commit": "Commitment",
+      "presspage.panelChip": "Transparency",
+      "presspage.panelText":
+        "We publish verified and timely information for media, partners and our community.",
+      "presspage.listTitle": "Our <span class='grad'>Releases</span>",
+      "presspage.listSubtitle": "Official information about our activities, achievements and updates.",
+      "presspage.searchPh": "Search by title or content...",
+      "presspage.yearFilterAria": "Filter by year",
+      "presspage.yearAll": "All years",
+      "presspage.emptyTitle": "No releases available",
+      "presspage.emptyText": "When we publish new content, it will appear here automatically.",
+      "presspage.emptyPlaceholder": "Reserved area for future releases",
+      "presspage.resultsMeta": "Showing {n} releases",
+      "presspage.contactTitle": "Are you a <span class='grad'>media outlet</span>?",
+      "presspage.contactText":
+        "Contact us to request information, interviews, or press materials. Our communications team is available to assist you.",
+      "presspage.contactCtaNews": "View releases",
+      "presspage.footerSoon": "Coming soon.",
+      "presspage.footerNoteRest": "No active branches found.",
+      "presspage.footerRights": "© 2026 Bausen. All rights reserved",
+      "presspage.mobileMenuTitle": "Menu",
+      "presspage.cardCta": "View release",
+      "presspage.badgeFeatured": "Featured",
+      "presspage.badgeDefault": "Release",
+    },
+  };
+
+  /* =========================
+     Flags (keep all)
+  ========================= */
+  const FLAG_SVG = {
+    ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
+          <rect y="7" width="24" height="10" fill="#F1BF00"></rect>
+        </svg>`,
+    EN: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#012169"></rect>
+          <path d="M0 0 L24 24 M24 0 L0 24" stroke="#FFF" stroke-width="5"/>
+          <path d="M0 0 L24 24 M24 0 L0 24" stroke="#C8102E" stroke-width="3"/>
+        </svg>`,
+    DE: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#000"></rect>
+          <rect y="8" width="24" height="8" fill="#DD0000"></rect>
+          <rect y="16" width="24" height="8" fill="#FFCE00"></rect>
+        </svg>`,
+    PT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#006600"></rect>
+          <circle cx="10" cy="12" r="6" fill="#FF0000"></circle>
+        </svg>`,
+    FR: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#FFF"></rect>
+          <rect width="8" height="24" rx="6" fill="#0055A4"></rect>
+          <rect x="16" width="8" height="24" rx="6" fill="#EF4135"></rect>
+        </svg>`,
+    IT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <rect width="24" height="24" rx="6" fill="#FFF"></rect>
+          <rect width="8" height="24" rx="6" fill="#009246"></rect>
+          <rect x="16" width="8" height="24" rx="6" fill="#CE2B37"></rect>
+        </svg>`,
+  };
+
+  /* =========================
+     ONE language source of truth
+  ========================= */
+  const LANG_KEY = "bausen_lang";
+
+  const normalizeLang = (lang) => {
+    const v = String(lang || "").trim();
+    const up = v.toUpperCase();
+
+    // accept common variants
+    if (up === "EN" || up === "ES" || up === "DE" || up === "PT" || up === "FR" || up === "IT") return up;
+    if (v.toLowerCase().startsWith("en")) return "EN";
+    if (v.toLowerCase().startsWith("es")) return "ES";
+    if (v.toLowerCase().startsWith("pt")) return "PT";
+    if (v.toLowerCase().startsWith("fr")) return "FR";
+    if (v.toLowerCase().startsWith("it")) return "IT";
+    if (v.toLowerCase().startsWith("de")) return "DE";
+    return "EN"; // ✅ default site language
+  };
+
+  const getLang = () => {
+    // compat: if you previously stored preferred-language
+    const saved = storage.get(LANG_KEY, null) || storage.get("preferred-language", null);
+    // Reference behavior: default to EN when there is no saved preference
+    return normalizeLang(saved || "EN");
+  };
+
+  let CURRENT_LANG = getLang();
+
+  const t = (lang, key) => {
+    const L = normalizeLang(lang);
+    const dict = I18N[L] || I18N.ES; // fallback ES for non-EN/ES
+    return dict[key] ?? (I18N.ES[key] ?? key);
+  };
+
+  const format = (lang, key, vars = {}) => {
+    let s = String(t(lang, key));
+    Object.entries(vars).forEach(([k, v]) => {
+      s = s.replaceAll(`{${k}}`, String(v));
+    });
+    return s;
+  };
+
+  /* =========================
+     Translator (ONLY data-i18n*)
+  ========================= */
+  function applyTranslations(lang) {
+    const L = normalizeLang(lang);
+    CURRENT_LANG = L;
+
+    // semantic html lang
+    document.documentElement.setAttribute("lang", L === "EN" ? "en" : "es");
+
+    // translate innerHTML
+    $$("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (!key) return;
+      el.innerHTML = t(L, key);
     });
 
-    // Cierra al click fuera
-    document.addEventListener("click", (e) => {
-      if (!isOpen()) return;
-      if (wrapper.contains(e.target)) return;
-      close();
+    // translate textContent
+    $$("[data-i18n-text]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-text");
+      if (!key) return;
+      el.textContent = t(L, key);
     });
 
-    // Exponer helpers
-    wrapper.__closeLang = close;
-    wrapper.__setLang = setLang;
+    // placeholders
+    $$("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (!key) return;
+      el.setAttribute("placeholder", t(L, key));
+    });
 
-    // Opcional: hacer items focusables para teclado (sin cambiar estilo)
-    items().forEach((li) => {
-      if (!li.hasAttribute("tabindex")) li.setAttribute("tabindex", "0");
+    // ARIA / UI labels (stable)
+    const menuToggleEl = $("#menu-toggle") || $("#menuToggle");
+    if (menuToggleEl) menuToggleEl.setAttribute("aria-label", t(L, "ui.openMenu"));
+    const closeMenuEl = $("#close-menu") || $("#menuClose");
+    if (closeMenuEl) closeMenuEl.setAttribute("aria-label", t(L, "ui.closeMenu"));
+    const themeToggleEl = $("#theme-toggle") || $("#themeToggle");
+    if (themeToggleEl) themeToggleEl.setAttribute("aria-label", t(L, "ui.toggleTheme"));
+    const langBtn = $("#language-btn");
+    if (langBtn) langBtn.setAttribute("aria-label", t(L, "ui.langSelect"));
+    const logoLink = $(".logo-link") || $(".brand");
+    if (logoLink) logoLink.setAttribute("aria-label", t(L, "ui.goHome"));
+
+    const yearSelect = $("#yearSelect");
+    if (yearSelect) yearSelect.setAttribute("aria-label", t(L, "presspage.yearFilterAria"));
+
+    // sync language code + flag
+    const languageCode = $("#language-code");
+    const mobileSelect = $("#mobile-language-select");
+    if (languageCode) languageCode.textContent = L;
+    if (mobileSelect) {
+      mobileSelect.value = L;
+      mobileSelect.setAttribute('aria-label', t(L, 'ui.langSelect'));
+    }
+
+    const flagEl = $("#language-flag");
+    if (flagEl) flagEl.innerHTML = FLAG_SVG[L] || FLAG_SVG.ES;
+
+    $$("[data-flag]").forEach((el) => {
+      const code = normalizeLang(el.getAttribute("data-flag") || "ES");
+      el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
     });
   }
 
+  const setLang = (lang) => {
+    const L = normalizeLang(lang);
+    storage.set(LANG_KEY, L);
+    // compat keep
+    storage.set("preferred-language", L);
+    applyTranslations(L);
+    // hook for dynamic content
+    onLanguageChange.forEach((fn) => {
+      try { fn(L); } catch {}
+    });
+  };
+
+  const onLanguageChange = [];
+
   /* =========================
+     Language UI
+  ========================= */
+  function initLanguage() {
+    const languageBtn = $("#language-btn");
+    const languageDropdown = $("#language-dropdown");
+    const languageOptions = $$(".language-option");
+    const mobileLanguageSelect = $("#mobile-language-select");
+
+    // init apply
+    applyTranslations(CURRENT_LANG);
+
+    // desktop dropdown
+    if (languageBtn && languageDropdown) {
+      const open = () => {
+        languageBtn.setAttribute("aria-expanded", "true");
+        languageDropdown.classList.add("show");
+      };
+      const close = () => {
+        languageBtn.setAttribute("aria-expanded", "false");
+        languageDropdown.classList.remove("show");
+      };
+
+      // expose for mobile-menu open if needed
+      window.__bausenCloseLang = close;
+
+      languageBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const expanded = languageBtn.getAttribute("aria-expanded") === "true";
+        expanded ? close() : open();
+      });
+
+      languageOptions.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const lang = opt.getAttribute("data-lang") || "EN";
+          setLang(lang);
+          close();
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!languageDropdown.classList.contains("show")) return;
+        if (languageBtn.contains(e.target) || languageDropdown.contains(e.target)) return;
+        close();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
+    }
+
+    // mobile select
+    if (mobileLanguageSelect) {
+      mobileLanguageSelect.addEventListener("change", (e) => setLang(e.target.value));
+    }
+  }
+
+/* =========================
      Mobile menu
   ========================= */
   function initMobileMenu() {
-    const menuToggle = $("#menuToggle");
-    const mobileMenu = $("#mobileMenu");
-    const overlay = $("#mobileMenuOverlay");
-    const menuClose = $("#menuClose");
-    const langWrapper = $(".lang");
+    const toggleBtn =
+      document.getElementById("menu-toggle") ||
+      document.querySelector(".menu-toggle") ||
+      document.querySelector(".nav__toggle");
 
-    if (!menuToggle || !mobileMenu || !overlay) return;
+    const panel =
+      document.getElementById("mobile-menu") ||
+      document.querySelector(".mobile-menu") ||
+      document.querySelector(".nav__panel");
 
-    const lockScroll = (locked) => {
-      root.style.overflow = locked ? "hidden" : "";
-      document.body.style.overflow = locked ? "hidden" : "";
+    const overlay =
+      document.getElementById("mobile-menu-overlay") ||
+      document.querySelector(".mobile-menu-overlay") ||
+      document.querySelector(".nav__overlay");
+
+    const closeBtn =
+      document.getElementById("close-menu") ||
+      document.querySelector(".close-menu") ||
+      document.querySelector(".nav__close");
+
+    if (!toggleBtn || !panel || !overlay) return;
+
+    const rootEl = document.documentElement;
+
+    const setLocked = (locked) => {
+      rootEl.style.overflow = locked ? "hidden" : "";
+      body.style.overflow = locked ? "hidden" : "";
+      body.classList.toggle("menu-open", locked);
     };
 
-    const simplifyLabel = (txt) => String(txt || "").replace(/\s*\([^)]*\)\s*/g, "").trim();
-
-    const ensureMobileFooterUI = () => {
-      const footer = $(".mobile-menu__footer", mobileMenu);
-      if (!footer) return;
-
-      // 1) Select idioma
-      if (!footer.querySelector(".mobile-lang")) {
-        const div = document.createElement("div");
-        div.className = "mobile-lang";
-
-        const sel = document.createElement("select");
-        sel.setAttribute("aria-label", "Idioma");
-
-        const items = $$("#langList li[data-lang]");
-        items.forEach((li) => {
-          const opt = document.createElement("option");
-          opt.value = li.dataset.lang || "es";
-          opt.textContent = simplifyLabel(li.textContent);
-
-          if (li.getAttribute("aria-selected") === "true") opt.selected = true;
-          sel.appendChild(opt);
-        });
-
-        sel.addEventListener("change", () => {
-          const lang = sel.value || "es";
-          if (langWrapper && typeof langWrapper.__setLang === "function") {
-            langWrapper.__setLang(lang);
-          }
-        });
-
-        // ✅ Sincroniza si cambias idioma desde el header (aunque el select ya exista)
-        document.addEventListener("bausen:langchange", (ev) => {
-          const lang = ev?.detail?.lang;
-          if (!lang) return;
-          sel.value = lang;
-        });
-
-        div.appendChild(sel);
-        footer.prepend(div);
-      }
-
-      // 2) CTA principal (respeta HTML o fuerza colaborador)
-      const primary = footer.querySelector(".btn.btn--primary");
-      if (!primary) return;
-
-      if (FORCE_MOBILE_PRIMARY_CTA_TO_COLLAB) {
-        primary.textContent = "¿Eres colaborador?";
-        primary.setAttribute("href", "#contacto-prensa");
-      }
-    };
-
-    const open = () => {
-      // Cierra dropdown idioma si estuviera abierto
-      if (langWrapper && typeof langWrapper.__closeLang === "function") {
-        langWrapper.__closeLang();
-      }
-
-      // ensureMobileFooterUI();
-
-      mobileMenu.classList.add("open");
+    const openMenu = () => {
+      panel.classList.add("open");
       overlay.classList.add("show");
+      toggleBtn.setAttribute("aria-expanded", "true");
+      setLocked(true);
 
-      mobileMenu.setAttribute("aria-hidden", "false");
-      overlay.setAttribute("aria-hidden", "false");
-      menuToggle.setAttribute("aria-expanded", "true");
-
-      lockScroll(true);
-
-      setTimeout(() => {
-        const first = $(".mobile-nav-link", mobileMenu) || $("#menuClose");
-        if (first) first.focus();
-      }, 60);
+      window.setTimeout(() => {
+        const firstLink = panel.querySelector(".mobile-nav-link") || panel.querySelector("a[href]") || panel.querySelector("button");
+        if (firstLink) firstLink.focus();
+      }, 80);
     };
 
-    const close = () => {
-      mobileMenu.classList.remove("open");
+    const closeMenuFn = () => {
+      panel.classList.remove("open");
       overlay.classList.remove("show");
-
-      mobileMenu.setAttribute("aria-hidden", "true");
-      overlay.setAttribute("aria-hidden", "true");
-      menuToggle.setAttribute("aria-expanded", "false");
-
-      lockScroll(false);
-      menuToggle.focus();
+      toggleBtn.setAttribute("aria-expanded", "false");
+      setLocked(false);
+      window.setTimeout(() => toggleBtn.focus(), 0);
     };
 
-    menuToggle.addEventListener("click", () => {
-      const expanded = menuToggle.getAttribute("aria-expanded") === "true";
-      expanded ? close() : open();
+    toggleBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      panel.classList.contains("open") ? closeMenuFn() : openMenu();
     });
 
-    overlay.addEventListener("click", close);
-    if (menuClose) menuClose.addEventListener("click", close);
+    if (closeBtn) {
+      closeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeMenuFn();
+      });
+    }
 
-    // Cierra al hacer clic en un link del menú (solo anchors con href)
-    mobileMenu.addEventListener("click", (e) => {
-      const a = e.target.closest("a[href]");
-      if (!a) return;
-      close();
+    overlay.addEventListener("click", closeMenuFn);
+
+    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
+      el.addEventListener("click", () => closeMenuFn());
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") {
-        close();
-      }
+      if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
     });
 
-    // Si cambias a desktop, cierra el menú
     window.addEventListener("resize", () => {
-      if (window.innerWidth > 820 && menuToggle.getAttribute("aria-expanded") === "true") {
-        close();
-      }
+      if (window.innerWidth > 980 && panel.classList.contains("open")) closeMenuFn();
     });
   }
+
+  /* =========================
+     Active link (data-page)
+  ========================= */
 
   /* =========================
      Reveal on scroll (single observer)
@@ -378,34 +636,52 @@
   ========================= */
   const PRESS_ITEMS = [
     {
-      id: "p-001",
-      featured: true,
-      title: "Prueba de comunicado",
-      excerpt:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quiaque ducimus sequi non perferendis...",
+      id: "pr-001",
       year: 2026,
-      dateLabel: "Enero 2026",
-      tags: ["Comunicado", "Destacado"],
+      dateISO: "2026-02-06",
+      dateLabel: { ES: "Febrero 2026", EN: "February 2026" },
+      tags: [{ ES: "Institucional", EN: "Institutional" }],
+      title: {
+        ES: "BAUSEN anuncia expansión de su Training Center",
+        EN: "BAUSEN announces expansion of its Training Center",
+      },
+      excerpt: {
+        ES: "Nuevos programas y certificaciones en alianza con universidades y socios estratégicos.",
+        EN: "New programs and certifications in partnership with universities and strategic partners.",
+      },
+      href: "#",
     },
     {
-      id: "p-002",
-      featured: false,
-      title: "Actualización corporativa: nuevos estándares internos",
-      excerpt:
-        "Publicamos un resumen de avances institucionales y lineamientos operativos que fortalecen nuestro servicio.",
+      id: "pr-002",
+      year: 2026,
+      dateISO: "2026-01-18",
+      dateLabel: { ES: "Enero 2026", EN: "January 2026" },
+      tags: [{ ES: "Caso de éxito", EN: "Success story" }],
+      title: {
+        ES: "Caso de éxito: reducción de rotación en 28%",
+        EN: "Success story: 28% turnover reduction",
+      },
+      excerpt: {
+        ES: "Implementación de un modelo de desarrollo organizacional con impacto medible en seis meses.",
+        EN: "Implementation of an organizational development model with measurable impact in six months.",
+      },
+      href: "#",
+    },
+    {
+      id: "pr-003",
       year: 2025,
-      dateLabel: "Octubre 2025",
-      tags: ["Institucional"],
-    },
-    {
-      id: "p-003",
-      featured: false,
-      title: "Posicionamiento ante cambios regulatorios",
-      excerpt:
-        "Compartimos nuestra postura y recomendaciones para clientes ante actualizaciones relevantes del sector.",
-      year: 2024,
-      dateLabel: "Marzo 2024",
-      tags: ["Regulatorio"],
+      dateISO: "2025-11-02",
+      dateLabel: { ES: "Noviembre 2025", EN: "November 2025" },
+      tags: [{ ES: "Novedad", EN: "Update" }],
+      title: {
+        ES: "Nueva unidad de Servicios Contables y Fiscales",
+        EN: "New Accounting and Tax Services unit",
+      },
+      excerpt: {
+        ES: "Acompañamiento integral en cumplimiento, estrategia y optimización fiscal para PYMEs.",
+        EN: "End-to-end support for compliance, strategy and tax optimization for SMEs.",
+      },
+      href: "#",
     },
   ];
 
@@ -432,17 +708,25 @@
 
     const normalize = (s) => (s || "").toLowerCase().trim();
 
-    const render = (items) => {
+    const pickI18nValue = (v) => {
+    // Allows PRESS_ITEMS fields to be either string or { ES, EN }
+    if (v && typeof v === "object") return v[CURRENT_LANG] || v.ES || v.EN || "";
+    return v ?? "";
+  };
+
+  const pickTag = (tag) => pickI18nValue(tag);
+
+  const render = (items) => {
       grid.innerHTML = "";
 
       if (!items.length) {
         empty.hidden = false;
-        meta.textContent = "Mostrando 0 comunicados";
+        meta.textContent = format(CURRENT_LANG, 'presspage.resultsMeta', { n: 0 });
         return;
       }
 
       empty.hidden = true;
-      meta.textContent = `Mostrando ${items.length} comunicado${items.length === 1 ? "" : "s"}`;
+      meta.textContent = format(CURRENT_LANG, 'presspage.resultsMeta', { n: items.length });
 
       const newCards = [];
 
@@ -451,7 +735,7 @@
         card.className = "press-card reveal";
         card.setAttribute("data-tilt", "");
 
-        const badgeLabel = item.featured ? "Destacado" : "Comunicado";
+        const badgeLabel = item.featured ? t(CURRENT_LANG, 'presspage.badgeFeatured') : t(CURRENT_LANG, 'presspage.badgeDefault');
 
         card.innerHTML = `
           <div class="press-card__top">
@@ -459,12 +743,12 @@
               <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
               ${badgeLabel}
             </span>
-            <span class="press-card__date">${item.dateLabel}</span>
+            <span class="press-card__date">${pickI18nValue(item.dateLabel)}</span>
           </div>
 
           <div class="press-card__body">
-            <h3 class="press-card__title">${item.title}</h3>
-            <p class="press-card__excerpt">${item.excerpt}</p>
+            <h3 class="press-card__title">${pickI18nValue(item.title)}</h3>
+            <p class="press-card__excerpt">${pickI18nValue(item.excerpt)}</p>
           </div>
 
           <div class="press-card__footer">
@@ -474,7 +758,7 @@
               .join("")}
 
             <a class="btn btn--ghost btn--pill press-card__cta" href="#">
-              Ver comunicado <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+              ${t(CURRENT_LANG, 'presspage.cardCta')} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </a>
           </div>
         `;
@@ -518,6 +802,11 @@
       render(items);
     };
 
+    // Re-render list when language changes (CTA labels / meta)
+    onLanguageChange.push(() => {
+      applyFilters();
+    });
+
     // Listeners (no duplicates por guard global)
     searchInput.addEventListener("input", applyFilters);
     yearSelect.addEventListener("change", applyFilters);
@@ -525,12 +814,67 @@
     applyFilters();
   }
 
-  /* =========================
+  
+function initActiveLink() {
+    // Soporta tanto desktop (.nav__link) como menú móvil (.mobile-nav-link)
+    const links = $$(".nav__link, .mobile-nav-link");
+    if (!links.length) return;
+
+    const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
+    const pageNoExt = file.split("?")[0].split("#")[0].replace(".html", "").replace(".htm", "");
+
+    const alias = {
+      indexbeca: "index",
+      index: "index",
+      inicio: "index",
+      contacto: "contacto",
+      acercade: "acercade",
+      servicios: "servicios",
+      noticias: "noticias",
+      prensa: "prensa",
+      centro: "centro",
+      acerca: "acerca",
+    };
+
+    const currentKey = alias[pageNoExt] || pageNoExt || "index";
+
+    const keyFromLink = (a) => {
+      const dp = (a.getAttribute("data-page") || "").trim().toLowerCase();
+      if (dp) return dp;
+
+      const href = (a.getAttribute("href") || "").trim().toLowerCase();
+      if (!href) return "";
+
+      const last = href.split("/").pop().split("?")[0].split("#")[0];
+      const noExt = last.replace(".html", "").replace(".htm", "");
+      return alias[noExt] || noExt;
+    };
+
+    links.forEach((a) => {
+      const key = keyFromLink(a);
+      const isCurrent = key === currentKey;
+
+      // Clases usadas por este diseño (prensa.css)
+      a.classList.toggle("is-active", isCurrent);
+
+      // Compat (si algún estilo externo usa .active)
+      a.classList.toggle("active", isCurrent);
+
+      // Accesibilidad
+      if (isCurrent) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+  }
+
+
+
+/* =========================
      Init
   ========================= */
   initTheme();
-  initLang();
+  initLanguage();
   initMobileMenu();
+  initActiveLink();
   initReveal();
   initTilt();
   initPress();

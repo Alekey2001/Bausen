@@ -281,6 +281,23 @@ html[data-theme="light"] .icon-btn:hover{ box-shadow: 0 12px 28px rgba(11,18,38,
   cursor:pointer;
   transition: background .18s var(--ease), transform .18s var(--ease), border-color .18s var(--ease), box-shadow .18s var(--ease);
 }
+/* Flag container (soporta SVG como en referencia) */
+.lang__flag{
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.lang__flag svg{
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
 .lang__btn:hover{
   transform: translateY(-1px);
   background: var(--glass-2);
@@ -320,6 +337,29 @@ html[data-theme="light"] .lang__list li{ color: rgba(11,18,38,.84); }
   background: rgba(255,255,255,.10);
   transform: translateY(-1px);
 }
+/* Flags dentro del dropdown de idiomas */
+.lang__list li{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lang__opt-flag{
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-flex;
+}
+
+.lang__opt-flag svg{
+  display: block;
+}
+
+.lang__opt-text{
+  font-weight: 600;
+  font-size: 13px;
+}
+
 html[data-theme="light"] .lang__list li:hover{ background: rgba(11,18,38,.06); }
 
 .burger{ display:none; }
@@ -367,7 +407,12 @@ html[data-theme="light"] .mobile-menu{
   justify-content:space-between;
   gap:10px;
 }
-.mobile-menu__logo{ height: 22px; width:auto; }
+.mobile-menu__logo{
+  height: 45px;      /* antes 22px */
+  width: auto;
+  object-fit: contain;
+}
+
 
 .mobile-nav{ margin-top: 16px; display:flex; flex-direction:column; gap:8px; }
 .mobile-nav__link{
@@ -397,10 +442,27 @@ html[data-theme="light"] .mobile-nav__link:hover{ box-shadow: 0 14px 28px rgba(1
 
 /* Responsive header */
 @media (max-width: 980px){
-  .nav{ display:none; }
+   .nav{ display:none; }
   .burger{ display:grid; }
-  .lang{ display:none; }
+
+  /* ✅ En móvil SÍ se ven idiomas (como referencia) */
+  .lang{ display:flex; }
+    /* ✅ En móvil: Tema + Idiomas + Hamburguesa en la esquina derecha */
+  .header__actions{
+    margin-left: auto;
+  }
+
+  /* Opcional pero recomendado: separa logo a la izquierda y acciones a la derecha */
+  .header__inner{
+    justify-content: space-between;
+  }
+
+
+  /* ✅ En móvil el CTA solo vive dentro del menú hamburguesa */
+  .header__actions .collab-cta{ display:none; }
+  
 }
+.mobile-menu__footer .btn{ width:100%; }
 
 /* =========================
    Sections

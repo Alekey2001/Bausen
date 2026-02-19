@@ -1,11 +1,17 @@
 <!doctype html>
-<html lang="es-MX">
+<html lang="en" data-lang="EN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
-  <title>Servicios especializados | BAUSEN</title>
+
+  <title >Servicios especializados | BAUSEN</title>
   <link rel="icon" href="/images/logo.jpeg">
+<!-- Favicons correctos (nítidos en navegador) -->
+<link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
   <meta
     name="description"
     content="Servicios especializados para aumentar la eficiencia y resultados de tu negocio. Operación, cumplimiento y control con enfoque medible. Agenda un diagnóstico con BAUSEN."
@@ -22,13 +28,13 @@
   <meta property="og:image" content="/images/og-servicios.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Performance hints (opcionales; tu CSS puede ajustar esto) -->
   <meta name="theme-color" content="#0b0f17" />
   <link rel="preload" href="/images/bausenlogo.png" as="image" />
+
   <link rel="stylesheet" href="servicios.css" />
   <script src="servicios.js" defer></script>
 
-  <!-- JSON-LD: Organization + WebPage + Breadcrumb + Service + FAQ (SEO) -->
+  <!-- JSON-LD (dejas igual si quieres; no afecta al i18n) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -63,149 +69,157 @@
           "name":"BAUSEN",
           "url":"https://bausenweb.netlify.app/"
         }
-      },
-      {
-        "@type":"BreadcrumbList",
-        "itemListElement":[
-          {"@type":"ListItem","position":1,"name":"Inicio","item":"https://bausenweb.netlify.app/"},
-          {"@type":"ListItem","position":2,"name":"Servicios","item":"https://bausenweb.netlify.app/servicios"},
-          {"@type":"ListItem","position":3,"name":"Servicios especializados","item":"https://bausenweb.netlify.app/servicios-especializados"}
-        ]
-      },
-      {
-        "@type":"Service",
-        "name":"Servicios especializados",
-        "serviceType":"Servicios especializados",
-        "provider":{"@type":"Organization","name":"BAUSEN"},
-        "areaServed":{"@type":"Country","name":"México"},
-        "description":"Soluciones especializadas para aumentar la eficiencia operativa y resultados del negocio con enfoque de cumplimiento, control y métricas."
-      },
-      {
-        "@type":"FAQPage",
-        "mainEntity":[
-          {
-            "@type":"Question",
-            "name":"¿Qué son los servicios especializados?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"Son servicios enfocados en actividades específicas que permiten mejorar eficiencia, control y resultados, con un modelo de operación medible y documentación clara."
-            }
-          },
-          {
-            "@type":"Question",
-            "name":"¿Cómo iniciamos el servicio?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"Iniciamos con un diagnóstico, definimos alcance y KPIs, implementamos onboarding y arrancamos operación con reportes periódicos."
-            }
-          },
-          {
-            "@type":"Question",
-            "name":"¿Qué entregables incluyen?",
-            "acceptedAnswer":{
-              "@type":"Answer",
-              "text":"Entregables típicos: plan de implementación, matriz de responsabilidades, KPIs, reportes, bitácoras operativas y evidencias de cumplimiento (según alcance)."
-            }
-          }
-        ]
       }
     ]
   }
   </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <a class="skip-link" href="#contenido" data-i18n="ui.skip">Saltar al contenido</a>
 
   <!-- Header / Navbar -->
   <header class="site-header" id="top" data-header>
-  <div class="nav-shell">
-    <a class="brand" href="/index.html" aria-label="BAUSEN - Inicio">
-      <img class="brand__logo" src="/images/bausenlogo.png" alt="BAUSEN" width="140" height="36" loading="eager" decoding="async" />
-    </a>
+    <div class="nav-shell">
+      <a class="brand" href="/index.html" aria-label="BAUSEN - Inicio">
+        <img class="brand__logo" src="/images/bausenlogo.png" alt="BAUSEN" width="140" height="36" loading="eager" decoding="async" />
+      </a>
 
-    <!-- Links centrados (desktop) -->
-    <nav class="nav-center" aria-label="Navegación principal">
-      <a class="nav-link" href="/index.html">Inicio</a>
-      <a class="nav-link" href="/capital.html">Capital Humano</a>
-      <a class="nav-link is-active" href="/inexservicios/servicios.html" aria-current="page">Servicios especializados</a>
-      <a class="nav-link" href="/inexservicios/impuestos.html">Servicios de Impuestos</a>
-      <a class="nav-link" href="/acerca.html">Acerca de</a>
-    </nav>
-
-    <!-- Acciones derecha -->
-    <div class="nav-actions">
-      <a class="pill-cta" href="#lead">Agendar diagnóstico</a>
-
-      <button class="icon-btn" type="button" id="themeToggle" aria-label="Cambiar tema">
-        <span class="icon" aria-hidden="true">
-          <svg class="i-moon" viewBox="0 0 24 24" fill="none">
-            <path d="M21 14.2A8.6 8.6 0 0 1 9.8 3 7 7 0 1 0 21 14.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <svg class="i-sun" viewBox="0 0 24 24" fill="none">
-            <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M5 19l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </span>
-      </button>
-
-      <button class="lang-btn" type="button" aria-label="Idioma">
-        <span class="lang">ES</span>
-        <svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <!-- Hamburguesa (móvil) -->
-      <button class="burger" type="button" id="navToggle"
-        aria-label="Abrir menú" aria-expanded="false" aria-controls="navDrawer">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-
-  <!-- Drawer móvil -->
-  <div class="nav-drawer" id="navDrawer" hidden>
-    <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menú">
-      <div class="drawer-top">
-        <span class="drawer-title">Menú</span>
-        <button class="icon-btn" type="button" id="navClose" aria-label="Cerrar menú">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-
-      <nav class="drawer-links" aria-label="Navegación móvil">
-        <a class="drawer-link" href="/index.html">Inicio</a>
-        <a class="drawer-link" href="/capital.html">Capital Humano</a>
-        <a class="drawer-link is-active" href="/inexservicios/servicios.html" aria-current="page">Servicios especializados</a>
-        <a class="drawer-link" href="/inexservicios/impuestos.html">Servicios de Impuestos</a>
-        <a class="drawer-link" href="/acerca.html">Acerca de</a>
+      <!-- Links centrados (desktop) -->
+      <nav class="nav-center" aria-label="Navegación principal">
+        <a class="nav-link" href="/index.html" data-i18n="nav.home">Inicio</a>
+        <a class="nav-link" href="/capital.html" data-i18n="services.card1.title">Capital Humano</a>
+        <a class="nav-link is-active" href="/inexservicios/servicios.html" aria-current="page" data-i18n="services.card2.title">Servicios especializados</a>
+        <a class="nav-link" href="/inexservicios/impuestos.html" data-i18n="services.card3.title">Servicios de Impuestos</a>
+        <a class="nav-link" href="/acerca.html" data-i18n="nav.about">Acerca de</a>
       </nav>
 
-      <div class="drawer-actions">
-        <a class="pill-cta w-full" href="#lead">Agendar diagnóstico</a>
+      <!-- Acciones derecha -->
+      <div class="nav-actions">
+        <a class="pill-cta" href="#lead" data-i18n="nav.cta">Agendar diagnóstico</a>
+
+        <!-- Theme -->
+        <button class="icon-btn" type="button" id="themeToggle" aria-label="Cambiar tema">
+          <span class="icon" aria-hidden="true">
+            <svg class="i-moon" viewBox="0 0 24 24" fill="none">
+              <path d="M21 14.2A8.6 8.6 0 0 1 9.8 3 7 7 0 1 0 21 14.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="i-sun" viewBox="0 0 24 24" fill="none">
+              <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M5 19l1.4-1.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </button>
+
+        <!-- ✅ Idiomas (MISMO FORMATO que capital: 6 idiomas visibles, funcionan ES/EN) -->
+        <div class="language-selector">
+          <button class="language-btn" id="language-btn" aria-label="Select language" aria-expanded="false" type="button">
+            <span class="language-flag" aria-hidden="true" id="language-flag"></span>
+            <span class="language-code" id="language-code">EN</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+
+          <ul class="language-dropdown" id="language-dropdown" role="menu">
+            <li>
+              <button class="language-option" type="button" data-lang="ES">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="ES"></span>
+                <span>Español (ES)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="EN">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="EN"></span>
+                <span>English (EN)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="DE">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="DE"></span>
+                <span>Deutsch (DE)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="PT">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="PT"></span>
+                <span>Português (PT)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="FR">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="FR"></span>
+                <span>Français (FR)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="IT">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="IT"></span>
+                <span>Italiano (IT)</span>
+              </button>
+            </li>
+</ul>
+        </div>
+        <!-- /Idiomas -->
+
+        <!-- Hamburguesa (móvil) -->
+        <button class="burger" type="button" id="navToggle"
+          aria-label="Abrir menú" aria-expanded="false" aria-controls="navDrawer">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
 
-    <button class="drawer-backdrop" type="button" aria-label="Cerrar menú"></button>
-  </div>
-</header>
+    <!-- Drawer móvil -->
+    <div class="nav-drawer" id="navDrawer" hidden>
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menú">
+        <div class="drawer-top">
+          <span class="drawer-title" data-i18n="ui.menu">Menú</span>
+          <button class="icon-btn" type="button" id="navClose" aria-label="Cerrar menú">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="drawer-links" aria-label="Navegación móvil">
+          <a class="drawer-link" href="/index.html" data-i18n="nav.home">Inicio</a>
+          <a class="drawer-link" href="/capital.html" data-i18n="services.card1.title">Capital Humano</a>
+          <a class="drawer-link is-active" href="/inexservicios/servicios.html" aria-current="page" data-i18n="services.card2.title">Servicios especializados</a>
+          <a class="drawer-link" href="/inexservicios/impuestos.html" data-i18n="services.card3.title">Servicios de Impuestos</a>
+          <a class="drawer-link" href="/acerca.html" data-i18n="nav.about">Acerca de</a>
+        </nav>
+
+        <div class="drawer-actions">
+          <a class="pill-cta w-full" href="#lead" data-i18n="nav.cta">Agendar diagnóstico</a>
+
+          <!-- selector móvil (mismo set de 6; funciona ES/EN) -->
+</select>
+        </div>
+      </div>
+      <button class="drawer-backdrop" type="button" aria-label="Cerrar menú"></button>
+    </div>
+  </header>
+
   <main id="contenido">
     <!-- Hero -->
     <section class="hero" aria-labelledby="h1-servicios">
       <div class="container hero__grid">
         <div class="hero__copy">
-          <p class="eyebrow">Servicios especializados</p>
-          <h1 id="h1-servicios">Aumenta la eficiencia y resultados de tu negocio.</h1>
-          <p class="lead">
+          <p class="eyebrow" data-i18n="eyebrow">Servicios especializados</p>
+
+          <h1 id="h1-servicios" data-i18n="h1">
+            Aumenta la eficiencia y resultados de tu negocio.
+          </h1>
+
+          <p class="lead" data-i18n="lead">
             Operación más ágil, controlable y medible. Diseñamos un modelo de servicio con alcance claro,
             indicadores (KPIs) y seguimiento continuo para impulsar productividad y cumplimiento.
           </p>
 
           <div class="hero__cta">
-            <a class="btn btn--primary" href="#lead">Solicitar diagnóstico</a>
-            <a class="btn btn--soft" href="#alcance">Ver alcance</a>
+            <a class="btn btn--primary" href="#lead" data-i18n="ctaPrimary">Solicitar diagnóstico</a>
+            <a class="btn btn--soft" href="#alcance" data-i18n="ctaSecondary">Ver alcance</a>
           </div>
 
           <ul class="trust" role="list" aria-label="Confianza y certificaciones">
@@ -217,21 +231,20 @@
           <dl class="stats" aria-label="Indicadores clave">
             <div class="stat">
               <dt class="stat__k">15+</dt>
-              <dd class="stat__v">Años de experiencia</dd>
+              <dd class="stat__v" data-i18n="stat1">Años de experiencia</dd>
             </div>
             <div class="stat">
               <dt class="stat__k">500+</dt>
-              <dd class="stat__v">Clientes</dd>
+              <dd class="stat__v" data-i18n="stat2">Clientes</dd>
             </div>
             <div class="stat">
               <dt class="stat__k">98%</dt>
-              <dd class="stat__v">Satisfacción</dd>
+              <dd class="stat__v" data-i18n="stat3">Satisfacción</dd>
             </div>
           </dl>
         </div>
 
         <div class="hero__media" aria-label="Imagen principal">
-          <!-- Reemplaza por tu imagen real en /images/ -->
           <figure class="media-card">
             <img
               src="/images/servicio.png"
@@ -241,7 +254,7 @@
               loading="lazy"
               decoding="async"
             />
-            <figcaption class="sr-only">
+            <figcaption class="sr-only" data-i18n="heroFigcap">
               Servicios especializados con enfoque en control, métricas y cumplimiento.
             </figcaption>
           </figure>
@@ -255,24 +268,24 @@
     <section class="section" aria-labelledby="h2-beneficios">
       <div class="container">
         <header class="section__head">
-          <h2 id="h2-beneficios">Resultados que se sienten en operación</h2>
-          <p class="section__sub">
+          <h2 id="h2-beneficios" data-i18n="benefitsTitle">Resultados que se sienten en operación</h2>
+          <p class="section__sub" data-i18n="benefitsSub">
             Diseñamos un servicio para reducir fricción, aumentar productividad y mantener visibilidad con reportes claros.
           </p>
         </header>
 
         <div class="grid grid--3">
           <article class="card">
-            <h3>Más eficiencia</h3>
-            <p>Procesos definidos, responsables claros y tiempos de respuesta acordados (SLA) para mejorar el flujo operativo.</p>
+            <h3 data-i18n="b1Title">Más eficiencia</h3>
+            <p data-i18n="b1Text">Procesos definidos, responsables claros y tiempos de respuesta acordados (SLA) para mejorar el flujo operativo.</p>
           </article>
           <article class="card">
-            <h3>Control y evidencia</h3>
-            <p>Bitácoras, entregables y reportes periódicos para auditar avances, incidencias y cumplimiento del alcance.</p>
+            <h3 data-i18n="b2Title">Control y evidencia</h3>
+            <p data-i18n="b2Text">Bitácoras, entregables y reportes periódicos para auditar avances, incidencias y cumplimiento del alcance.</p>
           </article>
           <article class="card">
-            <h3>KPIs y mejora continua</h3>
-            <p>Indicadores medibles para tomar decisiones y ajustar la operación conforme a tus objetivos del negocio.</p>
+            <h3 data-i18n="b3Title">KPIs y mejora continua</h3>
+            <p data-i18n="b3Text">Indicadores medibles para tomar decisiones y ajustar la operación conforme a tus objetivos del negocio.</p>
           </article>
         </div>
       </div>
@@ -282,57 +295,57 @@
     <section class="section section--alt" id="alcance" aria-labelledby="h2-alcance">
       <div class="container">
         <header class="section__head">
-          <h2 id="h2-alcance">¿Qué incluye “Servicios especializados”?</h2>
-          <p class="section__sub">
+          <h2 id="h2-alcance" data-i18n="scopeTitle">¿Qué incluye “Servicios especializados”?</h2>
+          <p class="section__sub" data-i18n="scopeSub">
             El alcance exacto depende de tu necesidad. Estos son módulos típicos que podemos integrar en tu operación.
           </p>
         </header>
 
         <div class="grid grid--2">
           <article class="card card--feature">
-            <h3>Operación especializada por proceso</h3>
+            <h3 data-i18n="s1Title">Operación especializada por proceso</h3>
             <ul class="checklist">
-              <li>Levantamiento y mapeo de procesos</li>
-              <li>Definición de roles, responsabilidades y SLA</li>
-              <li>Supervisión operativa y control de incidencias</li>
-              <li>Entregables y evidencia documental</li>
+              <li data-i18n="s1i1">Levantamiento y mapeo de procesos</li>
+              <li data-i18n="s1i2">Definición de roles, responsabilidades y SLA</li>
+              <li data-i18n="s1i3">Supervisión operativa y control de incidencias</li>
+              <li data-i18n="s1i4">Entregables y evidencia documental</li>
             </ul>
           </article>
 
           <article class="card card--feature">
-            <h3>Modelo de control y reporteo</h3>
+            <h3 data-i18n="s2Title">Modelo de control y reporteo</h3>
             <ul class="checklist">
-              <li>KPIs por área / operación</li>
-              <li>Reportes ejecutivos (semanal / mensual)</li>
-              <li>Tablero de seguimiento (metrics-first)</li>
-              <li>Reuniones de revisión y mejora continua</li>
+              <li data-i18n="s2i1">KPIs por área / operación</li>
+              <li data-i18n="s2i2">Reportes ejecutivos (semanal / mensual)</li>
+              <li data-i18n="s2i3">Tablero de seguimiento (metrics-first)</li>
+              <li data-i18n="s2i4">Reuniones de revisión y mejora continua</li>
             </ul>
           </article>
 
           <article class="card card--feature">
-            <h3>Gobernanza y cumplimiento (según alcance)</h3>
+            <h3 data-i18n="s3Title">Gobernanza y cumplimiento (según alcance)</h3>
             <ul class="checklist">
-              <li>Matriz RACI y políticas operativas</li>
-              <li>Control de accesos y trazabilidad (si aplica)</li>
-              <li>Auditoría interna de evidencias</li>
-              <li>Soporte documental para revisiones</li>
+              <li data-i18n="s3i1">Matriz RACI y políticas operativas</li>
+              <li data-i18n="s3i2">Control de accesos y trazabilidad (si aplica)</li>
+              <li data-i18n="s3i3">Auditoría interna de evidencias</li>
+              <li data-i18n="s3i4">Soporte documental para revisiones</li>
             </ul>
           </article>
 
           <article class="card card--feature">
-            <h3>Onboarding e implementación</h3>
+            <h3 data-i18n="s4Title">Onboarding e implementación</h3>
             <ul class="checklist">
-              <li>Plan de arranque con cronograma</li>
-              <li>Checklist de requisitos y documentación</li>
-              <li>Capacitación rápida a responsables</li>
-              <li>Arranque controlado + estabilización</li>
+              <li data-i18n="s4i1">Plan de arranque con cronograma</li>
+              <li data-i18n="s4i2">Checklist de requisitos y documentación</li>
+              <li data-i18n="s4i3">Capacitación rápida a responsables</li>
+              <li data-i18n="s4i4">Arranque controlado + estabilización</li>
             </ul>
           </article>
         </div>
 
         <aside class="callout" aria-label="Mensaje clave">
-          <p><strong>Enfoque BAUSEN:</strong> alcance claro + evidencia + KPIs. Lo que se mide, se mejora.</p>
-          <a class="btn btn--primary" href="#lead">Quiero un diagnóstico</a>
+          <p data-i18n="callout" data-i18n-html="true"><strong>Enfoque BAUSEN:</strong> alcance claro + evidencia + KPIs. Lo que se mide, se mejora.</p>
+          <a class="btn btn--primary" href="#lead" data-i18n="calloutCta">Quiero un diagnóstico</a>
         </aside>
       </div>
     </section>
@@ -341,26 +354,26 @@
     <section class="section" aria-labelledby="h2-proceso">
       <div class="container">
         <header class="section__head">
-          <h2 id="h2-proceso">Implementación en 4 pasos</h2>
-          <p class="section__sub">Un método simple para arrancar rápido y operar con orden.</p>
+          <h2 id="h2-proceso" data-i18n="stepsTitle">Implementación en 4 pasos</h2>
+          <p class="section__sub" data-i18n="stepsSub">Un método simple para arrancar rápido y operar con orden.</p>
         </header>
 
         <ol class="steps" role="list">
           <li class="step">
-            <h3>1) Diagnóstico</h3>
-            <p>Entendemos tu operación, riesgos, metas y restricciones. Definimos “qué sí / qué no”.</p>
+            <h3 data-i18n="p1Title">1) Diagnóstico</h3>
+            <p data-i18n="p1Text">Entendemos tu operación, riesgos, metas y restricciones. Definimos “qué sí / qué no”.</p>
           </li>
           <li class="step">
-            <h3>2) Diseño del servicio</h3>
-            <p>Alcance, SLA, responsables, KPIs, entregables y calendario de seguimiento.</p>
+            <h3 data-i18n="p2Title">2) Diseño del servicio</h3>
+            <p data-i18n="p2Text">Alcance, SLA, responsables, KPIs, entregables y calendario de seguimiento.</p>
           </li>
           <li class="step">
-            <h3>3) Onboarding</h3>
-            <p>Arranque controlado, documentación, checklist y validación de flujo operativo.</p>
+            <h3 data-i18n="p3Title">3) Onboarding</h3>
+            <p data-i18n="p3Text">Arranque controlado, documentación, checklist y validación de flujo operativo.</p>
           </li>
           <li class="step">
-            <h3>4) Operación + mejora</h3>
-            <p>Reportes, métricas, revisión periódica y ajustes para optimizar resultados.</p>
+            <h3 data-i18n="p4Title">4) Operación + mejora</h3>
+            <p data-i18n="p4Text">Reportes, métricas, revisión periódica y ajustes para optimizar resultados.</p>
           </li>
         </ol>
       </div>
@@ -370,17 +383,17 @@
     <section class="section section--alt" aria-labelledby="h2-sectores">
       <div class="container">
         <header class="section__head">
-          <h2 id="h2-sectores">Sectores que atendemos</h2>
-          <p class="section__sub">Adaptamos el modelo al tipo de operación y volumen de trabajo.</p>
+          <h2 id="h2-sectores" data-i18n="sectorsTitle">Sectores que atendemos</h2>
+          <p class="section__sub" data-i18n="sectorsSub">Adaptamos el modelo al tipo de operación y volumen de trabajo.</p>
         </header>
 
         <div class="chips" role="list" aria-label="Sectores">
-          <span class="chip" role="listitem">Manufactura</span>
-          <span class="chip" role="listitem">Logística</span>
-          <span class="chip" role="listitem">Retail</span>
-          <span class="chip" role="listitem">Servicios</span>
-          <span class="chip" role="listitem">Construcción</span>
-          <span class="chip" role="listitem">Corporativo / PyME</span>
+          <span class="chip" role="listitem" data-i18n="sec1">Manufactura</span>
+          <span class="chip" role="listitem" data-i18n="sec2">Logística</span>
+          <span class="chip" role="listitem" data-i18n="sec3">Retail</span>
+          <span class="chip" role="listitem" data-i18n="sec4">Servicios</span>
+          <span class="chip" role="listitem" data-i18n="sec5">Construcción</span>
+          <span class="chip" role="listitem" data-i18n="sec6">Corporativo / PyME</span>
         </div>
       </div>
     </section>
@@ -389,30 +402,24 @@
     <section class="section" aria-labelledby="h2-testimonios">
       <div class="container">
         <header class="section__head">
-          <h2 id="h2-testimonios">Casos y resultados</h2>
-          <p class="section__sub">Espacio para testimonios / métricas antes-después (ideal para SEO y confianza).</p>
+          <h2 id="h2-testimonios" data-i18n="casesTitle">Casos y resultados</h2>
+          <p class="section__sub" data-i18n="casesSub">Espacio para testimonios / métricas antes-después (ideal para SEO y confianza).</p>
         </header>
 
         <div class="grid grid--3">
           <figure class="quote card">
-            <blockquote>
-              “Reducimos tiempos de respuesta y obtuvimos visibilidad total del servicio con reportes claros.”
-            </blockquote>
-            <figcaption>— Dirección de Operaciones (Cliente)</figcaption>
+            <blockquote data-i18n="q1">“Reducimos tiempos de respuesta y obtuvimos visibilidad total del servicio con reportes claros.”</blockquote>
+            <figcaption data-i18n="q1c">— Dirección de Operaciones (Cliente)</figcaption>
           </figure>
 
           <figure class="quote card">
-            <blockquote>
-              “El arranque fue ordenado: alcance bien definido y seguimiento semanal con KPIs.”
-            </blockquote>
-            <figcaption>— Gerencia Administrativa (Cliente)</figcaption>
+            <blockquote data-i18n="q2">“El arranque fue ordenado: alcance bien definido y seguimiento semanal con KPIs.”</blockquote>
+            <figcaption data-i18n="q2c">— Gerencia Administrativa (Cliente)</figcaption>
           </figure>
 
           <figure class="quote card">
-            <blockquote>
-              “La operación se estabilizó rápido y logramos mejorar productividad sin perder control.”
-            </blockquote>
-            <figcaption>— Recursos Humanos (Cliente)</figcaption>
+            <blockquote data-i18n="q3">“La operación se estabilizó rápido y logramos mejorar productividad sin perder control.”</blockquote>
+            <figcaption data-i18n="q3c">— Recursos Humanos (Cliente)</figcaption>
           </figure>
         </div>
       </div>
@@ -422,15 +429,15 @@
     <section class="section section--alt" aria-labelledby="h2-faq">
       <div class="container">
         <header class="section__head">
-          <h2 id="h2-faq">Preguntas frecuentes</h2>
-          <p class="section__sub">Resolvemos dudas comunes antes de agendar.</p>
+          <h2 id="h2-faq" data-i18n="faqTitle">Preguntas frecuentes</h2>
+          <p class="section__sub" data-i18n="faqSub">Resolvemos dudas comunes antes de agendar.</p>
         </header>
 
         <div class="faq" role="list">
           <details class="faq__item" role="listitem">
-            <summary>¿Qué son los servicios especializados?</summary>
+            <summary data-i18n="faq1Q">¿Qué son los servicios especializados?</summary>
             <div class="faq__content">
-              <p>
+              <p data-i18n="faq1A">
                 Son servicios enfocados en actividades específicas para mejorar eficiencia y control. El servicio se documenta con alcance,
                 entregables y métricas, para asegurar resultados verificables.
               </p>
@@ -438,9 +445,9 @@
           </details>
 
           <details class="faq__item" role="listitem">
-            <summary>¿Cómo iniciamos?</summary>
+            <summary data-i18n="faq2Q">¿Cómo iniciamos?</summary>
             <div class="faq__content">
-              <p>
+              <p data-i18n="faq2A">
                 Primero hacemos un diagnóstico breve, definimos alcance y KPIs, y armamos un plan de arranque. Luego ejecutamos onboarding y
                 arrancamos operación con reportes periódicos.
               </p>
@@ -448,9 +455,9 @@
           </details>
 
           <details class="faq__item" role="listitem">
-            <summary>¿En cuánto tiempo se ven resultados?</summary>
+            <summary data-i18n="faq3Q">¿En cuánto tiempo se ven resultados?</summary>
             <div class="faq__content">
-              <p>
+              <p data-i18n="faq3A">
                 Depende del volumen y madurez del proceso. Normalmente se percibe orden y control desde el arranque; la mejora de KPIs se
                 consolida en ciclos de 30–90 días (según alcance).
               </p>
@@ -465,59 +472,66 @@
       <div class="container">
         <div class="lead-grid">
           <div class="lead-copy">
-            <h2 id="h2-lead">Agenda un diagnóstico</h2>
-            <p class="section__sub">
+            <h2 id="h2-lead" data-i18n="leadTitle">Agenda un diagnóstico</h2>
+            <p class="section__sub" data-i18n="leadSub">
               Cuéntanos tu necesidad y un especialista te contacta. Entre más contexto compartas, más precisa será la propuesta.
             </p>
 
             <ul class="mini" role="list" aria-label="Puntos rápidos">
-              <li>Respuesta rápida</li>
-              <li>Alcance y KPIs desde el inicio</li>
-              <li>Propuesta clara y medible</li>
+              <li data-i18n="mini1">Respuesta rápida</li>
+              <li data-i18n="mini2">Alcance y KPIs desde el inicio</li>
+              <li data-i18n="mini3">Propuesta clara y medible</li>
             </ul>
 
             <div class="contact-card" aria-label="Datos de contacto">
-              <p><strong>Teléfono:</strong> +52 (442) 123 4567</p>
-              <p><strong>Email:</strong> contacto@bausen.com</p>
-              <p><strong>Ubicación:</strong> <span>MEXICO</span>, <span>Querétaro, México</span></p>
-              <p><strong>Horario:</strong> Lun–Vie: 9:00–18:00</p>
+              <p><strong data-i18n="phoneLabel">Teléfono:</strong> +52 (442) 123 4567</p>
+              <p><strong data-i18n="emailLabel">Email:</strong> contacto@bausen.com</p>
+              <p><strong data-i18n="locationLabel">Ubicación:</strong> <span data-i18n="country">MÉXICO</span>, <span>Querétaro, México</span></p>
+              <p><strong data-i18n="hoursLabel">Horario:</strong> <span data-i18n="hours">Lun–Vie: 9:00–18:00</span></p>
             </div>
           </div>
-          <!-- Form (puedes conectar a Netlify Forms o tu backend) -->
+
           <form class="form card" method="post" action="/gracias" aria-label="Formulario de contacto">
             <div class="form__row">
-              <label for="nombre">Nombre completo</label>
+              <label for="nombre" data-i18n="fName">Nombre completo</label>
               <input id="nombre" name="nombre" type="text" autocomplete="name" required />
             </div>
 
             <div class="form__row">
-              <label for="empresa">Empresa</label>
+              <label for="empresa" data-i18n="fCompany">Empresa</label>
               <input id="empresa" name="empresa" type="text" autocomplete="organization" />
             </div>
 
             <div class="form__row">
-              <label for="email">Correo</label>
+              <label for="email" data-i18n="fEmail">Correo</label>
               <input id="email" name="email" type="email" autocomplete="email" required />
             </div>
 
             <div class="form__row">
-              <label for="telefono">Teléfono</label>
+              <label for="telefono" data-i18n="fPhone">Teléfono</label>
               <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" />
             </div>
 
             <div class="form__row">
-              <label for="necesidad">¿Qué necesitas?</label>
-              <textarea id="necesidad" name="necesidad" rows="5" required placeholder="Ej. Quiero mejorar tiempos, control operativo y reporteo con KPIs."></textarea>
+              <label for="necesidad" data-i18n="fNeed">¿Qué necesitas?</label>
+              <textarea
+                id="necesidad"
+                name="necesidad"
+                rows="5"
+                required
+                placeholder="Ej. Quiero mejorar tiempos, control operativo y reporteo con KPIs."
+                data-i18n-placeholder="fNeedPh"
+              ></textarea>
             </div>
 
             <div class="form__row form__row--inline">
               <input id="privacidad" name="privacidad" type="checkbox" required />
-              <label for="privacidad">Acepto el aviso de privacidad.</label>
+              <label for="privacidad" data-i18n="fPrivacy">Acepto el aviso de privacidad.</label>
             </div>
 
-            <button class="btn btn--primary btn--full" type="submit">Enviar</button>
+            <button class="btn btn--primary btn--full" type="submit" data-i18n="fSubmit">Enviar</button>
 
-            <p class="fineprint">
+            <p class="fineprint" data-i18n="fineprint">
               Al enviar aceptas ser contactado por BAUSEN para dar seguimiento a tu solicitud.
             </p>
           </form>
@@ -531,49 +545,50 @@
     <div class="container footer__grid">
       <div class="footer__brand">
         <img src="/images/bausenlogo.png" alt="BAUSEN" width="140" height="36" loading="lazy" decoding="async" />
-        <p>Tu aliado estratégico en soluciones empresariales integrales. Transformamos organizaciones desde adentro.</p>
+        <p data-i18n="footer.brandText">Tu aliado estratégico en soluciones empresariales integrales. Transformamos organizaciones desde adentro.</p>
       </div>
 
       <div class="footer__col">
-        <h3>Empresa</h3>
+        <h3 data-i18n="footer.company">Empresa</h3>
         <ul role="list">
-          <li><a href="/acerca.html">Acerca de</a></li>
-          <li><a href="/servicios.html">Servicios</a></li>
-          <li><a href="/noticias.html">Noticias</a></li>
-          <li><a href="/prensa.html">Prensa</a></li>
-          <li><a href="/index.html">Contacto</a></li>
+          <li><a href="/acerca.html" data-i18n="footer.about">Acerca de</a></li>
+          <li><a href="/servicios.html" data-i18n="footer.services">Servicios</a></li>
+          <li><a href="/noticias.html" data-i18n="footer.news">Noticias</a></li>
+          <li><a href="/prensa.html" data-i18n="footer.press">Prensa</a></li>
+          <li><a href="/index.html" data-i18n="footer.contact">Contacto</a></li>
         </ul>
       </div>
 
       <div class="footer__col">
-        <h3>Servicios</h3>
+        <h3 data-i18n="footer.servicesLink">Servicios</h3>
         <ul role="list">
-          <li><a href="/capital.html">Capital Humano</a></li>
-          <li><a href="/inexservicios/servicios.html" aria-current="page">Servicios especializados</a></li>
-          <li><a href="/inexservicios/impuestos.html">Servicios de Impuestos</a></li>
+          <li><a href="/capital.html" data-i18n="services.card1.title">Capital Humano</a></li>
+          <li><a href="/inexservicios/servicios.html" aria-current="page" data-i18n="services.card2.title">Servicios especializados</a></li>
+          <li><a href="/inexservicios/impuestos.html" data-i18n="services.card3.title">Servicios de Impuestos</a></li>
         </ul>
       </div>
 
       <div class="footer__col">
-        <h3>Contacto</h3>
+        <h3 data-i18n="footer.contactTitle">Contacto</h3>
         <ul role="list">
           <li><a href="tel:+524421234567">+65 65 524 5678</a></li>
           <li><a href="mailto:contacto@bausen.com">contacto@bausen.com</a></li>
           <li><span>Querétaro, México</span></li>
-          <li><span>Lun–Vie: 9:00–18:00</span></li>
+          <li><span data-i18n="footer.hoursValue">Lun–Vie: 9:00–18:00</span></li>
         </ul>
       </div>
     </div>
 
     <div class="container footer__bottom">
-      <small>© <span id="year">2026</span> BAUSEN. Todos los derechos reservados.</small>
+      <small>© <span id="year">2026</span> BAUSEN. <span data-i18n-text="footer.rights">Todos los derechos reservados</span>.</small>
       <ul class="footer__legal" role="list">
-        <li><a href="/politica-de-privacidad">Política de privacidad</a></li>
-        <li><a href="/terminos">Términos de servicio</a></li>
-        <li><a href="/cookies">Política de cookies</a></li>
+        <li><a href="/politica-de-privacidad" data-i18n-text="footer.privacy">Política de privacidad</a></li>
+        <li><a href="/terminos" data-i18n-text="footer.terms">Términos de servicio</a></li>
+        <li><a href="/cookies" data-i18n-text="footer.cookies">Política de cookies</a></li>
       </ul>
     </div>
   </footer>
+
   <button class="to-top" type="button" data-to-top aria-label="Volver arriba"></button>
 
   <noscript>

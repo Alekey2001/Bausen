@@ -6,46 +6,48 @@
   <meta name="color-scheme" content="dark light" />
   <meta name="theme-color" content="#0b1222" />
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
-  <title>Capital Humano | Bausen</title>
+  <title data-i18n-text="head.title">Capital Humano | Bausen</title>
   <link rel="icon" href="/images/logo.jpeg">
-
+<!-- Favicons correctos (nítidos en navegador) -->
+<link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Inter (moderna y similar a la referencia) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/inexservicios/capital.css" />
   <script defer src="/inexservicios/capital.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 
 <body>
-  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+  <a class="skip-link" href="#contenido" data-i18n-text="ui.skip">Saltar al contenido</a>
 
   <!-- =========================
-       HEADER / NAVBAR (como imagen 1)
+       HEADER / NAVBAR
   ========================== -->
   <header class="site-header" id="top">
     <div class="nav-shell">
-      <a class="brand" href="#" aria-label="Bausen - Inicio">
+      <a class="brand" href="#" aria-label="Bausen - Inicio" data-i18n-aria="aria.brandHome">
         <img class="brand__logo" src="/images/bausenlogo.png" alt="Bausen" />
       </a>
 
       <!-- Links centrados (desktop) -->
-      <nav class="nav-center" aria-label="Navegación principal">
-        <a class="nav-link" href="index.html">inicio</a>
-        <a class="nav-link is-active" href="capital.html">Capital Humano</a>
-        <a class="nav-link" href="/inexservicios/servicios.html">Servicíos especializados</a>
-        <a class="nav-link" href="/inexservicios/impuestos.html">Servicios de impuestos</a>
-        <a class="nav-link" href="acerca.html">Acerca de</a>
+      <nav class="nav-center" aria-label="Navegación principal" data-i18n-aria="aria.mainNav">
+        <a class="nav-link" href="index.html" data-i18n-text="nav.home">inicio</a>
+        <a class="nav-link is-active" href="capital.html" data-i18n-text="nav.capital">Capital Humano</a>
+        <a class="nav-link" href="/inexservicios/servicios.html" data-i18n-text="nav.specialized">Servicíos especializados</a>
+        <a class="nav-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.tax">Servicios de impuestos</a>
+        <a class="nav-link" href="acerca.html" data-i18n-text="nav.about">Acerca de</a>
       </nav>
+
       <!-- Acciones derecha -->
       <div class="nav-actions">
-        <a class="pill-cta" href="">
-          ¿Eres colaborador?
-        </a>
+        <a class="pill-cta" href="" data-i18n-text="header.collab">¿Eres colaborador?</a>
 
-        <button class="icon-btn" type="button" id="themeToggle" aria-label="Cambiar tema">
-          <!-- icono luna/sol via CSS/JS -->
+        <button class="icon-btn" type="button" id="themeToggle" aria-label="Cambiar tema" data-i18n-aria="aria.toggleTheme">
           <span class="icon" aria-hidden="true">
             <svg class="i-moon" viewBox="0 0 24 24" fill="none">
               <path d="M21 14.2A8.6 8.6 0 0 1 9.8 3 7 7 0 1 0 21 14.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -57,15 +59,56 @@
           </span>
         </button>
 
-        <button class="lang-btn" type="button" aria-label="Idioma">
-          <span class="lang">ES</span>
-          <svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
+        <!-- Idioma (desktop) con banderas -->
+        <div class="language-selector">
+          <button class="language-btn" id="language-btn" aria-label="Select language" aria-expanded="false" type="button">
+            <span class="language-flag" aria-hidden="true" id="language-flag"></span>
+            <span class="language-code" id="language-code">EN</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+
+          <ul class="language-dropdown" id="language-dropdown" role="menu">
+            <li>
+              <button class="language-option" type="button" data-lang="ES">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="ES"></span>
+                <span>Español (ES)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="EN">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="EN"></span>
+                <span>English (EN)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="DE">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="DE"></span>
+                <span>Deutsch (DE)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="PT">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="PT"></span>
+                <span>Português (PT)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="FR">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="FR"></span>
+                <span>Français (FR)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="IT">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="IT"></span>
+                <span>Italiano (IT)</span>
+              </button>
+            </li>
+          </ul>
+        </div>
 
         <!-- Hamburguesa (móvil) -->
-        <button class="burger" type="button" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navDrawer">
+        <button class="burger" type="button" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navDrawer" data-i18n-aria="aria.openMenu">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -73,30 +116,27 @@
 
     <!-- Drawer móvil -->
     <div class="nav-drawer" id="navDrawer" hidden>
-      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menú">
+      <div class="drawer-panel" role="dialog" aria-modal="true" aria-label="Menú" data-i18n-aria="aria.drawerMenu">
         <div class="drawer-top">
-          <span class="drawer-title">Menú</span>
-          <button class="icon-btn" type="button" id="navClose" aria-label="Cerrar menú">
+          <span class="drawer-title" data-i18n-text="ui.menu">Menú</span>
+          <button class="icon-btn" type="button" id="navClose" aria-label="Cerrar menú" data-i18n-aria="aria.closeMenu">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </button>
         </div>
-
-        <nav class="drawer-links" aria-label="Navegación móvil">
-          <a class="drawer-link" href="/index.html">inicio</a>
-          <a class="drawer-link is-active" href="/capital.html">Capital Humano</a>
-          <a class="drawer-link" href="/inexservicios/servicios.html">Servicíos especializados</a>
-          <a class="drawer-link" href="/inexservicios/impuestos.html">Servicios de impuestos</a>
-          <a class="drawer-link" href="/acerca.html">Acerca de</a>
+        <nav class="drawer-links" aria-label="Navegación móvil" data-i18n-aria="aria.mobileNav">
+          <a class="drawer-link" href="/index.html" data-i18n-text="nav.home">inicio</a>
+          <a class="drawer-link is-active" href="/capital.html" data-i18n-text="nav.capital">Capital Humano</a>
+          <a class="drawer-link" href="/inexservicios/servicios.html" data-i18n-text="nav.specialized">Servicíos especializados</a>
+          <a class="drawer-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.tax">Servicios de impuestos</a>
+          <a class="drawer-link" href="/acerca.html" data-i18n-text="nav.about">Acerca de</a>
         </nav>
         <div class="drawer-actions">
-          <a class="pill-cta w-full" href="#contacto">¿Eres colaborador?</a>
-          <div class="drawer-row">
-          </div>
+          <a class="pill-cta w-full" href="#contacto" data-i18n-text="header.collab">¿Eres colaborador?</a>
         </div>
       </div>
-      <button class="drawer-backdrop" type="button" aria-label="Cerrar menú"></button>
+      <button class="drawer-backdrop" type="button" aria-label="Cerrar menú" data-i18n-aria="aria.closeMenu"></button>
     </div>
   </header>
   <!-- =========================
@@ -104,19 +144,19 @@
   ========================== -->
   <main id="contenido">
     <!-- =========================
-         SECCIÓN 1 (como imagen 2) - Hero
+         SECCIÓN 1 - Hero
     ========================== -->
-    <section class="section hero" aria-label="Capital Humano">
+    <section class="section hero" aria-label="Capital Humano" data-i18n-aria="aria.hero">
       <div class="container hero-grid">
         <div class="hero-left">
-          <a class="back-btn" href="servicios.html">
+          <a class="back-btn" href="servicios.html" data-i18n-text="hero.back">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M14 6 8 12l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             Volver a Servicios
           </a>
 
-          <div class="badge">
+          <div class="badge" data-i18n-text="hero.badge">
             <span class="badge__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M12 3l1.2 3.4L17 7l-3 2.2.9 3.6-3-2-3 2 .9-3.6L7 7l3.8-.6L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
@@ -126,17 +166,17 @@
             Servicio Premium
           </div>
 
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-i18n="hero.title">
             <span class="grad">Capital</span> Humano
           </h1>
 
-          <p class="hero-text">
+          <p class="hero-text" data-i18n="hero.subtitle">
             Potencia el crecimiento y éxito de tu empresa con nuestros<br />
             servicios de capital humano. ¡Transforma tu empresa con<br />
             nuestro enfoque estratégico!
           </p>
 
-          <a class="btn-primary" href="#contacto">
+          <a class="btn-primary" href="#contacto" data-i18n="hero.cta">
             Contactar a BAUSEN
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -147,8 +187,7 @@
 
         <div class="hero-right">
           <figure class="media-card">
-            <!-- Reemplaza por tu imagen real -->
-            <img class="media-img" src="/images/capital1.png" alt="Equipo colaborando en oficina" loading="lazy" />
+            <img class="media-img" src="/images/capital1.png" alt="Equipo colaborando en oficina" loading="lazy" data-i18n-aria="alt.heroImg" />
             <div class="floating-square" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -163,11 +202,11 @@
     </section>
 
     <!-- =========================
-         SECCIÓN 2 (como imagen 3) - Cards servicios
+         SECCIÓN 2 - Cards servicios
     ========================== -->
-    <section class="section section-curve" id="servicios" aria-label="Servicios Capital Humano">
+    <section class="section section-curve" id="servicios" aria-label="Servicios Capital Humano" data-i18n-aria="aria.services">
       <div class="container">
-        <h2 class="section-title">
+        <h2 class="section-title" data-i18n="services.title">
           <span>Servicios</span> <span class="grad2">Capital Humano</span>
         </h2>
 
@@ -181,13 +220,14 @@
                 <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
             </div>
-            <h3>Servicios Especializados</h3>
-            <p>
+
+            <h3 data-i18n-text="services.card1.title">Servicios Especializados</h3>
+            <p data-i18n="services.card1.body">
               Avalados por la STPS y registrados en el<br />
               REPSE, garantizando transparencia y<br />
               cumplimiento legal.
             </p>
-            <a class="card-link" href="#">
+            <a class="card-link" href="#" data-i18n="ui.seeMore">
               Ver más
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -203,13 +243,14 @@
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7H14.5a3.5 3.5 0 0 1 0 7H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h3>Payrolling</h3>
-            <p>
+
+            <h3 data-i18n-text="services.card2.title">Payrolling</h3>
+            <p data-i18n="services.card2.body">
               Desde el alta hasta la desvinculación,<br />
               incluyendo pagos de cuotas patronales, IMSS,<br />
               Infonavit, e impuestos.
             </p>
-            <a class="card-link" href="#">
+            <a class="card-link" href="#" data-i18n="ui.seeMore">
               Ver más
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -226,13 +267,14 @@
                 <path d="M20 8l2 2-5 5-3-3 2-2 1 1 3-3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </div>
-            <h3>Atracción de Talento</h3>
-            <p>
+
+            <h3 data-i18n-text="services.card3.title">Atracción de Talento</h3>
+            <p data-i18n="services.card3.body">
               Utilizamos estrategias selectivas y entrevistas<br />
               exhaustivas para presentarte a los candidatos<br />
               correctos.
             </p>
-            <a class="card-link" href="#">
+            <a class="card-link" href="#" data-i18n="ui.seeMore">
               Ver más
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M5 12h13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -245,18 +287,18 @@
     </section>
 
     <!-- =========================
-         SECCIÓN 3 (como imagen 4) - Beneficios
+         SECCIÓN 3 - Beneficios
     ========================== -->
-    <section class="section" aria-label="Beneficios de Capital Humano">
+    <section class="section" aria-label="Beneficios de Capital Humano" data-i18n-aria="aria.benefits">
       <div class="container two-col">
         <div class="col-media">
           <figure class="media-card large">
-            <img class="media-img" src="/images/capital2.png" alt="Equipo en reunión" loading="lazy" />
+            <img class="media-img" src="/images/capital2.png" alt="Equipo en reunión" loading="lazy" data-i18n-aria="alt.benefitsImg" />
           </figure>
         </div>
 
         <div class="col-content">
-          <div class="mini-badge">
+          <div class="mini-badge" data-i18n-text="benefits.badge">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 2a10 10 0 1 0 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -265,7 +307,7 @@
             Beneficios Exclusivos
           </div>
 
-          <h2 class="big-title">
+          <h2 class="big-title" data-i18n="benefits.title">
             Beneficios de <span class="grad">Capital</span><br />
             <span class="grad">Humano</span>
           </h2>
@@ -278,8 +320,8 @@
                 </svg>
               </div>
               <div>
-                <h3>Acceso Exclusivo BTC</h3>
-                <p>Accede a nuestra agenda de cursos gratuitos, avalados por el Colegio de Contadores Públicos de la Ciudad de México.</p>
+                <h3 data-i18n-text="benefits.item1.title">Acceso Exclusivo BTC</h3>
+                <p data-i18n-text="benefits.item1.body">Accede a nuestra agenda de cursos gratuitos, avalados por el Colegio de Contadores Públicos de la Ciudad de México.</p>
               </div>
             </article>
 
@@ -290,8 +332,8 @@
                 </svg>
               </div>
               <div>
-                <h3>Reducción de Costos</h3>
-                <p>Optimiza los procesos de reclutamiento, selección y gestión de nómina con nuestras soluciones integrales.</p>
+                <h3 data-i18n-text="benefits.item2.title">Reducción de Costos</h3>
+                <p data-i18n-text="benefits.item2.body">Optimiza los procesos de reclutamiento, selección y gestión de nómina con nuestras soluciones integrales.</p>
               </div>
             </article>
 
@@ -302,8 +344,8 @@
                 </svg>
               </div>
               <div>
-                <h3>Asesoramiento Personalizado</h3>
-                <p>Sesiones de asesoramiento personalizado con expertos en Capital Humano para tu empresa.</p>
+                <h3 data-i18n-text="benefits.item3.title">Asesoramiento Personalizado</h3>
+                <p data-i18n-text="benefits.item3.body">Sesiones de asesoramiento personalizado con expertos en Capital Humano para tu empresa.</p>
               </div>
             </article>
           </div>
@@ -312,23 +354,23 @@
     </section>
 
     <!-- =========================
-         SECCIÓN 4 (como imagen 5) - CTA “Todos los servicios...”
+         SECCIÓN 4 - CTA
     ========================== -->
-    <section class="section cta" aria-label="Todos los servicios en un solo lugar">
+    <section class="section cta" aria-label="Todos los servicios en un solo lugar" data-i18n-aria="aria.cta">
       <div class="container two-col cta-grid">
         <div class="col-content">
-          <h2 class="big-title">
+          <h2 class="big-title" data-i18n="cta.title">
             Todos los servicios en un<br />
             solo lugar
           </h2>
 
-          <p class="cta-text">
+          <p class="cta-text" data-i18n="cta.body">
             Solicita una reunión para más información sobre cómo podemos<br />
             ayudarte a optimizar tu gestión de capital humano.
           </p>
 
           <div class="cta-actions">
-            <a class="btn-primary" href="#contacto">
+            <a class="btn-primary" href="#contacto" data-i18n="cta.book">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M8 7V3m8 4V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 <path d="M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -337,17 +379,16 @@
               Agenda una cita
             </a>
 
-            <a class="btn-ghost" href="#">
-  <i data-lucide="badge-plus" class="icon" aria-hidden="true"></i>
-  Ver casos de éxito
-</a>
-
+            <a class="btn-ghost" href="#" data-i18n="cta.cases">
+              <i data-lucide="badge-plus" class="icon" aria-hidden="true"></i>
+              Ver casos de éxito
+            </a>
           </div>
         </div>
 
         <div class="col-media">
           <figure class="media-card large">
-            <img class="media-img" src="/images/capital3.png" alt="Persona en llamada de negocio" loading="lazy" />
+            <img class="media-img" src="/images/capital3.png" alt="Persona en llamada de negocio" loading="lazy" data-i18n-aria="alt.ctaImg" />
             <div class="stat-badge" aria-hidden="true">
               <span class="stat-ico">
                 <svg viewBox="0 0 24 24" fill="none">
@@ -358,7 +399,7 @@
               </span>
               <div>
                 <div class="stat-num">500+</div>
-                <div class="stat-sub">Empresas</div>
+                <div class="stat-sub" data-i18n-text="cta.stat">Empresas</div>
               </div>
             </div>
           </figure>
@@ -367,12 +408,12 @@
     </section>
 
     <!-- =========================
-         SECCIÓN 5 (como imagen 6) - Contacto (form)
+         SECCIÓN 5 - Contacto
     ========================== -->
-    <section class="section contact" id="contacto" aria-label="Contacto">
+    <section class="section contact" id="contacto" aria-label="Contacto" data-i18n-aria="aria.contact">
       <div class="container">
         <div class="contact-top">
-          <span class="mini-badge">
+          <span class="mini-badge" data-i18n-text="contact.badge">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
               <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -380,49 +421,49 @@
             Contacto
           </span>
 
-          <h2 class="section-title big">
+          <h2 class="section-title big" data-i18n="contact.title">
             Contáctanos <span class="grad2">Contáctanos</span>
           </h2>
-          <p class="section-sub">Estamos listos para ayudarte a transformar tu empresa</p>
+          <p class="section-sub" data-i18n-text="contact.sub">Estamos listos para ayudarte a transformar tu empresa</p>
         </div>
 
         <form class="contact-card" action="#" method="post">
           <div class="form-grid">
             <label class="field">
-              <span class="sr-only">Tu nombre completo</span>
+              <span class="sr-only" data-i18n-text="form.nameLabel">Tu nombre completo</span>
               <span class="field-ico" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                   <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
                 </svg>
               </span>
-              <input type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name" />
+              <input type="text" name="nombre" placeholder="Tu nombre completo" autocomplete="name" data-i18n-placeholder="form.namePh" />
             </label>
 
             <label class="field">
-              <span class="sr-only">Tu email</span>
+              <span class="sr-only" data-i18n-text="form.emailLabel">Tu email</span>
               <span class="field-ico" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
                   <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </span>
-              <input type="email" name="email" placeholder="tu@email.com" autocomplete="email" />
+              <input type="email" name="email" placeholder="tu@email.com" autocomplete="email" data-i18n-placeholder="form.emailPh" />
             </label>
 
             <label class="field field--full">
-              <span class="sr-only">Mensaje</span>
+              <span class="sr-only" data-i18n-text="form.msgLabel">Mensaje</span>
               <span class="field-ico field-ico--top" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none">
                   <path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="2" />
                   <path d="M8 9h8M8 13h8M8 17h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </span>
-              <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" rows="6"></textarea>
+              <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" rows="6" data-i18n-placeholder="form.msgPh"></textarea>
             </label>
           </div>
 
-          <button class="btn-primary" type="submit">
+          <button class="btn-primary" type="submit" data-i18n="form.sendBtn">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M22 2 11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -432,8 +473,8 @@
         </form>
 
         <div class="contact-direct">
-          <p>¿Prefieres contactarnos directamente?</p>
-          <a class="mail" href="mailto:contacto@bausen.com">
+          <p data-i18n-text="contact.directQ">¿Prefieres contactarnos directamente?</p>
+          <a class="mail" href="mailto:contacto@bausen.com" data-i18n="contact.directMail">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2" />
               <path d="M4 8l8 6 8-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -446,15 +487,15 @@
   </main>
 
   <!-- =========================
-       FOOTER (como imagen final)
+       FOOTER
   ========================== -->
-  <footer class="site-footer" aria-label="Pie de página">
+  <footer class="site-footer" aria-label="Pie de página" data-i18n-aria="aria.footer">
     <div class="container footer-grid">
       <div class="footer-brand">
         <div class="footer-logo">
           <img src="/images/bausenlogo.png" alt="Bausen" />
         </div>
-        <p class="footer-desc">
+        <p class="footer-desc" data-i18n="footer.desc">
           Tu aliado estratégico en soluciones empresariales integrales.<br />
           Transformamos organizaciones desde adentro.
         </p>
@@ -468,14 +509,14 @@
               </svg>
             </span>
             <div>
-              <div class="meta-title">Horario de atención</div>
-              <div class="meta-sub">Lunes - Viernes: 9:00 - 18:00</div>
+              <div class="meta-title" data-i18n-text="footer.hoursTitle">Horario de atención</div>
+              <div class="meta-sub" data-i18n-text="footer.hoursSub">Lunes - Viernes: 9:00 - 18:00</div>
             </div>
           </div>
         </div>
 
         <div class="social">
-          <div class="social-title">Síguenos en redes</div>
+          <div class="social-title" data-i18n-text="footer.follow">Síguenos en redes</div>
           <div class="social-row">
             <a class="social-btn" href="#" aria-label="Facebook">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -506,26 +547,26 @@
         </div>
       </div>
 
-      <nav class="footer-col" aria-label="Empresa">
-        <h3>EMPRESA</h3>
-        <a href="#acerca">Acerca de</a>
-        <a href="#servicios">Servicios</a>
-        <a href="#noticias">Noticias</a>
-        <a href="#prensa">Prensa</a>
-        <a href="#contacto">Contacto</a>
+      <nav class="footer-col" aria-label="Empresa" data-i18n-aria="aria.company">
+        <h3 data-i18n-text="footer.company">EMPRESA</h3>
+        <a href="#acerca" data-i18n-text="nav.about">Acerca de</a>
+        <a href="#servicios" data-i18n-text="footer.services">Servicios</a>
+        <a href="#noticias" data-i18n-text="footer.news">Noticias</a>
+        <a href="#prensa" data-i18n-text="footer.press">Prensa</a>
+        <a href="#contacto" data-i18n-text="footer.contact">Contacto</a>
       </nav>
 
-      <nav class="footer-col" aria-label="Servicios">
-        <h3>SERVICIOS</h3>
-        <a href="#top">Capital Humano</a>
-        <a href="#">Servicios Legales</a>
-        <a href="#">Servicios Contables</a>
-        <a href="#">Desarrollo Organizacional</a>
+      <nav class="footer-col" aria-label="Servicios" data-i18n-aria="aria.footerServices">
+        <h3 data-i18n-text="footer.servicesUpper">SERVICIOS</h3>
+        <a href="#top" data-i18n-text="nav.capital">Capital Humano</a>
+        <a href="#" data-i18n-text="footer.legalServices">Servicios Legales</a>
+        <a href="#" data-i18n-text="footer.accountingServices">Servicios Contables</a>
+        <a href="#" data-i18n-text="footer.orgDev">Desarrollo Organizacional</a>
       </nav>
 
       <div class="footer-col footer-contact">
-        <h3>CONTACTO</h3>
-        <p class="soon">Próximamente. No se encontraron sucursales activas.</p>
+        <h3 data-i18n-text="footer.contactUpper">CONTACTO</h3>
+        <p class="soon" data-i18n-text="footer.soon">Próximamente. No se encontraron sucursales activas.</p>
 
         <div class="contact-row">
           <span class="contact-ico" aria-hidden="true">
@@ -534,7 +575,7 @@
             </svg>
           </span>
           <div>
-            <div class="meta-title">Teléfono</div>
+            <div class="meta-title" data-i18n-text="footer.phone">Teléfono</div>
             <div class="meta-sub">+65 65 524 5678</div>
           </div>
         </div>
@@ -547,12 +588,12 @@
             </svg>
           </span>
           <div>
-            <div class="meta-title">Email</div>
+            <div class="meta-title" data-i18n-text="footer.email">Email</div>
             <div class="meta-sub">contact@bausen.com</div>
           </div>
         </div>
 
-        <a class="maps" href="#" target="_blank" rel="noopener">
+        <a class="maps" href="#" target="_blank" rel="noopener" data-i18n="footer.maps">
           Ver en Google Maps
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M14 3h7v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -565,21 +606,18 @@
 
     <div class="footer-bottom">
       <div class="container bottom-row">
-        <div class="copyright">© 2026 Bausen. Todos los derechos reservados</div>
-        <nav class="legal" aria-label="Legal">
-          <a href="#">Política de privacidad</a>
-          <a href="#">Términos de servicio</a>
-          <a href="#">Política de cookies</a>
+        <div class="copyright" data-i18n-text="footer.copy">© 2026 Bausen. Todos los derechos reservados</div>
+        <nav class="legal" aria-label="Legal" data-i18n-aria="aria.legal">
+          <a href="#" data-i18n-text="footer.privacy">Política de privacidad</a>
+          <a href="#" data-i18n-text="footer.terms">Términos de servicio</a>
+          <a href="#" data-i18n-text="footer.cookies">Política de cookies</a>
         </nav>
       </div>
     </div>
   </footer>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>  
-  lucide.createIcons();
-</script>
-
-  <!-- Botoncito flotante (esquina inferior izquierda) como se ve en tu captura -->
-  <button class="fab" type="button" aria-label="Acción rápida">N</button>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>

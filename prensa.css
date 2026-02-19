@@ -1,6 +1,5 @@
-/* =========================
-   Base / Tokens (Limpio + Responsive sin cambiar look)
-========================= */
+
+
 :root{
   --c1: rgb(0,61,165);
   --c2: rgb(24,35,137);
@@ -146,12 +145,16 @@ html[data-theme="light"] .site-header{
 }
 html[data-theme="light"] .nav__link:hover{ background: rgba(11,16,32,.06); }
 
-.nav__link.is-active{
+.nav__link.is-active,
+.nav__link.active,
+.nav__link[aria-current="page"]{
   color: var(--text);
   background: rgba(255,255,255,.08);
   box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
 }
-html[data-theme="light"] .nav__link.is-active{
+html[data-theme="light"] .nav__link.is-active,
+html[data-theme="light"] .nav__link.active,
+html[data-theme="light"] .nav__link[aria-current="page"]{
   background: rgba(11,16,32,.06);
   box-shadow: 0 0 0 1px rgba(11,16,32,.08) inset;
 }
@@ -256,6 +259,25 @@ html[data-theme="light"] .lang__list li:hover{ background: rgba(11,16,32,.06); }
   transform: translateY(-1px);
   box-shadow: 0 22px 80px rgba(0,61,165,.42);
 }
+/* Collab CTA parity (look + size) */
+.btn--collab{
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+.btn--collab.btn--primary{
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  box-shadow: 0 16px 34px rgba(31,94,255,0.24);
+}
+
+html[data-theme="light"] .btn--collab.btn--primary{
+  box-shadow: 0 16px 34px rgba(31,94,255,0.22);
+}
+
+.btn--collab.btn--primary:hover{
+  box-shadow: 0 20px 42px rgba(31,94,255,0.28);
+}
+
 
 .btn--ghost{
   background: rgba(255,255,255,.06);
@@ -282,6 +304,88 @@ html[data-theme="light"] .btn--ghost{
   transition: transform .18s var(--ease), background .18s var(--ease);
   flex: 0 0 auto;
 }
+
+/* Language selector */
+.language-selector{ position:relative; }
+.language-btn{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  color: var(--text);
+  cursor:pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+body:not(.theme-dark) .language-btn{
+  box-shadow: 0 12px 26px rgba(19,33,68,0.10);
+}
+.language-btn:hover{ transform: translateY(-1px); }
+.language-btn i{ font-size: 12px; transition: transform var(--t-fast); }
+.language-btn[aria-expanded="true"] i{ transform: rotate(180deg); }
+
+.language-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(31,94,255,0.35), rgba(43,140,255,0.25));
+  box-shadow: 0 10px 22px rgba(31,94,255,0.12);
+}
+
+.language-dropdown{
+  position:absolute;
+  right:0;
+  top: calc(100% + 10px);
+  list-style:none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  min-width: 230px;
+  padding: 8px;
+  opacity:0;
+  visibility:hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--t-fast), transform var(--t-fast), visibility var(--t-fast);
+  z-index: calc(var(--z-header) + 30);
+}
+body:not(.theme-dark) .language-dropdown{
+  box-shadow: var(--shadow-lg);
+}
+.language-dropdown.show{
+  opacity:1;
+  visibility:visible;
+  transform: translateY(0);
+}
+.language-option{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 10px;
+  background: transparent;
+  border:none;
+  border-radius: 12px;
+  cursor:pointer;
+  color: var(--text);
+  font-weight: 900;
+  transition: background var(--t-fast);
+}
+.language-option:hover{
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.lang-option-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(31,94,255,0.35), rgba(43,140,255,0.25));
+}
+
+.lang-option-flag svg,
+.language-flag svg { display: block; width: 18px; height: 18px; }
+
 html[data-theme="light"] .theme-toggle{
   border-color: rgba(11,16,32,.12);
   background: rgba(11,16,32,.04);
@@ -372,6 +476,25 @@ html[data-theme="light"] .mobile-menu{ background: var(--panel2); }
   padding: 14px 14px 12px;
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
+/* Logo dentro del menú móvil (paridad con referencia) */
+.mobile-menu__head .logo{
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu__head .logo-img{
+  width: 140px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  max-width: 180px;
+  filter: drop-shadow(0 8px 18px rgba(19,33,68,0.10));
+}
+
+/* Ajuste mínimo en pantallas muy pequeñas */
+@media (max-width: 420px){
+  .mobile-menu__head .logo-img{ width: 120px; }
+}
 html[data-theme="light"] .mobile-menu__head{ border-bottom: 1px solid var(--border); }
 
 .mobile-menu__title{
@@ -427,7 +550,9 @@ html[data-theme="light"] .mobile-nav-link{
   transform: translateY(-1px);
 }
 
-.mobile-nav-link.is-active{
+.mobile-nav-link.is-active,
+.mobile-nav-link.active,
+.mobile-nav-link[aria-current="page"]{
   color: rgba(255,255,255,.96);
   background: linear-gradient(135deg, rgba(0,61,165,.42), rgba(24,35,137,.28));
   border-color: rgba(120,180,255,.24);
@@ -435,7 +560,9 @@ html[data-theme="light"] .mobile-nav-link{
     0 0 0 1px rgba(120,180,255,.14) inset,
     0 18px 50px rgba(0,0,0,.22);
 }
-html[data-theme="light"] .mobile-nav-link.is-active{
+html[data-theme="light"] .mobile-nav-link.is-active,
+html[data-theme="light"] .mobile-nav-link.active,
+html[data-theme="light"] .mobile-nav-link[aria-current="page"]{
   color: var(--text);
   background: rgba(0,61,165,.08);
   border-color: rgba(0,61,165,.14);
@@ -1230,96 +1357,72 @@ html[data-theme="light"] .social__btn{ background: rgba(11,16,32,.03); }
   .footer__grid{ grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 820px){
+/* === Mobile header like reference (<= 980px) === */
+@media (max-width: 980px){
+  /* Igual que referencia: hamburguesa visible, nav desktop oculto */
+  .menu-toggle{ display:block; }
   .nav{ display:none; }
-  .menu-toggle{ display:grid; }
 
-  /* Header en 2 filas (logo arriba / controles abajo) */
+  /* Importante: NO forzar altura en móvil (la referencia no lo hace) */
+  .site-header{ height: auto !important; }
+
+  /* Header layout: 2 filas (grid) como referencia */
   .header__inner{
-    flex-wrap: wrap;
-    align-content: flex-start;
-    gap: 10px;
-    padding: 10px 0;
+    height: auto;
+    padding: 12px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    row-gap: 10px;
+    align-items: center;
   }
 
-  /* estructura: logo (fila 1) | luna + idioma + hamburguesa (fila 2) */
-  .header__actions{ display: contents; }
-  .header__actions .btn{ display:none; }
-
-  .brand{
-    order: 1;
-    flex: 0 0 100%;
-    min-width: 0;
-    margin: 0;
+  /* Controles a la derecha */
+  .header__actions{
+    width: auto;
+    justify-content: flex-end;
   }
 
-  .theme-toggle{ order: 2; }
+  /* Si en tu header hay CTA primaria, en referencia se oculta en móvil */
+  .header__actions .btn-primary,
+  .header__actions .btn.btn-primary{
+    display:none !important;
+  }
+/* Ocultar "¿Eres colaborador?" en el header en móvil (ya está dentro del menú) */
+.header__actions a[href="#contacto-prensa"][data-i18n-text="header.collab"]{
+  display:none !important;
+}
 
+  /* Selector de idioma ocupa toda la fila como referencia */
   .lang{
-    order: 3;
-    flex: 1 1 auto;
-    min-width: 0;
+    grid-column: 1 / -1;
+    width: 100%;
   }
 
-  .menu-toggle{ order: 4; }
-
-  /* Más alto el header para que quepan las 2 filas */
-  :root{ --header-h: 118px; }
-  .site-header{ height: var(--header-h); }
-
-  /* Botón idioma */
+  /* Botón idioma full width + spacing como referencia */
   .lang__btn{
     width: 100%;
-    height: 44px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 8px;
-    padding: 0 36px 0 40px;
-    border-radius: 14px;
-    border: 1px solid rgba(255,255,255,.18);
-    background: #0b2d66;
-    color: #ffffff;
-    font-weight: 800;
-    position: relative;
-    box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.06),
-      0 6px 16px rgba(0,0,0,.25);
+    justify-content: space-between;
+    padding: 0 14px;
   }
 
-  .lang__btn::before{
-    content:"";
-    position:absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #1f6bff;
-  }
+  /* En tu CSS móvil agregaste un “dot” decorativo (:before).
+     La referencia NO lo usa así, por eso se ve distinto. */
+  .lang__btn::before{ display:none !important; }
 
-  .lang__tag{
-    font-size: 14px;
-    letter-spacing: .04em;
-  }
-
+  /* En tu CSS lo pones absoluto a la derecha.
+     En referencia va “natural” dentro del layout */
   .lang__btn i{
-    position:absolute;
-    right: 14px;
-    font-size: 12px;
-    opacity: .9;
+    position: static !important;
+    margin-left: auto;
   }
 
-  .lang__list{
-    width: min(260px, calc(100vw - 40px));
-  }
-
-  /* ✅ Filtros a 1 columna en móvil (sin cambiar estilo) */
+  /* Mantén tu ajuste útil: filtros en 1 columna */
   .filters{
     grid-template-columns: 1fr;
   }
 }
+
 
 @media (max-width: 520px){
   .header__inner{ gap:10px; }
@@ -1341,7 +1444,151 @@ html[data-theme="light"] .social__btn{ background: rgba(11,16,32,.03); }
   }
 }
 
-/* Desktop: ocultar SOLO el botón hamburguesa */
-@media (min-width: 821px){
+/* Desktop: ocultar SOLO el botón hamburguesa (>= 981px) */
+@media (min-width: 981px){
   .menu-toggle{ display: none !important; }
+}
+
+
+/* =========================================================
+   Reference parity patch (ONLY header/nav/services + hamburger)
+   Goal: match index.html + stylebeca.css visuals WITHOUT touching i18n logic.
+   ========================================================= */
+
+/* Primary color used by reference hover states */
+:root{
+  --primary: rgb(31,94,255);
+  --primary-2: rgb(43,140,255);
+  --t-fast: .18s;
+}
+
+/* Desktop nav links: match reference (.nav-link) look */
+.site-header .nav__link{
+  text-decoration:none;
+  color: var(--text);
+  opacity: 0.92;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 10px 10px;
+  border-radius: 12px;
+  letter-spacing: -0.01em;
+  transition: background var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease),
+              transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.site-header .nav__link:hover,
+.site-header .nav__link:focus-visible{
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  opacity: 1;
+  color: var(--text);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(31,94,255,0.08);
+  outline:none;
+}
+.site-header .nav__link.is-active,
+.site-header .nav__link[aria-current="page"]{
+  opacity: 1;
+  color: var(--text);
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(31,94,255,0.14);
+}
+
+/* Hamburger: match reference (.menu-toggle + .bar) exactly */
+.menu-toggle{
+  display:none; /* reference hides on desktop */
+  width: 46px;
+  height: 44px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 84%, var(--primary) 16%);
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  cursor:pointer;
+  padding: 10px 10px;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+  box-shadow: none; /* reference: shadow only in light */
+}
+html[data-theme="light"] .menu-toggle{
+  box-shadow: 0 12px 26px rgba(19,33,68,0.10);
+}
+.menu-toggle:hover{ transform: translateY(-1px); }
+
+/* destination uses <span> bars; reference uses .bar -> support both */
+.menu-toggle span,
+.menu-toggle .bar{
+  display:block;
+  height: 3px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--text) 82%, transparent);
+  margin: 5px 0 !important;
+  width: 100%;
+  opacity: 1;
+}
+
+/* Mobile menu links: match reference */
+.mobile-nav-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  text-decoration:none;
+  color: var(--text);
+  font-weight: 950;
+  background: color-mix(in srgb, var(--bg) 92%, #0b1220 8%);
+  border: 1px solid var(--border);
+  transition: transform var(--t-fast) var(--ease), background var(--t-fast) var(--ease),
+              border-color var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+  opacity: 0.95;
+}
+html[data-theme="dark"] .mobile-nav-link{
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.mobile-nav-link:hover,
+.mobile-nav-link.is-active{
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-color: rgba(31,94,255,0.18);
+  box-shadow: 0 14px 34px rgba(19,33,68,0.14);
+  opacity: 1;
+}
+
+/* IMPORTANT: breakpoint parity with reference */
+@media (max-width: 980px){
+  .menu-toggle{ display:block; }
+  .nav{ display:none; }
+}
+@media (max-width: 768px){
+  .mobile-menu{ width: min(85vw, 420px); }
+}
+
+@media (max-width: 420px){
+  .mobile-menu{ width: 100vw; border-left: 0; }
+}
+/* =====================================================
+   DEFINITIVO: Active state visible in MOBILE drawer
+   - Fuerza el resaltado del link activo en resolución móvil
+   - No toca JS ni HTML (solo CSS)
+   ===================================================== */
+@media (max-width: 980px){
+  .mobile-nav-link.is-active,
+  .mobile-nav-link.active,
+  .mobile-nav-link[aria-current="page"]{
+    background: rgba(31,94,255,0.18) !important;
+    border-color: rgba(31,94,255,0.38) !important;
+    color: rgba(255,255,255,0.98) !important;
+    box-shadow: 0 14px 34px rgba(19,33,68,0.14) !important;
+    opacity: 1 !important;
+    transform: translateY(-1px) !important;
+  }
+
+  /* Modo claro */
+  html[data-theme="light"] .mobile-nav-link.is-active,
+  html[data-theme="light"] .mobile-nav-link.active,
+  html[data-theme="light"] .mobile-nav-link[aria-current="page"]{
+    background: rgba(31,94,255,0.12) !important;
+    border-color: rgba(31,94,255,0.26) !important;
+    color: rgba(11,16,32,0.96) !important;
+    box-shadow: 0 12px 26px rgba(19,33,68,0.10) !important;
+  }
 }

@@ -16,19 +16,22 @@
   const $ = (sel, parent = document) => parent.querySelector(sel);
   const $$ = (sel, parent = document) => Array.from(parent.querySelectorAll(sel));
 
-  const header = $("#siteHeader");
+ const header = document.querySelector(".site-header");
 
-  const menuToggle = $("#menuToggle");
-  const menuClose = $("#menuClose");
-  const mobileMenu = $("#mobileMenu");
-  const mobileOverlay = $("#mobileOverlay");
+const menuToggle = $("#menu-toggle");
+const menuClose  = $("#close-menu");
+const mobileMenu  = $("#mobile-menu");
+const mobileOverlay = $("#mobile-menu-overlay");
 
-  const themeToggle = $("#themeToggle");
-  const mobileTheme = $("#mobileTheme");
+const themeToggle = $("#theme-toggle");
+const mobileTheme = $("#mobile-theme-toggle"); // si no existe en HTML, queda null y NO rompe
 
-  const langBtn = $("#langBtn");
-  const langList = $("#langList");
-  const langCode = $("#langCode");
+
+const langBtn  = $("#language-btn");
+const langList = $("#language-dropdown");
+const langCode = $("#language-code");
+const langFlag = $("#language-flag");
+
 
   const openNewsletter = $("#openNewsletter");
   const newsletterModal = $("#newsletterModal");
@@ -37,6 +40,243 @@
 
   const searchForm = $("#searchForm");
   const searchInput = $("#searchInput");
+  // =========================
+  // i18n (ES / EN) - aplica a TODO el HTML con data-i18n*
+  // Nota: el selector conserva sus opciones (EN, ES, DE, PT, FR, IT),
+  // pero el contenido traducible se soporta para ES y EN. Otros códigos -> fallback a EN.
+  // =========================
+  const I18N = {
+    ES: {
+      "doc.title": "Bausen | Noticias y Actualidad",
+
+      "nav.home": "Inicio",
+      "nav.press": "Prensa",
+      "nav.services": "Servicios",
+      "nav.news": "Noticias",
+      "nav.training": "Centro de Formación",
+      "nav.about": "Sobre Nosotros",
+
+      "header.collab": "¿Eres colaborador?",
+
+      "newspage.pill": "Blog y Noticias",
+      "newspage.h1": "Noticias y Actualidad",
+      "newspage.subtitle":
+        "Blog corporativo, eventos destacados y actualizaciones sobre cambios legislativos que impactan tus operaciones empresariales.",
+      "newspage.ctaNewsletter": "Suscribirme al newsletter",
+
+      "newspage.searchAria": "Buscador de noticias",
+      "newspage.searchPlaceholder": "Buscar noticias, temas o palabras clave...",
+      "newspage.searchInputAria": "Buscar noticias",
+      "newspage.searchBtn": "Buscar",
+      "newspage.searchHint": "Buscador próximamente disponible (estructura lista para integrar noticias).",
+
+      "newspage.recentTitleHtml": 'Noticias <span class="title-accent">Más Recientes</span>',
+      "newspage.recentSub": "Mantente al día con lo más relevante de la industria.",
+
+      "newspage.emptyTitle": "No hay noticias disponibles",
+      "newspage.emptySub": "Cuando publiquemos contenido nuevo, aparecerá aquí automáticamente.",
+
+      "newspage.catTitleHtml": 'Explora por <span class="title-accent">categoría</span>',
+      "newspage.catSub": "Explora contenido por tema",
+
+      "newspage.catBlogAria": "Blog corporativo",
+      "newspage.catBlogTitle": "Blog Corporativo",
+      "newspage.catBlogSub": "Insights, guías y mejores prácticas",
+      "newspage.kpiArticles": "artículos",
+
+      "newspage.catEventsAria": "Eventos destacados",
+      "newspage.catEventsTitle": "Eventos Destacados",
+      "newspage.catEventsSub": "Conferencias, webinars y highlights",
+      "newspage.kpiEvents": "eventos",
+
+      "newspage.catLegalAria": "Cambios legislativos",
+      "newspage.catLegalTitle": "Cambios Legislativos",
+      "newspage.catLegalSub": "Actualizaciones legales y su impacto",
+      "newspage.kpiUpdates": "actualizaciones",
+
+      "newspage.modalAria": "Suscripción a newsletter",
+      "newspage.modalTitle": "Suscripción a Newsletter",
+      "newspage.modalCloseAria": "Cerrar",
+      "newspage.modalText":
+        "Recibe actualizaciones periódicas sobre noticias, eventos y cambios legislativos relevantes para tu empresa.",
+      "newspage.fieldName": "Nombre",
+      "newspage.fieldNamePh": "Tu nombre",
+      "newspage.fieldEmail": "Correo electrónico",
+      "newspage.fieldEmailPh": "tucorreo@empresa.com",
+      "newspage.modalSubmit": "Suscribirme",
+
+      "newspage.statusProcessing": "Procesando suscripción...",
+      "newspage.statusDone": "Listo. Suscripción registrada (demo).",
+
+      "footer.brandText":
+        "Tu aliado estratégico en soluciones empresariales integrales. Transformamos organizaciones desde adentro.",
+      "footer.hoursLabel": "Horario de atención",
+      "footer.hoursValue": "Lunes - Viernes: 9:00 - 18:00",
+      "footer.follow": "Síguenos en redes / CONTACTO",
+
+      "footer.company": "Empresa",
+      "footer.about": "Sobre Nosotros",
+      "footer.services": "Servicios",
+      "footer.news": "Noticias",
+      "footer.press": "Prensa",
+      "footer.contact": "Contacto",
+
+      "footer.servicesLink": "SERVICIOS",
+      "footer.svc.capital": "Capital Humano",
+      "footer.svc.legal": "Servicios Legales",
+      "footer.svc.accounting": "Servicios Contables",
+      "footer.svc.orgdev": "Desarrollo Organizacional",
+
+      "footer.contactTitle": "CONTACTO",
+      "presspage.footerSoon": "Próximamente.",
+      "presspage.footerNoteRest": "No se encontraron sucursales activas.",
+
+      "footer.phoneLabel": "Teléfono",
+      "footer.emailLabel": "Email",
+      "footer.maps": "Ver en Google Maps",
+
+      "presspage.footerRights": "© 2026 Bausen. Todos los derechos reservados.",
+      "footer.privacy": "Política de privacidad",
+      "footer.terms": "Términos de servicio",
+      "footer.cookies": "Política de cookies",
+    },
+
+    EN: {
+      "doc.title": "Bausen | News & Updates",
+
+      "nav.home": "Home",
+      "nav.press": "Press",
+      "nav.services": "Services",
+      "nav.news": "News",
+      "nav.training": "Training",
+      "nav.about": "About Us",
+
+      "header.collab": "Are you a collaborator?",
+
+      "newspage.pill": "Blog & News",
+      "newspage.h1": "News & Updates",
+      "newspage.subtitle":
+        "Corporate blog, featured events, and updates on legislative changes that impact your business operations.",
+      "newspage.ctaNewsletter": "Subscribe to the newsletter",
+
+      "newspage.searchAria": "News search",
+      "newspage.searchPlaceholder": "Search news, topics, or keywords...",
+      "newspage.searchInputAria": "Search news",
+      "newspage.searchBtn": "Search",
+      "newspage.searchHint": "Search coming soon (structure ready to integrate news).",
+
+      "newspage.recentTitleHtml": 'Latest <span class="title-accent">News</span>',
+      "newspage.recentSub": "Stay up to date with the most relevant industry updates.",
+
+      "newspage.emptyTitle": "No news available",
+      "newspage.emptySub": "When we publish new content, it will appear here automatically.",
+
+      "newspage.catTitleHtml": 'Browse by <span class="title-accent">category</span>',
+      "newspage.catSub": "Explore content by topic",
+
+      "newspage.catBlogAria": "Corporate blog",
+      "newspage.catBlogTitle": "Corporate Blog",
+      "newspage.catBlogSub": "Insights, guides, and best practices",
+      "newspage.kpiArticles": "articles",
+
+      "newspage.catEventsAria": "Featured events",
+      "newspage.catEventsTitle": "Featured Events",
+      "newspage.catEventsSub": "Conferences, webinars, and highlights",
+      "newspage.kpiEvents": "events",
+
+      "newspage.catLegalAria": "Legislative changes",
+      "newspage.catLegalTitle": "Legislative Changes",
+      "newspage.catLegalSub": "Legal updates and their impact",
+      "newspage.kpiUpdates": "updates",
+
+      "newspage.modalAria": "Newsletter subscription",
+      "newspage.modalTitle": "Newsletter Subscription",
+      "newspage.modalCloseAria": "Close",
+      "newspage.modalText":
+        "Receive periodic updates about news, events, and legislative changes relevant to your business.",
+      "newspage.fieldName": "Name",
+      "newspage.fieldNamePh": "Your name",
+      "newspage.fieldEmail": "Email",
+      "newspage.fieldEmailPh": "youremail@company.com",
+      "newspage.modalSubmit": "Subscribe",
+
+      "newspage.statusProcessing": "Processing subscription...",
+      "newspage.statusDone": "Done. Subscription registered (demo).",
+
+      "footer.brandText":
+        "Your strategic ally in comprehensive business solutions. We transform organizations from within.",
+      "footer.hoursLabel": "Business hours",
+      "footer.hoursValue": "Monday - Friday: 9:00 - 18:00",
+      "footer.follow": "Follow us on social / CONTACT",
+
+      "footer.company": "Company",
+      "footer.about": "About Us",
+      "footer.services": "Services",
+      "footer.news": "News",
+      "footer.press": "Press",
+      "footer.contact": "Contact",
+
+      "footer.servicesLink": "SERVICES",
+      "footer.svc.capital": "Human Capital",
+      "footer.svc.legal": "Legal Services",
+      "footer.svc.accounting": "Accounting Services",
+      "footer.svc.orgdev": "Organizational Development",
+
+      "footer.contactTitle": "CONTACT",
+      "presspage.footerSoon": "Coming soon.",
+      "presspage.footerNoteRest": "No active branches found.",
+
+      "footer.phoneLabel": "Phone",
+      "footer.emailLabel": "Email",
+      "footer.maps": "View on Google Maps",
+
+      "presspage.footerRights": "© 2026 Bausen. All rights reserved.",
+      "footer.privacy": "Privacy policy",
+      "footer.terms": "Terms of service",
+      "footer.cookies": "Cookie policy",
+    },
+  };
+
+  let currentLang = "EN";
+  const normLang = (code) => (code === "ES" ? "ES" : "EN");
+
+  function t(key) {
+    const dict = I18N[currentLang] || I18N.EN;
+    return dict[key];
+  }
+
+  function applyTranslations() {
+    const dict = I18N[currentLang] || I18N.EN;
+
+    document.documentElement.lang = currentLang === "ES" ? "es" : "en";
+    if (dict["doc.title"]) document.title = dict["doc.title"];
+
+    $$("[data-i18n-text]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-text");
+      if (key && dict[key] != null) el.textContent = dict[key];
+    });
+
+    $$("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (key && dict[key] != null) el.innerHTML = dict[key];
+    });
+
+    $$("[data-i18n-placeholder]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-placeholder");
+      if (key && dict[key] != null) el.setAttribute("placeholder", dict[key]);
+    });
+
+    $$("[data-i18n-aria-label]").forEach((el) => {
+      const key = el.getAttribute("data-i18n-aria-label");
+      if (key && dict[key] != null) el.setAttribute("aria-label", dict[key]);
+    });
+  }
+
+  function setLanguage(code) {
+    currentLang = normLang(code);
+    applyTranslations();
+  }
+
 
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
@@ -78,86 +318,175 @@
   if (mobileTheme) mobileTheme.addEventListener("click", toggleTheme);
 
   // =========================
-  // Language dropdown
-  // =========================
-  function closeLang() {
-    if (!langList || !langBtn) return;
-    langList.classList.remove("is-open");
-    langBtn.setAttribute("aria-expanded", "false");
+// Language dropdown (HTML real: language-*)
+// =========================
+// =========================
+// Flags (igual que referencia: SVG por JS)
+// =========================
+const FLAG_SVG = {
+  ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
+        <rect y="7" width="24" height="10" fill="#F1BF00"></rect>
+      </svg>`,
+  EN: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#012169"></rect>
+        <path d="M0 0 L24 24 M24 0 L0 24" stroke="#FFF" stroke-width="5"/>
+        <path d="M0 0 L24 24 M24 0 L0 24" stroke="#C8102E" stroke-width="3"/>
+      </svg>`,
+  DE: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#000"></rect>
+        <rect y="8" width="24" height="8" fill="#DD0000"></rect>
+        <rect y="16" width="24" height="8" fill="#FFCE00"></rect>
+      </svg>`,
+  PT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#006600"></rect>
+        <circle cx="10" cy="12" r="6" fill="#FF0000"></circle>
+      </svg>`,
+  FR: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#FFF"></rect>
+        <rect width="8" height="24" rx="6" fill="#0055A4"></rect>
+        <rect x="16" width="8" height="24" rx="6" fill="#EF4135"></rect>
+      </svg>`,
+  IT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+        <rect width="24" height="24" rx="6" fill="#FFF"></rect>
+        <rect width="8" height="24" rx="6" fill="#009246"></rect>
+        <rect x="16" width="8" height="24" rx="6" fill="#CE2B37"></rect>
+      </svg>`,
+};
+
+const normFlagLang = (v) => {
+  const up = String(v || "").trim().toUpperCase();
+  if (FLAG_SVG[up]) return up;
+  // fallback seguro
+  return "ES";
+};
+
+function setFlag(code) {
+  const L = normFlagLang(code);
+
+  // Flag principal (botón)
+  if (langFlag) {
+    langFlag.innerHTML = FLAG_SVG[L] || FLAG_SVG.ES;
   }
 
-  function toggleLang() {
-    if (!langList || !langBtn) return;
-    const open = langList.classList.toggle("is-open");
-    langBtn.setAttribute("aria-expanded", String(open));
-  }
+  // Flags dentro del dropdown (tus spans .flag con data-flag)
+  document.querySelectorAll("[data-flag]").forEach((el) => {
+    const c = normFlagLang(el.getAttribute("data-flag") || "ES");
+    el.innerHTML = FLAG_SVG[c] || FLAG_SVG.ES;
+  });
+}
 
-  if (langBtn && langList) {
-    langBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      toggleLang();
+
+function closeLang(){
+  if (!langList || !langBtn) return;
+  langList.classList.remove("show");
+  langBtn.setAttribute("aria-expanded", "false");
+}
+
+function toggleLang(){
+  if (!langList || !langBtn) return;
+  const open = langList.classList.toggle("show");
+  langBtn.setAttribute("aria-expanded", String(open));
+}
+
+if (langBtn && langList){
+  langBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleLang();
+  });
+
+  $$(".language-option", langList).forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const code = btn.dataset.lang || "EN";
+
+     if (langCode) langCode.textContent = code;
+setFlag(code);
+setLanguage(code);
+
+
+      $$(".language-option", langList).forEach((b) => b.setAttribute("aria-selected", "false"));
+      btn.setAttribute("aria-selected", "true");
+
+      localStorage.setItem("bausen_lang", code);
+      closeLang();
     });
+  });
 
-    $$(".lang__item", langList).forEach((item) => {
-      item.addEventListener("click", () => {
-        const code = item.dataset.lang || "ES";
-        if (langCode) langCode.textContent = code;
+  document.addEventListener("click", closeLang);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLang();
+  });
 
-        $$(".lang__item", langList).forEach((i) => i.setAttribute("aria-selected", "false"));
-        item.setAttribute("aria-selected", "true");
+  const saved = localStorage.getItem("bausen_lang");
+  if (saved){
+    setLanguage(saved);
 
-        closeLang();
-        localStorage.setItem("bausen_lang", code);
-      });
-    });
-
-    document.addEventListener("click", closeLang);
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeLang();
-    });
-
-    const savedLang = localStorage.getItem("bausen_lang");
-    if (savedLang && langCode) {
-      langCode.textContent = savedLang;
-      $$(".lang__item", langList).forEach((i) => {
-        i.setAttribute("aria-selected", String(i.dataset.lang === savedLang));
-      });
-    }
+    if (langCode) langCode.textContent = saved;
+    setFlag(saved);
+    const match = $(`.language-option[data-lang="${saved}"]`, langList);
+    if (match) match.setAttribute("aria-selected", "true");
+  } else {
+    // default visual coherente con tu HTML (EN)
+    setFlag(langCode?.textContent || "EN");
   }
+}
 
-  // =========================
-  // Mobile menu
-  // =========================
-  const lockScroll = (locked) => {
-    document.documentElement.style.overflow = locked ? "hidden" : "";
-    document.body.style.overflow = locked ? "hidden" : "";
-  };
 
-  function openMenu() {
-    if (!mobileMenu || !mobileOverlay || !menuToggle) return;
-    mobileMenu.hidden = false;
-    mobileOverlay.hidden = false;
-    menuToggle.setAttribute("aria-expanded", "true");
-    lockScroll(true);
+ // =========================
+// Mobile menu (HTML real: mobile-menu / mobile-menu-overlay)
+// =========================
+const lockScroll = (locked) => {
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+  document.body.style.overflow = locked ? "hidden" : "";
+};
 
-    setTimeout(() => {
-      const first = $(".mobile-nav__link", mobileMenu);
-      if (first) first.focus();
-    }, 30);
-  }
+function openMenu(){
+  if (!mobileMenu || !mobileOverlay || !menuToggle) return;
 
-  function closeMenu() {
-    if (!mobileMenu || !mobileOverlay || !menuToggle) return;
-    mobileMenu.hidden = true;
-    mobileOverlay.hidden = true;
-    menuToggle.setAttribute("aria-expanded", "false");
-    lockScroll(false);
-    menuToggle.focus();
-  }
+  mobileMenu.classList.add("open");
+  mobileOverlay.classList.add("show");
 
-  if (menuToggle) menuToggle.addEventListener("click", openMenu);
-  if (menuClose) menuClose.addEventListener("click", closeMenu);
-  if (mobileOverlay) mobileOverlay.addEventListener("click", closeMenu);
+  mobileMenu.setAttribute("aria-hidden", "false");
+  mobileOverlay.setAttribute("aria-hidden", "false");
+  menuToggle.setAttribute("aria-expanded", "true");
+
+  lockScroll(true);
+
+  setTimeout(() => {
+    const first = $(".mobile-nav-link", mobileMenu);
+    if (first) first.focus();
+  }, 30);
+}
+
+function closeMenu(){
+  if (!mobileMenu || !mobileOverlay || !menuToggle) return;
+
+  mobileMenu.classList.remove("open");
+  mobileOverlay.classList.remove("show");
+
+  mobileMenu.setAttribute("aria-hidden", "true");
+  mobileOverlay.setAttribute("aria-hidden", "true");
+  menuToggle.setAttribute("aria-expanded", "false");
+
+  lockScroll(false);
+  menuToggle.focus();
+}
+
+if (menuToggle) menuToggle.addEventListener("click", openMenu);
+if (menuClose) menuClose.addEventListener("click", closeMenu);
+if (mobileOverlay) mobileOverlay.addEventListener("click", closeMenu);
+
+// Cierra al hacer click en un link del menú móvil
+if (mobileMenu){
+  $$(".mobile-nav-link", mobileMenu).forEach((a) => a.addEventListener("click", closeMenu));
+}
+
+// Escape cierra menú
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeMenu();
+});
 
   // =========================
   // Newsletter modal
@@ -190,13 +519,13 @@
       e.preventDefault();
       if (!newsletterStatus) return;
 
-      newsletterStatus.textContent = "Procesando suscripción...";
+      newsletterStatus.textContent = t("newspage.statusProcessing") || "Procesando suscripción...";
       newsletterStatus.style.color = "";
 
       // TODO: Integrar backend real: POST /api/newsletter {name,email}
       await new Promise((r) => setTimeout(r, 650));
 
-      newsletterStatus.textContent = "Listo. Suscripción registrada (demo).";
+      newsletterStatus.textContent = t("newspage.statusDone") || "Listo. Suscripción registrada (demo).";
       newsletterStatus.style.color = "currentColor";
 
       setTimeout(() => {

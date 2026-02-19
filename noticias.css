@@ -1,7 +1,9 @@
 :root{
   --c-primary: #003DA5;
   --c-secondary: #182389;
-
+  /* ✅ Tokens que tu botón collab YA está usando */
+  --primary: rgb(31,94,255);
+  --primary-2: rgb(43,140,255);
   --container: 1200px;
   --header-h: 66px;
 
@@ -186,6 +188,27 @@ html.theme-transition *{
   box-shadow: 0 0 22px var(--glow);
 }
 .btn--primary:hover{ box-shadow: 0 0 28px var(--glow); }
+/* Collab CTA parity (look + size) — EXACTO como referencia */
+.btn--collab{
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
+/* MISMO LOOK que la referencia (Prensa) */
+.btn--collab.btn--primary{
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  border-color: transparent;
+  box-shadow: 0 16px 34px rgba(31,94,255,0.24);
+}
+
+html[data-theme="light"] .btn--collab.btn--primary{
+  box-shadow: 0 16px 34px rgba(31,94,255,0.22);
+}
+
+.btn--collab.btn--primary:hover{
+  box-shadow: 0 20px 42px rgba(31,94,255,0.28);
+}
+
 .btn--soft{
   width:100%;
   background: color-mix(in srgb, var(--text) 7%, transparent);
@@ -229,27 +252,261 @@ html.theme-transition *{
 }
 
 .header__burger{ display:none; }
+/* =========================================================
+   PUENTE: conectar tu HTML (logo-link / language-* / menu-*)
+   con la estética del HEADER ya definida arriba
+   ========================================================= */
+
+/* Logo (tu HTML) -> Brand (estilo header) */
+.logo-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:160px;
+}
+.logo-mark{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--c-primary) 22%, transparent),
+    color-mix(in srgb, var(--c-secondary) 22%, transparent)
+  );
+  border:1px solid var(--border);
+}
+.logo-text{
+  font-weight:780;
+  letter-spacing:.2px;
+  color: color-mix(in srgb, var(--c-primary) 55%, var(--text));
+}
+
+/* Botón luna (tu HTML) con look “icon-btn” */
+.theme-toggle{
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: color-mix(in srgb, var(--text) 88%, transparent);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+}
+.theme-toggle:hover{
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  box-shadow: 0 0 18px var(--glow);
+}
+
+/* Idiomas (tu HTML) con look del dropdown */
+.language-selector{ position:relative; }
+
+.language-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  height:36px;
+  padding:0 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  cursor:pointer;
+}
+
+.language-btn .code{
+  font-weight:850;
+  font-size:12px;
+}
+
+.language-dropdown{
+  position:absolute;
+  left:0;
+  top:calc(100% + 10px);
+  width:220px;
+  padding:8px;
+  margin:0;
+  list-style:none;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  display:none;
+  z-index:1200;
+}
+/* Mantener dropdown anclado al lado derecho del botón (evita overflow en móvil) */
+.language-dropdown{
+  left: auto;
+  right: 0;
+}
+
+.language-dropdown.show{ display:block; }
+
+.language-option{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 10px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:700;
+  border:0;
+  background:transparent;
+  color:inherit;
+}
+.language-option:hover{
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+}
+.language-option[aria-selected="true"]{
+  background: color-mix(in srgb, var(--c-primary) 18%, transparent);
+  border:1px solid color-mix(in srgb, var(--c-primary) 22%, transparent);
+}
+
+/* Overlay / Menú móvil (tu HTML) */
+.mobile-menu-overlay{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.45);
+  z-index:999;
+  display:none;
+  opacity:0;
+  transition: opacity .2s ease;
+}
+/* Tu HTML no usa hidden; lo controlamos con clases */
+.mobile-menu{
+  display:none;
+  opacity:0;
+  transform: translateY(-6px) scale(.985);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.mobile-menu.open{
+  display:block;
+  opacity:1;
+  transform: translateY(0) scale(1);
+}
+
+/* Links menú móvil: tu HTML usa .mobile-nav-link */
+.mobile-nav-link{
+  display:block;
+  padding:12px 12px;
+  border-radius:14px;
+  font-weight:750;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  border:1px solid var(--border);
+}
+.mobile-nav-link.is-active{
+  background: color-mix(in srgb, var(--c-primary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--c-primary) 22%, transparent);
+}
+
+/* Hamburguesa: tu HTML usa .menu-toggle */
+.menu-toggle{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+   display:none;            /* <- OCULTO en desktop */
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  gap: 3px;              /* <- esto es el look de referencia */
+  cursor:pointer;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+}
+
+.menu-toggle span{
+  display:block;
+  width:18px;
+  height:2px;
+  border-radius:999px;
+  background: var(--text);
+  margin: 0 !important;     /* <- evita separación extra */
+  opacity:.95;
+}
+
+
 
 /* Mobile menu */
 .mobile-overlay{ position:fixed; inset:0; background: rgba(0,0,0,.45); z-index:999; }
 .mobile-menu{
-  position:fixed;
-  top:10px; right:10px;
-  width:min(340px, calc(100% - 20px));
-  max-height:calc(100vh - 20px);
-  overflow:auto;
+  position: fixed;
+
+  /* ✅ ESPACIO/INSET igual a la referencia */
+  top: 12px;
+  right: 12px;
+  bottom: 12px;
+  width: min(390px, calc(100% - 24px));
+
+  /* ✅ ya no necesitas max-height si usas bottom */
+  max-height: none;
+  overflow: auto;
+
+  /* lo demás lo dejas igual para NO romper nada */
   background: color-mix(in srgb, var(--surface) 94%, transparent);
-  border:1px solid var(--border);
-  border-radius:18px;
-  z-index:1001;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  z-index: 1001;
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
 }
+
+.mobile-menu__head .logo-img{
+  width: 118px;          /* más parecido a tu referencia */
+  height:auto;
+  object-fit:contain;
+  filter: drop-shadow(0 8px 18px rgba(19,33,68,0.10));
+}
+@media (max-width: 420px){
+  .mobile-menu__head .logo-img{ width: 110px; }
+}
+
 .mobile-menu__head{
   display:flex; align-items:center; justify-content:space-between;
   padding:14px 14px 10px;
   border-bottom:1px solid var(--border);
 }
+/* X cerrar (igual vibra referencia: pill + hover + rotate suave) */
+.mobile-menu__close{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease, border-color .18s ease;
+  box-shadow: 0 10px 26px rgba(0,0,0,.18);
+}
+html[data-theme="light"] .mobile-menu__close{
+  border-color: rgba(11,16,32,.12);
+  background: rgba(11,16,32,.04);
+  box-shadow: 0 10px 26px rgba(0,0,0,.10);
+}
+
+.mobile-menu__close i{
+  transition: transform .22s ease, opacity .22s ease;
+  opacity:.92;
+}
+
+.mobile-menu__close:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 14px 34px rgba(0,0,0,.22);
+}
+.mobile-menu__close:hover i{
+  transform: rotate(90deg);
+  opacity:1;
+}
+
+.mobile-menu__close:active{
+  transform: translateY(0) scale(.96);
+}
+
 .mobile-menu__title{ font-weight:900; }
 .mobile-nav{ display:flex; flex-direction:column; padding:10px; gap:6px; }
 .mobile-nav__link{
@@ -351,6 +608,23 @@ html.theme-transition *{
   background: var(--page);
   padding: 18px 0 var(--space-block);
 }
+/* Centrar bloque completo del buscador (form + hint) */
+.search-wrap .container{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search{
+  margin: 0 auto;           /* asegura centrado visual */
+}
+
+.search-hint{
+  width: min(740px, 100%);  /* mismo ancho que el form */
+  margin: 10px auto 0;
+  text-align: center;
+}
+
 .search-wrap__inner{
   display:flex;
   flex-direction:column;
@@ -646,11 +920,13 @@ html[data-theme="dark"] .cat-card__kpi{
 }
 .footer__label{ display:block; font-weight:950; font-size:12px; margin-bottom:10px; }
 .footer__social-row{ display:flex; gap:10px; }
-.social{
-  width:36px; height:36px; border-radius:12px;
-  display:grid; place-items:center;
-  background: color-mix(in srgb, var(--text) 6%, transparent);
-  border: 1px solid var(--border);
+.footer__social .social{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 36px);
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 6px;
 }
 .footer__col{ display:flex; flex-direction:column; gap:10px; }
 .footer__title{ margin:0 0 4px; font-size:12px; font-weight:950; letter-spacing:.6px; }
@@ -676,6 +952,97 @@ html[data-theme="dark"] .cat-card__kpi{
 .footer__legal{ display:flex; gap:16px; flex-wrap:wrap; }
 .footer__legal a{ color: var(--muted); }
 .footer__legal a:hover{ color: var(--text); }
+/* =========================================================
+   FOOTER BRIDGE: estilos para las clases reales del HTML
+   (footer__text, meta-row, meta-ico, social__btn, footer__social-title)
+========================================================= */
+
+/* Texto y jerarquía */
+.footer__text{
+  margin: 0;
+  color: var(--muted);
+  font-weight:650;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.footer__title{
+  margin:0 0 6px;
+}
+
+/* Bloques meta (Horario / etc) */
+.footer__meta{ margin-top: 12px; }
+.meta-row{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin: 10px 0;
+}
+.meta-ico{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  border: 1px solid var(--border);
+}
+
+/* Redes (tu HTML: .social contenedor + .social__btn botones) */
+.social{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.social__btn{
+  width:36px;
+  height:36px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  border: 1px solid var(--border);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.social__btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px var(--glow2);
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+}
+.footer__social-title{
+  display:block;
+  font-weight:950;
+  font-size:12px;
+  margin: 14px 0 10px;
+}
+
+/* Contacto mini (tu HTML: .contact-mini__row) */
+.contact-mini{ margin-top: 12px; }
+.contact-mini__row{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin: 10px 0;
+}
+
+/* Footer bottom en móvil: apilar (para que no se “rompa”) */
+@media (max-width: 620px){
+  .site-footer{ padding: 34px 0 18px; }
+
+  .footer__grid{
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+  }
+
+  .footer__bottom{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .footer__legal{
+    gap: 12px;
+  }
+}
 
 /* =========================
    Responsive: mantener “doble espacio” pero proporcional
@@ -687,6 +1054,7 @@ html[data-theme="dark"] .cat-card__kpi{
 
 /* Tablet */
 @media (max-width: 980px){
+
   :root{
     --space-section: 76px;
     --space-title: 28px;
@@ -694,83 +1062,199 @@ html[data-theme="dark"] .cat-card__kpi{
     --future-h: 260px;
   }
 
-  .nav{ display:none; }
-  .header__burger{ display:grid; }
+  /* Header móvil como referencia: acciones pegadas a la derecha */
+  .nav{ display:none !important; }
 
-  .news-grid{ grid-template-columns: 1fr; }
-  .cat-grid{ grid-template-columns: 1fr; gap: 16px; }
-  .footer__grid{ grid-template-columns: 1fr 1fr; }
-
-  .search{ flex-direction:column; align-items:stretch; }
-}
-
-/* Mobile */
-@media (max-width: 620px){
-  :root{
-    --space-section: 64px;
-    --space-title: 24px;
-    --space-block: 24px;
-    --future-h: 220px;
-  }
-
-  .container{ width: min(var(--container), calc(100% - 28px)); }
-  .brand{ min-width: 0; }
-  .lang__btn{ padding: 0 10px; }
-  .lang__list{ width: 210px; }
-  .footer__grid{ grid-template-columns: 1fr; }
-  .footer__bottom{ flex-direction:column; align-items:flex-start; }
-
-  .hero__curve{
-    height: 86px;
-    border-top-left-radius: 900px 86px;
-    border-top-right-radius: 900px 86px;
-  }
-}
-/* =========================
-   FIX Header móvil: ES + luna + hamburguesa (solo rescale)
-   No toca HTML/JS/logo
-========================= */
-@media (max-width: 620px){
-
-  /* Ajuste fino de espacio general */
   .header__inner{
+    justify-content: space-between;   /* logo izq / acciones der */
+    align-items: center;
     gap: 10px;
   }
-
-  /* Botones (luna / hamburguesa) con tamaño consistente */
-  .icon-btn{
-    width: 40px;
-    height: 40px;
-  }
-
-  /* El bloque de idioma ocupa el centro */
-  .header__lang{
-    flex: 1 1 auto;
-    min-width: 0;
+.mobile-nav .btn--collab{
+  width: 100%;
+  justify-content: center;
+  margin-top: 10px;
+  display: inline-flex;
+}
+  .brand{ flex: 0 0 auto; min-width: 0; }
+  .header__actions{
+    margin-left: auto;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;                        /* compacto como referencia */
+    flex: 0 0 auto;
   }
 
-  /* Botón de idioma estilo “píldora” centrada y más ancha */
-  .lang__btn{
-    width: 100%;
-    max-width: 220px;     /* controla que NO se coma todo el header */
-    height: 40px;
-    padding: 0 12px;
-    justify-content: center;
-    gap: 8px;
-  }
+  .menu-toggle{ display:flex; }       /* (en Paso 2 lo hacemos igualito) */
 
-  /* Texto ES más claro/centrado */
-  .lang__code{
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: .3px;
-  }
+  /* Layout del contenido: se mantiene bien */
+  .news-grid{ grid-template-columns: 1fr; }
+  .cat-grid{ grid-template-columns: 1fr; gap: 16px; }
 
-  /* Lista desplegable alineada al centro del botón */
-  .lang__list{
-    left: 50%;
-    transform: translateX(-50%);
+  /* Footer: en “móvil/tablet” mejor 1 columna (evita que se vea roto) */
+  .footer__grid{ grid-template-columns: 1fr; }
+
+  /* Buscador: NO lo fuerces a columna; deja que envuelva */
+  .search{
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
   }
+  .search .btn{
+    width: auto;
+  }
+  
+}
+
+@media (max-width: 620px){
+  .footer__grid{ gap: 18px; }
+  .footer__social-row{ flex-wrap: wrap; }
+  .search{ padding: 10px; }
+}
+@media (min-width: 981px){
+  .search{
+    flex-wrap: nowrap;
+  }
+  .footer__grid{
+    grid-template-columns: 1.2fr .7fr .8fr 1fr; /* asegura el desktop original */
+  }
+}
+/* =========================================================
+   UI polish: light/dark más premium (sin tocar estructura)
+========================================================= */
+
+/* Cards/superficies: un poco más “glass” en dark */
+html[data-theme="dark"] .search,
+html[data-theme="dark"] .footer__col{
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+}
+
+/* Light: sombras más limpias y bordes finos */
+html[data-theme="light"] .search{
+  box-shadow: 0 14px 34px rgba(11,16,32,.08);
+}
+html[data-theme="light"] .site-footer{
+  background: linear-gradient(180deg, rgba(255,255,255,.92), var(--bg));
+}
+
+/* Footer links: más “clickable” */
+.footer__link{
+  transition: color .18s ease, transform .18s ease;
+}
+.footer__link:hover{
+  transform: translateX(2px);
+}
+
+/* Botones de redes: hover un poco más marcado */
+.social__btn{
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+}
+.social__btn:hover{
+  border-color: color-mix(in srgb, var(--c-primary) 22%, var(--border));
+}
+
+/* Hint del buscador más elegante */
+.search-hint{
+  opacity: .92;
+}
+/* =========================================================
+   FLAGS REALES (usa tus clases: .language-flag / .lang-option-flag)
+   - Sin tocar HTML/JS
+   - Render nítido (SVG) “tipo referencia”
+========================================================= */
+
+.language-flag,
+.lang-option-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  display: inline-block;
+  overflow: hidden;
+
+  /* Marco + sombra como referencia */
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 10px 22px rgba(0,0,0,.18);
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+html[data-theme="light"] .language-flag,
+html[data-theme="light"] .lang-option-flag{
+  border-color: rgba(11,16,32,.12);
+  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+}
+
+/* =========================================================
+   MATCH EXACTO (REFERENCIA PRENSA)
+   - Idiomas: botón + dropdown (tamaño/color)
+========================================================= */
+
+/* Equivalente del "primary" de la referencia */
+:root{
+  --primary: var(--c-primary);
+  --t-fast: .18s;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --z-header: 120;
+}
+
+/* Botón idiomas EXACTO */
+.language-btn{
+  height: auto;                 /* quita el 36px fijo */
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  color: var(--text);
+
+  transition:
+    transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease),
+    background var(--t-fast) var(--ease);
+}
+
+.language-btn:hover{
+  transform: translateY(-1px);
+}
+
+/* Dropdown EXACTO (tamaño/colores/animación) */
+.language-dropdown{
+  position: absolute;
+  right: 0;
+  left: auto;                   /* ancla a la derecha como referencia */
+  top: calc(100% + 10px);
+
+  list-style: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+
+  min-width: 230px;             /* <- exacto referencia */
+  padding: 8px;
+
+  /* animación tipo referencia */
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+
+  transition:
+    opacity var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease),
+    visibility var(--t-fast) var(--ease);
+
+  z-index: calc(var(--z-header) + 30);
+}
+
+/* JS usa .show -> lo convertimos en “abierto” como referencia */
+.language-dropdown.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }

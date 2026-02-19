@@ -647,7 +647,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setLocked(true);
 
       window.setTimeout(() => {
-        const firstLink = panel.querySelector(".mobile-nav-link") || panel.querySelector("a[href]") || panel.querySelector("button");
+        const firstLink =
+  panel.querySelector(".mobile-nav-link, .mobile-nav__link") ||
+  panel.querySelector("a[href]") ||
+  panel.querySelector("button");
+
         if (firstLink) firstLink.focus();
       }, 80);
     };
@@ -690,30 +694,56 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      Active link (data-page)
   ========================= */
-  function initActiveLink() {
-    const mainNavLinks = $$(".nav-link, .mobile-nav-link");
-    const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
-    const pageNoExt = file.replace(".html", "").replace(".htm", "");
+ function initActiveLink() {
+  // Soporta ambos estilos: .mobile-nav-link (index) y .mobile-nav__link (referencias)
+  const links = $$(".nav-link, .mobile-nav-link, .mobile-nav__link");
 
-    const alias = {
-      indexbeca: "index",
-      index: "index",
-      inicio: "index",
-      contacto: "contacto",
-      acercade: "acercade",
-      servicios: "servicios",
-      noticias: "noticias",
-      prensa: "prensa",
-      centro: "centro",
-    };
+  const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
+  const pageNoExt = file.replace(".html", "").replace(".htm", "");
 
-    const currentKey = alias[pageNoExt] || pageNoExt || "index";
+  const alias = {
+    indexbeca: "index",
+    index: "index",
+    inicio: "index",
+    contacto: "contacto",
+    acercade: "acercade",
+    servicios: "servicios",
+    noticias: "noticias",
+    prensa: "prensa",
+    centro: "centro",
+  };
 
-    mainNavLinks.forEach((link) => {
-      const key = (link.getAttribute("data-page") || "").toLowerCase();
-      link.classList.toggle("active", key === currentKey);
-    });
-  }
+  const currentKey = alias[pageNoExt] || pageNoExt || "index";
+
+  // Si algún link no tiene data-page, intenta inferirlo desde href (backup)
+  const keyFromLink = (a) => {
+    const dp = (a.getAttribute("data-page") || "").trim().toLowerCase();
+    if (dp) return dp;
+
+    const href = (a.getAttribute("href") || "").trim().toLowerCase();
+    const last = href.split("/").pop().split("?")[0].split("#")[0];
+    const noExt = last.replace(".html", "").replace(".htm", "");
+    return alias[noExt] || noExt;
+  };
+
+  links.forEach((a) => {
+    const key = keyFromLink(a);
+    const isCurrent = key === currentKey;
+
+    // Clase usada por stylebeca.css
+    a.classList.toggle("active", isCurrent);
+
+    // Compat con la referencia (centro.css) que usa .is-active en mobile links
+    if (a.classList.contains("mobile-nav__link")) {
+      a.classList.toggle("is-active", isCurrent);
+    }
+
+    // Accesibilidad: aria-current solo en el actual
+    if (isCurrent) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+}
+
 
   /* =========================
      Footer year

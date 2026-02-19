@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="stylebeca.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-
 <body>
   <!-- Page Loader -->
   <div class="page-loader" id="page-loader" aria-hidden="true">
@@ -118,12 +117,11 @@
         </div>
 
         <!-- Menú hamburguesa (mobile) -->
-        <button class="menu-toggle" id="menu-toggle" type="button"
-                aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
-        </button>
+      <button class="menu-toggle" id="menu-toggle" type="button"
+        aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+  <i class="fa-solid fa-bars" aria-hidden="true"></i>
+</button>
+
       </div>
     </div>
 
@@ -143,31 +141,17 @@
 
       <nav aria-label="Mobile navigation">
         <ul class="mobile-nav-list">
-          <li><a href="index.html" class="mobile-nav-link" data-page="index" data-i18n="nav.home">Home</a></li>
+          <li><a href="index.html" class="mobile-nav-link " data-page="index" data-i18n="nav.home">Home</a></li>
           <li><a href="prensa.html" class="mobile-nav-link" data-page="prensa" data-i18n="nav.press">Press</a></li>
           <li><a href="servicios.html" class="mobile-nav-link" data-page="servicios" data-i18n="nav.services">Services</a></li>
           <li><a href="noticias.html" class="mobile-nav-link" data-page="noticias" data-i18n="nav.news">News</a></li>
           <li><a href="centro.html" class="mobile-nav-link" data-page="centro" data-i18n="nav.training">Training Center</a></li>
           <li><a href="acerca.html" class="mobile-nav-link" data-page="acercade" data-i18n="nav.about">About</a></li>
+          <li><a href="acceso.html" class="btn btn-primary btn-sm" data-i18n="header.collab">Are you a collaborator?</a></li>
         </ul>
       </nav>
-
-      <div class="mobile-menu-controls">
-        <div class="mobile-language-selector">
-          <label class="visually-hidden" for="mobile-language-select" data-i18n="ui.langSelect">Select language</label>
-          <select class="mobile-language-select" id="mobile-language-select">
-            <option value="ES">Español</option>
-            <option value="EN">English</option>
-            <option value="DE">Deutsch</option>
-            <option value="PT">Português</option>
-            <option value="FR">Français</option>
-            <option value="IT">Italiano</option>
-          </select>
-        </div>
-      </div>
     </div>
   </header>
-
   <!-- HERO -->
   <main>
     <section class="hero" id="hero">

@@ -361,14 +361,19 @@ body.theme-dark .theme-toggle .fa-sun{
   display:flex;
   align-items:center;
   gap: 8px;
-  padding: 10px 12px;
-  border-radius: 999px;
+
+  height: 44px;            /* MISMA ALTURA que theme-toggle */
+  padding: 0 12px;         /* ya no “infla” el recuadro */
+  min-width: 44px;         /* asegura tamaño mínimo */
+  border-radius: 14px;     /* MISMO RADIO que theme-toggle */
+
   background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
   border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
   color: var(--text);
   cursor:pointer;
   transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
 }
+
 body:not(.theme-dark) .language-btn{
   box-shadow: 0 12px 26px rgba(19,33,68,0.10);
 }
@@ -434,28 +439,48 @@ body:not(.theme-dark) .language-dropdown{
 }
 
 /* Hamburguesa */
+/* Hamburguesa */
 .menu-toggle{
   display:none;
-  width: 46px;
-  height: 44px;
-  border-radius: 14px;
+
+  width: 46px;             /* MISMO ancho que referencia */
+  height: 44px;            /* MISMA altura */
+  border-radius: 14px;     /* MISMO radio */
+
   background: color-mix(in srgb, var(--bg) 84%, var(--primary) 16%);
   border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  color: var(--text);
   cursor:pointer;
-  padding: 10px 10px;
+
+  padding: 0;
   -webkit-tap-highlight-color: transparent;
   transition: transform var(--t-fast), box-shadow var(--t-fast);
+
+  display: none; /* se mantiene oculto en desktop por tu lógica */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
 }
+
+.menu-toggle i{
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text);
+  display: block;
+}
+
+
 body:not(.theme-dark) .menu-toggle{
   box-shadow: 0 12px 26px rgba(19,33,68,0.10);
 }
 .menu-toggle:hover{ transform: translateY(-1px); }
 .menu-toggle .bar{
   display:block;
+  width: 18px;
   height: 3px;
   border-radius: 99px;
-  background: color-mix(in srgb, var(--text) 82%, transparent);
-  margin: 5px 0;
+  background: var(--text);
 }
 
 /* Overlay */
@@ -532,6 +557,21 @@ body:not(.theme-dark) .mobile-menu{
   -webkit-overflow-scrolling: touch;
 }
 .mobile-nav-list > li{ margin-bottom: 6px; }
+/* CTA "Eres colaborador" — SOLO dentro del menú hamburguesa (más largo como referencia) */
+.mobile-menu .mobile-nav-list .btn.btn-primary.btn-sm{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 14px 18px;  /* más largo/alto */
+  min-height: 48px;
+  border-radius: 16px;
+}
+
+/* (Opcional) separarlo un poco del resto del menú */
+.mobile-menu .mobile-nav-list > li:last-child{
+  margin-top: 12px;
+}
+
 
 .mobile-nav-link{
   display:flex;
@@ -2440,6 +2480,28 @@ body.theme-dark .award-title{ color: rgba(255,255,255,.92); }
   }
 
   .header-controls{ width: auto; justify-content: flex-end; }
+  /* ===== Mobile header controls match SERVICIOS (reference) ===== */
+.theme-toggle{
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+}
+.theme-toggle i{ font-size: 16px; }
+
+.language-btn{
+  height: 36px;
+  min-width: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+}
+
+.menu-toggle{
+  width: 46px;
+  height: 44px;
+  border-radius: 14px;
+}
+.menu-toggle i{ font-size: 18px; }
+
 
   .header-controls .btn-primary,
   .header-controls .btn.btn-primary{
@@ -2457,6 +2519,86 @@ body.theme-dark .award-title{ color: rgba(255,255,255,.92); }
 
   .site-footer .footer-top,
   .footer .footer-top{ grid-template-columns: 1fr 1fr; }
+
+
+  /* =========================
+     DEFINITIVO (mobile <=980px): Controles del header iguales a SERVICIOS (referencia)
+     SOLO afecta: tema + idioma + hamburguesa (tamaño/forma/colores)
+     ========================= */
+  .header-container{
+    grid-template-rows: auto;   /* quita la segunda fila */
+    row-gap: 0;                 /* sin separación extra */
+  }
+
+  .header-controls{
+    gap: 10px;                  /* espaciado como referencia */
+  }
+
+  /* Tema + Hamburguesa = mismo “icon-btn” de la referencia */
+  .header-controls .theme-toggle,
+  .header-controls .menu-toggle{
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+    color: color-mix(in srgb, var(--text) 88%, transparent);
+
+    display: grid;
+    place-items: center;
+    padding: 0;
+  }
+  .header-controls .theme-toggle:hover,
+  .header-controls .menu-toggle:hover{
+    background: color-mix(in srgb, var(--text) 10%, transparent);
+  }
+
+  .header-controls .menu-toggle{ display: grid; }
+  .header-controls .menu-toggle i{ font-size: 18px; line-height: 1; color: inherit; }
+
+  /* En theme-toggle hay 2 iconos (moon/sun): centrar y mantener tamaño */
+  .header-controls .theme-toggle{ position: relative; }
+  .header-controls .theme-toggle i{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    line-height: 1;
+    color: inherit;
+  }
+
+  /* Idioma: compacto (no full width) */
+  .language-selector{
+    grid-column: auto;
+    width: auto;
+  }
+  .language-btn{
+    width: auto;
+    justify-content: center;
+    white-space: nowrap;
+
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 999px;
+
+    background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+    border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+    color: var(--text);
+  }
+  .language-btn i{ font-size: 12px; }
+  .language-flag{
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+  }
+  .language-code{
+    font-weight: 850;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
 }
 
 @media (max-width: 860px){
@@ -2735,4 +2877,23 @@ body.theme-dark .social-card .social-icon{
 /* Keep icons crisp */
 .social-card .social-icon i{
   transform: translateY(0.5px);
+}
+/* =========================================
+   MOBILE MENU ACTIVE (match SERVICIOS reference)
+   Resalta la página actual dentro del menú hamburguesa
+   (usa class .active que ya setea scripbeca.js)
+========================================= */
+@media (max-width: 980px){
+  .mobile-menu .mobile-nav-link.active{
+    background: color-mix(in srgb, var(--primary) 18%, transparent) !important;
+    border-color: color-mix(in srgb, var(--primary) 22%, transparent) !important;
+
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+  }
+  .mobile-menu .mobile-nav-link.active[aria-current="page"]{
+    outline: 1px solid color-mix(in srgb, var(--primary) 14%, transparent);
+    outline-offset: 0;
+  }
 }

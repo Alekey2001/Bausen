@@ -4,6 +4,9 @@
    Base / Theme (mismo ADN que tu web)
 ========================= */
 :root{
+  --z-header: 10000;
+  --shadow-lg: 0 28px 90px rgba(19, 33, 68, 0.16);
+  --t-fast: 150ms ease;
   --bg: #0b1020;
   --bg-2:#0a0f1b;
 
@@ -139,6 +142,10 @@ html[data-theme="light"] .site-header:after{ opacity:.30; }
   align-items:center;
   gap:14px;
   padding: 14px 0;
+}
+/* "¿Eres colaborador?" SOLO dentro del menú hamburguesa */
+.header__actions .collab-cta--header{
+  display: none !important;
 }
 
 .brand{ display:flex; align-items:center; gap:10px; }
@@ -356,7 +363,10 @@ html[data-theme="light"] .mobile-menu{
 }
 .mobile-menu.open{ transform: translateX(0); }
 .mobile-menu__top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-.mobile-menu__logo{ height: 22px; width:auto; }
+.mobile-menu__logo{
+  height: 42px;   /* antes 22px */
+  width: auto;
+}
 .mobile-nav{ margin-top: 16px; display:flex; flex-direction:column; gap:8px; }
 .mobile-nav__link{
   padding: 12px 12px;
@@ -377,11 +387,32 @@ html[data-theme="light"] .mobile-nav__link{
   border-color: rgba(0,61,165,.30);
   background: rgba(0,61,165,.18);
 }
-.mobile-menu__footer{ margin-top: auto; padding-top: 12px; }
+/* ✅ CTA del menú móvil: ancho completo y más “largo” como referencia */
+.mobile-menu__footer .collab-cta{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 14px 18px;     /* más largo/alto */
+  min-height: 48px;
+}
+
 
 @media (max-width: 980px){
   .nav{ display:none; }
   .burger{ display:grid; }
+
+  /* ✅ En móvil: Tema + Idiomas + Hamburguesa en la esquina derecha */
+  .header__actions{
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+
+  /* ✅ Separa logo a la izquierda y acciones a la derecha */
+  .header__inner{
+    justify-content: space-between;
+  }
+
+  /* (Opcional) Si tuvieras un bloque viejo .lang, lo puedes dejar oculto */
   .lang{ display:none; }
 }
 
@@ -1544,3 +1575,97 @@ html[data-theme="light"] .footer__bottom{
   .footer__grid{ grid-template-columns: 1fr; }
   .footer__bottom{ flex-direction:column; align-items:flex-start; }
 }
+
+/* Language selector */
+.language-selector{ position:relative; }
+.language-btn{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  color: var(--text);
+  cursor:pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+body:not(.theme-dark) .language-btn{
+  box-shadow: 0 12px 26px rgba(19,33,68,0.10);
+}
+.language-btn:hover{ transform: translateY(-1px); }
+.language-btn i{ font-size: 12px; transition: transform var(--t-fast); }
+.language-btn[aria-expanded="true"] i{ transform: rotate(180deg); }
+
+.language-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(31,94,255,0.35), rgba(43,140,255,0.25));
+  box-shadow: 0 10px 22px rgba(31,94,255,0.12);
+}
+
+.language-dropdown{
+  position:absolute;
+  right:0;
+  top: calc(100% + 10px);
+  list-style:none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  min-width: 230px;
+  padding: 8px;
+  opacity:0;
+  visibility:hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--t-fast), transform var(--t-fast), visibility var(--t-fast);
+  z-index: calc(var(--z-header) + 30);
+}
+body:not(.theme-dark) .language-dropdown{
+  box-shadow: var(--shadow-lg);
+}
+.language-dropdown.show{
+  opacity:1;
+  visibility:visible;
+  transform: translateY(0);
+}
+.language-option{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 10px;
+  background: transparent;
+  border:none;
+  border-radius: 12px;
+  cursor:pointer;
+  color: var(--text);
+  font-weight: 900;
+  transition: background var(--t-fast);
+}
+.language-option:hover{
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+.lang-option-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(31,94,255,0.35), rgba(43,140,255,0.25));
+}
+
+/* =========================
+   Flags SVG sizing (from reference)
+========================= */
+.language-flag,
+.lang-option-flag {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+}
+.language-btn .language-flag { margin-right: 10px; }
+.language-dropdown .language-option { display: flex; align-items: center; gap: 10px; }
+.lang-option-flag svg,
+.language-flag svg { display: block; width: 18px; height: 18px; }

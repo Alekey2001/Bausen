@@ -8,6 +8,11 @@
   <meta name="color-scheme" content="dark light" />
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
   <title>Servicios de Impuestos | Bausen — Optimización Fiscal y Cumplimiento</title>
+  <!-- Favicons correctos (nítidos en navegador) -->
+<link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
+<link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
+<link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
   <meta name="description" content="Optimiza tu carga fiscal con expertos certificados. Planeación fiscal, cumplimiento, auditorías internas, estrategias y acompañamiento integral para empresas." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <link rel="canonical" href="https://bausenweb.netlify.app/impuestos.html" />
@@ -48,8 +53,10 @@
   <!-- Lottie (icons/animations) -->
   <script type="module" src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
-  <link rel="stylesheet" href="./impuestos.css" />
-  <script defer src="./impuestos.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <link rel="stylesheet" href="/inexservicios/impuestos.css" />
+  <script defer src="/inexservicios/impuestos.js"></script>
 </head>
 
 <body>
@@ -58,17 +65,17 @@
   <!-- HEADER / NAVBAR (IGUAL A LA REFERENCIA) -->
   <header class="site-header" id="top" data-header>
     <div class="nav-shell">
-      <a class="brand" href="./index.html" aria-label="BAUSEN - Inicio">
+      <a class="brand logo-link" href="./index.html" aria-label="BAUSEN - Inicio">
         <img class="brand__logo" src="/images/bausenlogo.png" alt="BAUSEN" width="140" height="36" loading="eager" decoding="async" />
       </a>
 
       <!-- Links centrados (desktop) -->
       <nav class="nav-center" aria-label="Navegación principal">
-        <a class="nav-link" href="/index.html">Inicio</a>
+        <a class="nav-link" href="/index.html" data-i18n="nav.home">Inicio</a>
         <a class="nav-link" href="/capital.html">Capital Humano</a>
         <a class="nav-link" href="/inexservicios/servicios.html">Servicios especializados</a>
         <a class="nav-link is-active" href="/inexservicios/impuestos.html" aria-current="page">Servicios de Impuestos</a>
-        <a class="nav-link" href="/acerca.html">Acerca de</a>
+        <a class="nav-link" href="/acerca.html" data-i18n="nav.about">Acerca de</a>
       </nav>
 
       <!-- Acciones derecha -->
@@ -88,13 +95,53 @@
           </span>
         </button>
 
-        <!-- Idioma (UI-only) -->
-        <button class="lang-btn" type="button" aria-label="Idioma">
-          <span class="lang">ES</span>
-          <svg class="chev" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-            <path d="M5 7.5 10 12.5 15 7.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <!-- Idioma (desktop) con banderas -->
+        <div class="language-selector">
+        <button class="language-btn" id="language-btn" aria-label="Select language" aria-expanded="false" type="button">
+        <span class="language-flag" aria-hidden="true" id="language-flag"></span>
+        <span class="language-code" id="language-code">EN</span>
+        <i class="fas fa-chevron-down"></i>
         </button>
+
+        <ul class="language-dropdown" id="language-dropdown" role="menu">
+        <li>
+        <button class="language-option" type="button" data-lang="ES">
+        <span class="lang-option-flag" aria-hidden="true" data-flag="ES"></span>
+        <span>Español (ES)</span>
+        </button>
+        </li>
+        <li>
+        <button class="language-option" type="button" data-lang="EN">
+        <span class="lang-option-flag" aria-hidden="true" data-flag="EN"></span>
+        <span>English (EN)</span>
+        </button>
+        </li>
+        <li>
+              <button class="language-option" type="button" data-lang="DE">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="DE"></span>
+                <span>Deutsch (DE)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="PT">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="PT"></span>
+                <span>Português (PT)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="FR">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="FR"></span>
+                <span>Français (FR)</span>
+              </button>
+            </li>
+            <li>
+              <button class="language-option" type="button" data-lang="IT">
+                <span class="lang-option-flag" aria-hidden="true" data-flag="IT"></span>
+                <span>Italiano (IT)</span>
+              </button>
+            </li>
+</ul>
+        </div>
 
         <!-- Hamburguesa (móvil) -->
         <button class="burger" type="button" id="navToggle"
@@ -117,11 +164,11 @@
         </div>
 
         <nav class="drawer-links" aria-label="Navegación móvil">
-          <a class="drawer-link" href="/index.html">Inicio</a>
+          <a class="drawer-link" href="/index.html" data-i18n="nav.home">Inicio</a>
           <a class="drawer-link" href="/capital.html">Capital Humano</a>
           <a class="drawer-link" href="/inexservicios/servicios.html">Servicios especializados</a>
           <a class="drawer-link is-active" href="/inexservicios/impuestos.html" aria-current="page">Servicios de Impuestos</a>
-          <a class="drawer-link" href="/acerca.html">Acerca de</a>
+          <a class="drawer-link" href="/acerca.html" data-i18n="nav.about">Acerca de</a>
         </nav>
 
         <div class="drawer-actions">
@@ -141,18 +188,16 @@
           <p class="hero__eyebrow">
             <span class="chip chip--accent">
               <span class="dot" aria-hidden="true"></span>
-              Soluciones empresariales integrales
+              <span data-i18n="hero.pill">Soluciones empresariales integrales</span>
             </span>
           </p>
 
-          <h1 id="hero-title" class="hero__title">Servicios de Impuestos</h1>
+          <h1 id="hero-title" class="hero__title" data-i18n="services.card3.title">Servicios de Impuestos</h1>
 
-          <p class="hero__subtitle">
-            Optimiza tu carga fiscal con expertos certificados. Planeación, cumplimiento y acompañamiento integral.
-          </p>
+          <p class="hero__subtitle" data-i18n="services.card3.text">Optimiza tu carga fiscal con expertos certificados.</p>
 
           <div class="hero__cta">
-            <a class="btn btn--primary" href="#detalle-servicio">Conocer más</a>
+            <a class="btn btn--primary" href="#detalle-servicio" data-i18n="services.more">Conocer más</a>
             <a class="btn btn--soft" href="#contacto">Agendar llamada</a>
           </div>
 
@@ -400,3 +445,4 @@
   </footer>
 </body>
 </html>
+
