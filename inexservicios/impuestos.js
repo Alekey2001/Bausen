@@ -56,11 +56,11 @@
       "services.kicker": "Lo que hacemos",
       "services.title": "Nuestros Servicios",
       "services.subtitle": "Soluciones integrales diseñadas para optimizar cada aspecto de tu organización",
-      "services.card1.title": "Capital humano",
+      "services.card1.title": "Procesamiento de nómina",
       "services.card1.text": "Aumenta la eficiencia y resultados de tu negocio.",
       "services.card2.title": "Servicios especializados",
       "services.card2.text": "Aumenta la eficiencia y resultados de tu negocio.",
-      "services.card3.title": "Servicios de Impuestos",
+      "services.card3.title": " Consultoria Fiscal ",
       "services.card3.text": "Optimiza tu carga fiscal con expertos certificados.",
       "services.more": "Conocer más",
 

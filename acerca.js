@@ -23,108 +23,213 @@
   const html = document.documentElement;
   const body = document.body;
 
+
+  // Forzar modo claro
+  html.setAttribute("data-theme","light");
   /* =========================
      Theme
   ========================= */
-  const THEME_KEY = "bausen_theme";
-  const themeToggle = $("#themeToggle");
-  const themeToggleMobile = $("#themeToggleMobile");
+  // Modo claro fijo: tema deshabilitado.
+/* =========================
+   Mobile menu (FIX definitivo)
+   - IDs reales del HTML: #mobile-menu, #mobile-menu-overlay, #close-menu
+   - Overlay: usa clase .show (CSS)
+   - ESC cierra
+   - Click en links cierra
+   - Scroll lock sin romper scroll del drawer
+========================= */
+const menuToggle = document.getElementById("menuToggle");
+const menuClose = document.getElementById("close-menu");
+const mobileMenu = document.getElementById("mobile-menu");
+const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
 
-  const applyTheme = (theme) => {
-    const next = theme === "light" ? "light" : "dark";
-    html.setAttribute("data-theme", next);
+const lockScroll = (locked) => {
+  // Mantiene el body fijo, pero NO afecta el scroll interno del drawer
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+  body.style.overflow = locked ? "hidden" : "";
+};
 
-    // ✅ Importante para que el selector de idioma se vea EXACTO como referencia (CSS usa body:not(.theme-dark))
-    body.classList.toggle("theme-dark", next === "dark");
+const openMenu = () => {
+  if (!mobileMenu || !mobileMenuOverlay || !menuToggle) return;
 
-    // Icon swap (optional): moon for dark, sun for light
-    const iconClass = next === "light" ? "fa-sun" : "fa-moon";
-    const iconAltClass = next === "light" ? "fa-moon" : "fa-sun";
+  mobileMenuOverlay.hidden = false;
+  mobileMenuOverlay.classList.add("show");
 
-    const swapIcon = (btn) => {
-      if (!btn) return;
-      const i = btn.querySelector("i");
-      if (!i) return;
-      i.classList.remove(iconAltClass);
-      i.classList.add(iconClass);
+  mobileMenu.classList.add("open");
+  mobileMenu.setAttribute("aria-hidden", "false");
+  menuToggle.setAttribute("aria-expanded", "true");
+
+  body.classList.add("menu-open"); // tu CSS ya contempla esto :contentReference[oaicite:4]{index=4}
+  lockScroll(true);
+
+  // focus primer link clickeable
+  setTimeout(() => {
+    const first =
+      mobileMenu.querySelector("a.mobile-nav-link, a.mobile-sub-link, button, [tabindex]:not([tabindex='-1'])");
+    first?.focus();
+  }, 50);
+};
+
+const closeMenu = () => {
+  if (!mobileMenu || !mobileMenuOverlay || !menuToggle) return;
+
+  mobileMenu.classList.remove("open");
+  mobileMenu.setAttribute("aria-hidden", "true");
+  menuToggle.setAttribute("aria-expanded", "false");
+
+  body.classList.remove("menu-open");
+  lockScroll(false);
+
+  mobileMenuOverlay.classList.remove("show");
+
+  // Espera transición antes de ocultar overlay
+  setTimeout(() => {
+    mobileMenuOverlay.hidden = true;
+  }, 220);
+
+  menuToggle.focus();
+};
+
+menuToggle?.addEventListener("click", openMenu);
+menuClose?.addEventListener("click", closeMenu);
+mobileMenuOverlay?.addEventListener("click", closeMenu);
+/* =========================
+   Hover interactions (DESKTOP)
+   - NO cambia IDs ni estructura
+   - Idioma: hover abre/cierra
+   - Drawer: hover en #menuToggle abre
+   - Submenús (<details>) dentro del drawer: hover abre/cierra
+========================= */
+(() => {
+  // Solo en dispositivos con mouse/hover real
+  const canHover =
+    window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  if (!canHover) return;
+
+  /* ---------- 1) IDIOMA: hover open/close ---------- */
+  const langBtn = document.getElementById("language-btn");
+  const langDropdown = document.getElementById("language-dropdown");
+  const langWrap = langBtn?.closest(".language-selector");
+
+  if (langBtn && langDropdown && langWrap) {
+    let langCloseTimer = null;
+
+    const openLang = () => {
+      clearTimeout(langCloseTimer);
+      langDropdown.classList.add("show");
+      langBtn.setAttribute("aria-expanded", "true");
     };
-    swapIcon(themeToggle);
-    swapIcon(themeToggleMobile);
-  };
 
-  const initTheme = () => {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved === "light" || saved === "dark") {
-      applyTheme(saved);
-      return;
-    }
-    // Default: respect HTML attribute; if missing, use prefers-color-scheme
-    const attr = html.getAttribute("data-theme");
-    if (attr === "light" || attr === "dark") {
-      applyTheme(attr);
-      return;
-    }
-    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-    applyTheme(prefersLight ? "light" : "dark");
-  };
+    const closeLang = (delay = 90) => {
+      clearTimeout(langCloseTimer);
+      langCloseTimer = setTimeout(() => {
+        langDropdown.classList.remove("show");
+        langBtn.setAttribute("aria-expanded", "false");
+      }, delay);
+    };
 
-  const toggleTheme = () => {
-    const current = html.getAttribute("data-theme") || "dark";
-    const next = current === "light" ? "dark" : "light";
-    localStorage.setItem(THEME_KEY, next);
-    applyTheme(next);
-  };
+    // Entra: abre
+    langWrap.addEventListener("pointerenter", openLang);
 
-  themeToggle?.addEventListener("click", toggleTheme);
-  themeToggleMobile?.addEventListener("click", toggleTheme);
+    // Sale: cierra
+    langWrap.addEventListener("pointerleave", () => closeLang(120));
 
-  /* =========================
-     Mobile menu
-  ========================= */
-  const menuToggle = $("#menuToggle");
-  const menuClose = $("#menuClose");
-  const mobileMenu = $("#mobileMenu");
-  const mobileMenuOverlay = $("#mobileMenuOverlay");
+    // Si el usuario hace click afuera, asegúrate de cerrar (no rompe tu click actual)
+    document.addEventListener("pointerdown", (e) => {
+      if (!langWrap.contains(e.target)) closeLang(0);
+    });
+  }
 
-  const lockScroll = (locked) => {
-    document.documentElement.style.overflow = locked ? "hidden" : "";
-    body.style.overflow = locked ? "hidden" : "";
-  };
+  /* ---------- 2) HAMBURGUESA: hover abre menú ---------- */
+  const burger = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
 
-  const openMenu = () => {
-    if (!mobileMenu || !mobileMenuOverlay || !menuToggle) return;
-    mobileMenuOverlay.hidden = false;
-    mobileMenu.classList.add("open");
-    mobileMenu.setAttribute("aria-hidden", "false");
-    menuToggle.setAttribute("aria-expanded", "true");
-    lockScroll(true);
+  // Reutiliza tus funciones existentes si están en scope (openMenu / closeMenu)
+  // Si por algún motivo no existen, no hacemos nada.
+  const hasOpenClose =
+    typeof openMenu === "function" && typeof closeMenu === "function";
 
-    // focus first link
-    setTimeout(() => {
-      const first = $(".mobile-nav__link", mobileMenu);
-      first?.focus();
-    }, 50);
-  };
+  if (burger && hasOpenClose) {
+    let openTimer = null;
 
-  const closeMenu = () => {
-    if (!mobileMenu || !mobileMenuOverlay || !menuToggle) return;
-    mobileMenu.classList.remove("open");
-    mobileMenu.setAttribute("aria-hidden", "true");
-    menuToggle.setAttribute("aria-expanded", "false");
-    lockScroll(false);
+    burger.addEventListener("pointerenter", () => {
+      // Evita aperturas accidentales al pasar rápido
+      clearTimeout(openTimer);
+      openTimer = setTimeout(() => {
+        if (!mobileMenu?.classList.contains("open")) openMenu();
+      }, 120);
+    });
 
-    // Wait for transition before hiding overlay (keeps animation smooth)
-    setTimeout(() => {
-      mobileMenuOverlay.hidden = true;
-    }, 220);
+    burger.addEventListener("pointerleave", () => {
+      clearTimeout(openTimer);
+    });
 
-    menuToggle.focus();
-  };
+    // Si el usuario ya tiene el menú abierto y se va con el mouse fuera del drawer + overlay, cerramos suave
+    // (Esto NO afecta móvil; solo desktop hover)
+    const closeIfAway = () => {
+      if (!mobileMenu?.classList.contains("open")) return;
+      // Si el mouse no está sobre el menú ni el toggle, cerrar
+      closeMenu();
+    };
 
-  menuToggle?.addEventListener("click", openMenu);
-  menuClose?.addEventListener("click", closeMenu);
-  mobileMenuOverlay?.addEventListener("click", closeMenu);
+    mobileMenu?.addEventListener("pointerleave", () => {
+      // espera breve para permitir entrar al overlay sin cerrar al milisegundo
+      setTimeout(() => {
+        // Si el menú sigue abierto y el puntero ya no está en el menú, cerrar
+        if (mobileMenu.classList.contains("open")) closeIfAway();
+      }, 220);
+    });
 
+   // FIX BUG: NO cerrar al pasar del overlay al menú (eso era lo que lo cerraba)
+mobileMenuOverlay?.addEventListener("pointerleave", (e) => {
+  if (!mobileMenu?.classList.contains("open")) return;
+
+  const to = e.relatedTarget;
+
+  // Si el mouse entra al menú o vuelve al botón, NO cierres
+  if (to && (mobileMenu.contains(to) || burger.contains(to))) return;
+
+  closeMenu();
+});
+
+  }
+
+  /* ---------- 3) SUBMENÚS dentro del drawer: hover abre/cierra <details> ---------- */
+  if (mobileMenu) {
+    const detailsList = mobileMenu.querySelectorAll("details.menu-details");
+
+    detailsList.forEach((d) => {
+      let t = null;
+
+      d.addEventListener("pointerenter", () => {
+        clearTimeout(t);
+        d.open = true;
+      });
+
+      d.addEventListener("pointerleave", () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          d.open = false;
+        }, 140);
+      });
+    });
+  }
+})();
+// Cerrar con ESC
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && mobileMenu?.classList.contains("open")) closeMenu();
+});
+
+// Cerrar al hacer click en cualquier link del menú (para que “sí deje” navegar)
+mobileMenu?.addEventListener("click", (e) => {
+  const a = e.target.closest("a");
+  if (!a) return;
+
+  // Si es anchor dentro de la misma página (ej. #contacto), cerramos y dejamos que navegue
+  closeMenu();
+});
   /* =========================
      Language (i18n) — EXACT copy from reference (index.html / stylebeca.css / scripbeca.js)
      NOTE: Do not edit keys/structure; connect via data-i18n* in HTML.
@@ -307,7 +412,7 @@
       "ui.closeMenu": "Cerrar menú",
       "ui.langSelect": "Seleccionar idioma",
       "ui.goHome": "Ir a inicio",
-      "ui.toggleTheme": "Cambiar tema claro/oscuro",
+      "ui./*toggleTheme_removed*/": "Cambiar tema claro/oscuro",
       "ui.scrollNext": "Bajar a la siguiente sección",
 
       // CTA mini
@@ -595,7 +700,7 @@
       "ui.closeMenu": "Close menu",
       "ui.langSelect": "Select language",
       "ui.goHome": "Go to home",
-      "ui.toggleTheme": "Toggle light/dark theme",
+      "ui./*toggleTheme_removed*/": "Toggle light/dark theme",
       "ui.scrollNext": "Scroll to next section",
 
       // CTA mini
@@ -829,9 +934,9 @@
     if (closeMenu) closeMenu.setAttribute("aria-label", t(L, "ui.closeMenu"));
 
     const themeToggle = byId("theme-toggle", "themeToggle");
-    if (themeToggle) themeToggle.setAttribute("aria-label", t(L, "ui.toggleTheme"));
+    if (themeToggle) themeToggle.setAttribute("aria-label", t(L, "ui./*toggleTheme_removed*/"));
     const themeToggleMobile = byId("themeToggleMobile");
-    if (themeToggleMobile) themeToggleMobile.setAttribute("aria-label", t(L, "ui.toggleTheme"));
+    if (themeToggleMobile) themeToggleMobile.setAttribute("aria-label", t(L, "ui./*toggleTheme_removed*/"));
 
     const langBtn = byId("language-btn", "languageBtn");
     if (langBtn) langBtn.setAttribute("aria-label", t(L, "ui.langSelect"));
@@ -1216,7 +1321,34 @@ function initLanguage() {
       setFaqExpanded(btn, !isOpen);
     });
   });
+/* =========================
+   FAQ hover open/close (DESKTOP)
+   - No toca IDs, ni CSS
+   - No rompe click: click sigue funcionando igual
+========================= */
+(() => {
+  const canHover =
+    window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  if (!canHover) return;
+
+  faqItems.forEach((btn) => {
+    let t = null;
+
+    btn.addEventListener("pointerenter", () => {
+      clearTimeout(t);
+      // abre el que estás “hovering” y cierra los demás (misma lógica premium)
+      faqItems.forEach((b) => b !== btn && setFaqExpanded(b, false));
+      setFaqExpanded(btn, true);
+    });
+
+    btn.addEventListener("pointerleave", () => {
+      clearTimeout(t);
+      // cierra suave al salir del botón completo
+      t = setTimeout(() => setFaqExpanded(btn, false), 120);
+    });
+  });
+})();
   const normalize = (s) =>
     (s || "")
       .toString()
@@ -1368,7 +1500,7 @@ function initLanguage() {
   /* =========================
      Init
   ========================= */
-  initTheme();
+  
   initLanguage();
   initReveal();
   initTilt();

@@ -1,962 +1,812 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
-<link rel="canonical" href="https://bausenweb.netlify.app/">
-<meta name="robots" content="index, follow">
-
-  <title>BAUSEN - Home</title>
-
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" name="google-site-verification"/>
+<link href="https://bausenweb.netlify.app/" rel="canonical"/>
+<meta content="index, follow" name="robots"/>
+<title>BAUSEN - Home</title>
 <!-- Favicons correctos (nítidos en navegador) -->
-<link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
-
-    <!-- ESTETICA DE ICONOS  -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-
-  <link rel="stylesheet" href="stylebeca.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link href="/images/favicon.ico?v=10" rel="icon" sizes="any"/>
+<link href="/images/favicon-32.png?v=10" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/images/favicon-16.png?v=10" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/images/apple-touch-icon.png?v=10" rel="apple-touch-icon" sizes="180x180"/>
+<!-- ESTETICA DE ICONOS  -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="stylebeca.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
-  <!-- Page Loader -->
-  <div class="page-loader" id="page-loader" aria-hidden="true">
-    <div class="loader-content">
-      <div class="loader-logo">
-        <img class="logo-img" src="/images/bausenlogo.png" alt="Bausen" />
-      </div>
-      <div class="loader-progress">
-        <div class="progress-bar"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <header class="header" id="main-header">
-    <div class="container header-container">
-      <!-- Logo -->
-      <a href="index.html" class="logo-link" aria-label="Go to home">
-        <div class="logo">
-          <img class="logo-img" src="images/bausenlogo.png" alt="Bausen" />
-        </div>
-      </a>
-
-      <!-- Menú desktop -->
-      <nav class="nav" aria-label="Primary navigation">
-        <ul class="nav-list" id="main-nav">
-          <li><a href="index.html" class="nav-link" data-page="index" data-i18n="nav.home">Home</a></li>
-          <li><a href="prensa.html" class="nav-link" data-page="prensa" data-i18n="nav.press">Press</a></li>
-          <li><a href="servicios.html" class="nav-link" data-page="servicios" data-i18n="nav.services">Services</a></li>
-          <li><a href="noticias.html" class="nav-link" data-page="noticias" data-i18n="nav.news">News</a></li>
-          <li><a href="centro.html" class="nav-link" data-page="centro" data-i18n="nav.training">Training Center</a></li>
-          <li><a href="acerca.html" class="nav-link" data-page="acercade" data-i18n="nav.about">About</a></li>
-        </ul>
-      </nav>
-
-      <!-- Controles derecha -->
-      <div class="header-controls">
-        <a href="acceso.html" class="btn btn-primary btn-sm" data-i18n="header.collab">Are you a collaborator?</a>
-
-        <!-- Toggle tema -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" type="button">
-          <i class="fas fa-moon"></i>
-          <i class="fas fa-sun"></i>
-        </button>
-
-        <!-- Idioma (desktop) con banderas -->
-        <div class="language-selector">
-          <button class="language-btn" id="language-btn" aria-label="Select language" aria-expanded="false" type="button">
-            <span class="language-flag" aria-hidden="true" id="language-flag"></span>
-            <span class="language-code" id="language-code">EN</span>
-            <i class="fas fa-chevron-down"></i>
-          </button>
-
-          <ul class="language-dropdown" id="language-dropdown" role="menu">
-            <li>
-              <button class="language-option" type="button" data-lang="ES">
-                <span class="lang-option-flag" aria-hidden="true" data-flag="ES"></span>
-                <span>Español (ES)</span>
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="EN">
-                <span class="lang-option-flag" aria-hidden="true" data-flag="EN"></span>
-                <span>English (EN)</span>
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="DE">
-                <span class="lang-option-flag" aria-hidden="true" data-flag="DE"></span>
-                <span>Deutsch (DE)</span>
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="PT">
-                <span class="lang-option-flag" aria-hidden="true" data-flag="PT"></span>
-                <span>Português (PT)</span>
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="FR">
-                <span class="lang-option-flag" aria-hidden="true" data-flag="FR"></span>
-                <span>Français (FR)</span>
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="IT">
-                <span class="lang-option-flag" aria-hidden="true" data-flag="IT"></span>
-                <span>Italiano (IT)</span>
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Menú hamburguesa (mobile) -->
-      <button class="menu-toggle" id="menu-toggle" type="button"
-        aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
-  <i class="fa-solid fa-bars" aria-hidden="true"></i>
+<!-- Page Loader -->
+<div aria-hidden="true" class="page-loader" id="page-loader">
+<div class="loader-content">
+<div class="loader-logo">
+<img alt="Bausen" class="logo-img" src="/images/bausenlogo.png"/>
+</div>
+<div class="loader-progress">
+<div class="progress-bar"></div>
+</div>
+</div>
+</div>
+<!-- HEADER -->
+<header class="header" id="main-header">
+<div class="container header-container">
+<!-- Logo -->
+<a aria-label="Go to home" class="logo-link" href="index.html">
+<div class="logo">
+<img alt="Bausen" class="logo-img" src="images/bausenlogo.png"/>
+</div>
+</a>
+<!-- (Desktop) Menú horizontal deshabilitado: la navegación vive dentro del menú hamburguesa -->
+<nav aria-label="Primary navigation" class="nav nav-disabled"></nav>
+<!-- Controles derecha -->
+<div class="header-controls">
+<a class="btn btn-primary btn-sm" data-i18n="header.collab" href="acceso.html">Are you a collaborator?</a>
+<!-- Idioma (desktop) con banderas -->
+<div class="language-selector">
+<button aria-expanded="false" aria-label="Select language" class="language-btn" id="language-btn" type="button">
+<span aria-hidden="true" class="language-flag" id="language-flag"></span>
+<span class="language-code" id="language-code">EN</span>
+<i class="fas fa-chevron-down"></i>
 </button>
+<ul class="language-dropdown" id="language-dropdown" role="menu">
+<li>
+<button class="language-option" data-lang="ES" type="button">
+<span aria-hidden="true" class="lang-option-flag" data-flag="ES"></span>
+<span>Español (ES)</span>
+</button>
+</li>
+<li>
+<button class="language-option" data-lang="EN" type="button">
+<span aria-hidden="true" class="lang-option-flag" data-flag="EN"></span>
+<span>English (EN)</span>
+</button>
+</li>
+</ul>
+</div>
+<!-- Menú hamburguesa (PC + móvil) -->
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu" class="menu-toggle" id="menu-toggle" type="button">
+<i aria-hidden="true" class="fa-solid fa-bars"></i>
+</button>
+</div>
+</div>
+<!-- Menú overlay -->
+<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+<!-- Menú lateral -->
+<div aria-label="Navigation menu" aria-modal="true" class="mobile-menu" id="mobile-menu" role="dialog">
+<div class="mobile-menu-header">
+<div class="logo mobile-logo">
+<img alt="Bausen" class="logo-img" src="/images/bausenlogo.png"/>
+</div>
+<button aria-label="Close menu" class="close-menu" id="close-menu" type="button">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<nav aria-label="Site navigation">
+<ul class="mobile-nav-list mobile-accordion">
+<!-- Inicio ▸ (dropdown) -->
+<li class="mobile-nav-item">
+<details class="menu-details">
+<summary class="mobile-nav-link mobile-nav-summary" data-page="index">
 
-      </div>
-    </div>
+<a class="mobile-summary-link" href="index.html"><span data-i18n="nav.home">Inicio</span></a><i aria-hidden="true" class="fas fa-chevron-right"></i>
+</summary>
+<ul class="mobile-submenu">
+<li>
+<a class="mobile-sub-link" data-i18n="nav.about" data-page="acercade" href="acerca.html">Acerca de</a>
+</li>
+</ul>
+</details>
+</li>
+<!-- Servicios ▸ (dropdown) -->
+<li class="mobile-nav-item">
+  <details class="menu-details">
+    <summary class="mobile-nav-link mobile-nav-summary" data-page="servicios">
+      <a class="mobile-summary-link" href="servicios.html">
+        <span data-i18n="nav.services">Servicios</span>
+      </a>
+      <i aria-hidden="true" class="fas fa-chevron-right"></i>
+    </summary>
 
-    <!-- Menú móvil -->
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+    <ul class="mobile-submenu">
+      <li>
+        <a class="mobile-sub-link" href="capital.html" data-i18n-text="nav.svc.payroll">
+          Procesamiento de nómina
+        </a>
+      </li>
+      <li>
+        <a class="mobile-sub-link" href="/inexservicios/servicios.html" data-i18n-text="nav.svc.specialized">
+          Servicios especializados
+        </a>
+      </li>
+      <li>
+        <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.svc.tax">
+          Consultoría fiscal
+        </a>
+      </li>
+    </ul>
+  </details>
+</li>
+<!-- Centro de formación (opción aparte) -->
+<li class="mobile-nav-item">
+<a class="mobile-nav-link" data-i18n="nav.training" data-page="centro" href="centro.html">Centro de formación</a>
+</li>
+<!-- Noticias ▸ (dropdown) -->
+<li class="mobile-nav-item">
+<details class="menu-details">
+<summary class="mobile-nav-link mobile-nav-summary" data-page="noticias">
 
-    <div class="mobile-menu" id="mobile-menu" aria-label="Mobile menu" role="dialog" aria-modal="true">
-      <div class="mobile-menu-header">
-        <div class="logo mobile-logo">
-          <img class="logo-img" src="/images/bausenlogo.png" alt="Bausen" />
-        </div>
+<a class="mobile-summary-link" href="noticias.html"><span data-i18n="nav.news">Noticias</span></a><i aria-hidden="true" class="fas fa-chevron-right"></i>
+</summary>
+<ul class="mobile-submenu">
+<li>
+<a class="mobile-sub-link" data-page="social" href="noticias.html#social">Social</a>
+</li>
+</ul>
+</details>
+</li>
+<!-- Prensa (opción aparte) -->
+<li class="mobile-nav-item">
+<a class="mobile-nav-link" data-i18n="nav.press" data-page="prensa" href="prensa.html">Prensa</a>
+</li>
+<!-- Contáctanos (opción aparte) -->
+<li class="mobile-nav-item">
+<a class="mobile-nav-link" data-i18n="footer.contact" data-page="contacto" href="index.html#contacto">Contáctanos</a>
+</li>
+<!-- CTA colaborador (se mantiene) -->
+</ul>
+</nav>
+</div>
+</header>
+<!-- HERO -->
+<main>
+<section class="hero" id="hero">
+<div aria-hidden="true" class="hero-bg">
+<div class="hero-orb hero-orb-1"></div>
+<div class="hero-orb hero-orb-2"></div>
+<div class="hero-orb hero-orb-3"></div>
+</div>
+<div class="container hero-grid">
+<div class="hero-left">
+<div class="hero-pill" data-animate="fade-up">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+<span data-i18n="hero.pill">Integrated business solutions</span>
+</div>
+<h1 class="hero-title" data-animate="fade-up" data-delay="120" data-i18n="hero.title">
+  Bausen<br/>
+  <span class="hero-accent">México</span>
+</h1>
 
-        <button class="close-menu" id="close-menu" aria-label="Close menu" type="button">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <nav aria-label="Mobile navigation">
-        <ul class="mobile-nav-list">
-          <li><a href="index.html" class="mobile-nav-link " data-page="index" data-i18n="nav.home">Home</a></li>
-          <li><a href="prensa.html" class="mobile-nav-link" data-page="prensa" data-i18n="nav.press">Press</a></li>
-          <li><a href="servicios.html" class="mobile-nav-link" data-page="servicios" data-i18n="nav.services">Services</a></li>
-          <li><a href="noticias.html" class="mobile-nav-link" data-page="noticias" data-i18n="nav.news">News</a></li>
-          <li><a href="centro.html" class="mobile-nav-link" data-page="centro" data-i18n="nav.training">Training Center</a></li>
-          <li><a href="acerca.html" class="mobile-nav-link" data-page="acercade" data-i18n="nav.about">About</a></li>
-          <li><a href="acceso.html" class="btn btn-primary btn-sm" data-i18n="header.collab">Are you a collaborator?</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <!-- HERO -->
-  <main>
-    <section class="hero" id="hero">
-      <div class="hero-bg" aria-hidden="true">
-        <div class="hero-orb hero-orb-1"></div>
-        <div class="hero-orb hero-orb-2"></div>
-        <div class="hero-orb hero-orb-3"></div>
-      </div>
-
-      <div class="container hero-grid">
-        <div class="hero-left">
-          <div class="hero-pill" data-animate="fade-up">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span data-i18n="hero.pill">Integrated business solutions</span>
-          </div>
-
-          <h1 class="hero-title" data-animate="fade-up" data-delay="120" data-i18n="hero.title">
-            We empower<br />
-            <span class="hero-accent">your talent</span>
-          </h1>
-
-          <p class="hero-subtitle" data-animate="fade-up" data-delay="220" data-i18n="hero.subtitle">
-            Human Capital, Organizational Development and Management<br />
-            Services for every growth stage.
-          </p>
-
-          <div class="hero-cta" data-animate="fade-up" data-delay="320">
-            <a class="btn btn-primary btn-lg btn-icon" href="servicios.html">
-              <span data-i18n="hero.ctaServices">View Services</span>
-              <i class="fas fa-arrow-right"></i>
-            </a>
-
-            <a class="btn btn-soft btn-lg btn-icon" href="acerca.html">
-              <i class="fa-regular fa-envelope"></i>
-              <span data-i18n="hero.ctaContact">Contact</span>
-            </a>
-          </div>
-
-          <div class="hero-divider" aria-hidden="true"></div>
-
-          <div class="hero-kpis" data-animate="fade-up" data-delay="420">
-            <div class="kpi">
-              <div class="kpi-value">15+</div>
-              <div class="kpi-label" data-i18n-text="kpi.years">Years of experience</div>
-            </div>
-            <div class="kpi">
-              <div class="kpi-value">500+</div>
-              <div class="kpi-label" data-i18n-text="kpi.clients">Clients</div>
-            </div>
-            <div class="kpi">
-              <div class="kpi-value">98%</div>
-              <div class="kpi-label" data-i18n-text="kpi.sat">Satisfaction</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-right" data-animate="fade-left" data-delay="220">
-          <div class="media-wrap">
-            <div class="media-card" id="media-card">
-              <div class="media">
-                <img class="media-img"
-                     src="/images/agedrez.PNG"
-                     alt="Preview"
-                     loading="lazy" />
-              </div>
-            </div>
-
-            <div class="toast-card" id="toast-card">
-              <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
-              <div class="toast-text">
-                <div class="toast-title" data-i18n-text="toast.title">Certified</div>
-                <div class="toast-sub">REPSE · ISO · NOM</div>
-              </div>
-            </div>
-
-            <div class="media-shadow-plate" aria-hidden="true"></div>
-          </div>
-        </div>
-      </div>
-
-      <button class="scroll-indicator" type="button" aria-label="Scroll to next section">
-        <i class="fas fa-chevron-down"></i>
-      </button>
-    </section>
-
-    <!-- SERVICIOS -->
-    <section class="services" id="services">
-      <div class="container">
-        <header class="section-head">
-          <div class="section-pill" data-animate="fade-up" data-i18n-text="services.kicker">What we do</div>
-          <h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n-text="services.title">Our Services</h2>
-          <div class="section-underline" aria-hidden="true"></div>
-          <p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="services.subtitle">
+<p class="hero-subtitle" data-animate="fade-up" data-delay="220" data-i18n="hero.subtitle">
+  Trabajamos bajo una integración de servicios de alto nivel diseñada para brindar excelencia técnica y ética en cumplimiento normativo, consultoría fiscal y procesamiento de nómina.
+  <br/>
+  A través de una estructura blindada, protegemos el patrimonio de las organizaciones para garantizar un crecimiento ordenado y un México sustentable.
+</p>
+<div class="hero-cta" data-animate="fade-up" data-delay="320">
+<a class="btn btn-primary btn-lg btn-icon" href="servicios.html">
+<span data-i18n="hero.ctaServices">View Services</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+<a class="btn btn-soft btn-lg btn-icon" href="acerca.html">
+<i class="fa-regular fa-envelope"></i>
+<span data-i18n="hero.ctaContact">Contact</span>
+</a>
+</div>
+<div aria-hidden="true" class="hero-divider"></div>
+<div class="hero-kpis" data-animate="fade-up" data-delay="420">
+<div class="kpi">
+<div class="kpi-value">15+</div>
+<div class="kpi-label" data-i18n-text="kpi.years">Years of experience</div>
+</div>
+<div class="kpi">
+<div class="kpi-value">500+</div>
+<div class="kpi-label" data-i18n-text="kpi.clients">Clients</div>
+</div>
+<div class="kpi">
+<div class="kpi-value">98%</div>
+<div class="kpi-label" data-i18n-text="kpi.sat">Satisfaction</div>
+</div>
+</div>
+</div>
+<div class="hero-right" data-animate="fade-left" data-delay="220">
+<div class="media-wrap">
+<div class="media-card" id="media-card">
+<div class="media">
+<img alt="Preview" class="media-img" loading="lazy" src="/images/agedrez.PNG"/>
+</div>
+</div>
+<div class="toast-card" id="toast-card">
+<div class="toast-icon"><i class="fa-solid fa-check"></i></div>
+<div class="toast-text">
+<div class="toast-title" data-i18n-text="toast.title">Certified</div>
+<div class="toast-sub">REPSE · ISO · NOM</div>
+</div>
+</div>
+<div aria-hidden="true" class="media-shadow-plate"></div>
+</div>
+</div>
+</div>
+<button aria-label="Scroll to next section" class="scroll-indicator" type="button">
+<i class="fas fa-chevron-down"></i>
+</button>
+</section>
+<!-- SERVICIOS -->
+<section class="services" id="services">
+<div class="container">
+<header class="section-head">
+<div class="section-pill" data-animate="fade-up" data-i18n-text="services.kicker">What we do</div>
+<h2 class="section-title" data-animate="fade-up" data-delay="120">
+  <span data-i18n-text="services.title1">Nuestros</span>
+  <span class="accent" data-i18n-text="services.title2">Servicios</span>
+</h2>
+<div aria-hidden="true" class="section-underline"></div>
+<p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="services.subtitle">
             Integrated solutions designed to optimize every aspect of your organization
           </p>
-        </header>
-
-        <div class="services-grid" data-animate="fade-up" data-delay="320">
-          <article class="service-card">
-            <div class="service-media">
-              <img src="/images/capital.PNG" alt="Human Capital" loading="lazy" />
-              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-users-gear"></i></span>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title" data-i18n-text="services.card1.title">Human Capital</h3>
-              <p class="service-text" data-i18n-text="services.card1.text">Boost efficiency and results for your business.</p>
-              <a class="service-link" href="capital.html">
-                <span data-i18n-text="services.more">Learn more</span> <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <div class="service-media">
-              <img src="/images/servicos.PNG" alt="Specialized Services" loading="lazy" />
-              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-briefcase"></i></span>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title" data-i18n-text="services.card2.title">Specialized Services</h3>
-              <p class="service-text" data-i18n-text="services.card2.text">Boost efficiency and results for your business.</p>
-              <a class="service-link" href="/inexservicios/servicios.html">
-                <span data-i18n-text="services.more">Learn more</span> <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </article>
-
-          <article class="service-card">
-            <div class="service-media">
-              <img src="/images/impuestos.PNG" alt="Tax Services" loading="lazy" />
-              <span class="service-icon" aria-hidden="true"><i class="fa-solid fa-file-invoice-dollar"></i></span>
-            </div>
-            <div class="service-body">
-              <h3 class="service-title" data-i18n-text="services.card3.title">Tax Services</h3>
-              <p class="service-text" data-i18n-text="services.card3.text">Optimize your tax burden with certified experts.</p>
-              <a class="service-link" href="/inexservicios/impuestos.html">
-                <span data-i18n-text="services.more">Learn more</span> <i class="fas fa-arrow-right"></i>
-              </a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRENSA -->
-    <section class="section-press" id="press">
-      <div class="container">
-        <header class="section-head">
-          <div class="section-pill" data-animate="fade-up">
-            <i class="fa-solid fa-newspaper" aria-hidden="true"></i>
-            <span data-i18n-text="press.kicker">Press room</span>
-          </div>
-
-          <h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n="press.title">
-            Press <span class="accent">Releases</span>
-          </h2>
-
-          <p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="press.subtitle">
-            Stay informed about the latest BAUSEN news and announcements
-          </p>
-        </header>
-
-        <div class="section-center-cta" data-animate="fade-up" data-delay="320">
-          <a class="btn btn-primary btn-lg btn-icon" href="prensa.html">
-            <span data-i18n-text="press.cta">View all releases</span>
-            <i class="fas fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- TRAINING -->
-    <section class="training" id="training">
-      <div class="container">
-        <header class="training-head">
-          <div class="training-pill">
-            <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
-            <span data-i18n-text="training.kicker">Talent development</span>
-          </div>
-
-          <h2 class="training-title" data-i18n-text="training.title">BAUSEN Training Center</h2>
-
-          <p class="training-subtitle" data-i18n="training.subtitle">
-            We train and connect future talent with the best<br />
-            opportunities
-          </p>
-        </header>
-
-        <div class="training-card" role="region" aria-label="Bausen Training Center">
-          <div class="training-card-left" aria-hidden="true">
-            <div class="training-image">
-              <div class="training-image-icon">
-                <i class="fa-solid fa-award" aria-hidden="true"></i>
-              </div>
-              <div class="training-image-title" id="trainingLeftTitle" data-i18n-text="training.leftTitle.interns">Internship Program</div>
-            </div>
-
-            <div class="training-progress-left" aria-hidden="true">
-              <span class="training-progress-bar"></span>
-            </div>
-          </div>
-
-          <div class="training-card-right">
-            <div class="training-tabs" role="tablist" aria-label="Training Center options">
-              <button class="training-tab"
-                      type="button"
-                      role="tab"
-                      id="tab-eventos"
-                      data-tab="eventos"
-                      data-icon="fa-regular fa-calendar">
-                <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-                <span data-i18n-text="training.tab.events">Events</span>
-              </button>
-
-              <button class="training-tab"
-                      type="button"
-                      role="tab"
-                      id="tab-webinars"
-                      data-tab="webinars"
-                      data-icon="fa-solid fa-video">
-                <i class="fa-solid fa-video" aria-hidden="true"></i>
-                <span data-i18n-text="training.tab.webinars">Institutional Webinars</span>
-              </button>
-
-              <button class="training-tab is-active"
-                      type="button"
-                      role="tab"
-                      id="tab-becarios"
-                      data-tab="becarios"
-                      data-icon="fa-solid fa-user-graduate">
-                <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
-                <span data-i18n-text="training.tab.interns">Internship Program</span>
-              </button>
-            </div>
-
-            <div class="training-panels">
-              <div class="training-panel" role="tabpanel" id="panel-eventos"
-                   aria-labelledby="tab-eventos" hidden>
-                <div class="training-panel-pill">
-                  <i class="fa-regular fa-calendar" aria-hidden="true"></i>
-                  <span data-i18n-text="training.tab.events">Events</span>
-                </div>
-
-                <h3 class="training-panel-title" data-i18n-text="training.panel.events.title">Events</h3>
-                <p class="training-panel-text" data-i18n-text="training.panel.events.text">
-                  Active participation in events with schools and universities
-                </p>
-
-                <a class="btn btn-primary btn-lg btn-icon" href="/Training/eventos.html">
-                  <span data-i18n-text="training.more">Learn more</span>
-                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-              </div>
-
-              <div class="training-panel" role="tabpanel" id="panel-webinars"
-                   aria-labelledby="tab-webinars" hidden>
-                <div class="training-panel-pill">
-                  <i class="fa-solid fa-video" aria-hidden="true"></i>
-                  <span data-i18n-text="training.tab.webinars">Institutional Webinars</span>
-                </div>
-
-                <h3 class="training-panel-title" data-i18n-text="training.panel.webinars.title">Institutional Webinars</h3>
-                <p class="training-panel-text" data-i18n-text="training.panel.webinars.text">
-                  Specialized training and webinars with educational institutions
-                </p>
-
-                <a class="btn btn-primary btn-lg btn-icon" href="/Training/webinars.html">
-                  <span data-i18n-text="training.more">Learn more</span>
-                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-              </div>
-
-              <div class="training-panel is-active" role="tabpanel" id="panel-becarios"
-                   aria-labelledby="tab-becarios">
-                <div class="training-panel-pill">
-                  <i class="fa-solid fa-user-graduate" aria-hidden="true"></i>
-                  <span data-i18n-text="training.tab.interns">Internship Program</span>
-                </div>
-
-                <h3 class="training-panel-title" data-i18n-text="training.panel.interns.title">Internship Program</h3>
-                <p class="training-panel-text" data-i18n-text="training.panel.interns.text">
-                  Comprehensive program for training and developing young talent
-                </p>
-
-                <a class="btn btn-primary btn-lg btn-icon" href="/Training/becarios.html">
-                  <span data-i18n-text="training.more">Learn more</span>
-                  <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-              </div>
-            </div>
-
-            <div class="training-controls" aria-label="Training indicators">
-              <div class="training-dots-nav" role="group" aria-label="Sections">
-                <button class="training-dot" type="button" data-go="eventos" aria-label="Go to Events"></button>
-                <button class="training-dot" type="button" data-go="webinars" aria-label="Go to Webinars"></button>
-                <button class="training-dot" type="button" data-go="becarios" aria-label="Go to Internship Program"></button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- NEWS -->
-    <section class="section-news" id="news">
-      <div class="section-news__bg" aria-hidden="true"></div>
-
-      <div class="container">
-        <header class="section-head">
-          <div class="section-pill" data-animate="fade-up">
-            <i class="fa-solid fa-rss" aria-hidden="true"></i>
-            <span data-i18n-text="news.kicker">Blog & news</span>
-          </div>
-
-          <h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n="news.title">
-            Latest <span class="accent">News</span>
-          </h2>
-
-          <p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="news.subtitle">
-            Discover articles, success stories and industry trends
-          </p>
-        </header>
-
-        <div class="section-center-cta" data-animate="fade-up" data-delay="320">
-          <a class="btn btn-primary btn-lg btn-icon" href="noticias.html">
-            <span data-i18n-text="news.cta">View all news</span>
-            <i class="fas fa-arrow-right" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONNECT -->
-    <section class="section-connect" id="connect">
-      <div class="container">
-        <div class="connect-card" data-animate="fade-up">
-          <div class="connect-left" data-animate="fade-left" data-delay="120">
-            <div class="connect-pill">
-              <i class="fa-regular fa-comment-dots" aria-hidden="true"></i>
-              <span data-i18n-text="connect.kicker">Connect with us</span>
-            </div>
-
-            <h2 class="connect-title" data-i18n="connect.title">
-              Together we shape<br />
-              <span class="connect-accent">your path to success</span>
-            </h2>
-
-            <p class="connect-text" data-i18n="connect.text">
-              Ready to take your business to the next level? Schedule a<br />
-              meeting with our specialists and discover how we can<br />
-              help you.
-            </p>
-
-            <a class="btn btn-primary btn-lg btn-icon" href="index.html#contacto">
-              <span data-i18n-text="connect.cta">Schedule now!</span>
-              <i class="fas fa-arrow-right" aria-hidden="true"></i>
-            </a>
-          </div>
-
-          <div class="connect-right" data-animate="fade-right" data-delay="220">
-            <h3 class="connect-right-title" data-i18n-text="connect.follow">Follow us on social!</h3>
-
-            <div class="social-grid">
-              <a class="social-card is-linkedin"
-                 href="https://www.linkedin.com/"
-                 target="_blank" rel="noopener noreferrer"
-                 aria-label="LinkedIn - Business Services BAUSEN">
-                <div class="social-icon"><i class="fab fa-linkedin-in" aria-hidden="true"></i></div>
-                <div class="social-label">Business Services BAUSEN</div>
-              </a>
-
-              <a class="social-card is-facebook"
-                 href="https://www.facebook.com/"
-                 target="_blank" rel="noopener noreferrer"
-                 aria-label="Facebook - Business Services BAUSEN">
-                <div class="social-icon"><i class="fab fa-facebook-f" aria-hidden="true"></i></div>
-                <div class="social-label">Business Services BAUSEN</div>
-              </a>
-
-              <a class="social-card is-instagram"
-                 href="https://www.instagram.com/bausen__/"
-                 target="_blank" rel="noopener noreferrer"
-                 aria-label="Instagram - bausen">
-                <div class="social-icon"><i class="fab fa-instagram" aria-hidden="true"></i></div>
-                <div class="social-label">bausen</div>
-              </a>
-
-              <a class="social-card is-youtube"
-                 href="https://www.youtube.com/"
-                 target="_blank" rel="noopener noreferrer"
-                 aria-label="YouTube - Business Services BAUSEN">
-                <div class="social-icon"><i class="fa-solid fa-play" aria-hidden="true"></i></div>
-                <div class="social-label">Business Services BAUSEN</div>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- AWARDS -->
-    <section class="section-awards" id="awards">
-      <div class="container">
-        <header class="section-head">
-          <div class="section-pill" data-animate="fade-up">
-            <i class="fa-solid fa-award" aria-hidden="true"></i>
-            <span data-i18n-text="awards.kicker">Recognized excellence</span>
-          </div>
-
-          <h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n="awards.title">
+</header>
+<div class="services-grid" data-animate="fade-up" data-delay="320">
+<article class="service-card">
+<div class="service-media">
+<img alt="Human Capital" loading="lazy" src="/images/Pocesamiento de nómina (capital humano).jpg"/>
+<span aria-hidden="true" class="service-icon"><i class="fa-solid fa-users-gear"></i></span>
+</div>
+<div class="service-body">
+<h3 class="service-title" data-i18n-text="services.card1.title">Procesamiento de nomina</h3>
+<p class="service-text" data-i18n-text="services.card1.text">Boost efficiency and results for your business.</p>
+<a class="service-link" href="capital.html">
+<span data-i18n-text="services.more">Learn more</span> <i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</article>
+<article class="service-card">
+<div class="service-media">
+<img alt="Specialized Services" loading="lazy" src="/images/Servicios especializadosportada.jpg"/>
+<span aria-hidden="true" class="service-icon"><i class="fa-solid fa-briefcase"></i></span>
+</div>
+<div class="service-body">
+<h3 class="service-title" data-i18n-text="services.card2.title">Specialized Services</h3>
+<p class="service-text" data-i18n-text="services.card2.text">Boost efficiency and results for your business.</p>
+<a class="service-link" href="/inexservicios/servicios.html">
+<span data-i18n-text="services.more">Learn more</span> <i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</article>
+<article class="service-card">
+<div class="service-media">
+<img alt="Tax Services" loading="lazy" src="/images/Consultoría fiscalportada.jpg"/>
+<span aria-hidden="true" class="service-icon"><i class="fa-solid fa-file-invoice-dollar"></i></span>
+</div>
+<div class="service-body">
+<h3 class="service-title" data-i18n-text="services.card3.title">Consultoria Fiscal </h3>
+<p class="service-text" data-i18n-text="services.card3.text">Optimize your tax burden with certified experts.</p>
+<a class="service-link" href="/inexservicios/impuestos.html">
+<span data-i18n-text="services.more">Learn more</span> <i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- AWARDS -->
+<section class="section-awards" id="awards">
+<div class="container">
+<header class="section-head">
+<div class="section-pill" data-animate="fade-up">
+<i aria-hidden="true" class="fa-solid fa-award"></i>
+<span data-i18n-text="awards.kicker">Recognized excellence</span>
+</div>
+<h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n="awards.title">
             Our <span class="accent">Recognitions</span>
-          </h2>
-
-          <p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="awards.subtitle">
+</h2>
+<p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="awards.subtitle">
             Certifications and partnerships that back our commitment to excellence
           </p>
+</header>
+<div aria-label="Recognitions carousel" class="awards-carousel">
+<div class="awards-viewport">
+<div class="awards-track" id="awardsTrack">
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card1.k">Recognition 01</span>
+<h4 class="award-title" data-i18n-text="awards.card1.t">Human Resources Council</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card2.k">Recognition 02</span>
+<h4 class="award-title" data-i18n-text="awards.card2.t">Humanitarian Companies Distinction</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card3.k">Recognition 03</span>
+<h4 class="award-title" data-i18n-text="awards.card3.t">Decent Work Certification</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card4.k">Recognition 04</span>
+<h4 class="award-title" data-i18n-text="awards.card4.t">Professional Specialists Registry</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card5.k">Recognition 05</span>
+<h4 class="award-title" data-i18n-text="awards.card5.t">Human Resources Council</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card6.k">Recognition 06</span>
+<h4 class="award-title" data-i18n-text="awards.card6.t">ISO Certification</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card7.k">Recognition 07</span>
+<h4 class="award-title" data-i18n-text="awards.card7.t">NOM Compliance</h4>
+</article>
+<article class="award-card">
+<span class="award-kicker" data-i18n-text="awards.card8.k">Recognition 08</span>
+<h4 class="award-title" data-i18n-text="awards.card8.t">REPSE Registry</h4>
+</article>
+</div>
+</div>
+<div aria-hidden="true" class="awards-indicators">
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+<i class="fa-solid fa-star"></i>
+</div>
+</div>
+<div aria-hidden="true" class="awards-indicators">
+<span class="award-indicator is-active"></span>
+<span class="award-indicator"></span>
+<span class="award-indicator"></span>
+<span class="award-indicator"></span>
+<span class="award-indicator"></span>
+</div>
+</div>
+</section>
+<!-- NEWS -->
+<section class="section-news" id="news">
+<div aria-hidden="true" class="section-news__bg"></div>
+<div class="container">
+<header class="section-head">
+<div class="section-pill" data-animate="fade-up">
+<i aria-hidden="true" class="fa-solid fa-rss"></i>
+<span data-i18n-text="news.kicker">Blog &amp; news</span>
+</div>
+<h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n="news.title">
+            Latest <span class="accent">News</span>
+</h2>
+<p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="news.subtitle">
+            Discover articles, success stories and industry trends
+          </p>
+</header>
+<div class="section-center-cta" data-animate="fade-up" data-delay="320">
+<a class="btn btn-primary btn-lg btn-icon" href="noticias.html">
+<span data-i18n-text="news.cta">View all news</span>
+<i aria-hidden="true" class="fas fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</section>
+<!-- PRENSA -->
+<section class="section-press" id="press">
+<div class="container">
+<header class="section-head">
+<div class="section-pill" data-animate="fade-up">
+<i aria-hidden="true" class="fa-solid fa-newspaper"></i>
+<span data-i18n-text="press.kicker">Press room</span>
+</div>
+<h2 class="section-title" data-animate="fade-up" data-delay="120" data-i18n="press.title">
+            Press <span class="accent">Releases</span>
+</h2>
+<p class="section-subtitle" data-animate="fade-up" data-delay="220" data-i18n-text="press.subtitle">
+            Stay informed about the latest BAUSEN news and announcements
+          </p>
+</header>
+<div class="section-center-cta" data-animate="fade-up" data-delay="320">
+<a class="btn btn-primary btn-lg btn-icon" href="prensa.html">
+<span data-i18n-text="press.cta">View all releases</span>
+<i class="fas fa-arrow-right"></i>
+</a>
+</div>
+</div>
+</section>
+
+<!-- TRAINING -->
+<section class="training" id="training">
+<div class="container">
+<header class="training-head">
+<div class="training-pill">
+<i aria-hidden="true" class="fa-solid fa-graduation-cap"></i>
+<span data-i18n-text="training.kicker">Talent development</span>
+</div>
+<h2 class="training-title" data-i18n-text="training.title">BAUSEN Training Center</h2>
+<p class="training-subtitle" data-i18n="training.subtitle">
+            We train and connect future talent with the best<br/>
+            opportunities
+          </p>
+</header>
+<div aria-label="Bausen Training Center" class="training-card" role="region">
+<div aria-hidden="true" class="training-card-left">
+<div class="training-image">
+<div class="training-image-icon">
+<i aria-hidden="true" class="fa-solid fa-award"></i>
+</div>
+<div class="training-image-title" data-i18n-text="training.leftTitle.interns" id="trainingLeftTitle">Internship Program</div>
+</div>
+<div aria-hidden="true" class="training-progress-left">
+<span class="training-progress-bar"></span>
+</div>
+</div>
+<div class="training-card-right">
+<div aria-label="Training Center options" class="training-tabs" role="tablist">
+<button class="training-tab" data-icon="fa-regular fa-calendar" data-tab="eventos" id="tab-eventos" role="tab" type="button">
+<i aria-hidden="true" class="fa-regular fa-calendar"></i>
+<span data-i18n-text="training.tab.events">Events</span>
+</button>
+<button class="training-tab" data-icon="fa-solid fa-video" data-tab="webinars" id="tab-webinars" role="tab" type="button">
+<i aria-hidden="true" class="fa-solid fa-video"></i>
+<span data-i18n-text="training.tab.webinars">Institutional Webinars</span>
+</button>
+<button class="training-tab is-active" data-icon="fa-solid fa-user-graduate" data-tab="becarios" id="tab-becarios" role="tab" type="button">
+<i aria-hidden="true" class="fa-solid fa-user-graduate"></i>
+<span data-i18n-text="training.tab.interns">Internship Program</span>
+</button>
+</div>
+<div class="training-panels">
+<div aria-labelledby="tab-eventos" class="training-panel" hidden="" id="panel-eventos" role="tabpanel">
+<div class="training-panel-pill">
+<i aria-hidden="true" class="fa-regular fa-calendar"></i>
+<span data-i18n-text="training.tab.events">Events</span>
+</div>
+<h3 class="training-panel-title" data-i18n-text="training.panel.events.title">Events</h3>
+<p class="training-panel-text" data-i18n-text="training.panel.events.text">
+                  Active participation in events with schools and universities
+                </p>
+<a class="btn btn-primary btn-lg btn-icon" href="/Training/eventos.html">
+<span data-i18n-text="training.more">Learn more</span>
+<i aria-hidden="true" class="fas fa-arrow-right"></i>
+</a>
+</div>
+<div aria-labelledby="tab-webinars" class="training-panel" hidden="" id="panel-webinars" role="tabpanel">
+<div class="training-panel-pill">
+<i aria-hidden="true" class="fa-solid fa-video"></i>
+<span data-i18n-text="training.tab.webinars">Institutional Webinars</span>
+</div>
+<h3 class="training-panel-title" data-i18n-text="training.panel.webinars.title">Institutional Webinars</h3>
+<p class="training-panel-text" data-i18n-text="training.panel.webinars.text">
+                  Specialized training and webinars with educational institutions
+                </p>
+<a class="btn btn-primary btn-lg btn-icon" href="/Training/webinars.html">
+<span data-i18n-text="training.more">Learn more</span>
+<i aria-hidden="true" class="fas fa-arrow-right"></i>
+</a>
+</div>
+<div aria-labelledby="tab-becarios" class="training-panel is-active" id="panel-becarios" role="tabpanel">
+<div class="training-panel-pill">
+<i aria-hidden="true" class="fa-solid fa-user-graduate"></i>
+<span data-i18n-text="training.tab.interns">Internship Program</span>
+</div>
+<h3 class="training-panel-title" data-i18n-text="training.panel.interns.title">Internship Program</h3>
+<p class="training-panel-text" data-i18n-text="training.panel.interns.text">
+                  Comprehensive program for training and developing young talent
+                </p>
+<a class="btn btn-primary btn-lg btn-icon" href="/Training/becarios.html">
+<span data-i18n-text="training.more">Learn more</span>
+<i aria-hidden="true" class="fas fa-arrow-right"></i>
+</a>
+</div>
+</div>
+<div aria-label="Training indicators" class="training-controls">
+<div aria-label="Sections" class="training-dots-nav" role="group">
+<button aria-label="Go to Events" class="training-dot" data-go="eventos" type="button"></button>
+<button aria-label="Go to Webinars" class="training-dot" data-go="webinars" type="button"></button>
+<button aria-label="Go to Internship Program" class="training-dot" data-go="becarios" type="button"></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CONNECT -->
+<section class="section-connect" id="connect">
+<div class="container">
+<div class="connect-card" data-animate="fade-up">
+<div class="connect-left" data-animate="fade-left" data-delay="120">
+<div class="connect-pill">
+<i aria-hidden="true" class="fa-regular fa-comment-dots"></i>
+<span data-i18n-text="connect.kicker">Connect with us</span>
+</div>
+<h2 class="connect-title" data-i18n="connect.title">
+              Together we shape<br/>
+<span class="connect-accent">your path to success</span>
+</h2>
+<p class="connect-text" data-i18n="connect.text">
+              Ready to take your business to the next level? Schedule a<br/>
+              meeting with our specialists and discover how we can<br/>
+              help you.
+            </p>
+<a class="btn btn-primary btn-lg btn-icon" href="index.html#contacto">
+<span data-i18n-text="connect.cta">Schedule now!</span>
+<i aria-hidden="true" class="fas fa-arrow-right"></i>
+</a>
+</div>
+<div class="connect-right" data-animate="fade-right" data-delay="220">
+<h3 class="connect-right-title" data-i18n-text="connect.follow">Follow us on social!</h3>
+<div class="social-grid">
+<a aria-label="LinkedIn - Business Services BAUSEN" class="social-card is-linkedin" href="https://www.linkedin.com/in/bausen-tax-services-732a693a7/" rel="noopener noreferrer" target="_blank">
+<div class="social-icon"><i aria-hidden="true" class="fab fa-linkedin-in"></i></div>
+<div class="social-label">Business Services BAUSEN</div>
+</a><a aria-label="X - Business Services BAUSEN" class="social-card is-x" href="https://x.com/bausen_mx" rel="noopener noreferrer" target="_blank"><div class="social-icon"><svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L5 22H2l7.4-8.5L1 2h7l4.8 6.1L18.9 2Zm-1.2 18h1.7L7.1 3.9H5.3L17.7 20Z"></path></svg></div><div class="social-label">Business Services BAUSEN</div></a>
+<a aria-label="Instagram - bausen" class="social-card is-instagram" href="https://www.instagram.com/bausen_mx/" rel="noopener noreferrer" target="_blank">
+<div class="social-icon"><i aria-hidden="true" class="fab fa-instagram"></i></div>
+<div class="social-label">bausen</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+    <!-- INSTAGRAM CAROUSEL (PLACEHOLDERS) -->
+    <section class="section-instagram" id="instagram">
+      <div class="container">
+        <header class="section-head">
+          <div class="section-pill" data-animate="fade-up">
+            <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+            <span>Instagram</span>
+          </div>
+          <h2 class="section-title" data-animate="fade-up" data-delay="120">Nuestro <span class="accent">Instagram</span></h2>
+          <p class="section-subtitle" data-animate="fade-up" data-delay="220">
+            Carrusel listo para que agregues tus publicaciones (imágenes vacías por ahora).
+          </p>
         </header>
 
-        <div class="awards-carousel" aria-label="Recognitions carousel">
-          <div class="awards-viewport">
-            <div class="awards-track" id="awardsTrack">
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card1.k">Recognition 01</span>
-                <h4 class="award-title" data-i18n-text="awards.card1.t">Human Resources Council</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card2.k">Recognition 02</span>
-                <h4 class="award-title" data-i18n-text="awards.card2.t">Humanitarian Companies Distinction</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card3.k">Recognition 03</span>
-                <h4 class="award-title" data-i18n-text="awards.card3.t">Decent Work Certification</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card4.k">Recognition 04</span>
-                <h4 class="award-title" data-i18n-text="awards.card4.t">Professional Specialists Registry</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card5.k">Recognition 05</span>
-                <h4 class="award-title" data-i18n-text="awards.card5.t">Human Resources Council</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card6.k">Recognition 06</span>
-                <h4 class="award-title" data-i18n-text="awards.card6.t">ISO Certification</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card7.k">Recognition 07</span>
-                <h4 class="award-title" data-i18n-text="awards.card7.t">NOM Compliance</h4>
-              </article>
-
-              <article class="award-card">
-                <span class="award-kicker" data-i18n-text="awards.card8.k">Recognition 08</span>
-                <h4 class="award-title" data-i18n-text="awards.card8.t">REPSE Registry</h4>
-              </article>
+        <div class="ig-carousel" data-animate="fade-up" data-delay="320">
+          <div class="ig-viewport" aria-label="Instagram carousel">
+            <div class="ig-track" id="ig-track" tabindex="0">
+              <!-- Placeholder slides (reemplaza .ig-placeholder por <img class="ig-img" ...>) -->
+              <a class="ig-card" href="#" aria-label="Instagram item 1"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 2"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 3"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 4"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 5"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 6"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 7"><div class="ig-placeholder"></div></a>
+              <a class="ig-card" href="#" aria-label="Instagram item 8"><div class="ig-placeholder"></div></a>
             </div>
           </div>
 
-          <div class="awards-indicators" aria-hidden="true">
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
-            <i class="fa-solid fa-star"></i>
+          <div class="ig-indicators" aria-label="Carousel indicators">
+            <button class="ig-indicator is-active" type="button" aria-label="Go to slide 1"></button>
+            <button class="ig-indicator" type="button" aria-label="Go to slide 2"></button>
+            <button class="ig-indicator" type="button" aria-label="Go to slide 3"></button>
+            <button class="ig-indicator" type="button" aria-label="Go to slide 4"></button>
+            <button class="ig-indicator" type="button" aria-label="Go to slide 5"></button>
           </div>
-        </div>
-
-        <div class="awards-indicators" aria-hidden="true">
-          <span class="award-indicator is-active"></span>
-          <span class="award-indicator"></span>
-          <span class="award-indicator"></span>
-          <span class="award-indicator"></span>
-          <span class="award-indicator"></span>
         </div>
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section class="contact" id="contacto">
-      <div class="container">
-        <header class="contact-head">
-          <div class="contact-pill">
-            <i class="fa-regular fa-message" aria-hidden="true"></i>
-            <span data-i18n-text="contact.kicker">Ready to connect?</span>
-          </div>
-
-          <h2 class="contact-title" data-i18n="contact.title">
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+<div class="container">
+<header class="contact-head">
+<div class="contact-pill">
+<i aria-hidden="true" class="fa-regular fa-message"></i>
+<span data-i18n-text="contact.kicker">Ready to connect?</span>
+</div>
+<h2 class="contact-title" data-i18n="contact.title">
             Let’s talk about <span class="contact-accent">your project</span>
-          </h2>
-
-          <p class="contact-subtitle" data-i18n="contact.subtitle">
-            Tell us your ideas, needs or questions and our team will contact you<br />
+</h2>
+<p class="contact-subtitle" data-i18n="contact.subtitle">
+            Tell us your ideas, needs or questions and our team will contact you<br/>
             shortly. We’re here to help you transform your operations!
           </p>
-        </header>
+</header>
+<!-- Formulario Netlify Forms -->
+<div aria-label="Contact form" class="contact-form-card" role="region">
+<h3 class="contact-form-title" data-i18n-text="contact.formTitle">Send us a message</h3>
+<p class="contact-form-subtitle" data-i18n-text="contact.formSubtitle">Fill out the form and we’ll contact you soon.</p>
+<form action="/gracias/" class="contact-form" data-netlify="true" data-netlify-honeypot="bot-field" id="contactForm" method="POST" name="contact">
+<p style="display:none;">
+<label>Don’t fill this out: <input name="bot-field"/></label>
+</p>
+<input name="form-name" type="hidden" value="contact"/>
+<input name="subject" type="hidden" value="New message from BAUSEN (Web)"/>
+<div class="contact-row">
+<div class="field">
+<label class="visually-hidden" data-i18n-text="form.fullNamePh" for="fullName">Full name</label>
+<div class="field-input">
+<i aria-hidden="true" class="fa-regular fa-user"></i>
+<input autocomplete="name" data-i18n-placeholder="form.fullNamePh" id="fullName" name="fullName" placeholder="Full name" required="" type="text"/>
+</div>
+</div>
+<div class="field">
+<label class="visually-hidden" data-i18n-text="form.emailPh" for="email">you@email.com</label>
+<div class="field-input">
+<i aria-hidden="true" class="fa-regular fa-envelope"></i>
+<input autocomplete="email" data-i18n-placeholder="form.emailPh" id="email" name="email" placeholder="you@email.com" required="" type="email"/>
+</div>
+</div>
+</div>
+<div class="field">
+<label class="visually-hidden" data-i18n-text="form.messagePh" for="message">How can we help you?</label>
+<div class="field-textarea">
+<i aria-hidden="true" class="fa-regular fa-message"></i>
+<textarea data-i18n-placeholder="form.messagePh" id="message" name="message" placeholder="How can we help you?" required="" rows="6"></textarea>
+</div>
+</div>
+<button class="btn btn-primary btn-lg btn-icon" id="contactSubmitBtn" type="submit">
+<i aria-hidden="true" class="fa-regular fa-paper-plane"></i>
+<span data-i18n-text="form.send">Send message</span>
+</button>
+<p aria-live="polite" class="form-status" id="formStatus"></p>
+</form>
+</div>
+<div class="contact-bottom">
+<aside aria-label="Contact information" class="contact-info-card">
+<h3 class="contact-info-title" data-i18n-text="contact.infoTitle">Contact Information</h3>
+<ul class="contact-info-list">
+<li class="contact-info-item">
+<div aria-hidden="true" class="contact-info-icon"><i class="fa-solid fa-phone"></i></div>
+<div class="contact-info-text">
+<div class="contact-info-label" data-i18n-text="contact.phone">Phone</div>
+<div class="contact-info-value">+65 65 524 5678</div>
+</div>
+</li>
+<li class="contact-info-item">
+<div aria-hidden="true" class="contact-info-icon"><i class="fa-regular fa-envelope"></i></div>
+<div class="contact-info-text">
+<div class="contact-info-label" data-i18n-text="contact.email">Email</div>
+<div class="contact-info-value">contacto@bausen.com</div>
+</div>
+</li>
+<li class="contact-info-item">
+<div aria-hidden="true" class="contact-info-icon"><i class="fa-solid fa-location-dot"></i></div>
+<div class="contact-info-text">
+<div class="contact-info-label" data-i18n-text="contact.location">Location</div>
+<div class="contact-info-value" data-i18n-text="contact.locationValue">Querétaro, Mexico</div>
+</div>
+</li>
+<li class="contact-info-item">
+<div aria-hidden="true" class="contact-info-icon"><i class="fa-regular fa-clock"></i></div>
+<div class="contact-info-text">
+<div class="contact-info-label" data-i18n-text="contact.hours">Hours</div>
+<div class="contact-info-value" data-i18n-text="contact.hoursValue">Mon - Fri: 9:00 - 18:00</div>
+</div>
+</li>
+</ul>
+<div class="contact-social">
+<div class="contact-social-title" data-i18n-text="contact.follow">Follow us on social</div>
+<div class="contact-social-links">
+<a aria-label="X" class="social-mini is-x" href="https://x.com/bausen_mx" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L5 22H2l7.4-8.5L1 2h7l4.8 6.1L18.9 2Zm-1.2 18h1.7L7.1 3.9H5.3L17.7 20Z"></path></svg>
+</a>
+<a aria-label="Instagram" class="social-mini is-instagram" href=" https://www.instagram.com/bausen_mx" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="fab fa-instagram"></i>
+</a>
+<a aria-label="LinkedIn" class="social-mini is-linkedin" href=" https://www.linkedin.com/in/bausen-tax-services-732a693a7" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="fab fa-linkedin-in"></i>
+</a>
 
-        <!-- Formulario Netlify Forms -->
-        <div class="contact-form-card" role="region" aria-label="Contact form">
-          <h3 class="contact-form-title" data-i18n-text="contact.formTitle">Send us a message</h3>
-          <p class="contact-form-subtitle" data-i18n-text="contact.formSubtitle">Fill out the form and we’ll contact you soon.</p>
-
-          <form
-            class="contact-form"
-            id="contactForm"
-            name="contact"
-            method="POST"
-            action="/gracias/"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-          >
-            <p style="display:none;">
-              <label>Don’t fill this out: <input name="bot-field" /></label>
-            </p>
-
-            <input type="hidden" name="form-name" value="contact" />
-            <input type="hidden" name="subject" value="New message from BAUSEN (Web)" />
-
-            <div class="contact-row">
-              <div class="field">
-                <label class="visually-hidden" for="fullName" data-i18n-text="form.fullNamePh">Full name</label>
-                <div class="field-input">
-                  <i class="fa-regular fa-user" aria-hidden="true"></i>
-                  <input
-                    type="text"
-                    id="fullName"
-                    name="fullName"
-                    data-i18n-placeholder="form.fullNamePh"
-                    placeholder="Full name"
-                    autocomplete="name"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div class="field">
-                <label class="visually-hidden" for="email" data-i18n-text="form.emailPh">you@email.com</label>
-                <div class="field-input">
-                  <i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    data-i18n-placeholder="form.emailPh"
-                    placeholder="you@email.com"
-                    autocomplete="email"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="field">
-              <label class="visually-hidden" for="message" data-i18n-text="form.messagePh">How can we help you?</label>
-              <div class="field-textarea">
-                <i class="fa-regular fa-message" aria-hidden="true"></i>
-                <textarea
-                  id="message"
-                  name="message"
-                  data-i18n-placeholder="form.messagePh"
-                  placeholder="How can we help you?"
-                  rows="6"
-                  required
-                ></textarea>
-              </div>
-            </div>
-
-            <button class="btn btn-primary btn-lg btn-icon" type="submit" id="contactSubmitBtn">
-              <i class="fa-regular fa-paper-plane" aria-hidden="true"></i>
-              <span data-i18n-text="form.send">Send message</span>
-            </button>
-
-            <p class="form-status" id="formStatus" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <div class="contact-bottom">
-          <aside class="contact-info-card" aria-label="Contact information">
-            <h3 class="contact-info-title" data-i18n-text="contact.infoTitle">Contact Information</h3>
-
-            <ul class="contact-info-list">
-              <li class="contact-info-item">
-                <div class="contact-info-icon" aria-hidden="true"><i class="fa-solid fa-phone"></i></div>
-                <div class="contact-info-text">
-                  <div class="contact-info-label" data-i18n-text="contact.phone">Phone</div>
-                  <div class="contact-info-value">+65 65 524 5678</div>
-                </div>
-              </li>
-
-              <li class="contact-info-item">
-                <div class="contact-info-icon" aria-hidden="true"><i class="fa-regular fa-envelope"></i></div>
-                <div class="contact-info-text">
-                  <div class="contact-info-label" data-i18n-text="contact.email">Email</div>
-                  <div class="contact-info-value">contacto@bausen.com</div>
-                </div>
-              </li>
-
-              <li class="contact-info-item">
-                <div class="contact-info-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></div>
-                <div class="contact-info-text">
-                  <div class="contact-info-label" data-i18n-text="contact.location">Location</div>
-                  <div class="contact-info-value" data-i18n-text="contact.locationValue">Querétaro, Mexico</div>
-                </div>
-              </li>
-
-              <li class="contact-info-item">
-                <div class="contact-info-icon" aria-hidden="true"><i class="fa-regular fa-clock"></i></div>
-                <div class="contact-info-text">
-                  <div class="contact-info-label" data-i18n-text="contact.hours">Hours</div>
-                  <div class="contact-info-value" data-i18n-text="contact.hoursValue">Mon - Fri: 9:00 - 18:00</div>
-                </div>
-              </li>
-            </ul>
-
-            <div class="contact-social">
-              <div class="contact-social-title" data-i18n-text="contact.follow">Follow us on social</div>
-              <div class="contact-social-links">
-                <a class="social-mini is-facebook" href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                  <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                </a>
-                <a class="social-mini is-instagram" href="https://www.instagram.com/bausen__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                  <i class="fab fa-instagram" aria-hidden="true"></i>
-                </a>
-                <a class="social-mini is-linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                  <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-                </a>
-                <a class="social-mini social-mini--x" href="https://x.com/Bausen__" target="_blank" rel="noopener" aria-label="X">
-                  <span class="social-x-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="18" height="18" role="img" aria-hidden="true">
-                      <path d="M18.9 2H22l-6.8 7.8L23.3 22h-6.5l-5-7-6.1 7H2.6l7.3-8.4L1 2h6.7l4.5 6.3L18.9 2Zm-1.1 18h1.7L6.8 3.9H5L17.8 20Z"></path>
-                    </svg>
-                  </span>
-                </a>
-              </div>
-            </div>
-          </aside>
-
-          <div class="contact-map-card" aria-label="Our locations">
-            <div class="contact-map-head">
-              <div class="contact-map-kicker" data-i18n-text="map.kicker">OUR LOCATIONS</div>
-            </div>
-
-            <div class="contact-map-alert" role="status" aria-live="polite">
-              <div class="contact-map-alert-title" data-i18n-text="map.noBranches">No active branches found</div>
-              <button class="contact-map-retry" id="mapRetryBtn" type="button">
-                <span class="retry-text" data-i18n-text="map.retry">Retry</span>
-                <span class="retry-spinner" aria-hidden="true"></span>
-              </button>
-            </div>
-
-            <div class="contact-map-frame" aria-label="Map">
-              <iframe
-                title="BAUSEN Map"
-                src="https://www.google.com/maps?q=19.4326,-99.1332&z=14&output=embed"
-                width="100%"
-                height="100%"
-                style="border:0;"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="site-footer" id="footer">
-    <div class="container">
-      <div class="footer-top">
-        <div class="footer-col footer-brand">
-          <div class="brand-logo">
-            <a href="index.html" aria-label="Go to home">
-              <img src="/images/bausenlogo.png" alt="Bausen" />
-            </a>
-          </div>
-
-          <p class="brand-text" data-i18n="footer.brandText">
-            Your strategic ally in integrated business solutions.<br />
+</div>
+</div>
+</aside>
+<div aria-label="Our locations" class="contact-map-card">
+<div class="contact-map-head">
+<div class="contact-map-kicker" data-i18n-text="map.kicker">OUR LOCATIONS</div>
+</div>
+<div aria-live="polite" class="contact-map-alert" role="status">
+<div class="contact-map-alert-title" data-i18n-text="map.noBranches">No active branches found</div>
+<button class="contact-map-retry" id="mapRetryBtn" type="button">
+<span class="retry-text" data-i18n-text="map.retry">Retry</span>
+<span aria-hidden="true" class="retry-spinner"></span>
+</button>
+</div>
+<div aria-label="Map" class="contact-map-frame">
+<iframe height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=19.4326,-99.1332&amp;z=14&amp;output=embed" style="border:0;" title="BAUSEN Map" width="100%"></iframe>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER -->
+<footer class="site-footer" id="footer">
+<div class="container">
+<div class="footer-top">
+<div class="footer-col footer-brand">
+<div class="brand-logo">
+<a aria-label="Go to home" href="index.html">
+<img alt="Bausen" src="/images/bausenlogo.png"/>
+</a>
+</div>
+<p class="brand-text" data-i18n="footer.brandText">
+            Your strategic ally in integrated business solutions.<br/>
             We transform organizations from the inside out.
           </p>
-
-          <div class="footer-hours">
-            <div class="ic"><i class="fa-regular fa-clock" aria-hidden="true"></i></div>
-            <div class="meta">
-              <div class="label" data-i18n-text="footer.hoursLabel">Business hours</div>
-              <div class="value" data-i18n-text="footer.hoursValue">Mon - Fri: 9:00 - 18:00</div>
-            </div>
-          </div>
-
-          <div class="footer-social-row">
-            <div class="label" data-i18n-text="footer.follow">Follow us on social</div>
-          <div class="icons">
-  <!-- Facebook -->
-  <a class="social-mini is-facebook"
-     href="https://facebook.com/tuPagina"
-     target="_blank" rel="noopener"
-     aria-label="Facebook">
-    <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-  </a>
-
-  <!-- Instagram -->
-  <a class="social-mini is-instagram"
-     href="https://instagram.com/tuPerfil"
-     target="_blank" rel="noopener"
-     aria-label="Instagram">
-    <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-  </a>
-
-  <!-- LinkedIn -->
-  <a class="social-mini is-linkedin"
-     href="https://linkedin.com/company/tuEmpresa"
-     target="_blank" rel="noopener"
-     aria-label="LinkedIn">
-    <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
-  </a>
-
-  <!-- X -->
-  <a class="social-mini social-mini--x"
-     href="https://x.com/tuUsuario"
-     target="_blank" rel="noopener"
-     aria-label="X">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-      <path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L5 22H2l7.4-8.5L1 2h7l4.8 6.1L18.9 2Zm-1.2 18h1.7L7.1 3.9H5.3L17.7 20Z"/>
-    </svg>
-  </a>
+<div class="footer-hours">
+<div class="ic"><i aria-hidden="true" class="fa-regular fa-clock"></i></div>
+<div class="meta">
+<div class="label" data-i18n-text="footer.hoursLabel">Business hours</div>
+<div class="value" data-i18n-text="footer.hoursValue">Mon - Fri: 9:00 - 18:00</div>
 </div>
-          </div>
-        </div>
+</div>
+<div class="footer-social-row">
+<div class="label" data-i18n-text="footer.follow">Follow us on social</div>
+<div class="icons">
+<!-- X -->
+<a aria-label="X" class="social-mini is-x" href="https://x.com/bausen_mx" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L5 22H2l7.4-8.5L1 2h7l4.8 6.1L18.9 2Zm-1.2 18h1.7L7.1 3.9H5.3L17.7 20Z"></path></svg>
+</a>
+<!-- Instagram -->
+<a aria-label="Instagram" class="social-mini is-instagram" href="https://instagram.com/bausen_mx" rel="noopener" target="_blank">
+<i aria-hidden="true" class="fa-brands fa-instagram"></i>
+</a>
+<!-- LinkedIn -->
+<a aria-label="LinkedIn" class="social-mini is-linkedin" href=" https://www.linkedin.com/in/bausen-tax-services-732a693a7" rel="noopener" target="_blank">
+<i aria-hidden="true" class="fa-brands fa-linkedin-in"></i>
+</a>
+<!-- X -->
 
-        <nav class="footer-col" aria-label="Company">
-          <h4 data-i18n-text="footer.company">COMPANY</h4>
-          <ul class="footer-links">
-            <li><a href="acerca.html" data-i18n-text="footer.about">About</a></li>
-            <li><a href="servicios.html" data-i18n-text="footer.servicesLink">Services</a></li>
-            <li><a href="noticias.html" data-i18n-text="footer.news">News</a></li>
-            <li><a href="prensa.html" data-i18n-text="footer.press">Press</a></li>
-            <li><a href="acerca.html" data-i18n-text="footer.contact">Contact</a></li>
-          </ul>
-        </nav>
-
-        <nav class="footer-col" aria-label="Services">
-          <h4 data-i18n-text="footer.services">SERVICES</h4>
-          <ul class="footer-links">
-            <li><a href="servicios.html#capital-humano" data-i18n-text="footer.svc.capital">Human Capital</a></li>
-            <li><a href="servicios.html#servicios-legales" data-i18n-text="footer.svc.legal">Legal Services</a></li>
-            <li><a href="servicios.html#servicios-contables" data-i18n-text="footer.svc.accounting">Accounting Services</a></li>
-            <li><a href="servicios.html#desarrollo-organizacional" data-i18n-text="footer.svc.orgdev">Organizational Development</a></li>
-          </ul>
-        </nav>
-
-        <div class="footer-col footer-contact-col">
-          <h4 data-i18n-text="footer.contactTitle">CONTACT</h4>
-          <p class="note" data-i18n-text="footer.note">Coming soon. No active branches found.</p>
-
-          <div class="footer-contact-list">
-            <div class="footer-contact-item">
-              <div class="ic"><i class="fa-solid fa-phone" aria-hidden="true"></i></div>
-              <div class="meta">
-                <div class="label" data-i18n-text="footer.phoneLabel">Phone</div>
-                <div class="value">+65 65 524 5678</div>
-              </div>
-            </div>
-
-            <div class="footer-contact-item">
-              <div class="ic"><i class="fa-regular fa-envelope" aria-hidden="true"></i></div>
-              <div class="meta">
-                <div class="label" data-i18n-text="footer.emailLabel">Email</div>
-                <div class="value">contacto@bausen.com</div>
-              </div>
-            </div>
-          </div>
-
-          <a class="footer-maps-link" href="#" target="_blank" rel="noopener">
-            <span data-i18n-text="footer.maps">View on Google Maps</span>
-            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div class="footer-copy">
+</div>
+</div>
+</div>
+<nav aria-label="Company" class="footer-col">
+<h4 data-i18n-text="footer.company">COMPANY</h4>
+<ul class="footer-links">
+<li><a data-i18n-text="footer.about" href="acerca.html">About</a></li>
+<li><a data-i18n-text="footer.servicesLink" href="servicios.html">Services</a></li>
+<li><a data-i18n-text="footer.news" href="noticias.html">News</a></li>
+<li><a data-i18n-text="footer.press" href="prensa.html">Press</a></li>
+<li><a data-i18n-text="footer.contact" href="acerca.html">Contact</a></li>
+</ul>
+</nav>
+<nav aria-label="Services" class="footer-col">
+<h4 data-i18n-text="footer.services">SERVICES</h4>
+<ul class="footer-links">
+<li><a data-i18n-text="footer.svc.capital" href="servicios.html#capital-humano">Human Capital</a></li>
+<li><a data-i18n-text="footer.svc.legal" href="servicios.html#servicios-legales">Legal Services</a></li>
+<li><a data-i18n-text="footer.svc.accounting" href="servicios.html#servicios-contables">Accounting Services</a></li>
+<li><a data-i18n-text="footer.svc.orgdev" href="servicios.html#desarrollo-organizacional">Organizational Development</a></li>
+</ul>
+</nav>
+<div class="footer-col footer-contact-col">
+<h4 data-i18n-text="footer.contactTitle">CONTACT</h4>
+<p class="note" data-i18n-text="footer.note">Coming soon. No active branches found.</p>
+<div class="footer-contact-list">
+<div class="footer-contact-item">
+<div class="ic"><i aria-hidden="true" class="fa-solid fa-phone"></i></div>
+<div class="meta">
+<div class="label" data-i18n-text="footer.phoneLabel">Phone</div>
+<div class="value">+65 65 524 5678</div>
+</div>
+</div>
+<div class="footer-contact-item">
+<div class="ic"><i aria-hidden="true" class="fa-regular fa-envelope"></i></div>
+<div class="meta">
+<div class="label" data-i18n-text="footer.emailLabel">Email</div>
+<div class="value">contacto@bausen.com</div>
+</div>
+</div>
+</div>
+<a class="footer-maps-link" href="#" rel="noopener" target="_blank">
+<span data-i18n-text="footer.maps">View on Google Maps</span>
+<i aria-hidden="true" class="fa-solid fa-arrow-up-right-from-square"></i>
+</a>
+</div>
+</div>
+<div class="footer-bottom">
+<div class="footer-copy">
           © <span id="current-year"></span> Bausen. <span data-i18n-text="footer.rights">All rights reserved</span>
-        </div>
-
-        <div class="footer-legal">
-          <a href="/term/privacidad.html" data-i18n-text="footer.privacy">Privacy Policy</a>
-          <a href="/term/terminos.html" data-i18n-text="footer.terms">Terms of Service</a>
-          <a href="/term/cookies.html" data-i18n-text="footer.cookies">Cookie Policy</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Custom Cursor -->
-  <div class="cursor cursor-dot" id="cursor-dot"></div>
-  <div class="cursor cursor-ring" id="cursor-ring"></div>
-
-  <!-- JS -->
-  <script src="scripbeca.js"></script>
+</div>
+<div class="footer-legal">
+<a data-i18n-text="footer.privacy" href="/term/privacidad.html">Privacy Policy</a>
+<a data-i18n-text="footer.terms" href="/term/terminos.html">Terms of Service</a>
+<a data-i18n-text="footer.cookies" href="/term/cookies.html">Cookie Policy</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Custom Cursor -->
+<div class="cursor cursor-dot" id="cursor-dot"></div>
+<div class="cursor cursor-ring" id="cursor-ring"></div>
+<!-- JS -->
+<script src="scripbeca.js"></script>
 </body>
 </html>

@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Términos y Condiciones de BAUSEN. Consulta el uso de servicios, pagos, propiedad intelectual y contacto." />
+  <meta name="robots" content="index,follow" />
+
+  <title>BAUSEN — Términos y Condiciones</title>
+
+  <!-- Tipografías:
+    - Cuerpo: Inter (neutral/profesional)
+    - Subtítulos/misión: Manrope (limpia/legible)
+    - Títulos impacto: Space Grotesk (técnica/moderna)
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/term/terminos.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="container topbar__inner">
+     <a class="brand" href="/" aria-label="Ir a Home">
+        <img class="brand__logo" src="/images/bausenlogo.png" alt="BAUSEN" />
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="/" class="nav__link">Home</a>
+      </nav>
+
+      <button class="navbtn" id="navbtn" aria-label="Abrir menú" aria-expanded="false">
+        <span class="navbtn__line"></span>
+        <span class="navbtn__line"></span>
+        <span class="navbtn__line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile drawer -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <span class="drawer__title">Menú</span>
+          <button class="drawer__close" id="drawerClose" aria-label="Cerrar menú">✕</button>
+        </div>
+        <div class="drawer__links">
+          <a href="/" class="drawer__link">inicio</a>
+        </div>
+        <div class="drawer__hint">
+          <span class="chip">Legal</span>
+          <span class="drawer__hintText">Términos y Condiciones</span>
+        </div>
+      </div>
+      <button class="drawer__backdrop" id="drawerBackdrop" aria-label="Cerrar"></button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow">Legal · BAUSEN</p>
+          <h1 class="hero__title">Términos y Condiciones</h1>
+          <p class="hero__lead">
+            Por favor lee detenidamente estos términos antes de utilizar los servicios y contenidos de BAUSEN.
+            Si no estás de acuerdo con alguna parte, te recomendamos no continuar con el uso del sitio/servicios.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#toc">Leer términos</a>
+            <a class="btn btn--ghost" href="#contacto">¿Preguntas?</a>
+          </div>
+
+          <div class="meta">
+            <div class="meta__card">
+              <span class="meta__k">Versión</span>
+              <span class="meta__v">Actualizada: Febrero 2026</span>
+            </div>
+            <div class="meta__card">
+              <span class="meta__k">Alcance</span>
+              <span class="meta__v">Sitio, servicios y contenido</span>
+            </div>
+            <div class="meta__card">
+              <span class="meta__k">Transparencia</span>
+              <span class="meta__v">Políticas claras y verificables</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero__aside" aria-label="Resumen visual">
+          <div class="glassCard">
+            <div class="glassCard__top">
+              <span class="pill">Navegación rápida</span>
+              <button class="miniBtn" id="copyLinkBtn" type="button" title="Copiar enlace de esta página">Copiar enlace</button>
+            </div>
+
+            <p class="glassCard__hint">Accede directo a las secciones principales.</p>
+
+            <div class="quick" id="toc">
+              <a class="quick__item" href="#aceptacion">
+                <span class="quick__num">1</span>
+                <span class="quick__txt">Aceptación</span>
+              </a>
+              <a class="quick__item" href="#servicios">
+                <span class="quick__num">2</span>
+                <span class="quick__txt">Servicios</span>
+              </a>
+              <a class="quick__item" href="#pagos">
+                <span class="quick__num">3</span>
+                <span class="quick__txt">Pagos</span>
+              </a>
+              <a class="quick__item" href="#propiedad">
+                <span class="quick__num">4</span>
+                <span class="quick__txt">Propiedad</span>
+              </a>
+              <a class="quick__item" href="#privacidad">
+                <span class="quick__num">5</span>
+                <span class="quick__txt">Privacidad</span>
+              </a>
+              <a class="quick__item" href="#contacto">
+                <span class="quick__num">6</span>
+                <span class="quick__txt">Contacto</span>
+              </a>
+            </div>
+
+            <div class="glassCard__bottom">
+              <button class="btnLine" id="downloadBtn" type="button">
+                Descargar PDF <span aria-hidden="true">↘</span>
+              </button>
+              <small class="muted">* Genera un PDF imprimible desde tu navegador.</small>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Content -->
+    <section class="content">
+      <div class="container content__grid">
+        <aside class="rail" aria-label="Secciones">
+          <div class="rail__box">
+            <div class="rail__title">Contenido</div>
+            <nav class="rail__nav" id="railNav">
+              <a href="#aceptacion" class="rail__link">1. Aceptación</a>
+              <a href="#servicios" class="rail__link">2. Servicios</a>
+              <a href="#pagos" class="rail__link">3. Pagos</a>
+              <a href="#propiedad" class="rail__link">4. Propiedad Intelectual</a>
+              <a href="#privacidad" class="rail__link">5. Privacidad & Cookies</a>
+              <a href="#contacto" class="rail__link">6. Contacto</a>
+            </nav>
+          </div>
+
+          <div class="rail__note">
+            <span class="chip">Consejo</span>
+            <p>
+              Puedes imprimir/guardar como PDF con <strong>Ctrl+P</strong> / <strong>Cmd+P</strong>.
+            </p>
+          </div>
+        </aside>
+
+        <div class="doc">
+          <article class="section" id="aceptacion">
+            <header class="section__head">
+              <span class="section__num">1</span>
+              <div>
+                <h2 class="section__title">Aceptación de Términos</h2>
+                <p class="section__subtitle">Uso del sitio y contratación de servicios.</p>
+              </div>
+            </header>
+
+            <div class="section__body">
+              <p>
+                Al acceder, navegar o utilizar este sitio web (y/o al contratar servicios ofrecidos por BAUSEN),
+                confirmas que has leído, comprendido y aceptado estos Términos y Condiciones.
+              </p>
+              <p>
+                Si no estás de acuerdo con alguna parte, debes abstenerte de usar el sitio y/o solicitar servicios.
+              </p>
+
+              <div class="callout">
+                <div class="callout__icon" aria-hidden="true">✓</div>
+                <div class="callout__content">
+                  <strong>Alcance</strong>
+                  <p>
+                    Estos términos aplican a contenidos, formularios, materiales informativos, contacto,
+                    y cualquier servicio descrito dentro del sitio.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section" id="servicios">
+            <header class="section__head">
+              <span class="section__num">2</span>
+              <div>
+                <h2 class="section__title">Descripción de Servicios</h2>
+                <p class="section__subtitle">Qué ofrecemos y cómo se define el alcance.</p>
+              </div>
+            </header>
+
+            <div class="section__body">
+              <p>
+                BAUSEN ofrece soluciones empresariales integrales (por ejemplo: capital humano, servicios especializados,
+                servicios fiscales/contables, desarrollo organizacional u otros, según tu oferta vigente).
+              </p>
+              <ul class="list">
+                <li>El alcance, entregables, tiempos y condiciones se establecen por escrito en una propuesta o acuerdo.</li>
+                <li>El cliente se compromete a proporcionar información veraz y oportuna para la ejecución del servicio.</li>
+                <li>BAUSEN puede apoyarse en herramientas y proveedores terceros (con sus propias licencias/políticas).</li>
+              </ul>
+
+              <div class="cards">
+                <div class="miniCard">
+                  <h3>Metodología</h3>
+                  <p>Proceso estructurado: diagnóstico → propuesta → ejecución → cierre/seguimiento.</p>
+                </div>
+                <div class="miniCard">
+                  <h3>Disponibilidad</h3>
+                  <p>Los tiempos pueden variar según agenda, complejidad y validaciones del cliente.</p>
+                </div>
+                <div class="miniCard">
+                  <h3>Soporte</h3>
+                  <p>El soporte y post-servicio depende del plan o acuerdo contratado.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section" id="pagos">
+            <header class="section__head">
+              <span class="section__num">3</span>
+              <div>
+                <h2 class="section__title">Pagos y Facturación</h2>
+                <p class="section__subtitle">Políticas de pago, anticipo y reembolsos.</p>
+              </div>
+            </header>
+
+            <div class="section__body">
+              <p>
+                Los pagos, anticipos, facturación y condiciones comerciales se detallan en la propuesta/contrato.
+                De forma general:
+              </p>
+
+              <div class="tableWrap" role="region" aria-label="Tabla de pagos" tabindex="0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Concepto</th>
+                      <th>Condición</th>
+                      <th>Notas</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Anticipo</td>
+                      <td>Previo al inicio</td>
+                      <td>Activa agenda y planificación.</td>
+                    </tr>
+                    <tr>
+                      <td>Pagos parciales</td>
+                      <td>Según hitos</td>
+                      <td>En proyectos por fases.</td>
+                    </tr>
+                    <tr>
+                      <td>Pago final</td>
+                      <td>Antes de entrega/cierre</td>
+                      <td>Condición para liberación final.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout callout--warn">
+                <div class="callout__icon" aria-hidden="true">!</div>
+                <div class="callout__content">
+                  <strong>Reembolsos</strong>
+                  <p>
+                    Salvo acuerdo expreso, los anticipos pueden no ser reembolsables una vez iniciado el trabajo
+                    (por costos de agenda, investigación y ejecución).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section" id="propiedad">
+            <header class="section__head">
+              <span class="section__num">4</span>
+              <div>
+                <h2 class="section__title">Propiedad Intelectual</h2>
+                <p class="section__subtitle">Contenido, materiales y licencias.</p>
+              </div>
+            </header>
+
+            <div class="section__body">
+              <p>
+                Los materiales generados por BAUSEN pueden estar sujetos a derechos de autor, licencias o acuerdos.
+                La transferencia (si aplica) se define en el contrato.
+              </p>
+
+              <div class="split">
+                <div class="split__col">
+                  <h3 class="h3">Transferible (si se pacta)</h3>
+                  <ul class="list">
+                    <li>Entregables definidos en el alcance.</li>
+                    <li>Documentación preparada para el cliente.</li>
+                    <li>Materiales creados específicamente para el proyecto.</li>
+                  </ul>
+                </div>
+                <div class="split__col">
+                  <h3 class="h3">No transferible</h3>
+                  <ul class="list">
+                    <li>Herramientas, plantillas internas y metodologías.</li>
+                    <li>Software de terceros con licencias propias.</li>
+                    <li>Marcas, logotipos y contenido de BAUSEN.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section" id="privacidad">
+            <header class="section__head">
+              <span class="section__num">5</span>
+              <div>
+                <h2 class="section__title">Privacidad y Cookies</h2>
+                <p class="section__subtitle">Uso de datos, formularios y analítica.</p>
+              </div>
+            </header>
+
+            <div class="section__body">
+              <p>
+                BAUSEN puede recopilar datos de contacto cuando completas formularios (por ejemplo: nombre, correo,
+                mensaje) con el objetivo de dar seguimiento a tu solicitud.
+              </p>
+              <ul class="list">
+                <li>Usamos datos únicamente para atención y comunicación de servicios, salvo consentimiento adicional.</li>
+                <li>Podemos usar cookies o analítica para mejorar experiencia y rendimiento del sitio.</li>
+                <li>Puedes solicitar actualización/eliminación de datos conforme aplique por legislación local.</li>
+              </ul>
+
+              <div class="callout">
+                <div class="callout__icon" aria-hidden="true">i</div>
+                <div class="callout__content">
+                  <strong>Transparencia</strong>
+                  <p>
+                    Si tu implementación incluye herramientas de terceros (maps, formularios, analítica),
+                    sus políticas también podrían aplicar.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="section" id="contacto">
+            <header class="section__head">
+              <span class="section__num">6</span>
+              <div>
+                <h2 class="section__title">Contacto</h2>
+                <p class="section__subtitle">Dudas sobre estos términos.</p>
+              </div>
+            </header>
+
+            <div class="section__body">
+              <p>Para cualquier pregunta sobre estos Términos y Condiciones, contáctanos:</p>
+
+              <div class="contactGrid">
+                <div class="contactCard">
+                  <div class="contactCard__k">Correo</div>
+                  <a class="contactCard__v" href="mailto:contacto@bausen.com">contacto@bausen.com</a>
+                </div>
+                <div class="contactCard">
+                  <div class="contactCard__k">Teléfono</div>
+                  <a class="contactCard__v" href="tel:+526565245678">+52 65 65 524 5678</a>
+                </div>
+                <div class="contactCard">
+                  <div class="contactCard__k">Horario</div>
+                  <div class="contactCard__v">Lun - Vie: 9:00 - 18:00</div>
+                </div>
+              </div>
+
+              <div class="accept">
+                <label class="check">
+                  <input id="acceptCheck" type="checkbox" />
+                  <span>Confirmo que he leído y acepto estos Términos y Condiciones.</span>
+                </label>
+                <a class="btn btn--primary btn--disabled" id="backBtn" href="/index.html" aria-disabled="true">
+                  Volver a Servicios
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <div class="toTopWrap">
+            <a class="toTop" href="#top" id="toTop">Volver arriba ↑</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <div class="brand brand--footer">
+          <span class="brand__mark" aria-hidden="true"></span>
+          <span class="brand__name">BAUSEN</span>
+        </div>
+        <p class="footer__desc">
+          Tu aliado estratégico en soluciones empresariales integrales. Transformamos organizaciones desde adentro.
+        </p>
+</div>
+
+      <div class="footer__cols">
+        <div class="footer__col">
+          <div class="footer__h">COMPANY</div>
+          <a href="/about" class="footer__a">About</a>
+          <a href="/inexservicios/servicios" class="footer__a">Services</a>
+          <a href="/news" class="footer__a">News</a>
+          <a href="/prensa" class="footer__a">Press</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__h">LEGAL</div>
+          <a href="/term/terminos.html" class="footer__a is-active">Terms</a>
+          <a href="/privacy" class="footer__a">Privacy Policy</a>
+          <a href="/cookies" class="footer__a">Cookie Policy</a>
+        </div>
+        <div class="footer__col">
+          <div class="footer__h">CONTACT</div>
+          <div class="footer__text">Coming soon. No active branches found.</div>
+          <div class="footer__text">Email: contacto@bausen.com</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <span>© BAUSEN. All rights reserved</span>
+      <span class="sep">·</span>
+      <span>Actualización: Febrero 2026</span>
+    </div>
+  </footer>
+
+  <script src="/term/terminos.js"></script>
+</body>
+</html>

@@ -50,12 +50,14 @@ document.addEventListener("DOMContentLoaded", () => {
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
       "header.collab": "¿Eres colaborador?",
-
+"nav.svc.payroll": "Procesamiento de nómina",
+"nav.svc.specialized": "Servicios especializados",
+"nav.svc.tax": "Consultoría fiscal",
       // Hero
       "hero.pill": "Soluciones empresariales integrales",
-      "hero.title": "Impulsamos<br /><span class='hero-accent'>tu talento</span>",
+      "hero.title": 'Bausen en<br/><span class="hero-accent">México</span>',
       "hero.subtitle":
-        "Capital Humano, Desarrollo Organizacional y Management<br />Servicios para cada etapa de tu crecimiento.",
+        'Trabajamos bajo una integración de servicios de alto nivel diseñada para brindar excelencia técnica y ética en cumplimiento normativo, consultoría fiscal y procesamiento de nómina.<br/>A través de una estructura blindada, protegemos el patrimonio de las organizaciones para garantizar un crecimiento ordenado y un México sustentable.',
       "hero.ctaServices": "Ver Servicios",
       "hero.ctaContact": "Contactar",
       "kpi.years": "Años de experiencia",
@@ -64,14 +66,16 @@ document.addEventListener("DOMContentLoaded", () => {
       "toast.title": "Certificados",
 
       // Services
+      "services.title1": "Nuestros",
+"services.title2": "Servicios",
       "services.kicker": "Lo que hacemos",
       "services.title": "Nuestros Servicios",
       "services.subtitle": "Soluciones integrales diseñadas para optimizar cada aspecto de tu organización",
-      "services.card1.title": "Capital humano",
+      "services.card1.title": "Procesamiento de nomina",
       "services.card1.text": "Aumenta la eficiencia y resultados de tu negocio.",
       "services.card2.title": "Servicios especializados",
       "services.card2.text": "Aumenta la eficiencia y resultados de tu negocio.",
-      "services.card3.title": "Servicios de Impuestos",
+      "services.card3.title": "Consultoria Fiscal",
       "services.card3.text": "Optimiza tu carga fiscal con expertos certificados.",
       "services.more": "Conocer más",
 
@@ -215,9 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Hero
       "hero.pill": "Integrated business solutions",
-      "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
+      "hero.title": 'Bausen<br/><span class="hero-accent">Mexico</span>',
       "hero.subtitle":
-        "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
+        'We operate through a high-level integrated service model designed to deliver technical and ethical excellence in regulatory compliance, tax consulting, and payroll processing.<br/>Through a fortified structure, we protect organizations’ assets to ensure orderly growth and a sustainable Mexico.',
       "hero.ctaServices": "View Services",
       "hero.ctaContact": "Contact",
       "kpi.years": "Years of experience",
@@ -226,14 +230,16 @@ document.addEventListener("DOMContentLoaded", () => {
       "toast.title": "Certified",
 
       // Services
+      "services.title1": "Our",
+"services.title2": "Services",
       "services.kicker": "What we do",
       "services.title": "Our Services",
       "services.subtitle": "Integrated solutions designed to optimize every aspect of your organization",
-      "services.card1.title": "Human Capital",
+      "services.card1.title": "Payroll processing",
       "services.card1.text": "Boost efficiency and results for your business.",
       "services.card2.title": "Specialized Services",
       "services.card2.text": "Boost efficiency and results for your business.",
-      "services.card3.title": "Tax Services",
+      "services.card3.title": "Tax Consulting",
       "services.card3.text": "Optimize your tax burden with certified experts.",
       "services.more": "Learn more",
 
@@ -528,7 +534,46 @@ document.addEventListener("DOMContentLoaded", () => {
         const expanded = languageBtn.getAttribute("aria-expanded") === "true";
         expanded ? close() : open();
       });
+// ✅ Hover para abrir/cerrar idiomas (solo desktop con mouse)
+const isDesktopHoverLang = () =>
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+let langHoverTimer = null;
+
+const clearLangHoverTimer = () => {
+  if (langHoverTimer) {
+    window.clearTimeout(langHoverTimer);
+    langHoverTimer = null;
+  }
+};
+
+const scheduleLangClose = () => {
+  if (!isDesktopHoverLang()) return;
+  clearLangHoverTimer();
+
+  langHoverTimer = window.setTimeout(() => {
+    const overBtn = languageBtn.matches(":hover");
+    const overDrop = languageDropdown.matches(":hover");
+    if (!overBtn && !overDrop) close();
+  }, 180);
+};
+
+// Abre al pasar el mouse por el botón
+languageBtn.addEventListener("mouseenter", () => {
+  if (!isDesktopHoverLang()) return;
+  clearLangHoverTimer();
+  open();
+});
+
+// Mantener abierto si el mouse entra al dropdown
+languageDropdown.addEventListener("mouseenter", () => {
+  if (!isDesktopHoverLang()) return;
+  clearLangHoverTimer();
+});
+
+// Cierra cuando sales del botón o del dropdown (con pequeño delay)
+languageBtn.addEventListener("mouseleave", scheduleLangClose);
+languageDropdown.addEventListener("mouseleave", scheduleLangClose);
       languageOptions.forEach((opt) => {
         opt.addEventListener("click", () => {
           const lang = opt.getAttribute("data-lang") || "EN";
@@ -579,32 +624,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* =========================
-     Theme
+     Theme (LIGHT ONLY)
+     - Forzamos modo claro
+     - Eliminamos persistencia de tema
+     - Ocultamos el botón (si existe)
   ========================= */
   function initTheme() {
     const KEY = "theme";
     const themeToggle = $("#theme-toggle");
 
-    const apply = (mode) => {
-      const isDark = mode === "dark";
-      body.classList.toggle("theme-dark", isDark);
-      storage.set(KEY, isDark ? "dark" : "light");
-    };
+    // ✅ Siempre en claro
+    body.classList.remove("theme-dark");
 
-    const saved = storage.get(KEY);
-    if (saved === "dark" || saved === "light") apply(saved);
-    else {
-      const osDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      apply(osDark ? "dark" : "light");
-    }
+    // ✅ Limpia cualquier preferencia previa
+    try { localStorage.removeItem(KEY); } catch {}
+    // compat (si antes guardaste otros keys)
+    try { localStorage.removeItem("preferred-theme"); } catch {}
+    try { localStorage.removeItem("bausen_theme"); } catch {}
 
+    // ✅ Si el botón existe (por otras páginas), lo ocultamos y lo hacemos inaccesible
     if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        const isDark = body.classList.contains("theme-dark");
-        apply(isDark ? "light" : "dark");
-      });
+      themeToggle.setAttribute("aria-hidden", "true");
+      themeToggle.setAttribute("tabindex", "-1");
+      themeToggle.style.display = "none";
     }
   }
+
+
 
   /* =========================
      Mobile menu
@@ -669,6 +715,100 @@ document.addEventListener("DOMContentLoaded", () => {
       panel.classList.contains("open") ? closeMenuFn() : openMenu();
     });
 
+
+    // Desktop hover behavior (PC): open menu on mouse over, close when leaving toggle+panel
+    // Desktop hover behavior (PC): open menu on mouse over, close when leaving toggle+panel
+const isDesktopHover = () => window.matchMedia("(pointer: fine)").matches && window.innerWidth >= 980;
+
+let hoverCloseTimer = null;
+
+const clearHoverTimer = () => {
+  if (hoverCloseTimer) {
+    window.clearTimeout(hoverCloseTimer);
+    hoverCloseTimer = null;
+  }
+};
+
+// Si el mouse “sale” del botón hacia el panel/overlay, NO cierres
+const leavingToMenuZone = (e) => {
+  const to = e.relatedTarget;
+  if (!to) return false;
+  return (panel && panel.contains(to)) || (overlay && overlay.contains(to));
+};
+
+// Si el mouse “sale” del panel hacia el botón/overlay, NO cierres
+const leavingToToggleZone = (e) => {
+  const to = e.relatedTarget;
+  if (!to) return false;
+  return (toggleBtn && toggleBtn.contains(to)) || (overlay && overlay.contains(to));
+};
+
+const scheduleHoverClose = () => {
+  if (!isDesktopHover()) return;
+  clearHoverTimer();
+
+  // un poco más de tiempo para que el cursor alcance el panel sin parpadeo
+  hoverCloseTimer = window.setTimeout(() => {
+    const overToggle = toggleBtn.matches(":hover");
+    const overPanel = panel.matches(":hover");
+    const overOverlay = overlay.matches(":hover");
+
+    if (!overToggle && !overPanel && !overOverlay && panel.classList.contains("open")) {
+      closeMenuFn();
+    }
+  }, 260);
+};
+
+// Open on hover over the hamburger button
+toggleBtn.addEventListener("mouseenter", () => {
+  if (!isDesktopHover()) return;
+  clearHoverTimer();
+  if (!panel.classList.contains("open")) openMenu();
+});
+
+// Si sales del botón hacia el panel/overlay, no cierres
+toggleBtn.addEventListener("mouseleave", (e) => {
+  if (!isDesktopHover()) return;
+  if (leavingToMenuZone(e)) return;
+  scheduleHoverClose();
+});
+
+// Keep open while hovering the panel
+panel.addEventListener("mouseenter", () => {
+  if (!isDesktopHover()) return;
+  clearHoverTimer();
+});
+
+// Si sales del panel hacia el botón/overlay, no cierres
+panel.addEventListener("mouseleave", (e) => {
+  if (!isDesktopHover()) return;
+  if (leavingToToggleZone(e)) return;
+  scheduleHoverClose();
+});
+
+// Si entras al overlay, intenta cerrar con delay (pero no mientras estés sobre panel/botón)
+overlay.addEventListener("mouseenter", () => {
+  if (!isDesktopHover()) return;
+  scheduleHoverClose();
+});
+    // Open on hover over the hamburger button
+    toggleBtn.addEventListener('mouseenter', () => {
+      if (!isDesktopHover()) return;
+      clearHoverTimer();
+      if (!panel.classList.contains('open')) openMenu();
+    });
+    toggleBtn.addEventListener('mouseleave', scheduleHoverClose);
+
+    // Keep open while hovering the panel
+    panel.addEventListener('mouseenter', () => {
+      if (!isDesktopHover()) return;
+      clearHoverTimer();
+    });
+    panel.addEventListener('mouseleave', scheduleHoverClose);
+
+    // Also close if user hovers overlay (leaves the panel)
+    overlay.addEventListener('mouseenter', scheduleHoverClose);
+
     if (closeBtn) {
       closeBtn.addEventListener("click", (e) => {
         e.preventDefault();
@@ -678,11 +818,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     overlay.addEventListener("click", closeMenuFn);
 
-    panel.querySelectorAll("a, .mobile-nav-link").forEach((el) => {
-      el.addEventListener("click", () => closeMenuFn());
-    });
+    // Close the drawer only when a real navigation link is clicked.
+// IMPORTANT: Do NOT close when tapping submenu toggles (<summary> / .mobile-nav-summary).
+panel.querySelectorAll("a[href]").forEach((a) => {
+  a.addEventListener("click", () => closeMenuFn());
+});
 
-    document.addEventListener("keydown", (e) => {
+// Prevent submenu summaries from closing the drawer on mobile.
+panel.querySelectorAll("summary.mobile-nav-summary").forEach((s) => {
+  s.addEventListener("click", (e) => {
+    // If user clicked the link text inside the summary, allow normal navigation.
+    if (e.target && e.target.closest && e.target.closest("a")) return;
+    // Otherwise, let <details> toggle but prevent bubbling that could close the drawer.
+    e.stopPropagation();
+  });
+});
+document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
     });
 
@@ -690,7 +841,48 @@ document.addEventListener("DOMContentLoaded", () => {
       if (window.innerWidth > 980 && panel.classList.contains("open")) closeMenuFn();
     });
   }
+/* =========================
+   Submenus: open on hover (desktop)
+========================= */
+function initHamburgerSubmenuHover() {
+  // Solo tiene sentido con mouse/trackpad
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!finePointer) return;
 
+  const panel = document.getElementById("mobile-menu");
+  if (!panel) return;
+
+  // Para submenus con <details>
+  const groups = panel.querySelectorAll("details");
+  if (!groups.length) return;
+
+  groups.forEach((details) => {
+    let t;
+
+    details.addEventListener("mouseenter", () => {
+      clearTimeout(t);
+      details.open = true; // abre automáticamente
+    });
+
+    details.addEventListener("mouseleave", () => {
+      // pequeño delay para evitar cierres accidentales
+      t = setTimeout(() => (details.open = false), 120);
+    });
+
+    // Mantener abierto si navegas con teclado dentro del submenu
+    details.addEventListener("focusin", () => {
+      clearTimeout(t);
+      details.open = true;
+    });
+
+    details.addEventListener("focusout", () => {
+      t = setTimeout(() => (details.open = false), 150);
+    });
+  });
+}
+
+// Llama a la función cuando el DOM esté listo
+document.addEventListener("DOMContentLoaded", initHamburgerSubmenuHover);
   /* =========================
      Active link (data-page)
   ========================= */
@@ -1050,7 +1242,155 @@ document.addEventListener("DOMContentLoaded", () => {
     showPanel((initialTab?.dataset.tab || "becarios").toLowerCase());
   }
 
+  
   /* =========================
+     Instagram carousel (placeholders)
+  ========================= */
+  function initInstagramCarousel() {
+    const igRoot = $("#instagram");
+    const igTrack = igRoot ? $(".ig-track", igRoot) : null;
+    const igCards = igTrack ? $$(".ig-card", igTrack) : [];
+    const igIndicators = igRoot ? $$(".ig-indicator", igRoot) : [];
+
+    if (!igTrack || !igCards.length) return;
+
+    const canScroll = () => igTrack.scrollWidth > igTrack.clientWidth + 5;
+
+    const setIndicator = (idx) => {
+      if (!igIndicators.length) return;
+      igIndicators.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+    };
+
+    const mapCardToDot = (cardIndex) => {
+      if (!igIndicators.length) return 0;
+      if (igCards.length === 1) return 0;
+      const ratio = cardIndex / (igCards.length - 1);
+      return Math.round(ratio * (igIndicators.length - 1));
+    };
+
+    const nearestCardIndex = () => {
+      const rect = igTrack.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+
+      let best = 0;
+      let bestDist = Infinity;
+
+      igCards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        const c = r.left + r.width / 2;
+        const dist = Math.abs(c - centerX);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = i;
+        }
+      });
+
+      return best;
+    };
+
+    const updateIndicators = () => {
+      const cardIdx = nearestCardIndex();
+      setIndicator(mapCardToDot(cardIdx));
+    };
+
+    if (igIndicators.length) {
+      igIndicators.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+          const targetCardIdx =
+            igIndicators.length === 1
+              ? 0
+              : Math.round((i / (igIndicators.length - 1)) * (igCards.length - 1));
+
+          const target = igCards[targetCardIdx];
+          if (!target) return;
+
+          target.scrollIntoView({
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+            inline: "center",
+            block: "nearest",
+          });
+
+          setIndicator(i);
+        });
+      });
+    }
+
+    // Drag support (mouse)
+    let isDown = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    const onDown = (e) => {
+      if (!canScroll()) return;
+      isDown = true;
+      igTrack.classList.add("is-dragging");
+      startX = e.clientX;
+      startScroll = igTrack.scrollLeft;
+    };
+
+    const onMove = (e) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      igTrack.scrollLeft = startScroll - dx;
+    };
+
+    const onUp = () => {
+      if (!isDown) return;
+      isDown = false;
+      igTrack.classList.remove("is-dragging");
+      updateIndicators();
+    };
+
+    igTrack.addEventListener("mousedown", onDown);
+    igTrack.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+
+    // Touch support
+    let tDown = false;
+    let tStartX = 0;
+    let tStartScroll = 0;
+
+    igTrack.addEventListener(
+      "touchstart",
+      (e) => {
+        if (!canScroll()) return;
+        tDown = true;
+        tStartX = e.touches[0].clientX;
+        tStartScroll = igTrack.scrollLeft;
+      },
+      { passive: true }
+    );
+
+    igTrack.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!tDown) return;
+        const dx = e.touches[0].clientX - tStartX;
+        igTrack.scrollLeft = tStartScroll - dx;
+      },
+      { passive: true }
+    );
+
+    igTrack.addEventListener(
+      "touchend",
+      () => {
+        if (!tDown) return;
+        tDown = false;
+        updateIndicators();
+      },
+      { passive: true }
+    );
+
+    let st = null;
+    igTrack.addEventListener("scroll", () => {
+      if (st) clearTimeout(st);
+      st = setTimeout(updateIndicators, 90);
+    });
+
+    updateIndicators();
+  }
+
+/* =========================
      Awards carousel
   ========================= */
   function initAwardsCarousel() {
@@ -1324,6 +1664,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initTheme();
   initLanguage();
   initMobileMenu();
+  initHamburgerSubmenuHover();
   initActiveLink();
   initYear();
   initReveal();
@@ -1331,7 +1672,39 @@ document.addEventListener("DOMContentLoaded", () => {
   initCursor();
   initHeroParallax();
   initTrainingTabs();
+  initInstagramCarousel();
   initAwardsCarousel();
   initMapRetry();
   initContactForm();
 });
+function initHamburgerSubmenuHoverFallback() {
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!finePointer) return;
+
+  const panel = document.getElementById("mobile-menu");
+  if (!panel) return;
+
+  const items = panel.querySelectorAll(".has-submenu");
+  if (!items.length) return;
+
+  items.forEach((item) => {
+    let t;
+    const submenu = item.querySelector(".mm-submenu");
+    if (!submenu) return;
+
+    item.addEventListener("mouseenter", () => {
+      clearTimeout(t);
+      submenu.style.display = "block";
+      item.classList.add("is-open");
+    });
+
+    item.addEventListener("mouseleave", () => {
+      t = setTimeout(() => {
+        submenu.style.display = "";
+        item.classList.remove("is-open");
+      }, 120);
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initHamburgerSubmenuHoverFallback);

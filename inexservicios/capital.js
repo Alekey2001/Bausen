@@ -82,7 +82,7 @@
   // Los demás idiomas por ahora heredan EN (puedes traducirlos después sin tocar lógica).
   const I18N = {
     ES: {
-      "head.title": "Capital Humano | Bausen",
+      "head.title": " Procesamiento de nomina| Bausen",
 
       "ui.skip": "Saltar al contenido",
       "ui.menu": "Menú",
@@ -90,20 +90,20 @@
       "ui.seeMore": "Ver más <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M5 12h13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M13 6l6 6-6 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
 
       "nav.home": "inicio",
-      "nav.capital": "Capital Humano",
-      "nav.specialized": "Servicíos especializados",
-      "nav.tax": "Servicios de impuestos",
+      "nav.capital": "Servicios",
+      "nav.specialized": "Centro de formación",
+      "nav.tax": "Noticias",
       "nav.about": "Acerca de",
 
       "header.collab": "¿Eres colaborador?",
 
       "hero.back": "Volver a Servicios",
       "hero.badge": "Servicio Premium",
-      "hero.title": "<span class='grad'>Capital</span> Humano",
-      "hero.subtitle": "Potencia el crecimiento y éxito de tu empresa con nuestros<br />servicios de capital humano. ¡Transforma tu empresa con<br />nuestro enfoque estratégico!",
+      "hero.title": "<span class='grad'> Procesamiento</span>de nomina",
+      "hero.subtitle": "Potencia el crecimiento y éxito de tu empresa con nuestros<br />servicios de  Procesamiento de nomina. ¡Transforma tu empresa con<br />nuestro enfoque estratégico!",
       "hero.cta": "Contactar a BAUSEN <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M5 12h13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M13 6l6 6-6 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
 
-      "services.title": "<span>Servicios</span> <span class='grad2'>Capital Humano</span>",
+      "services.title": "<span>Servicios</span> <span class='grad2'>Procesamiento de nomina</span>",
       "services.card1.title": "Servicios Especializados",
       "services.card1.body": "Avalados por la STPS y registrados en el<br />REPSE, garantizando transparencia y<br />cumplimiento legal.",
       "services.card2.title": "Payrolling",
@@ -112,7 +112,7 @@
       "services.card3.body": "Utilizamos estrategias selectivas y entrevistas<br />exhaustivas para presentarte a los candidatos<br />correctos.",
 
       "benefits.badge": "Beneficios Exclusivos",
-      "benefits.title": "Beneficios de <span class='grad'>Capital</span><br /><span class='grad'>Humano</span>",
+      "benefits.title": "Beneficios de <span class='grad'> Procesamiento</span><br /><span class='grad'>de nómina</span>",
       "benefits.item1.title": "Acceso Exclusivo BTC",
       "benefits.item1.body": "Accede a nuestra agenda de cursos gratuitos, avalados por el Colegio de Contadores Públicos de la Ciudad de México.",
       "benefits.item2.title": "Reducción de Costos",
@@ -121,7 +121,7 @@
       "benefits.item3.body": "Sesiones de asesoramiento personalizado con expertos en Capital Humano para tu empresa.",
 
       "cta.title": "Todos los servicios en un<br />solo lugar",
-      "cta.body": "Solicita una reunión para más información sobre cómo podemos<br />ayudarte a optimizar tu gestión de capital humano.",
+      "cta.body": "Solicita una reunión para más información sobre cómo podemos<br />ayudarte a optimizar tu gestión de  Procesamiento de nomina.",
       "cta.book": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M8 7V3m8 4V3' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M3 10h18' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M5 6h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z' stroke='currentColor' stroke-width='2' stroke-linejoin='round'/></svg> Agenda una cita",
       "cta.cases": "<i data-lucide='badge-plus' class='icon' aria-hidden='true'></i> Ver casos de éxito",
       "cta.stat": "Empresas",
@@ -201,7 +201,7 @@
       "ui.seeMore": "See more <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M5 12h13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M13 6l6 6-6 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
 
       "nav.home": "Home",
-      "nav.capital": "Human Capital",
+      "nav.capital": "Payroll processing",
       "nav.specialized": "Specialized services",
       "nav.tax": "Tax services",
       "nav.about": "About",
@@ -210,11 +210,11 @@
 
       "hero.back": "Back to Services",
       "hero.badge": "Premium Service",
-      "hero.title": "<span class='grad'>Human</span> Capital",
-      "hero.subtitle": "Boost your company’s growth and success with our<br />human capital services. Transform your business with<br />our strategic approach!",
+      "hero.title": "<span class='grad'> Payroll </span>  processing",
+      "hero.subtitle": "Boost your company’s growth and success with our<br />Payroll processing Transform your business with<br />our strategic approach!",
       "hero.cta": "Contact BAUSEN <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M5 12h13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M13 6l6 6-6 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
 
-      "services.title": "<span>Human</span> <span class='grad2'>Capital Services</span>",
+      "services.title": "<span> Payroll </span> <span class='grad2'>processing</span>",
       "services.card1.title": "Specialized Services",
       "services.card1.body": "STPS-certified and registered in<br />REPSE, ensuring transparency and<br />legal compliance.",
       "services.card2.title": "Payroll",
@@ -614,65 +614,125 @@
 
   if (panel) panel.addEventListener('click', (e) => e.stopPropagation());
 
-  // ======================
-  // THEME TOGGLE
-  // ======================
-  const themeToggle = $('#themeToggle');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+/* =========================
+   Hover interactions (DESKTOP) — igual referencia (acerca.js)
+   - Idioma: hover abre/cierra
+   - Hamburguesa: hover abre
+   - Submenús (<details>) dentro del drawer: hover abre/cierra
+========================= */
+(() => {
+  const canHover =
+    window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!canHover) return;
 
-  function updateThemeIcons(theme) {
-    const isLight = theme === 'light';
-    $$('.i-sun').forEach(el => {
-      if (el) el.style.display = isLight ? 'block' : 'none';
-    });
-    $$('.i-moon').forEach(el => {
-      if (el) el.style.display = isLight ? 'none' : 'block';
-    });
-  }
+  /* 1) IDIOMA */
+  const langBtn = document.getElementById('language-btn');
+  const langDropdown = document.getElementById('language-dropdown');
+  const langWrap = langBtn?.closest('.language-selector');
 
-  function setTheme(theme) {
-    if (!theme || !['light', 'dark'].includes(theme)) return;
+  if (langBtn && langDropdown && langWrap) {
+    let tClose = null;
 
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('bausen_theme', theme);
-    updateThemeIcons(theme);
+    const openLang = () => {
+      clearTimeout(tClose);
+      langDropdown.classList.add('show');
+      langBtn.setAttribute('aria-expanded', 'true');
+    };
 
-    const themeColor = theme === 'dark' ? '#0b1222' : '#F8FBFF';
-    const metaThemeColor = $('meta[name="theme-color"]');
-    if (metaThemeColor) {
-      metaThemeColor.setAttribute('content', themeColor);
-    }
-  }
+    const closeLang = (delay = 120) => {
+      clearTimeout(tClose);
+      tClose = setTimeout(() => {
+        langDropdown.classList.remove('show');
+        langBtn.setAttribute('aria-expanded', 'false');
+      }, delay);
+    };
 
-  function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    const newTheme = current === 'dark' ? 'light' : 'dark';
-    setTheme(newTheme);
-  }
+    langWrap.addEventListener('pointerenter', openLang);
+    langWrap.addEventListener('pointerleave', () => closeLang(140));
 
-  const savedTheme = localStorage.getItem('bausen_theme');
-  if (savedTheme === 'light' || savedTheme === 'dark') {
-    setTheme(savedTheme);
-  } else {
-    setTheme(prefersDark.matches ? 'dark' : 'light');
-  }
-
-  if (prefersDark.addEventListener) {
-    prefersDark.addEventListener('change', (e) => {
-      if (!localStorage.getItem('bausen_theme')) {
-        setTheme(e.matches ? 'dark' : 'light');
-      }
-    });
-  } else {
-    prefersDark.addListener((e) => {
-      if (!localStorage.getItem('bausen_theme')) {
-        setTheme(e.matches ? 'dark' : 'light');
-      }
+    document.addEventListener('pointerdown', (e) => {
+      if (!langWrap.contains(e.target)) closeLang(0);
     });
   }
 
-  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  /* 2) HAMBURGUESA / DRAWER */
+  const burger = document.getElementById('navToggle');
+  const drawer = document.getElementById('navDrawer');
+  const panel = drawer?.querySelector('.drawer-panel');
+  const backdrop = drawer?.querySelector('.drawer-backdrop');
 
+  // Reusa openDrawer/closeDrawer del script actual
+  const hasFns = (typeof openDrawer === 'function' && typeof closeDrawer === 'function');
+
+  if (burger && drawer && panel && backdrop && hasFns) {
+    let openTimer = null;
+    let closeTimer = null;
+
+    const scheduleOpen = () => {
+      clearTimeout(closeTimer);
+      clearTimeout(openTimer);
+      openTimer = setTimeout(() => {
+        if (drawer.hidden) openDrawer();
+      }, 120);
+    };
+
+    const scheduleClose = (delay = 180) => {
+      clearTimeout(openTimer);
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        if (!drawer.hidden) closeDrawer();
+      }, delay);
+    };
+
+    burger.addEventListener('pointerenter', scheduleOpen);
+    burger.addEventListener('pointerleave', () => clearTimeout(openTimer));
+
+    // Mantén abierto si el mouse está en panel o botón; cierra al salir del panel/backdrop
+    panel.addEventListener('pointerenter', () => {
+      clearTimeout(closeTimer);
+    });
+
+    panel.addEventListener('pointerleave', (e) => {
+      const to = e.relatedTarget;
+      if (to && (burger.contains(to) || backdrop.contains(to))) return;
+      scheduleClose(180);
+    });
+
+    backdrop.addEventListener('pointerleave', (e) => {
+      const to = e.relatedTarget;
+      if (to && (panel.contains(to) || burger.contains(to))) return;
+      scheduleClose(180);
+    });
+
+    backdrop.addEventListener('pointerenter', () => {
+      // si está sobre backdrop, dejamos abierto (no cerramos instantáneo)
+      clearTimeout(closeTimer);
+    });
+  }
+
+  /* 3) SUBMENÚS en drawer (<details>) */
+  if (drawer) {
+    const detailsList = drawer.querySelectorAll('details.drawer-details');
+
+    detailsList.forEach((d) => {
+      let t = null;
+
+      d.addEventListener('pointerenter', () => {
+        clearTimeout(t);
+        d.open = true;
+      });
+
+      d.addEventListener('pointerleave', () => {
+        clearTimeout(t);
+        t = setTimeout(() => {
+          d.open = false;
+        }, 140);
+      });
+    });
+  }
+})();
+
+  
   // ======================
   // REVEAL ANIMATIONS
   // ======================

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark" class="no-js">
+<html lang="es" data-theme="light" class="no-js">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,136 +12,150 @@
   <link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
 
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="stylebeca.css" />
   <link rel="stylesheet" href="noticias.css" />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <meta name="theme-color" content="#08102a" />
+  <meta name="theme-color" content="#DCE2EF" />
 </head>
 
 <body>
-  <!-- Overlay para mobile -->
-  <div class="overlay" id="mobile-menu-overlay" aria-hidden="true"></div>
+ <!-- HEADER -->
+<header class="header" id="main-header">
+<div class="container header-container">
+<!-- Logo -->
+<a aria-label="Go to home" class="logo-link" href="index.html">
+<div class="logo">
+<img alt="Bausen" class="logo-img" src="/images/bausenlogo.png"/>
+</div>
+</a>
+<!-- (Desktop) Menú horizontal deshabilitado: la navegación vive dentro del menú hamburguesa -->
+<nav aria-label="Primary navigation" class="nav nav-disabled"></nav>
+<!-- Controles derecha -->
+<div class="header-controls">
+<a class="btn btn-primary btn-sm" data-i18n="header.collab" href="acceso.html">Are you a collaborator?</a>
+<!-- Idioma (desktop) con banderas -->
+<div class="language-selector">
+<button aria-expanded="false" aria-label="Select language" class="language-btn" id="language-btn" type="button">
+<span aria-hidden="true" class="language-flag" id="language-flag"></span>
+<span class="language-code" id="language-code">EN</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<ul class="language-dropdown" id="language-dropdown" role="menu">
+<li>
+<button class="language-option" data-lang="ES" type="button">
+<span aria-hidden="true" class="lang-option-flag" data-flag="ES"></span>
+<span>Español (ES)</span>
+</button>
+</li>
+<li>
+<button class="language-option" data-lang="EN" type="button">
+<span aria-hidden="true" class="lang-option-flag" data-flag="EN"></span>
+<span>English (EN)</span>
+</button>
+</li>
+</ul>
+</div>
+<!-- Menú hamburguesa (PC + móvil) -->
+<button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu" class="menu-toggle" id="menu-toggle" type="button">
+<i aria-hidden="true" class="fa-solid fa-bars"></i>
+</button>
+</div>
+</div>
+<!-- Menú overlay -->
+<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+<!-- Menú lateral -->
+<div aria-label="Navigation menu" aria-modal="true" class="mobile-menu" id="mobile-menu" role="dialog">
+<div class="mobile-menu-header">
+<div class="logo mobile-logo">
+<img alt="Bausen" class="logo-img" src="/images/bausenlogo.png"/>
+</div>
+<button aria-label="Close menu" class="close-menu" id="close-menu" type="button">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<nav aria-label="Site navigation">
+<ul class="mobile-nav-list mobile-accordion">
+<!-- Inicio ▸ (dropdown) -->
+<li class="mobile-nav-item">
+<details class="menu-details">
+<summary class="mobile-nav-link mobile-nav-summary" data-page="index">
 
-  <!-- HEADER (paridad visual con Prensa) -->
-  <header class="site-header">
-    <div class="container header__inner">
-      <!-- Brand -->
-      <a class="brand" href="index.html" aria-label="Bausen - Inicio">
-        <img
-          class="brand__logo"
-          src="/images/bausenlogo.png"
-          alt="Bausen"
-          width="130"
-          height="47"
-          loading="eager"
-          decoding="async"
-        />
+<a class="mobile-summary-link" href="index.html"><span data-i18n="nav.home">Inicio</span></a><i aria-hidden="true" class="fas fa-chevron-right"></i>
+</summary>
+<ul class="mobile-submenu">
+<li>
+<a class="mobile-sub-link" data-i18n="nav.about" data-page="acercade" href="acerca.html">Acerca de</a>
+</li>
+</ul>
+</details>
+</li>
+<!-- Servicios ▸ (dropdown) -->
+<li class="mobile-nav-item">
+  <details class="menu-details">
+    <summary class="mobile-nav-link mobile-nav-summary" data-page="servicios">
+      <a class="mobile-summary-link" href="servicios.html">
+        <span data-i18n="nav.services">Servicios</span>
       </a>
+      <i aria-hidden="true" class="fas fa-chevron-right"></i>
+    </summary>
 
-      <!-- Nav desktop -->
-      <nav class="nav" aria-label="Navegación principal">
-        <a class="nav__link" href="index.html" data-i18n-text="nav.home">Inicio</a>
-        <a class="nav__link" href="prensa.html" data-i18n-text="nav.press">Prensa</a>
-        <a class="nav__link" href="servicios.html" data-i18n-text="nav.services">Servicios</a>
-        <a class="nav__link is-active" href="noticias.html" aria-current="page" data-i18n-text="nav.news">Noticias</a>
-        <a class="nav__link" href="centro.html" data-i18n-text="nav.training">Centro de Formación</a>
-        <a class="nav__link" href="acerca.html" data-i18n-text="nav.about">Acerca de</a>
-      </nav>
-
-      <!-- Acciones -->
-      <div class="header__actions">
-        <a class="btn btn--primary btn--pill btn--collab" href="colaboradores.html" data-i18n-text="header.collab">
-          ¿Eres colaborador?
+    <ul class="mobile-submenu">
+      <li>
+        <a class="mobile-sub-link" href="capital.html" data-i18n-text="nav.svc.payroll">
+          Procesamiento de nómina
         </a>
+      </li>
+      <li>
+        <a class="mobile-sub-link" href="/inexservicios/servicios.html" data-i18n-text="nav.svc.specialized">
+          Servicios especializados
+        </a>
+      </li>
+      <li>
+        <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.svc.tax">
+          Consultoría fiscal
+        </a>
+      </li>
+    </ul>
+  </details>
+</li>
+<!-- Centro de formación (opción aparte) -->
+<li class="mobile-nav-item">
+<a class="mobile-nav-link" data-i18n="nav.training" data-page="centro" href="centro.html">Centro de formación</a>
+</li>
+<!-- Noticias ▸ (dropdown) -->
+<li class="mobile-nav-item">
+<details class="menu-details">
+<summary class="mobile-nav-link mobile-nav-summary" data-page="noticias">
 
-        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar tema">
-          <span class="theme-toggle__icon" aria-hidden="true">
-            <i class="fa-solid fa-moon"></i>
-          </span>
-        </button>
-
-        <!-- Idiomas -->
-        <div class="language-selector">
-          <button class="language-btn" id="language-btn" type="button" aria-label="Seleccionar idioma" aria-haspopup="listbox" aria-expanded="false">
-            <span class="language-flag" id="language-flag" aria-hidden="true"></span>
-            <span id="language-code">EN</span>
-            <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-          </button>
-
-          <ul class="language-dropdown" id="language-dropdown" role="listbox" aria-label="Selector de idioma">
-            <li>
-              <button class="language-option" type="button" data-lang="ES">
-                <span class="lang-option-flag" data-flag="ES" aria-hidden="true"></span>
-                Español (ES)
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="EN">
-                <span class="lang-option-flag" data-flag="EN" aria-hidden="true"></span>
-                English (EN)
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="DE">
-                <span class="lang-option-flag" data-flag="DE" aria-hidden="true"></span>
-                Deutsch (DE)
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="PT">
-                <span class="lang-option-flag" data-flag="PT" aria-hidden="true"></span>
-                Português (PT)
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="FR">
-                <span class="lang-option-flag" data-flag="FR" aria-hidden="true"></span>
-                Français (FR)
-              </button>
-            </li>
-            <li>
-              <button class="language-option" type="button" data-lang="IT">
-                <span class="lang-option-flag" data-flag="IT" aria-hidden="true"></span>
-                Italiano (IT)
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Hamburguesa -->
-        <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
-    <div class="mobile-menu__head">
-      <div class="logo mobile-logo">
-        <img class="logo-img" src="/images/bausenlogo.png" alt="Bausen" />
-      </div>
-
-      <button class="mobile-menu__close" id="close-menu" type="button" aria-label="Cerrar menú">
-        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-      </button>
-    </div>
-
-    <nav class="mobile-nav" aria-label="Navegación móvil">
-      <a class="mobile-nav-link" href="index.html" data-i18n-text="nav.home">Inicio</a>
-      <a class="mobile-nav-link" href="prensa.html" data-i18n-text="nav.press">Prensa</a>
-      <a class="mobile-nav-link" href="servicios.html" data-i18n-text="nav.services">Servicios</a>
-      <a class="mobile-nav-link is-active" href="noticias.html" aria-current="page" data-i18n-text="nav.news">Noticias</a>
-      <a class="mobile-nav-link" href="centro.html" data-i18n-text="nav.training">Centro de Formación</a>
-      <a class="mobile-nav-link" href="acerca.html" data-i18n-text="nav.about">Acerca de</a>
-
-      <a class="btn btn--primary btn--pill btn--collab" href="colaboradores.html" data-i18n-text="header.collab">
-        ¿Eres colaborador?
-      </a>
-    </nav>
-  </div>
+<a class="mobile-summary-link" href="noticias.html"><span data-i18n="nav.news">Noticias</span></a><i aria-hidden="true" class="fas fa-chevron-right"></i>
+</summary>
+<ul class="mobile-submenu">
+<li>
+<a class="mobile-sub-link" data-page="social" href="noticias.html#social">Social</a>
+</li>
+<li>
+</li>
+</ul>
+</details>
+</li>
+<!-- Prensa (opción aparte) -->
+<li class="mobile-nav-item">
+<a class="mobile-nav-link" data-i18n="nav.press" data-page="prensa" href="prensa.html">Prensa</a>
+</li>
+<!-- Contáctanos (opción aparte) -->
+<li class="mobile-nav-item">
+<a class="mobile-nav-link" data-i18n="footer.contact" data-page="contacto" href="index.html#contacto">Contáctanos</a>
+</li>
+<!-- CTA colaborador (se mantiene) -->
+<li class="mobile-nav-item mobile-cta">
+</li>
+</ul>
+</nav>
+</div>
+</header>
 
 <!-- MAIN (Noticias) -->
   <main>
@@ -157,92 +171,234 @@
         <p class="hero__subtitle" data-i18n-text="newspage.subtitle">Blog corporativo, eventos destacados y actualizaciones sobre cambios legislativos que impactan tus operaciones empresariales.</p>
 
         <div class="hero__actions">
-          <button class="btn btn--primary" type="button" id="openNewsletter">
-            <span data-i18n-text="newspage.ctaNewsletter">Suscríbete al newsletter</span>
+          <a class="btn btn--primary" href="#social" id="goSocial">
+            <span>Social</span>
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-          </button>
+          </a>
         </div>
       </div>
       <div class="hero__curve" aria-hidden="true"></div>
     </section>
 
-    <section class="search-wrap" aria-label="Buscador de noticias" data-i18n-aria-label="newspage.searchAria">
-      <div class="container">
-        <form class="search" id="searchForm" autocomplete="off">
-          <div class="search__field">
-            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-            <input
-              type="search"
-              id="searchInput"
-              placeholder="Buscar noticias, temas o palabras clave..."
-              data-i18n-placeholder="newspage.searchPlaceholder"
-              aria-label="Buscar noticias"
-              data-i18n-aria-label="newspage.searchInputAria"
-            />
-          </div>
-          <button class="btn btn--primary btn--sm" type="submit" data-i18n-text="newspage.searchBtn">Buscar</button>
-        </form>
+<section class="section">
+  <div class="container">
+    <header class="title-block">
+      <h2 class="title-block__title title-split">
+  <span class="title-split__first">Noticias</span>
+  <span class="title-split__second">Más Recientes</span>
+</h2>
+      <p class="title-block__sub" data-i18n-text="newspage.recentSub">Mantente informado con las últimas novedades del sector</p>
+      <span class="title-block__line" aria-hidden="true"></span>
+    </header>
 
-        <div class="search-hint muted" data-i18n-text="newspage.searchHint">
-          Buscador próximamente disponible (estructura lista para integrar noticias).
-        </div>
+    <!-- Recuadro contenedor (vacío / con contenido) -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></div>
+      <div class="empty-title" data-i18n-text="newspage.emptyTitle">No hay noticias disponibles</div>
+      <div class="empty-sub muted" data-i18n-text="newspage.emptySub">Cuando publiquemos contenido nuevo, aparecerá aquí automáticamente.</div>
+
+      <!-- Noticias (Eventos / publicaciones) — deben vivir dentro de ESTE recuadro -->
+      <div class="news-grid" id="newsGrid" aria-live="polite">
+       <!-- 1 -->
+<article class="event-card" data-event="1">
+  <div class="event-card__media is-empty">
+    
+    <img src="/eventosimagnes/fife2026/IMG_2986.JPG" alt="FIFE 2026" loading="lazy" decoding="async">
+  </div>
+
+  <div class="event-card__body">
+    <div class="event-card__meta">
+      <span class="event-pill">Evento</span>
+      <span class="event-date">Eventos 2026</span>
+    </div>
+
+    <h3 class="event-card__title">FIFE 2026</h3>
+    <p class="event-card__sub">Innovación, liderazgo y resiliencia</p>
+
+    <p class="event-card__excerpt">
+      Intercambio de ideas, experiencias y una ruta clara hacia la innovación. En BAUSEN participamos en la Feria Internacional de Innovación y Emprendimiento 2026...
+    </p>
+
+    <button class="btn btn--navy event-card__more" type="button" data-open-event="1">
+      Leer más
+      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </button>
+
+    <!-- Contenido completo (se lee en el modal) -->
+    <div class="event-card__full" hidden>
+      <p>
+        Intercambio de ideas, experiencias y una ruta clara hacia la innovación. 🤝
+        En BAUSEN nos sumamos a la Feria Internacional de Innovación y Emprendimiento 2026. Ha sido una jornada increíble conectando con mentes que buscan elevar la competitividad de los negocios a nivel internacional.
+        En la participación de nuestra Directora General en el panel “Desafíos de los líderes de hoy”, se abordaron los retos reales de encabezar organizaciones en la actualidad y cómo la resiliencia es el motor de la transformación.
+        ¡Gracias a todos los que compartieron con nosotros esta visión de un futuro más competitivo y sostenible!
+      </p>
+
+     <div class="event-detail__images">
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+</div>
+    </div>
+  </div>
+</article>
+
+<!-- 2 -->
+<article class="event-card" data-event="2">
+  <div class="event-card__media is-empty">
+    <img src="/eventosimagnes/peñon/EBC09821.jpeg" alt="Encuentro con directivos y empresarios" loading="lazy">
+  </div>
+
+  <div class="event-card__body">
+    <div class="event-card__meta">
+      <span class="event-pill">Evento</span>
+      <span class="event-date">Peñón Montefalco</span>
+    </div>
+
+    <h3 class="event-card__title">Encuentro con directivos y empresarios</h3>
+    <p class="event-card__sub">Educación, liderazgo y comunicación</p>
+
+    <p class="event-card__excerpt">
+      BAUSEN reafirma su compromiso con el desarrollo integral de México mediante educación y formación. En colaboración con IPADE y consejeros...
+    </p>
+
+    <button class="btn btn--navy event-card__more" type="button" data-open-event="2">
+      Leer más
+      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </button>
+
+    <div class="event-card__full" hidden>
+      <p>
+        BAUSEN reafirma su compromiso con el desarrollo integral de México a través de la educación y la formación de nuevas generaciones.
+        En colaboración con Jose Eduardo Tagle, autoridades del IPADE y consejeros de El Peñón Montefalco, participamos en un encuentro con directivos escolares y empresarios comprometidos con el futuro del país. 🇲🇽
+        Como parte de esta iniciativa, BAUSEN impartió el taller “Herramientas para hablar en público” a 54 alumnas y 72 alumnos de bachillerato, brindándoles recursos prácticos para fortalecer su comunicación, liderazgo y seguridad personal.
+        Seguimos trabajando por un México más preparado, ético y competitivo.
+      </p>
+
+     <div class="event-detail__images">
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+</div>
+    </div>
+  </div>
+</article>
+
+<!-- 3 -->
+<article class="event-card" data-event="3">
+  <div class="event-card__media is-empty">
+     <img src="/eventosimagnes/desayuno/IMG_2974.JPG" alt="Desayuno Nacional de Oración" loading="lazy"> 
+  </div>
+
+  <div class="event-card__body">
+    <div class="event-card__meta">
+      <span class="event-pill">Evento</span>
+      <span class="event-date">Eventos 2026</span>
+    </div>
+
+    <h3 class="event-card__title">Desayuno Nacional de Oración</h3>
+    <p class="event-card__sub">Unidad, integridad y servicio</p>
+
+    <p class="event-card__excerpt">
+      En BAUSEN creemos que el liderazgo nace del servicio y la colaboración. Por eso participamos en el Desayuno Nacional de Oración 2026...
+    </p>
+
+    <button class="btn btn--navy event-card__more" type="button" data-open-event="3">
+      Leer más
+      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </button>
+
+    <div class="event-card__full" hidden>
+      <p>
+        ¡Unidos por un México con valores! 🇲🇽🙏
+        En Bausen, creemos que el verdadero liderazgo nace del servicio y la colaboración.
+        Por eso, nos enorgullece participar en el Desayuno Nacional de Oración 2026.
+        Éste encuentro trasciende barreras políticas y religiosas para reunir a líderes de opinión, empresarios y autoridades en un mismo propósito: construir una nación más sólida, basada en la unidad y la integridad. 🤝✨
+        Para nosotros, ser parte de esta iniciativa es reafirmar nuestro compromiso con el desarrollo de México y el fortalecimiento de nuestra comunidad. ¡Sigamos construyendo juntos!
+      </p>
+
+     <div class="event-detail__images">
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+</div>
+    </div>
+  </div>
+</article>
+
+<!-- 4 -->
+<article class="event-card" data-event="4">
+  <div class="event-card__media is-empty">
+    <img src="/eventosimagnes/eventos 2026/IMG_2994.JPG" alt="Arte, responsabilidad y bienestar" loading="lazy"> 
+  </div>
+
+  <div class="event-card__body">
+    <div class="event-card__meta">
+      <span class="event-pill">Evento</span>
+      <span class="event-date">Ruta de las Empresas</span>
+    </div>
+
+    <h3 class="event-card__title">Arte, responsabilidad y bienestar</h3>
+    <p class="event-card__sub">Historias que impulsan solidez empresarial</p>
+
+    <p class="event-card__excerpt">
+      Exposición itinerante que visibiliza historias de crecimiento y bienestar. En este recorrido, BAUSEN destaca como firma que impulsa...
+    </p>
+
+    <button class="btn btn--navy event-card__more" type="button" data-open-event="4">
+      Leer más
+      <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+    </button>
+
+    <div class="event-card__full" hidden>
+      <p>
+        La Ruta de las Empresas llegó para mostrar, desde el lenguaje del arte, la labor social y económica que miles de empresas realizan todos los días en México.
+        A través de piezas monumentales, esta exposición itinerante visibiliza historias de crecimiento, responsabilidad y bienestar compartido.
+        En este recorrido, Bausen destaca como una firma que impulsa la solidez empresarial desde dentro.
+        Su labor acompaña a las empresas del país con consultoría fiscal, cumplimiento normativo y procesamiento de nómina, promoviendo prácticas responsables, competitivas y alineadas al desarrollo sostenible.
+      </p>
+
+   <div class="event-detail__images">
+  <div class="event-img-slot is-empty"><div class="slot-empty" aria-hidden="true"></div></div>
+</div>
+    </div>
+  </div>
+</article>
       </div>
-    </section>
 
-    <section class="section">
-      <div class="container">
-        <header class="title-block">
-          <h2 class="title-block__title" data-i18n="newspage.recentTitleHtml">Noticias <span class="title-accent">Más Recientes</span></h2>
-          <p class="title-block__sub" data-i18n-text="newspage.recentSub">Mantente informado con las últimas novedades del sector</p>
-          <span class="title-block__line" aria-hidden="true"></span>
-        </header>
+      <div class="empty-future" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+<!-- Modal de Evento (Leer más) — sin redirección -->
+<div class="event-modal" id="eventModal" aria-hidden="true" role="dialog" aria-label="Detalle de evento">
+  <div class="event-modal__backdrop" data-close="event"></div>
 
-        <div class="news-grid" id="newsGrid" aria-live="polite"></div>
-
-        <div class="empty-state" id="emptyState">
-          <div class="empty-icon" aria-hidden="true"><i class="fa-regular fa-newspaper"></i></div>
-          <div class="empty-title" data-i18n-text="newspage.emptyTitle">No hay noticias disponibles</div>
-          <div class="empty-sub muted" data-i18n-text="newspage.emptySub">Cuando publiquemos contenido nuevo, aparecerá aquí automáticamente.</div>
-
-          <div class="empty-future" aria-hidden="true"></div>
-        </div>
+  <div class="event-modal__panel" role="document">
+    <div class="event-modal__head">
+      <div class="event-modal__head-left">
+        <div class="event-modal__kicker" id="eventModalKicker">Evento</div>
+        <h3 class="event-modal__title" id="eventModalTitle">Título</h3>
+        <div class="event-modal__meta" id="eventModalMeta">Fecha / categoría</div>
       </div>
-    </section>
 
-    <section class="section section--alt" id="categorias">
-      <div class="container">
-        <header class="title-block">
-          <h2 class="title-block__title" data-i18n="newspage.catTitleHtml">Explora por <span class="title-accent">Categoría</span></h2>
-          <p class="title-block__sub" data-i18n-text="newspage.catSub">Encuentra el contenido de acuerdo a lo que te interesa</p>
-          <span class="title-block__line" aria-hidden="true"></span>
-        </header>
+      <button class="icon-btn" type="button" data-close="event" aria-label="Cerrar">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </div>
 
-        <div class="cat-grid">
-          <button class="cat-card reveal" type="button" data-cat="blog" aria-label="Explorar Blog Corporativo" data-i18n-aria-label="newspage.catBlogAria">
-            <div class="cat-card__icon" aria-hidden="true"><i class="fa-solid fa-building"></i></div>
-            <div class="cat-card__title" data-i18n-text="newspage.catBlogTitle">Blog Corporativo</div>
-            <div class="cat-card__sub muted" data-i18n-text="newspage.catBlogSub">Tendencias, insights y mejores prácticas</div>
-            <div class="cat-card__kpi"><span id="countBlog">42</span> <span data-i18n-text="newspage.kpiArticles">artículos</span></div>
-          </button>
+    <div class="event-modal__content" id="eventModalContent">
+      <!-- Se inyecta desde la card -->
+    </div>
 
-          <button class="cat-card reveal" type="button" data-cat="eventos" aria-label="Explorar Eventos" data-i18n-aria-label="newspage.catEventsAria">
-            <div class="cat-card__icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></div>
-            <div class="cat-card__title" data-i18n-text="newspage.catEventsTitle">Eventos</div>
-            <div class="cat-card__sub muted" data-i18n-text="newspage.catEventsSub">Webinars, conferencias y anuncios</div>
-            <div class="cat-card__kpi"><span id="countEventos">18</span> <span data-i18n-text="newspage.kpiEvents">eventos</span></div>
-          </button>
-
-          <button class="cat-card reveal" type="button" data-cat="legales" aria-label="Explorar Cambios Legislativos" data-i18n-aria-label="newspage.catLegalAria">
-            <div class="cat-card__icon" aria-hidden="true"><i class="fa-solid fa-scale-balanced"></i></div>
-            <div class="cat-card__title" data-i18n-text="newspage.catLegalTitle">Cambios Legislativos</div>
-            <div class="cat-card__sub muted" data-i18n-text="newspage.catLegalSub">Actualizaciones legales y su impacto</div>
-            <div class="cat-card__kpi"><span id="countLegales">27</span> <span data-i18n-text="newspage.kpiUpdates">actualizaciones</span></div>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <div class="modal" id="newsletterModal" aria-hidden="true" role="dialog" aria-label="Suscripción a newsletter" data-i18n-aria-label="newspage.modalAria">
+    <div class="event-modal__foot">
+      <button class="btn btn--slb" type="button" data-close="event">Cerrar</button>
+    </div>
+  </div>
+</div>
+<div class="modal" id="newsletterModal" aria-hidden="true" role="dialog" aria-label="Suscripción a newsletter" data-i18n-aria-label="newspage.modalAria">
       <div class="modal__backdrop" data-close="modal"></div>
       <div class="modal__panel" role="document">
         <div class="modal__head">
@@ -273,7 +429,35 @@
         </form>
       </div>
     </div>
-  </main>
+  
+
+
+<section class="section section--newsletter" id="social">
+  <div class="container">
+    <div class="cta">
+      <div class="cta__left">
+        <div class="cta__pill"><i class="fa-solid fa-hashtag" aria-hidden="true"></i> Social</div>
+        <h2 class="cta__title">Conecta con BAUSEN</h2>
+        <p class="cta__sub">Visita el sitio principal y nuestras redes (configurable).</p>
+
+        <div class="cta__actions">
+          <a class="btn btn--primary" href="index.html">Ir al sitio web</a>
+          <button class="btn btn--soft" type="button" id="openNewsletter">
+            Suscribirme al newsletter
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="cta__right" aria-hidden="true">
+        <div class="cta__blob"></div>
+        <div class="cta__grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
 
   <!-- FOOTER (idéntico a Prensa, pero Contacto apunta a contacto.html) -->
   <footer class="site-footer">
@@ -309,10 +493,15 @@
         <div class="footer__social">
           <span class="footer__social-title" data-i18n-text="footer.follow">Síguenos en redes</span>
           <div class="social">
-            <a class="social__btn" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a class="social__btn" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a class="social__btn" href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-            <a class="social__btn" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a aria-label="LinkedIn" class="social-mini is-linkedin" href=" https://www.linkedin.com/in/bausen-tax-services-732a693a7" rel="noopener" target="_blank">
+<i aria-hidden="true" class="fa-brands fa-linkedin-in"></i>
+</a>
+            <a aria-label="X" class="social-mini is-x" href="https://x.com/bausen_mx" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L5 22H2l7.4-8.5L1 2h7l4.8 6.1L18.9 2Zm-1.2 18h1.7L7.1 3.9H5.3L17.7 20Z"></path></svg>
+</a>
+           <a aria-label="Instagram" class="social-mini is-instagram" href="https://instagram.com/bausen_mx" rel="noopener" target="_blank">
+<i aria-hidden="true" class="fa-brands fa-instagram"></i>
+</a>
           </div>
         </div>
       </div>
@@ -364,9 +553,9 @@
     <div class="container footer__bottom">
       <div class="footer__copy" data-i18n-text="presspage.footerRights">© 2026 Bausen. Todos los derechos reservados</div>
       <div class="footer__legal">
-        <a href="privacidad.html" data-i18n-text="footer.privacy">Política de privacidad</a>
-        <a href="terminos.html" data-i18n-text="footer.terms">Términos de servicio</a>
-        <a href="cookies.html" data-i18n-text="footer.cookies">Política de cookies</a>
+        <a href="/term/privacidad.html" data-i18n-text="footer.privacy">Política de privacidad</a>
+        <a href="/term/terminos.html" data-i18n-text="footer.terms">Términos de servicio</a>
+        <a href="/term/cookies.html" data-i18n-text="footer.cookies">Política de cookies</a>
       </div>
     </div>
   </footer>

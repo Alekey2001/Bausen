@@ -21,43 +21,25 @@
      Theme
   ========================= */
   function initTheme() {
-    // Keep compatibility with BOTH implementations:
-    // - reference uses storage key "theme" + body.theme-dark
-    // - destino used html[data-theme] + "bausen_theme"
-    const KEY = "bausen_theme";
-    const KEY_COMPAT = "theme";
+    // ✅ Light-only: force the page to stay in light mode.
+    // Remove any persisted theme values from older builds.
+    try {
+      localStorage.removeItem("bausen_theme");
+      localStorage.removeItem("theme");
+    } catch {}
+
+    root.setAttribute("data-theme", "light");
+    body.classList.remove("theme-dark");
+
+    // If the toggle exists (other pages), hide it.
     const themeToggle = $("#theme-toggle") || $("#themeToggle");
-
-    const apply = (mode) => {
-      const next = mode === "light" ? "light" : "dark";
-      root.setAttribute("data-theme", next);
-      body.classList.toggle("theme-dark", next === "dark");
-
-      // persist (both keys for backwards compatibility)
-      storage.set(KEY, next);
-      storage.set(KEY_COMPAT, next);
-    };
-
-    const saved = storage.get(KEY, null) || storage.get(KEY_COMPAT, null);
-    if (saved === "dark" || saved === "light") apply(saved);
-    else {
-      const attr = root.getAttribute("data-theme");
-      if (attr === "dark" || attr === "light") apply(attr);
-      else {
-        const osDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        apply(osDark ? "dark" : "light");
-      }
-    }
-
     if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        const current = root.getAttribute("data-theme") || (body.classList.contains("theme-dark") ? "dark" : "light");
-        apply(current === "dark" ? "light" : "dark");
-      });
+      themeToggle.style.display = "none";
+      themeToggle.setAttribute("aria-pressed", "false");
     }
   }
 
-    /* =========================
+  /* =========================
      Language (i18n) - copied from reference
   ========================= */
   const storage = {
