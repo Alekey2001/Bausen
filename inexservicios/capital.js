@@ -94,6 +94,14 @@
       "nav.specialized": "Centro de formación",
       "nav.tax": "Noticias",
       "nav.about": "Acerca de",
+"nav.services": "Servicios",
+"nav.training": "Centro de formación",
+"nav.news": "Noticias",
+"nav.press": "Prensa",
+
+"nav.svc.payroll": "Procesamiento de nómina",
+"nav.svc.specialized": "Servicios especializados",
+"nav.svc.tax": "Consultoría fiscal",
 
       "header.collab": "¿Eres colaborador?",
 
@@ -205,6 +213,14 @@
       "nav.specialized": "Specialized services",
       "nav.tax": "Tax services",
       "nav.about": "About",
+"nav.services": "Servicios",
+"nav.training": "Centro de formación",
+"nav.news": "Noticias",
+"nav.press": "Prensa",
+
+"nav.svc.payroll": "Procesamiento de nómina",
+"nav.svc.specialized": "Servicios especializados",
+"nav.svc.tax": "Consultoría fiscal",
 
       "header.collab": "Are you a collaborator?",
 
@@ -528,13 +544,15 @@
   window.addEventListener('scroll', updateHeader, { passive: true });
 
   // ======================
-  // MOBILE DRAWER
+  
   // ======================
-  const drawer = $('#navDrawer');
-  const btnOpen = $('#navToggle');
-  const btnClose = $('#navClose');
-  const backdrop = $('.drawer-backdrop');
-  const panel = $('.drawer-panel');
+  // MOBILE MENU (match referencia)
+  // ======================
+  const drawerRoot = $('#navDrawer');            // wrapper (existe por ID)
+  const btnOpen = $('#navToggle');               // NO cambiar ID
+  const btnClose = $('#navClose');               // NO cambiar ID
+  const overlay = $('#mobile-menu-overlay');     // nuevo (referencia)
+  const menu = $('#mobile-menu');                // nuevo (referencia)
 
   function getScrollbarWidth() {
     return window.innerWidth - document.documentElement.clientWidth;
@@ -542,129 +560,93 @@
 
   function lockScroll() {
     const scrollbarWidth = getScrollbarWidth();
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('menu-open');
     document.body.style.paddingRight = `${scrollbarWidth}px`;
     if (header) header.style.paddingRight = `${scrollbarWidth}px`;
   }
 
   function unlockScroll() {
-    document.body.style.overflow = '';
+    document.body.classList.remove('menu-open');
     document.body.style.paddingRight = '';
     if (header) header.style.paddingRight = '';
   }
 
   function openDrawer() {
-    if (!drawer || !btnOpen) return;
+    if (!drawerRoot || !btnOpen || !overlay || !menu) return;
 
-    drawer.hidden = false;
+    drawerRoot.hidden = false;
     btnOpen.setAttribute('aria-expanded', 'true');
-    btnOpen.setAttribute('aria-label', t('aria.closeMenu'));
+    btnOpen.setAttribute('aria-label', 'Close menu');
 
-    drawer.offsetHeight;
+    // Force reflow for transitions
+    drawerRoot.offsetHeight;
+
+    overlay.classList.add('show');
+    menu.classList.add('open');
+
     lockScroll();
 
     setTimeout(() => {
       btnClose?.focus();
-    }, 100);
+    }, 80);
   }
 
   function closeDrawer() {
-    if (!drawer || !btnOpen) return;
+    if (!drawerRoot || !btnOpen || !overlay || !menu) return;
 
-    drawer.hidden = true;
+    overlay.classList.remove('show');
+    menu.classList.remove('open');
+
     btnOpen.setAttribute('aria-expanded', 'false');
-    btnOpen.setAttribute('aria-label', t('aria.openMenu'));
+    btnOpen.setAttribute('aria-label', 'Open menu');
 
     unlockScroll();
-    btnOpen.focus();
+
+    // Oculta el root tras la transición
+    setTimeout(() => {
+      if (drawerRoot) drawerRoot.hidden = true;
+      btnOpen?.focus();
+    }, 260);
   }
 
-  if (btnOpen) btnOpen.addEventListener('click', openDrawer);
-  if (btnClose) btnClose.addEventListener('click', closeDrawer);
-  if (backdrop) backdrop.addEventListener('click', closeDrawer);
+  if (btnOpen) btnOpen.addEventListener('click', () => {
+    if (drawerRoot?.hidden) openDrawer();
+    else closeDrawer();
+  });
 
-  if (drawer) {
-    drawer.addEventListener('click', (e) => {
+  if (btnClose) btnClose.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+
+  // Click en links: cierra menú
+  if (menu) {
+    menu.addEventListener('click', (e) => {
       const link = e.target.closest('a');
-      if (link && link.classList.contains('drawer-link')) {
-        closeDrawer();
-      }
+      if (!link) return;
+
+      const isMobileNavLink =
+        link.classList.contains('mobile-nav-link') ||
+        link.classList.contains('mobile-sub-link') ||
+        link.classList.contains('mobile-summary-link');
+
+      if (isMobileNavLink) closeDrawer();
     });
   }
 
+  // Escape
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer && !drawer.hidden) {
+    if (e.key === 'Escape' && drawerRoot && !drawerRoot.hidden) {
       closeDrawer();
     }
   });
 
-  const mediaQuery = window.matchMedia('(min-width: 981px)');
+  // Desktop hover interactions (igual referencia): abrir al pasar mouse
+  (function initHoverMenu() {
+    const canHover =
+      window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) return;
 
-  function handleMediaChange(e) {
-    if (e.matches && drawer && !drawer.hidden) {
-      closeDrawer();
-    }
-  }
+    if (!btnOpen || !drawerRoot || !overlay || !menu) return;
 
-  if (mediaQuery.addEventListener) {
-    mediaQuery.addEventListener('change', handleMediaChange);
-  } else {
-    mediaQuery.addListener(handleMediaChange);
-  }
-
-  if (panel) panel.addEventListener('click', (e) => e.stopPropagation());
-
-/* =========================
-   Hover interactions (DESKTOP) — igual referencia (acerca.js)
-   - Idioma: hover abre/cierra
-   - Hamburguesa: hover abre
-   - Submenús (<details>) dentro del drawer: hover abre/cierra
-========================= */
-(() => {
-  const canHover =
-    window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (!canHover) return;
-
-  /* 1) IDIOMA */
-  const langBtn = document.getElementById('language-btn');
-  const langDropdown = document.getElementById('language-dropdown');
-  const langWrap = langBtn?.closest('.language-selector');
-
-  if (langBtn && langDropdown && langWrap) {
-    let tClose = null;
-
-    const openLang = () => {
-      clearTimeout(tClose);
-      langDropdown.classList.add('show');
-      langBtn.setAttribute('aria-expanded', 'true');
-    };
-
-    const closeLang = (delay = 120) => {
-      clearTimeout(tClose);
-      tClose = setTimeout(() => {
-        langDropdown.classList.remove('show');
-        langBtn.setAttribute('aria-expanded', 'false');
-      }, delay);
-    };
-
-    langWrap.addEventListener('pointerenter', openLang);
-    langWrap.addEventListener('pointerleave', () => closeLang(140));
-
-    document.addEventListener('pointerdown', (e) => {
-      if (!langWrap.contains(e.target)) closeLang(0);
-    });
-  }
-
-  /* 2) HAMBURGUESA / DRAWER */
-  const burger = document.getElementById('navToggle');
-  const drawer = document.getElementById('navDrawer');
-  const panel = drawer?.querySelector('.drawer-panel');
-  const backdrop = drawer?.querySelector('.drawer-backdrop');
-
-  // Reusa openDrawer/closeDrawer del script actual
-  const hasFns = (typeof openDrawer === 'function' && typeof closeDrawer === 'function');
-
-  if (burger && drawer && panel && backdrop && hasFns) {
     let openTimer = null;
     let closeTimer = null;
 
@@ -672,7 +654,7 @@
       clearTimeout(closeTimer);
       clearTimeout(openTimer);
       openTimer = setTimeout(() => {
-        if (drawer.hidden) openDrawer();
+        if (drawerRoot.hidden) openDrawer();
       }, 120);
     };
 
@@ -680,60 +662,35 @@
       clearTimeout(openTimer);
       clearTimeout(closeTimer);
       closeTimer = setTimeout(() => {
-        if (!drawer.hidden) closeDrawer();
+        if (!drawerRoot.hidden) closeDrawer();
       }, delay);
     };
 
-    burger.addEventListener('pointerenter', scheduleOpen);
-    burger.addEventListener('pointerleave', () => clearTimeout(openTimer));
+    btnOpen.addEventListener('pointerenter', scheduleOpen);
+    btnOpen.addEventListener('pointerleave', () => clearTimeout(openTimer));
 
-    // Mantén abierto si el mouse está en panel o botón; cierra al salir del panel/backdrop
-    panel.addEventListener('pointerenter', () => {
-      clearTimeout(closeTimer);
-    });
+    menu.addEventListener('pointerenter', () => clearTimeout(closeTimer));
+    menu.addEventListener('pointerleave', () => scheduleClose(180));
+    overlay.addEventListener('pointerenter', () => clearTimeout(closeTimer));
+    overlay.addEventListener('pointerleave', () => scheduleClose(180));
 
-    panel.addEventListener('pointerleave', (e) => {
-      const to = e.relatedTarget;
-      if (to && (burger.contains(to) || backdrop.contains(to))) return;
-      scheduleClose(180);
-    });
-
-    backdrop.addEventListener('pointerleave', (e) => {
-      const to = e.relatedTarget;
-      if (to && (panel.contains(to) || burger.contains(to))) return;
-      scheduleClose(180);
-    });
-
-    backdrop.addEventListener('pointerenter', () => {
-      // si está sobre backdrop, dejamos abierto (no cerramos instantáneo)
-      clearTimeout(closeTimer);
-    });
-  }
-
-  /* 3) SUBMENÚS en drawer (<details>) */
-  if (drawer) {
-    const detailsList = drawer.querySelectorAll('details.drawer-details');
-
+    // Submenús (<details>) hover abre/cierra
+    const detailsList = menu.querySelectorAll('details.menu-details');
     detailsList.forEach((d) => {
       let t = null;
-
       d.addEventListener('pointerenter', () => {
         clearTimeout(t);
         d.open = true;
       });
-
       d.addEventListener('pointerleave', () => {
         clearTimeout(t);
-        t = setTimeout(() => {
-          d.open = false;
-        }, 140);
+        t = setTimeout(() => { d.open = false; }, 140);
       });
     });
-  }
-})();
+  })();
 
-  
-  // ======================
+
+// ======================
   // REVEAL ANIMATIONS
   // ======================
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

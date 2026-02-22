@@ -203,7 +203,6 @@ img{ max-width:100%; display:block; }
   gap: 14px;
 }
 
-
 /* =========================
    NEWS CARDS (para "Noticias disponibles")
 ========================= */
@@ -265,7 +264,6 @@ img{ max-width:100%; display:block; }
   display: block;
   overflow: visible;
 }
-
 
 .empty-state{
   margin-top: 18px;
@@ -534,12 +532,8 @@ img{ max-width:100%; display:block; }
   .modal__panel{ margin-top: 12vh; }
 }
 
-
 /* =========================================================
    HEADER / NAV / LANGUAGE — REFRESH (Noticias)
-   Objetivo: igualar barra superior a referencia (Home),
-   mantener solo modo claro y paleta corporativa.
-   (Solo estética: no toca lógica)
 ========================================================= */
 
 .header{
@@ -612,15 +606,6 @@ img{ max-width:100%; display:block; }
   opacity: .8;
 }
 
-.language-flag{
-  width: 22px;
-  height: 22px;
-  border-radius: 10px;
-  border: 1px solid rgba(24,35,137,.18);
-  background: linear-gradient(135deg, rgba(0,61,165,.18), rgba(24,35,137,.14));
-  box-shadow: 0 10px 18px rgba(24,35,137,.10);
-}
-
 /* Dropdown */
 .language-dropdown{
   position:absolute;
@@ -655,14 +640,6 @@ img{ max-width:100%; display:block; }
 }
 .language-option:hover{
   background: rgba(220,226,239,.62);
-}
-
-.lang-option-flag{
-  width: 18px;
-  height: 18px;
-  border-radius: 8px;
-  border: 1px solid rgba(24,35,137,.18);
-  background: linear-gradient(135deg, rgba(0,61,165,.16), rgba(91,117,182,.14));
 }
 
 /* Hamburguesa */
@@ -722,17 +699,19 @@ img{ max-width:100%; display:block; }
 
 @media (max-width: 860px){
   .header-controls .btn.btn-primary{
-    display:none; /* desktop CTA se mantiene, pero en móvil vive dentro del menú */
+    display:none;
   }
   .language-btn{
     padding: 10px 10px;
   }
-  .language-code{ display:none; } /* solo icono/flag en móvil para compactar */
+  .language-code{ display:none; }
 }
+
 /* ===== FIX #1: Cursor visible (force) ===== */
 html, body { cursor: auto !important; }
 a, button, summary, input, select, textarea { cursor: pointer; }
 input, textarea { cursor: text; }
+
 /* ===== FIX #2 (PRO): Flags iguales tipo referencia (SVG badges, NO emojis) ===== */
 .language-flag,
 .lang-option-flag{
@@ -759,7 +738,7 @@ input, textarea { cursor: text; }
 </svg>");
 }
 
-/* Flag EN (USA por defecto; si prefieres UK dime y lo cambio) */
+/* Flag EN (USA por defecto) */
 .language-flag[data-flag="EN"],
 .lang-option-flag[data-flag="EN"]{
   background-image: url("data:image/svg+xml;utf8,\
@@ -775,18 +754,6 @@ input, textarea { cursor: text; }
 </svg>");
 }
 
-/* Alineación fina dentro del botón de idioma */
-.language-btn{
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-.language-code{
-  font-family: var(--ff-sub);
-  font-weight: 900;
-}
-
-
 /* ===== Ajuste: noticias dentro del recuadro (empty-state) ===== */
 .empty-state .news-grid{
   margin-top: 14px;
@@ -799,7 +766,6 @@ input, textarea { cursor: text; }
 #mobile-menu details.menu-details[open] > summary i.fa-chevron-right{
   transform: rotate(90deg);
 }
-
 
 /* FIX: quitar barra/fondo raro en CTA colaborador dentro del menú */
 #mobile-menu .mobile-cta{
@@ -863,12 +829,8 @@ input, textarea { cursor: text; }
   }
 }
 
-
 /* =========================================================
    FOOTER — ajustes solicitados
-   - Redes sociales: iconos alineados y con mismo tamaño
-   - EMPRESA y SERVICIOS: links en layout horizontal (PC) y
-     vertical (móvil) sin cambiar los iconos existentes
 ========================================================= */
 
 /* Social icons layout */
@@ -911,7 +873,7 @@ input, textarea { cursor: text; }
 
   .site-footer .footer__grid > .footer__col:nth-child(2) .footer__link,
   .site-footer .footer__grid > .footer__col:nth-child(3) .footer__link{
-    flex: 1 1 170px; /* fuerza filas 2xN aprox */
+    flex: 1 1 170px;
     max-width: 220px;
     margin: 0;
     padding: 6px 8px;
@@ -931,25 +893,24 @@ input, textarea { cursor: text; }
     padding: 6px 0;
   }
 }
+
 /* =========================
-   TITLE SPLIT (Nuestros/Servicios style)
-   1º: azul marino #182389, 2º: negro
+   TITLE SPLIT
 ========================= */
-.title-split__first{ color: var(--am); } /* #182389 */
+.title-split__first{ color: var(--am); }
 .title-split__second{ color: #000; }
+
+/* ✅ NUEVO: split royal blue para lo solicitado (Noticias / Conecta) */
+.title-split--royal .title-split__first{ color: var(--ar); } /* #003DA5 */
+.title-split--royal .title-split__second{ color: #000; }
 
 /* =========================
    EVENT CARDS (4 eventos)
-   Reglas solicitadas:
-   - Fondo tarjeta: Silver lake blue #5B75B6
-   - Botón oscuro: #182389
-   - Botón claro: #5B75B6
-   - Fondo página: ya está en gradiente + mc
 ========================= */
 .event-card{
   border-radius: var(--radius2);
   border: 1px solid rgba(24,35,137,.14);
-  background: var(--slb); /* #5B75B6 */
+  background: var(--slb);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
   display: grid;
@@ -958,12 +919,12 @@ input, textarea { cursor: text; }
 }
 .event-card:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
 
-/* EVENT CARD MEDIA — mostrar imagen completa centrada */
+/* ✅ AJUSTE CLAVE: imagen ocupa todo el cuadro (cover) y se ve clean */
 .event-card__media{
   position: relative;
-  height: 210px;
-  background: var(--mc);            /* fondo suave (Morning cloud) */
-  overflow: hidden;
+  height: clamp(280px, 22vw, 360px); /* más alto para que la imagen quepa completa y se vea grande */
+  background: #fff;                 /* fondo neutro (sin relleno azul) */
+  overflow: hidden;                 /* mantiene el radio limpio */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -972,10 +933,14 @@ input, textarea { cursor: text; }
 .event-card__media img{
   width: 100%;
   height: 100%;
-  object-fit: contain;              /* <-- clave: NO recorta */
-  object-position: center;          /* centrado perfecto */
+  object-fit: contain;              /* se ve COMPLETA (sin recorte) */
+  object-position: center;
   display: block;
+  transform: none;                  /* sin zoom */
 }
+
+.event-card:hover .event-card__media img{ transform: none; }
+
 .event-card__media-empty{
   position:absolute;
   inset: 16px;
@@ -1048,12 +1013,12 @@ input, textarea { cursor: text; }
 }
 
 .btn--navy{
-  background: var(--am); /* #182389 */
+  background: var(--am);
   border-color: rgba(255,255,255,.18);
   color: #fff;
 }
 .btn--slb{
-  background: var(--slb); /* #5B75B6 */
+  background: var(--slb);
   border-color: rgba(255,255,255,.18);
   color: #fff;
 }
@@ -1063,7 +1028,6 @@ input, textarea { cursor: text; }
 
 /* =========================
    EVENT MODAL (Leer más)
-   Full-screen overlay, sin redirección
 ========================= */
 .event-modal{
   position: fixed;
@@ -1185,4 +1149,9 @@ input, textarea { cursor: text; }
 
 @media (max-width: 900px){
   .event-detail__images{ grid-template-columns: 1fr; }
+}
+
+/* event-card media responsive */
+@media (max-width: 560px){
+  .event-card__media{ height: 240px; }
 }

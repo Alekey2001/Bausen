@@ -751,6 +751,47 @@ function initLanguage() {
 
     languageBtn.addEventListener("click", (e) => {
       e.preventDefault();
+
+// ✅ Hover para abrir/cerrar idiomas (solo desktop con mouse)
+const isDesktopHoverLang = () =>
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+let langHoverTimer = null;
+
+const clearLangHoverTimer = () => {
+  if (langHoverTimer) {
+    window.clearTimeout(langHoverTimer);
+    langHoverTimer = null;
+  }
+};
+
+const scheduleLangClose = () => {
+  if (!isDesktopHoverLang()) return;
+  clearLangHoverTimer();
+
+  langHoverTimer = window.setTimeout(() => {
+    const overBtn = languageBtn.matches(":hover");
+    const overDrop = languageDropdown.matches(":hover");
+    if (!overBtn && !overDrop) close();
+  }, 180);
+};
+
+// Abre al pasar el mouse por el botón
+languageBtn.addEventListener("mouseenter", () => {
+  if (!isDesktopHoverLang()) return;
+  clearLangHoverTimer();
+  open();
+});
+
+// Mantener abierto si el mouse entra al dropdown
+languageDropdown.addEventListener("mouseenter", () => {
+  if (!isDesktopHoverLang()) return;
+  clearLangHoverTimer();
+});
+
+// Cierra cuando sales del botón o del dropdown (con pequeño delay)
+languageBtn.addEventListener("mouseleave", scheduleLangClose);
+languageDropdown.addEventListener("mouseleave", scheduleLangClose);
       e.stopPropagation();
       const expanded = languageBtn.getAttribute("aria-expanded") === "true";
       expanded ? close() : open();
@@ -792,101 +833,173 @@ function initLanguage() {
 const STORAGE_LANG = 'bausen_lang';
 const STORAGE_THEME = 'bausen_theme';
 
-function setupDrawer() {
-  const drawer = $('#navDrawer');
-  const btnOpen = $('#navToggle');
-  const btnClose = $('#navClose');
-  const backdrop = $('.drawer-backdrop');
-  const panel = $('.drawer-panel');
 
-  if (!drawer || !btnOpen) return;
+function initMobileMenu() {
+  const toggleBtn =
+    document.getElementById("menu-toggle") ||
+    document.querySelector(".menu-toggle") ||
+    document.querySelector(".nav__toggle");
 
-  const getScrollbarWidth = () => window.innerWidth - document.documentElement.clientWidth;
+  const panel =
+    document.getElementById("mobile-menu") ||
+    document.querySelector(".mobile-menu") ||
+    document.querySelector(".nav__panel");
 
-  const lockScroll = () => {
-    const w = getScrollbarWidth();
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${w}px`;
+  const overlay =
+    document.getElementById("mobile-menu-overlay") ||
+    document.querySelector(".mobile-menu-overlay") ||
+    document.querySelector(".nav__overlay");
+
+  const closeBtn =
+    document.getElementById("close-menu") ||
+    document.querySelector(".close-menu") ||
+    document.querySelector(".nav__close");
+
+  if (!toggleBtn || !panel || !overlay) return;
+
+  const rootEl = document.documentElement;
+
+  const setLocked = (locked) => {
+    rootEl.style.overflow = locked ? "hidden" : "";
+    document.body.style.overflow = locked ? "hidden" : "";
+    document.body.classList.toggle("menu-open", locked);
   };
 
-  const unlockScroll = () => {
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
+  const openMenu = () => {
+    panel.classList.add("open");
+    overlay.classList.add("show");
+    toggleBtn.setAttribute("aria-expanded", "true");
+    setLocked(true);
+
+    window.setTimeout(() => {
+      const firstLink =
+        panel.querySelector(".mobile-nav-link, .mobile-nav__link") ||
+        panel.querySelector("a[href]") ||
+        panel.querySelector("button");
+      if (firstLink) firstLink.focus();
+    }, 80);
   };
 
-  const openDrawer = () => {
-    drawer.hidden = false;
-    btnOpen.setAttribute('aria-expanded', 'true');
-    lockScroll();
-    setTimeout(() => btnClose?.focus(), 50);
+  const closeMenuFn = () => {
+    panel.classList.remove("open");
+    overlay.classList.remove("show");
+    toggleBtn.setAttribute("aria-expanded", "false");
+    setLocked(false);
+    window.setTimeout(() => toggleBtn.focus(), 0);
   };
 
-  const closeDrawer = () => {
-    drawer.hidden = true;
-    btnOpen.setAttribute('aria-expanded', 'false');
-    unlockScroll();
-    btnOpen.focus();
-  };
-
-  btnOpen.addEventListener('click', () => {
-    const isOpen = !drawer.hidden;
-    isOpen ? closeDrawer() : openDrawer();
+  toggleBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    panel.classList.contains("open") ? closeMenuFn() : openMenu();
   });
 
-  btnClose?.addEventListener('click', closeDrawer);
-  backdrop?.addEventListener('click', closeDrawer);
-  panel?.addEventListener('click', (e) => e.stopPropagation());
+  // Desktop hover behavior (PC): open menu on mouse over, close when leaving toggle+panel
+  const isDesktopHover = () =>
+    window.matchMedia("(hover: hover) and (pointer: fine)").matches && window.innerWidth >= 980;
 
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !drawer.hidden) closeDrawer();
+  let hoverCloseTimer = null;
+
+  const clearHoverTimer = () => {
+    if (hoverCloseTimer) {
+      window.clearTimeout(hoverCloseTimer);
+      hoverCloseTimer = null;
+    }
+  };
+
+  const leavingToMenuZone = (e) => {
+    const to = e.relatedTarget;
+    if (!to) return false;
+    return (panel && panel.contains(to)) || (overlay && overlay.contains(to));
+  };
+
+  const leavingToToggleZone = (e) => {
+    const to = e.relatedTarget;
+    if (!to) return false;
+    return (toggleBtn && toggleBtn.contains(to)) || (overlay && overlay.contains(to));
+  };
+
+  const scheduleHoverClose = () => {
+    if (!isDesktopHover()) return;
+    clearHoverTimer();
+
+    hoverCloseTimer = window.setTimeout(() => {
+      const overToggle = toggleBtn.matches(":hover");
+      const overPanel = panel.matches(":hover");
+      const overOverlay = overlay.matches(":hover");
+
+      if (!overToggle && !overPanel && !overOverlay && panel.classList.contains("open")) {
+        closeMenuFn();
+      }
+    }, 260);
+  };
+
+  toggleBtn.addEventListener("mouseenter", () => {
+    if (!isDesktopHover()) return;
+    clearHoverTimer();
+    if (!panel.classList.contains("open")) openMenu();
   });
 
-  drawer.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if (a && a.classList.contains('drawer-link')) closeDrawer();
+  toggleBtn.addEventListener("mouseleave", (e) => {
+    if (!isDesktopHover()) return;
+    if (leavingToMenuZone(e)) return;
+    scheduleHoverClose();
   });
 
-  const mq = window.matchMedia('(min-width: 981px)');
-  const mqHandler = (ev) => { if (ev.matches && !drawer.hidden) closeDrawer(); };
-  mq.addEventListener ? mq.addEventListener('change', mqHandler) : mq.addListener(mqHandler);
+  panel.addEventListener("mouseenter", () => {
+    if (!isDesktopHover()) return;
+    clearHoverTimer();
+  });
+
+  panel.addEventListener("mouseleave", (e) => {
+    if (!isDesktopHover()) return;
+    if (leavingToToggleZone(e)) return;
+    scheduleHoverClose();
+  });
+
+  overlay.addEventListener("mouseenter", () => {
+    if (!isDesktopHover()) return;
+    scheduleHoverClose();
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeMenuFn();
+    });
+  }
+
+  overlay.addEventListener("click", closeMenuFn);
+
+  // Close the drawer only when a real navigation link is clicked.
+  // IMPORTANT: Do NOT close when tapping submenu toggles (<summary> / .mobile-nav-summary).
+  panel.querySelectorAll("a[href]").forEach((a) => {
+    a.addEventListener("click", () => closeMenuFn());
+  });
+
+  // Prevent submenu summaries from closing the drawer on mobile.
+  panel.querySelectorAll("summary.mobile-nav-summary").forEach((s) => {
+    s.addEventListener("click", (e) => {
+      if (e.target && e.target.closest && e.target.closest("a")) return;
+      e.stopPropagation();
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && panel.classList.contains("open")) closeMenuFn();
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980 && panel.classList.contains("open")) closeMenuFn();
+  });
 }
 
+
 function setupTheme() {
-  const themeToggle = $('#themeToggle');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  // ✅ Single-theme site: always light (no toggle)
+  document.documentElement.setAttribute('data-theme', 'light');
 
-  const updateIcons = (theme) => {
-    const isLight = theme === 'light';
-    $$('.i-sun').forEach(el => el.style.display = isLight ? 'block' : 'none');
-    $$('.i-moon').forEach(el => el.style.display = isLight ? 'none' : 'block');
-  };
-
-  const setTheme = (theme) => {
-    if (!['light','dark'].includes(theme)) return;
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(STORAGE_THEME, theme);
-    updateIcons(theme);
-
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f17' : '#F8FBFF');
-  };
-
-  const initTheme = () => {
-    const saved = localStorage.getItem(STORAGE_THEME);
-    if (saved === 'light' || saved === 'dark') return setTheme(saved);
-    setTheme(prefersDark.matches ? 'dark' : 'light');
-  };
-
-  initTheme();
-
-  prefersDark.addEventListener?.('change', (e) => {
-    if (!localStorage.getItem(STORAGE_THEME)) setTheme(e.matches ? 'dark' : 'light');
-  });
-
-  themeToggle?.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    setTheme(current === 'dark' ? 'light' : 'dark');
-  });
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', '#DCE2EF');
 }
 
 function setupHeaderScroll() {
@@ -967,6 +1080,143 @@ function setupFormValidation() {
   });
 }
 
+
+
+/* =========================
+   Submenus: open on hover (desktop)
+========================= */
+function initHamburgerSubmenuHover() {
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!finePointer) return;
+
+  const panel = document.getElementById("mobile-menu");
+  if (!panel) return;
+
+  const groups = panel.querySelectorAll("details");
+  if (!groups.length) return;
+
+  groups.forEach((details) => {
+    let t;
+    details.addEventListener("mouseenter", () => {
+      clearTimeout(t);
+      details.open = true;
+    });
+    details.addEventListener("mouseleave", () => {
+      t = setTimeout(() => (details.open = false), 120);
+    });
+    details.addEventListener("focusin", () => {
+      clearTimeout(t);
+      details.open = true;
+    });
+    details.addEventListener("focusout", () => {
+      t = setTimeout(() => (details.open = false), 150);
+    });
+  });
+}
+
+/* =========================
+   Active link (data-page)
+========================= */
+function initActiveLink() {
+  const links = $$(".nav-link, .mobile-nav-link, .mobile-nav__link");
+  const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
+  const pageNoExt = file.replace(".html", "").replace(".htm", "");
+
+  const alias = {
+    indexbeca: "index",
+    index: "index",
+    inicio: "index",
+    contacto: "contacto",
+    acercade: "acercade",
+    servicios: "servicios",
+    noticias: "noticias",
+    prensa: "prensa",
+    centro: "centro",
+  };
+
+  const currentKey = alias[pageNoExt] || pageNoExt || "index";
+
+  const keyFromLink = (a) => {
+    const dp = (a.getAttribute("data-page") || "").trim().toLowerCase();
+    if (dp) return dp;
+
+    const href = (a.getAttribute("href") || "").trim().toLowerCase();
+    const last = href.split("/").pop().split("?")[0].split("#")[0];
+    const noExt = last.replace(".html", "").replace(".htm", "");
+    return alias[noExt] || noExt;
+  };
+
+  links.forEach((a) => {
+    const key = keyFromLink(a);
+    const isCurrent = key === currentKey;
+    a.classList.toggle("active", isCurrent);
+    if (a.classList.contains("mobile-nav__link")) a.classList.toggle("is-active", isCurrent);
+    if (isCurrent) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+}
+
+/* =========================
+   Custom Cursor (reference)
+========================= */
+function initCursor() {
+  const cursorDot = document.getElementById("cursor-dot");
+  const cursorRing = document.getElementById("cursor-ring");
+  if (!cursorDot || !cursorRing) return;
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+  if (!hasFinePointer || prefersReducedMotion) return;
+
+  document.body.classList.add("has-cursor");
+
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let dotX = mouseX, dotY = mouseY;
+  let ringX = mouseX, ringY = mouseY;
+
+  let raf = null;
+
+  const setPos = (el, x, y) => {
+    el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  };
+
+  const tick = () => {
+    dotX += (mouseX - dotX) * 0.6;
+    dotY += (mouseY - dotY) * 0.6;
+    ringX += (mouseX - ringX) * 0.16;
+    ringY += (mouseY - ringY) * 0.16;
+
+    setPos(cursorDot, dotX, dotY);
+    setPos(cursorRing, ringX, ringY);
+    raf = null;
+  };
+
+  const onMove = (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!raf) raf = requestAnimationFrame(tick);
+  };
+
+  const isInteractive = (tEl) =>
+    !!tEl.closest("a, button, input, textarea, select, .btn, [role='button'], .card, .media-card, .mobile-nav-link, .mobile-sub-link, .language-btn, .menu-toggle");
+
+  const isSoftInteractive = (tEl) =>
+    !!tEl.closest(".logo-link, .nav-link, .language-btn, .theme-toggle, .btn-primary");
+
+  const onOver = (e) => {
+    const tEl = e.target;
+    cursorRing.classList.toggle("hover", isInteractive(tEl));
+    cursorRing.classList.toggle("interactive", isSoftInteractive(tEl));
+  };
+
+  const onOut = () => cursorRing.classList.remove("hover", "interactive");
+
+  document.addEventListener("mousemove", onMove, { passive: true });
+  document.addEventListener("mouseover", onOver, { passive: true });
+  document.addEventListener("mouseout", onOut, { passive: true });
+}
+
 /* =========================
    INIT
 ========================= */
@@ -975,7 +1225,10 @@ function init() {
   // idioma (REF)
   initLanguage();
 
-  setupDrawer();
+  initMobileMenu();
+  initHamburgerSubmenuHover();
+  initActiveLink();
+  initCursor();
   setupTheme();
   setupHeaderScroll();
   setupToTop();

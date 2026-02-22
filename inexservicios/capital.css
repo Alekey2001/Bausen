@@ -2464,3 +2464,317 @@ body:not(.theme-dark) .language-dropdown{
   word-break: keep-all !important;
   overflow-wrap: normal !important;
 }
+
+/* =========================================================
+   AJUSTES SOLICITADOS (ONLY CSS)
+   1) Reveal scroll más rápido (menos blur / menos tardado)
+   2) Títulos: Azul rey vs negro (intercambio solicitado)
+   ========================================================= */
+
+/* 1) Reveal más rápido y menos “desvanecido” */
+.reveal{
+  opacity: 0;
+  filter: blur(6px);
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 0.55s var(--ease),
+    filter 0.55s var(--ease),
+    transform 0.55s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.reveal.is-in{
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+}
+
+/* 2) Intercambio de colores en títulos (Azul rey = var(--accent), Negro = var(--text)) */
+
+/* HERO: "Procesamiento" azul, "de nómina" negro */
+.hero-title{
+  color: var(--text) !important; /* parte “de nómina” */
+}
+.hero-title .grad{
+  /* anula cualquier gradiente anterior y fuerza azul rey */
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: var(--accent) !important;
+  -webkit-text-fill-color: var(--accent) !important;
+}
+
+/* SECCIÓN SERVICIOS: "Servicios" azul, "Procesamiento de nómina" negro */
+.section-title{
+  color: var(--text);
+}
+.section-title > span:first-child{
+  color: var(--accent) !important; /* "Servicios" */
+}
+.section-title .grad2{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: var(--text) !important;              /* "Procesamiento de nómina" */
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+/* BENEFICIOS: "Beneficios de" azul, "Procesamiento de nómina" negro */
+.big-title{
+  color: var(--accent) !important; /* “Beneficios de” */
+}
+.big-title .grad{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: var(--text) !important;              /* “Procesamiento / de nómina” */
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+/* CTA: "Todos los servicios" azul / "en un solo lugar" negro (wrappers vienen del JS) */
+.big-title .split-blue{
+  color: var(--accent) !important;
+  display: block;
+}
+.big-title .split-black{
+  color: var(--text) !important;
+  display: block;
+}
+
+
+/* =========================================================
+   MENÚ HAMBURGUESA — MATCH REFERENCIA (index/stylebeca)
+   - No cambia IDs existentes (usa #navToggle / #navClose / #navDrawer existentes en JS)
+   - Implementa estructura/clases de la referencia en capital.html
+========================================================= */
+
+/* Aliases para reusar estética de referencia con tokens de Capital */
+:root{
+  --bg: var(--bg0);
+  --bg-soft: var(--bg1);
+  --border: var(--stroke);
+  --primary: var(--accent);
+  --primary-2: var(--accent2);
+
+  /* Sombras similares a referencia */
+  --shadow-soft: 0 12px 26px rgba(19,33,68,0.10);
+  --shadow:      0 18px 55px rgba(19,33,68,0.14);
+  --shadow-lg:   0 28px 90px rgba(19,33,68,0.22);
+}
+
+/* Header (solo lo necesario para referencia) */
+.header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: color-mix(in oklab, var(--bg1) 88%, transparent);
+  border-bottom: 1px solid var(--stroke);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.header-container{
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-img{
+  height: 34px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Deshabilita cualquier nav horizontal: todo vive en hamburguesa */
+.nav.nav-disabled{ display:none !important; }
+.nav{ display:none !important; }
+
+.header-controls{
+  margin-left: auto;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+/* Botón hamburguesa visible también en PC */
+.menu-toggle{
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  border: 1px solid rgba(24,35,137,0.16);
+  background: rgba(255,255,255,0.78);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.menu-toggle:hover{ transform: translateY(-1px); }
+.menu-toggle i{
+  font-size: 18px;
+  color: rgba(11,21,53,0.88);
+}
+
+/* Overlay */
+.mobile-menu-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(11,21,53,0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 250ms ease, visibility 250ms ease;
+  z-index: 10010;
+}
+.mobile-menu-overlay.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Drawer */
+.mobile-menu{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(92vw, 420px);
+  height: 100dvh;
+  background: rgba(255,255,255,0.92);
+  border-left: 1px solid rgba(24,35,137,0.14);
+  border-radius: 26px 0 0 26px;
+  box-shadow: var(--shadow-lg);
+  transform: translateX(110%);
+  transition: transform 250ms ease;
+  z-index: 10030;
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.mobile-menu.open{ transform: translateX(0); }
+
+.mobile-menu-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 18px 16px 14px;
+  background: linear-gradient(135deg, rgba(0,61,165,0.10), rgba(91,117,182,0.12));
+  border-bottom: 1px solid rgba(24,35,137,0.12);
+}
+
+.close-menu{
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  border: 1px solid rgba(24,35,137,0.16);
+  background: rgba(255,255,255,0.78);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  place-items: center;
+  cursor:pointer;
+  transition: transform 150ms ease;
+}
+.close-menu:hover{ transform: translateY(-1px); }
+
+.mobile-nav-list{
+  list-style:none;
+  padding: 12px;
+  margin: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-nav-item{ list-style:none; margin-bottom: 8px; }
+
+/* Acordeón */
+.mobile-accordion{ padding: 8px 0; }
+.menu-details{ width: 100%; }
+.menu-details > summary{ list-style:none; cursor: pointer; }
+.menu-details > summary::-webkit-details-marker{ display:none; }
+
+.mobile-nav-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  text-decoration:none;
+  color: rgba(11,21,53,0.84);
+  font-weight: 900;
+  background: rgba(255,255,255,0.70);
+  border: 1px solid rgba(24,35,137,0.12);
+  transition: background 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+.mobile-nav-link:hover{
+  background: rgba(220,226,239,0.55);
+  transform: translateY(-1px);
+  border-color: rgba(24,35,137,0.18);
+}
+.mobile-nav-link i{
+  transition: transform 180ms ease;
+}
+
+/* Links dentro del summary (texto clickeable) */
+.mobile-summary-link{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  text-decoration:none;
+  color: inherit;
+}
+
+/* Submenu */
+.mobile-submenu{
+  list-style:none;
+  margin: 10px 0 8px 0;
+  padding: 0 0 0 14px;
+  border-left: 1px solid rgba(24,35,137,0.18);
+}
+.mobile-sub-link{
+  display:block;
+  padding: 12px 12px;
+  border-radius: 14px;
+  font-weight: 900;
+  color: rgba(11,21,53,0.84);
+  text-decoration:none;
+  background: transparent;
+  transition: background 150ms ease, transform 150ms ease;
+}
+.mobile-sub-link:hover{
+  background: rgba(220,226,239,0.55);
+  transform: translateX(2px);
+}
+
+/* Flecha rota cuando details abierto */
+.menu-details[open] > summary i{ transform: rotate(90deg); }
+
+/* Active/current page (si JS marca .active o aria-current) */
+.mobile-menu .mobile-nav-link.active,
+.mobile-menu .mobile-nav-link[aria-current="page"]{
+  background: color-mix(in srgb, var(--primary) 18%, transparent) !important;
+  border-color: color-mix(in srgb, var(--primary) 22%, transparent) !important;
+  transform: none !important;
+}
+
+/* Scroll lock */
+body.menu-open{
+  overflow: hidden;
+  height: 100%;
+  touch-action: none;
+}
+
+
+/* Drawer root wrapper */
+.nav-drawer{
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+}
