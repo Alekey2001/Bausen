@@ -2778,3 +2778,133 @@ body.menu-open{
   inset: 0;
   z-index: 10010;
 }
+
+
+/* =========================================================
+   PATCH 2026-02-22 — Mobile header / language / scrollbar fixes
+   - NO cambia IDs ni estructura
+   - Solo corrige escala/overflow en móvil (idiomas + controles)
+========================================================= */
+
+/* Evita que el header "salte" por el safe-area en móviles modernos */
+.site-header{
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Controles del header: no envolver raro en móvil */
+.header-controls{
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+/* Botón de idioma: tamaño consistente (igual a hamburguesa) */
+.language-btn{
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 14px;
+  min-width: 44px;
+}
+.language-flag,
+.lang-option-flag{
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+}
+.language-code{
+  font-weight: 850;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Dropdown: evita recortes en pantallas pequeñas */
+.language-dropdown{
+  max-width: min(260px, calc(100vw - 24px));
+}
+
+/* Botón hamburguesa: tamaño fijo consistente */
+.menu-toggle{
+  width: 46px;
+  height: 44px;
+  border-radius: 14px;
+  padding: 0;
+}
+
+/* En móviles chicos, el CTA del header suele romper el layout: lo ocultamos */
+@media (max-width: 520px){
+  .header-controls .btn.btn-primary.btn-sm{
+    display: none;
+  }
+}
+
+/* Drawer: ancho completo en pantallas muy pequeñas (sin bordes raros) */
+@media (max-width: 420px){
+  .mobile-menu{
+    width: 100vw;
+    border-left: 0;
+  }
+}
+
+/* Mejor scroll interno del drawer (si el contenido es largo) */
+.mobile-nav-list{
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+
+/* =========================================================
+   PATCH 2026-02-22b — 'Eres colaborador' + iconos header (móvil/desktop)
+   - MÓVIL: ocultar CTA colaborador y ajustar tamaños/posiciones de idioma + hamburguesa como referencia
+   - DESKTOP: CTA colaborador con tamaño/padding como referencia
+   - NO cambia IDs ni HTML
+========================================================= */
+
+/* DESKTOP / general: CTA colaborador como referencia (pill) */
+.header-controls .btn.btn-primary.btn-sm{
+  border-radius: 999px;
+  padding: 10px 14px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* MÓVIL/TABLET: ocultar 'Eres colaborador' y dejar SOLO iconos (idioma + menú) */
+@media (max-width: 980px){
+  .header-controls .btn.btn-primary.btn-sm{
+    display: none !important;
+  }
+
+  /* Espaciado exacto de controles */
+  .header-controls{
+    gap: 10px;
+  }
+
+  /* Idioma: compacto, redondo como referencia */
+  .language-btn{
+    height: 36px !important;
+    min-width: 36px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    width: auto !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+  }
+  .language-btn i{ font-size: 12px; }
+
+  /* Hamburguesa: circular, mismo tamaño que referencia en móvil */
+  .menu-toggle{
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 999px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+  .menu-toggle i{
+    font-size: 18px !important;
+    line-height: 1 !important;
+  }
+}
+

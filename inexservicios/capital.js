@@ -430,6 +430,47 @@
         expanded ? close() : open();
       });
 
+      // ✅ Hover para abrir/cerrar idiomas (solo desktop con mouse)
+      const isDesktopHoverLang = () =>
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+      let langHoverTimer = null;
+
+      const clearLangHoverTimer = () => {
+        if (langHoverTimer) {
+          window.clearTimeout(langHoverTimer);
+          langHoverTimer = null;
+        }
+      };
+
+      const scheduleLangClose = () => {
+        if (!isDesktopHoverLang()) return;
+        clearLangHoverTimer();
+
+        langHoverTimer = window.setTimeout(() => {
+          const overBtn = languageBtn.matches(":hover");
+          const overDrop = dropdown.matches(":hover");
+          if (!overBtn && !overDrop) close();
+        }, 180);
+      };
+
+      // Abre al pasar el mouse por el botón
+      languageBtn.addEventListener("mouseenter", () => {
+        if (!isDesktopHoverLang()) return;
+        clearLangHoverTimer();
+        open();
+      });
+
+      // Mantener abierto si el mouse entra al dropdown
+      dropdown.addEventListener("mouseenter", () => {
+        if (!isDesktopHoverLang()) return;
+        clearLangHoverTimer();
+      });
+
+      // Cierra cuando sales del botón o del dropdown (con pequeño delay)
+      languageBtn.addEventListener("mouseleave", scheduleLangClose);
+      dropdown.addEventListener("mouseleave", scheduleLangClose);
+
       options.forEach(opt => {
         opt.addEventListener('click', () => {
           const lang = opt.getAttribute('data-lang') || 'EN';
