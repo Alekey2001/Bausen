@@ -1,196 +1,381 @@
+
 /* =========================
-   BAUSEN — Impuestos (2026)
-   Dark + Glass + SEO layout
+   BAUSEN — Impuestos
+   Palette lock (NO light/dark toggle)
+   Background: #DCE2EF
+   Cards/Buttons: #5B75B6
+   Text (primary): #182389
+   Text (secondary): #000
 ========================= */
 
 :root{
-  --bg: #070B14;
-  --bg2:#0B1220;
-  --surface: rgba(255,255,255,.06);
-  --surface-2: rgba(255,255,255,.08);
-  --border: rgba(255,255,255,.14);
-  --border-2: rgba(255,255,255,.10);
-  --text: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.72);
-  --muted2: rgba(255,255,255,.60);
+  --bg: #DCE2EF;
+  --bg-soft: color-mix(in srgb, #DCE2EF 92%, #ffffff 8%);
+  --text: #182389;
+  --muted: rgba(0,0,0,.78);
+  --border: rgba(24,35,137,.18);
 
-  --accent: #58D6FF;   /* cian */
-  --accent2:#7C5CFF;   /* violeta */
-  --ok:#4EF2B4;
+  --primary: #5B75B6;   /* Silver lake blue */
+  --primary-2: #182389; /* Azul marino */
 
-  --shadow: 0 18px 60px rgba(0,0,0,.55);
-  --shadow2: 0 10px 28px rgba(0,0,0,.45);
+  --shadow-sm: 0 10px 22px rgba(24,35,137,.10);
+  --shadow:    0 18px 55px rgba(24,35,137,.12);
+  --shadow-lg: 0 28px 90px rgba(24,35,137,.16);
 
-  --t-fast: 160ms;
-  --shadow-lg: var(--shadow);
-  --z-header: 1000;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
 
-  --radius: 20px;
-  --radius2: 28px;
+  --header-h: 74px;
 
-  --max: 1120px;
-  --pad: clamp(16px, 3vw, 28px);
+  --z-header: 10020;
+  --z-overlay: 10010;
+  --z-menu: 10030;
 
-  --blur: 14px;
-  --ease: cubic-bezier(.2,.8,.2,1);
-  --t: 260ms var(--ease);
+  --t-fast: 150ms ease;
+  --t-normal: 250ms ease;
+  --t-slow: 450ms ease;
 
-  --navH: clamp(64px, 7.2vw, 78px);
-
-  /* ====== MAPEOS para Navbar (igual referencia) ====== */
-  --color-primary: var(--accent);
-  --color-secondary: var(--accent2);
-  --color-accent: var(--ok);
-
-  --color-bg: var(--bg);
-  --color-bg-light: var(--bg2);
-  --color-bg-lighter: color-mix(in oklab, var(--bg2) 60%, #10192e);
-
-  --color-surface: color-mix(in oklab, var(--surface) 100%, transparent);
-  --color-surface-solid: color-mix(in oklab, #0f172a 80%, #000);
-  --color-border: var(--border);
-  --color-border-light: var(--border-2);
-
-  --color-text: var(--text);
-  --color-text-light: var(--muted);
-  --color-text-lighter: var(--muted2);
+  --section-pad: clamp(64px, 6vw, 110px);
 }
 
 /* =========================
-   LIGHT THEME (TOGGLE)
+   RESET / BASE
 ========================= */
-html[data-theme="light"]{
-  --bg: #F8FBFF;
-  --bg2: #EEF5FF;
-
-  --surface: rgba(255,255,255,.78);
-  --surface-2: rgba(255,255,255,.86);
-
-  --border: rgba(14,22,44,.14);
-  --border-2: rgba(14,22,44,.10);
-
-  --text: rgba(10,16,32,.96);
-  --muted: rgba(10,16,32,.72);
-  --muted2: rgba(10,16,32,.56);
-
-  --accent: #2563eb;
-  --accent2: #7c3aed;
-  --ok: #10b981;
-
-  --shadow: 0 18px 60px rgba(10,16,32,.10);
-  --shadow2: 0 10px 28px rgba(10,16,32,.12);
-}
-
-*{ box-sizing: border-box; }
-html{ scroll-behavior: smooth; }
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ font-size:16px; scroll-behavior:smooth; -webkit-text-size-adjust: 100%; }
 body{
-  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  background: var(--bg);
   color: var(--text);
-  background:
-    radial-gradient(1200px 700px at 15% -10%, color-mix(in oklab, var(--accent2) 22%, transparent), transparent 60%),
-    radial-gradient(900px 600px at 85% 0%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 55%),
-    radial-gradient(800px 500px at 40% 95%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%),
-    linear-gradient(180deg, var(--bg), var(--bg2));
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-  line-height: 1.55;
-  overflow-x: hidden;
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x:hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
+img, svg, video, iframe, canvas{ max-width:100%; height:auto; }
+a{ color:inherit; }
+p{ color: var(--muted); }
+::selection{ background: color-mix(in srgb, var(--primary) 20%, transparent); }
 
-img{ max-width:100%; height:auto; display:block; }
-a{ color: inherit; text-decoration: none; }
-p{ margin: 0 0 1rem; color: var(--muted); }
-strong{ color: var(--text); }
-
-.wrap{
-  width: min(var(--max), calc(100% - (var(--pad) * 2)));
+.container{
+  max-width: 1240px;
   margin: 0 auto;
-}
-
-.skip-link{
-  position:absolute;
-  left: -999px;
-  top: 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: rgba(0,0,0,.8);
-  border: 1px solid var(--border);
-  color: #fff;
-  z-index: 9999;
-}
-.skip-link:focus{ left: 12px; }
-
-::selection{
-  background: color-mix(in oklab, var(--accent) 22%, transparent);
+  padding: 0 24px;
 }
 
 /* =========================
-   Buttons
+   HEADER + NAV + MENÚ (copiado de referencia)
+   ✅ Desktop nav deshabilitado
+   ✅ 3 controles: colaborador + idioma + hamburguesa
 ========================= */
+.header{
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(19,33,68,0.06);
+}
+
+.header-container{
+  height: var(--header-h);
+  display:flex;
+  align-items:center;
+  gap: 16px;
+  width:100%;
+}
+
+/* Logo */
+.logo-link{ text-decoration:none; color:inherit; }
+.logo{ display:flex; align-items:center; }
+.logo-img{
+  width: 140px;
+  height:auto;
+  display:block;
+  object-fit: contain;
+  max-width: 180px;
+  filter: drop-shadow(0 8px 18px rgba(19,33,68,0.10));
+}
+
+/* Nav desktop deshabilitado */
+.nav.nav-disabled{ display:none; }
+
+/* Header controls */
+.header-controls{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-left:auto;
+  justify-content:flex-end;
+}
+
+/* Buttons */
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap: 10px;
-  padding: 12px 16px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  font-weight: 650;
-  letter-spacing: .2px;
-  transition: transform var(--t), background var(--t), border-color var(--t), box-shadow var(--t), color var(--t);
-  position: relative;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  border-radius: 14px;
+  font-weight: 900;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  font-family: inherit;
 }
-.btn:focus-visible{
-  outline: 3px solid color-mix(in oklab, var(--accent) 30%, transparent);
-  outline-offset: 2px;
+.btn:active{ transform: translateY(0); }
+.btn-sm{ padding: 10px 14px; font-size: 13px; }
+.btn-primary{
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(24,35,137,0.18);
 }
-.btn:hover{ transform: translateY(-1px); }
-.btn:active{ transform: translateY(0px) scale(.99); }
-
-.btn--primary{
-  background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 95%, #fff), color-mix(in oklab, var(--accent2) 85%, #fff));
-  color: rgba(0,0,0,.90);
-  box-shadow: 0 16px 40px color-mix(in oklab, var(--accent) 16%, transparent);
-}
-.btn--primary:hover{
-  box-shadow: 0 18px 52px color-mix(in oklab, var(--accent) 22%, transparent);
+.btn-primary:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 20px 42px rgba(24,35,137,0.22);
 }
 
-.btn--soft{
-  background: color-mix(in oklab, var(--surface) 100%, transparent);
-  border-color: color-mix(in oklab, var(--border) 100%, transparent);
+/* Language selector */
+.language-selector{ position:relative; }
+.language-btn{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 12px;
+  min-width: 44px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
   color: var(--text);
+  cursor:pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+  box-shadow: 0 12px 26px rgba(19,33,68,0.10);
 }
-.btn--soft:hover{
-  background: color-mix(in oklab, var(--surface-2) 100%, transparent);
-  border-color: color-mix(in oklab, var(--border) 120%, transparent);
+.language-btn:hover{ transform: translateY(-1px); }
+.language-btn i{ font-size: 12px; transition: transform var(--t-fast); }
+.language-btn[aria-expanded="true"] i{ transform: rotate(180deg); }
+
+.language-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 32%, #ffffff 68%);
+  box-shadow: 0 10px 22px rgba(24,35,137,0.10);
 }
 
-.btn--ghost{
-  background: transparent;
-  border-color: color-mix(in oklab, var(--border) 100%, transparent);
-  color: var(--text);
-}
-.btn--ghost:hover{
-  background: color-mix(in oklab, var(--surface) 100%, transparent);
-  border-color: color-mix(in oklab, var(--border) 140%, transparent);
-}
-
-.btn__shine{
+.language-dropdown{
   position:absolute;
-  inset:0;
-  border-radius: 999px;
-  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.35) 40%, transparent 70%);
-  transform: translateX(-120%);
-  opacity: .75;
-  pointer-events:none;
+  right:0;
+  top: calc(100% + 10px);
+  list-style:none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  min-width: 230px;
+  padding: 8px;
+  opacity:0;
+  visibility:hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--t-fast), transform var(--t-fast), visibility var(--t-fast);
+  z-index: calc(var(--z-header) + 30);
 }
-.btn--primary:hover .btn__shine{
-  transform: translateX(120%);
-  transition: transform 900ms var(--ease);
+.language-dropdown.show{
+  opacity:1;
+  visibility:visible;
+  transform: translateY(0);
+}
+.language-option{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  padding: 10px 10px;
+  background: transparent;
+  border:none;
+  border-radius: 12px;
+  cursor:pointer;
+  color: var(--text);
+  font-weight: 900;
+  transition: background var(--t-fast);
+}
+.language-option:hover{
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+}
+.lang-option-flag{
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--primary) 32%, #ffffff 68%);
 }
 
+/* Hamburguesa (PC + móvil) */
+.menu-toggle{
+  width: 46px;
+  height: 44px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 84%, var(--primary) 16%);
+  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  color: var(--text);
+  cursor:pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+  display:flex; /* ✅ visible en desktop */
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 26px rgba(19,33,68,0.10);
+}
+.menu-toggle:hover{ transform: translateY(-1px); }
+.menu-toggle i{ font-size: 18px; line-height: 1; }
+
+/* Overlay */
+.mobile-menu-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  transition: opacity var(--t-normal), visibility var(--t-normal);
+}
+.mobile-menu-overlay.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Drawer */
+.mobile-menu{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(92vw, 420px);
+  height: 100dvh;
+  background: color-mix(in srgb, var(--bg) 92%, #0b1220 8%);
+  border-left: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  box-shadow: 0 28px 90px rgba(19,33,68,0.22);
+  transform: translateX(110%);
+  transition: transform var(--t-normal);
+  z-index: var(--z-menu);
+  display:flex;
+  flex-direction:column;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.mobile-menu.open{ transform: translateX(0); }
+
+.mobile-menu-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.close-menu{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  color: var(--text);
+  cursor:pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+.close-menu:hover{ transform: translateY(-1px); }
+
+/* Links menú */
+.mobile-nav-list{
+  list-style:none;
+  padding: 12px;
+  margin: 0;
+  flex: 1 1 auto;
+  overflow-y:auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-nav-list > li{ margin-bottom: 6px; }
+
+/* Summary layout */
+.mobile-nav-summary{
+  list-style:none;
+}
+.mobile-nav-summary::-webkit-details-marker{ display:none; }
+
+.mobile-nav-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  text-decoration:none;
+  color: var(--text);
+  font-weight: 950;
+  background: color-mix(in srgb, var(--bg) 92%, #0b1220 8%);
+  border: 1px solid var(--border);
+  transition: transform var(--t-fast), background var(--t-fast), border-color var(--t-fast), opacity var(--t-fast), box-shadow var(--t-fast);
+  opacity: 0.95;
+}
+.mobile-nav-link:hover,
+.mobile-nav-link.active{
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  border-color: rgba(24,35,137,0.22);
+  box-shadow: 0 14px 34px rgba(19,33,68,0.14);
+  opacity: 1;
+}
+
+.mobile-summary-link{ display:flex; align-items:center; gap: 10px; }
+.mobile-summary-link{ color: inherit; text-decoration:none; width: 100%; }
+
+/* Submenu */
+.mobile-submenu{
+  list-style:none;
+  margin: 8px 0 0;
+  padding: 8px 10px 6px 14px;
+  border-left: 1px dashed color-mix(in srgb, var(--primary-2) 35%, transparent);
+  display:grid;
+  gap: 6px;
+}
+.mobile-sub-link{
+  display:flex;
+  align-items:center;
+  padding: 12px 12px;
+  border-radius: 14px;
+  text-decoration:none;
+  color: rgba(0,0,0,.90);
+  font-weight: 900;
+  background: color-mix(in srgb, #ffffff 70%, var(--primary) 30%);
+  border: 1px solid color-mix(in srgb, var(--primary-2) 18%, transparent);
+  transition: transform var(--t-fast), background var(--t-fast), box-shadow var(--t-fast);
+}
+.mobile-sub-link:hover,
+.mobile-sub-link.active{
+  transform: translateY(-1px);
+  background: color-mix(in srgb, #ffffff 62%, var(--primary) 38%);
+  box-shadow: 0 12px 26px rgba(19,33,68,0.12);
+}
+
+/* Scroll lock */
+body.menu-open{
+  overflow: hidden;
+  height: 100%;
+  touch-action: none;
+}
+
+/* Hide any legacy theme button if exists */
+#themeToggle, .theme-toggle{ display:none !important; }
+
+
+/* ====== CONTENIDO (estilos originales desde Hero) ====== */
 /* =========================
    Hero
 ========================= */
@@ -1057,4 +1242,440 @@ body:not(.theme-dark) .language-dropdown{
   height: 18px;
   border-radius: 6px;
   background: linear-gradient(135deg, rgba(31,94,255,0.35), rgba(43,140,255,0.25));
+}
+
+
+/* =========================================================
+   FIX FINAL (2026-02-23)
+   Objetivo: que SE VEA TODO (contenido + servicios) sin romper HTML/IDs.
+   - Define variables faltantes usadas por el navbar "referencia"
+   - Corrige rgba(...) inválidos que rompen estilos
+   - Si JS falla, el contenido sigue visible (reveal fallback)
+   - Respeta paleta: #DCE2EF / #5B75B6 / #182389 / negro
+========================================================= */
+
+:root{
+  /* Paleta */
+  --color-bg-light: #DCE2EF;                 /* Morning cloud */
+  --color-primary:  #5B75B6;                 /* Silver lake blue */
+  --color-text:     #182389;                 /* Azul marino */
+  --color-border:   rgba(24,35,137,.18);
+
+  /* Superficies (usadas por el navbar/drawer y por secciones) */
+  --color-surface:  color-mix(in srgb, #ffffff 82%, var(--color-primary) 18%);
+  --surface:        color-mix(in srgb, #ffffff 84%, var(--color-primary) 16%);
+  --surface-2:      color-mix(in srgb, #ffffff 76%, var(--color-primary) 24%);
+
+  /* Tokens faltantes que el CSS usa más abajo */
+  --muted2: rgba(0,0,0,.62);
+  --accent:  var(--color-primary);
+  --accent2: var(--color-text);
+  --radius:  18px;
+  --radius2: 22px;
+  --shadow2: 0 12px 34px rgba(24,35,137,.12);
+  --t: 250ms ease;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --max: 1240px;
+  --pad: 24px;
+}
+
+/* Fallback: si algo de JS falla, NO ocultamos contenido */
+.reveal{
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Navbar referencia: corrige colores/visibilidad (vars ya definidas arriba) */
+.site-header{
+  background: color-mix(in srgb, var(--color-bg-light) 88%, transparent) !important;
+  border-bottom-color: var(--color-border) !important;
+}
+
+/* Corrige rgba(...) inválidos (alfa fuera de rango) */
+.site-header.is-scrolled{
+  box-shadow: 0 12px 32px rgba(0,0,0,.20) !important;
+}
+.brand__logo{
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,.18)) !important;
+}
+
+/* Links del navbar */
+.nav-link{
+  color: color-mix(in srgb, var(--color-text) 92%, transparent) !important;
+}
+.nav-link:hover{
+  background: color-mix(in srgb, var(--color-surface) 82%, transparent) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 28%, transparent) !important;
+}
+.nav-link.is-active{
+  background: color-mix(in srgb, var(--color-primary) 18%, transparent) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 38%, var(--color-border)) !important;
+}
+
+/* Drawer backdrop (rgba inválido en CSS original) */
+.drawer-backdrop{
+  background: rgba(0,0,0,.60) !important;
+}
+
+/* Asegura que el botón burger se vea en desktop si lo usas */
+.burger{
+  display: inline-flex !important;
+}
+
+/* Inputs legibles en fondo claro */
+input, textarea{
+  background: color-mix(in srgb, #ffffff 72%, var(--color-primary) 28%) !important;
+  color: var(--color-text) !important;
+}
+input::placeholder, textarea::placeholder{
+  color: rgba(0,0,0,.55) !important;
+}
+
+
+
+
+/* =========================================================
+   ALIGN PATCH (to match index.html + stylebeca.css)
+   SOLO ESTÉTICA / SOLO CSS (no toca IDs ni JS)
+   Paleta: #DCE2EF / #5B75B6 / #182389 / #000
+========================================================= */
+
+:root{
+  /* “content ops” spacing (tomado de referencia) */
+  --ops-max: 1240px;
+  --ops-pad: 24px;
+  --ops-radius: 22px;
+  --ops-radius-lg: 26px;
+  --ops-border: rgba(24,35,137,0.16);
+  --ops-shadow: 0 18px 55px rgba(24,35,137,0.12);
+  --ops-title: clamp(34px, 4.4vw, 56px);
+  --ops-sub: 15px;
+}
+
+/* Contenedor editorial (wrap = container en referencia) */
+.wrap{
+  max-width: var(--ops-max);
+  margin: 0 auto;
+  padding-left: var(--ops-pad);
+  padding-right: var(--ops-pad);
+}
+
+/* Ritmo vertical consistente */
+section{
+  scroll-margin-top: 92px;
+}
+
+/* HERO: alinear como referencia (texto izq / visual der) */
+@media (min-width: 1024px){
+  .hero{
+    padding-top: clamp(40px, 4.5vw, 70px);
+    padding-bottom: clamp(20px, 3vw, 40px);
+  }
+  .hero__grid{
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(26px, 4vw, 68px);
+    align-items: center;
+  }
+  .hero__copy{
+    max-width: 560px;
+    justify-self: start;
+  }
+  .hero__visual{
+    justify-self: end;
+  }
+}
+
+/* Tipografía editorial (sin cambiar font-family) */
+.hero__title{
+  font-size: clamp(40px, 5.4vw, 70px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 1000;
+  color: var(--text);
+}
+.hero__subtitle{
+  font-size: var(--ops-sub);
+  line-height: 1.65;
+  font-weight: 800;
+  opacity: .92;
+}
+
+/* “Pill” (chip) como referencia */
+.chip,
+.badge{
+  border-radius: 999px;
+  padding: 9px 12px;
+  border: 1px solid rgba(24,35,137,0.16);
+  background: rgba(24,35,137,0.06);
+  font-weight: 950;
+}
+
+/* Cards: look “product card” consistente */
+.stat,
+.visual-card,
+.card,
+.panel,
+.feature,
+.info__card,
+.form__card,
+.footer__grid > *{
+  border-radius: var(--ops-radius-lg);
+  border: 1px solid var(--ops-border);
+  box-shadow: var(--ops-shadow);
+}
+
+/* Botones alineados a paleta (como referencia: primary navy, soft silver) */
+.btn--primary{
+  background: #182389;
+  color: #fff;
+  border: 1px solid rgba(24,35,137,0.18);
+  box-shadow: 0 16px 34px rgba(24,35,137,0.22);
+}
+.btn--primary:hover{ box-shadow: 0 20px 42px rgba(24,35,137,0.28); }
+
+.btn--soft{
+  background: #5B75B6;
+  color: #fff;
+  border: 1px solid rgba(24,35,137,0.18);
+  box-shadow: 0 12px 26px rgba(91,117,182,0.22);
+}
+.btn--soft:hover{ box-shadow: 0 18px 40px rgba(91,117,182,0.28); }
+
+/* Links en footer y listas: legibilidad */
+.site-footer a{ text-decoration: none; }
+.site-footer a:hover{ text-decoration: underline; }
+
+/* Responsive: hero 1 columna como referencia */
+@media (max-width: 980px){
+  .hero__grid{ grid-template-columns: 1fr; }
+  .hero__visual{ margin-top: 14px; }
+}
+/* =========================================================
+   HOTFIX UI (solo estética)
+   1) Quita el “aire”/zona subrayada de arriba
+   2) Hace la imagen del hero más chica y alineada al texto
+========================================================= */
+
+/* 1) Elimina el espacio extra arriba (proviene del body padding-top del navbar “referencia”) */
+body{
+  padding-top: 0 !important; /* neutraliza: body{ padding-top: var(--header-h); } */
+}
+
+/* También quitamos decoraciones del hero que se ven como “manchas” arriba */
+.hero__backdrop,
+.noise{
+  display: none !important;
+}
+
+/* 2) Imagen del hero: más pequeña y con alto controlado */
+@media (min-width: 1024px){
+  /* tarjeta un poco más angosta */
+  .visual-card{
+    width: min(360px, 100%) !important; /* antes ~420px */
+    padding: 14px !important;
+  }
+
+  /* tu <img> tiene class="lottie-slot" (no es lottie), entonces lo forzamos a imagen normal */
+  .visual-card > img.lottie-slot{
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 420px !important;       /* baja el tamaño visual */
+    object-fit: cover !important;
+    border-radius: 16px !important;
+  }
+
+  /* el contenedor “lottie-slot” no debe forzar min-height gigante en este caso */
+  .lottie-slot{
+    min-height: unset !important;
+  }
+}
+
+/* En pantallas medianas/móvil: que no se dispare */
+@media (max-width: 1023px){
+  .visual-card{
+    width: min(380px, 100%) !important;
+  }
+  .visual-card > img.lottie-slot{
+    max-height: 380px !important;
+    object-fit: cover !important;
+  }
+}
+/* =========================
+   HERO IMAGE: un poco más ancha (solo estética)
+   ========================= */
+
+/* Desktop: ensancha la tarjeta del visual */
+@media (min-width: 1024px){
+  .hero__grid{
+    /* mantiene proporción pero deja respirar más al visual */
+    grid-template-columns: 1.05fr .95fr !important;
+  }
+
+  .visual-card{
+    width: min(480px, 100%) !important; /* antes min(420px, 100%) */
+  }
+
+  /* asegura que la imagen llene bien */
+  .visual-card > img.lottie-slot{
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+  }
+}
+
+/* Tablet/móvil: no crece de más */
+@media (max-width: 1023px){
+  .visual-card{
+    width: min(420px, 100%) !important;
+  }
+}
+/* =========================================================
+   ALIGN PATCH — match index.html + stylebeca.css (solo estética)
+   - NO cambia HTML/IDs/JS
+   - Mantiene paleta: bg #DCE2EF, primary #5B75B6, text #182389
+========================================================= */
+
+/* 0) Tokens “premium” (manteniendo tu paleta) */
+:root{
+  --surface: color-mix(in srgb, #ffffff 78%, var(--primary) 22%);
+  --surface-2: color-mix(in srgb, #ffffff 86%, var(--primary) 14%);
+  --glass: color-mix(in srgb, var(--bg) 86%, transparent);
+  --ring: rgba(24,35,137,.18);
+  --ring-strong: rgba(24,35,137,.28);
+}
+
+/* 1) Fondo hero tipo “orbs” del index (suave) */
+.hero{
+  background:
+    radial-gradient(900px 520px at 58% 10%, rgba(91,117,182,.12), transparent 62%),
+    radial-gradient(780px 520px at 20% 88%, rgba(24,35,137,.08), transparent 64%),
+    linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 92%, #ffffff 8%) 55%, var(--bg) 100%);
+}
+
+/* 2) Grid/espaciado del hero más “index-like” */
+.hero__grid{
+  gap: clamp(22px, 4.2vw, 44px) !important;
+  grid-template-columns: 1.06fr .94fr !important; /* más parecido al index */
+  align-items: center !important;
+}
+
+/* 3) Pill/eyebrow estilo index */
+.hero__eyebrow .chip{
+  background: rgba(91,117,182,.14) !important;
+  border: 1px solid rgba(91,117,182,.26) !important;
+  box-shadow: 0 18px 40px rgba(24,35,137,.10) !important;
+  font-weight: 950 !important;
+}
+.hero__eyebrow .chip .dot{
+  width: 10px; height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  box-shadow: 0 0 0 4px rgba(91,117,182,.12);
+}
+
+/* 4) Tipografía del hero (más editorial, como referencia) */
+.hero__title{
+  font-weight: 1000 !important;
+  letter-spacing: -0.035em !important;
+  color: var(--primary-2) !important;
+}
+.hero__subtitle{
+  font-weight: 800 !important;
+  color: rgba(0,0,0,.74) !important;
+}
+
+/* 5) Botones del hero: “primary + soft” como el index */
+.hero__cta .btn--primary,
+.hero__cta .btn.btn--primary{
+  background: linear-gradient(90deg, var(--primary), var(--primary-2)) !important;
+  color: #fff !important;
+  border: 0 !important;
+  box-shadow: 0 16px 34px rgba(24,35,137,.20) !important;
+}
+.hero__cta .btn--soft,
+.hero__cta .btn.btn--soft{
+  background: color-mix(in srgb, var(--bg) 88%, var(--primary) 12%) !important;
+  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border)) !important;
+  color: var(--text) !important;
+  box-shadow: 0 12px 26px rgba(19,33,68,.08) !important;
+}
+.hero__cta a:hover{
+  transform: translateY(-1px);
+}
+
+/* 6) KPIs (stats) con look del index */
+.hero__stats .stat dt{
+  color: var(--primary-2) !important;
+  font-weight: 1000 !important;
+  letter-spacing: -0.02em;
+}
+.hero__stats .stat dd{
+  color: rgba(0,0,0,.72) !important;
+  font-weight: 900 !important;
+}
+
+/* 7) Visual derecha: card + shine al hover (como media-card del index) */
+.visual-card{
+  background: color-mix(in srgb, #ffffff 90%, #0b1220 10%) !important;
+  border: 1px solid var(--ring) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 28px 90px rgba(19,33,68,.18) !important;
+  overflow: hidden !important;
+  transform: translate3d(0,0,0);
+  position: relative !important;
+}
+.visual-card::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%);
+  transform: translateX(-40%) rotate(10deg);
+  opacity: 0;
+  pointer-events:none;
+}
+.visual-card:hover::after{
+  opacity: .95;
+  animation: imp_shineMove 1.15s ease;
+}
+@keyframes imp_shineMove{
+  from{ transform: translateX(-40%) rotate(10deg); }
+  to{ transform: translateX(40%) rotate(10deg); }
+}
+
+/* Imagen dentro del visual: limpia y “premium” */
+.visual-card > img.lottie-slot{
+  width:100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  filter: saturate(1.02) contrast(1.02);
+  border-radius: 18px !important;
+}
+
+/* 8) Encabezados de secciones: underline como el index */
+.section-head .section-underline,
+.section-underline{
+  height: 2px !important;
+  width: 120px !important;
+  margin-top: 14px !important;
+  background: linear-gradient(90deg, transparent, rgba(24,35,137,.35), transparent) !important;
+  border-radius: 999px;
+}
+
+/* 9) Cards generales: mismo “glass + border” */
+.card,
+.panel,
+.service-card,
+.service{
+  background: var(--surface-2) !important;
+  border: 1px solid var(--ring) !important;
+  box-shadow: 0 18px 55px rgba(24,35,137,.12) !important;
+  border-radius: 22px !important;
+}
+
+/* 10) Ajuste responsivo (como referencia: stacking limpio) */
+@media (max-width: 980px){
+  .hero__grid{ grid-template-columns: 1fr !important; }
+  .visual-card{ width: min(420px, 100%) !important; margin: 0 auto; }
 }

@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="es" class="no-js" data-theme="dark">
+<html lang="es" class="no-js" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
   <title>Bausen | Servicios</title>
+  <!-- Favicons correctos (nítidos en navegador) -->
+<link href="/imgnavar/Icono .svg" rel="icon" sizes="any"/>
+<link href="/imgnavar/Icono .svg" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/imgnavar/Icono .svg" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/imgnavar/Icono .svg" rel="apple-touch-icon" sizes="180x180"/>
+  <!-- Typography (reference) -->
+  <style>
+    html, body { font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif; }
+  </style>
+
   <!-- Favicons correctos (nítidos en navegador) -->
 <link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
 <link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
@@ -34,25 +44,13 @@
     decoding="async"
   />
 </a>
-<nav class="nav" aria-label="Navegación principal">
-        <a class="nav__link" href="index.html" data-i18n="nav.home">Inicio</a>
-        <a class="nav__link" href="prensa.html" data-i18n="nav.press">Prensa</a>
-        <a class="nav__link is-active" href="servicios.html" aria-current="page" data-i18n="nav.services">Servicios</a>
-        <a class="nav__link" href="noticias.html" data-i18n="nav.news">Noticias</a>
-        <a class="nav__link" href="centro.html" data-i18n="nav.training">Centro de Formación</a>
-        <a class="nav__link" href="acerca.html" data-i18n="nav.about">Acerca de</a>
-      </nav>
+<nav class="nav nav-disabled" aria-label="Navegación principal"></nav>
 
       <div class="header__actions">
         <a class="btn btn--primary btn--pill" href="colaboradores.html" data-i18n="header.collab">
           ¿Eres colaborador?
         </a>
-
-        <button class="icon-btn" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
-          <i class="fa-solid fa-moon" aria-hidden="true"></i>
-        </button>
-
-        <!-- Idioma (desktop) con banderas (i18n referencia) -->
+<!-- Idioma (desktop) con banderas (i18n referencia) -->
         <div class="language-selector header__lang">
           <button class="language-btn" id="language-btn" aria-label="Select language" aria-expanded="false" type="button">
             <span class="language-flag" aria-hidden="true" id="language-flag"></span>
@@ -75,45 +73,110 @@
             </li>
           </ul>
         </div>
-
-
-        <!-- Hamburguesa (AHORA VA DONDE ANTES ESTABAN LOS IDIOMAS) -->
-        <button class="icon-btn header__burger" id="menuToggle"
-          aria-label="Abrir menú" aria-controls="mobileMenu" aria-expanded="false">
+        <!-- Menú hamburguesa (PC + móvil) -->
+        <button class="menu-toggle" id="menu-toggle" type="button"
+          aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
           <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
-      </div>
+</div>
     </div>
 
-    <!-- Mobile overlay/menu -->
-    <div class="mobile-overlay" id="mobileOverlay"></div>
-<aside class="mobile-menu" id="mobileMenu" aria-label="Menú móvil" role="dialog" aria-modal="true">
-  <div class="mobile-menu__head">
+    
+    <!-- Menú overlay -->
+    <div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+
+    <!-- Menú lateral -->
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <div class="mobile-menu-header">
         <div class="logo mobile-logo">
           <img class="logo-img" src="/images/bausenlogo.png" alt="Bausen" />
         </div>
-        <button class="icon-btn" id="menuClose" aria-label="Cerrar menú">
+        <button class="close-menu" id="close-menu" type="button" aria-label="Close menu">
           <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
       </div>
 
-      <nav class="mobile-nav" aria-label="Navegación móvil">
-        <a class="mobile-nav__link" href="index.html" data-i18n="nav.home">Inicio</a>
-        <a class="mobile-nav__link" href="prensa.html" data-i18n="nav.press">Prensa</a>
-        <a class="mobile-nav__link is-active" href="servicios.html" aria-current="page" data-i18n="nav.services">Servicios</a>
-        <a class="mobile-nav__link" href="noticias.html" data-i18n="nav.news">Noticias</a>
-        <a class="mobile-nav__link" href="centro.html" data-i18n="nav.training">Centro de Formación</a>
-        <a class="mobile-nav__link" href="acerca.html" data-i18n="nav.about">Acerca de</a>
-        <div class="mobile-menu__footer">
-  <a class="btn btn--primary btn--pill mobile-cta" href="colaboradores.html" data-i18n="header.collab">
-    ¿Eres colaborador?
-  </a>
-</div>
-</nav>
+      <nav aria-label="Site navigation">
+        <ul class="mobile-nav-list mobile-accordion">
 
-      
+          <!-- Inicio (details) -->
+          <li class="mobile-nav-item">
+            <details class="menu-details">
+              <summary class="mobile-nav-link mobile-nav-summary" data-page="inicio">
+                <a class="mobile-summary-link" href="index.html">
+                  <span data-i18n="nav.home">Inicio</span>
+                </a>
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+              </summary>
+              <ul class="mobile-submenu">
+                <li>
+                  <a class="mobile-sub-link" href="acerca.html" data-i18n="nav.about">Acerca de</a>
+                </li>
+              </ul>
+            </details>
+          </li>
 
-    </aside>
+          <!-- Servicios (details) -->
+          <li class="mobile-nav-item">
+            <details class="menu-details" open>
+              <summary class="mobile-nav-link mobile-nav-summary active" data-page="servicios">
+                <a class="mobile-summary-link active" href="servicios.html" aria-current="page">
+                  <span data-i18n="nav.services">Servicios</span>
+                </a>
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+              </summary>
+
+              <ul class="mobile-submenu">
+                <li>
+                  <a class="mobile-sub-link" href="capital.html" data-i18n-text="nav.svc.payroll">Procesamiento de nómina</a>
+                </li>
+                <li>
+                  <a class="mobile-sub-link" href="/inexservicios/servicios.html" data-i18n-text="nav.svc.specialized">Servicios especializados</a>
+                </li>
+                <li>
+                  <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.svc.tax">Consultoría fiscal</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+
+          <!-- Centro de formación (link directo) -->
+          <li class="mobile-nav-item">
+            <a class="mobile-nav-link" href="centro.html" data-i18n="nav.training">Centro de formación</a>
+          </li>
+
+          <!-- Noticias (details) -->
+          <li class="mobile-nav-item">
+            <details class="menu-details">
+              <summary class="mobile-nav-link mobile-nav-summary" data-page="noticias">
+                <a class="mobile-summary-link" href="noticias.html">
+                  <span data-i18n="nav.news">Noticias</span>
+                </a>
+                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+              </summary>
+              <ul class="mobile-submenu">
+                <li>
+                  <a class="mobile-sub-link" href="noticias.html#social">Social</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+
+          <!-- Prensa (link directo) -->
+          <li class="mobile-nav-item">
+            <a class="mobile-nav-link" href="prensa.html" data-i18n="nav.press">Prensa</a>
+          </li>
+
+          <!-- Contáctanos (link a #contacto) -->
+          <li class="mobile-nav-item">
+            <a class="mobile-nav-link" href="index.html#contacto" data-i18n="footer.contact">Contáctanos</a>
+          </li>
+
+          <!-- CTA colaborador -->
+</ul>
+      </nav>
+    </div>
+
   </header>
 
   <!-- MAIN -->
@@ -123,11 +186,11 @@
         <div class="hero__content">
           <div class="pill">
             <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
-            <span data-i18n-text="hero.pill">Soluciones empresariales</span>
+            <span data-i18n-text="hero.pill" style="color:#5B75B6;">Soluciones empresariales</span>
           </div>
 
-          <h1 class="hero__title" data-i18n="hero.title"><span data-i18n-text="services.title">Nuestros Servicios</span></h1>
-          <p class="hero__subtitle" data-i18n="hero.subtitle"><span data-i18n-text="services.subtitle">
+          <h1 class="hero__title" data-i18n="hero.title" style="color:#182389;"><span data-i18n-text="services.title">Nuestros Servicios</span></h1>
+          <p class="hero__subtitle" data-i18n="hero.subtitle" style="color:#5B75B6;"><span data-i18n-text="services.subtitle">
             Descubre soluciones integrales en Capital Humano, Desarrollo Organizacional y Management Services,
             diseñadas para impulsar el crecimiento de tu empresa.
           </span></p>
@@ -157,15 +220,10 @@
 
         <div class="hero__media" aria-hidden="true">
           <div class="media-card">
-            <div class="media-tag">
-              <i class="fa-solid fa-badge-check" aria-hidden="true"></i>
-              <span>Soluciones integrales</span>
-            </div>
-            <img class="media-img" src="assets/servicios-hero.jpg" alt=""
+            <img class="media-img" src="/images/pexels-pixabay-373584.jpg.jpeg" alt=""
                  onerror="this.style.display='none'; this.parentElement.classList.add('no-img');" />
             <div class="media-fallback">
               <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
-              <p>Espacio para tu imagen corporativa</p>
             </div>
           </div>
         </div>
@@ -204,7 +262,7 @@
               </ul>
             </div>
             <div class="card__actions">
-              <a class="link" href="capital.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a class="btn btn--solid btn--small" href="capital.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </div>
           </article>
 
@@ -225,7 +283,7 @@
               </ul>
             </div>
             <div class="card__actions">
-              <a class="link" href="desarrollo-organizacional.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a class="btn btn--solid btn--small" href="desarrollo-organizacional.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </div>
           </article>
 
@@ -246,7 +304,7 @@
               </ul>
             </div>
             <div class="card__actions">
-              <a class="link" href="management-services.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+              <a class="btn btn--solid btn--small" href="management-services.html">Ver más detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </div>
           </article>
         </div>

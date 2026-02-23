@@ -4499,3 +4499,218 @@ body:not(.theme-dark) #connect .connect-pill span[data-i18n-text="connect.kicker
 #contacto .contact-map-card{
   display: none !important;
 }
+
+
+/* =========================================================
+   PATCH 2026-02-22f — Unificar TODOS los botones con estilo "Conocer más"
+   Requerimientos:
+   - NO tocar IDs / NO tocar JS / NO tocar estructura
+   - Botones desde "¿Eres colaborador?" hasta "Enviar mensaje" deben verse IGUAL
+     al botón de Servicios "Conocer más" (.service-link)
+   - En CONNECT ("Juntos trazamos tu camino al éxito") el cuadro debe ser transparente
+========================================================= */
+
+/* 1) Canon del botón "Conocer más" (lo usamos como fuente) */
+:root{
+  --learn-bg: rgba(27,114,255,0.10);
+  --learn-bg-hover: rgba(27,114,255,0.14);
+  --learn-border: rgba(27,114,255,0.18);
+  --learn-fg: rgba(27,114,255,0.95);
+  --learn-radius: 12px;     /* mismo radio que .service-link */
+  --learn-pad-y: 8px;       /* mismo padding que .service-link */
+  --learn-pad-x: 10px;
+}
+
+/* 2) Aplica EXACTO look de .service-link a TODOS los botones/CTAs */
+.btn,
+.btn-primary,
+.btn-soft,
+.btn-ghost,
+.header-controls .btn,
+.mobile-menu .btn,
+.mobile-menu .mobile-nav-list .btn,
+.section-center-cta .btn{
+  background: var(--learn-bg) !important;
+  border: 1px solid var(--learn-border) !important;
+  color: var(--learn-fg) !important;
+  border-radius: var(--learn-radius) !important;
+  padding: var(--learn-pad-y) var(--learn-pad-x) !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  font-weight: 1000 !important;
+  transform: none !important;
+}
+
+/* Mantén iconos con el mismo color del texto */
+.btn i,
+.btn svg,
+.btn svg path{
+  color: currentColor !important;
+  stroke: currentColor !important;
+  fill: currentColor !important;
+}
+
+/* Hover igual al "Conocer más" */
+.btn:hover,
+.btn-primary:hover,
+.btn-soft:hover,
+.btn-ghost:hover,
+.header-controls .btn:hover,
+.mobile-menu .btn:hover{
+  background: var(--learn-bg-hover) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: none !important;
+}
+
+/* Tamaños: NO inflar en btn-lg / btn-sm — que se parezcan al "Conocer más" */
+.btn-sm,
+.btn-lg{
+  padding: var(--learn-pad-y) var(--learn-pad-x) !important;
+  border-radius: var(--learn-radius) !important;
+  font-size: 14px !important;
+}
+
+/* CTA colaborador (header) — mismo look (se le quita pill) */
+.header-controls .btn-primary.btn-sm{
+  border-radius: var(--learn-radius) !important;
+  padding: var(--learn-pad-y) var(--learn-pad-x) !important;
+  box-shadow: none !important;
+}
+
+/* 3) CONNECT: "Juntos trazamos tu camino al éxito" — el cuadro (card) transparente */
+#connect .connect-card,
+.section-connect .connect-card{
+  background: transparent !important;
+}
+
+/* Si existiera un "layer" interno tipo placa/cubo, también lo hacemos transparente sin afectar animaciones */
+#connect .connect-card::before,
+#connect .connect-card::after{
+  background: transparent !important;
+}
+
+
+/* =========================================================
+   PATCH 2026-02-22g — Ajuste EXACTO solicitado (sin tocar IDs / sin tocar JS)
+   1) NEWS: "Últimas" azul rey (#5B75B6) y "Noticias" negro
+   2) Botones SOLO: ver más noticias, ver servicios, contactar, eres colaborador, enviar mensaje
+      -> igual al botón "Conocer más" (rectangular/cuadrado + paleta indicada)
+      -> NO afecta teléfono / horario (porque NO tocamos botones fuera de estos CTAs)
+   3) CONNECT: recuadro grande (connect-card) transparente o Morning Cloud (#DCE2EF)
+========================================================= */
+
+:root{
+  --cloud:  #DCE2EF; /* Morning cloud */
+  --silver: #5B75B6; /* Silver lake blue */
+}
+
+/* 1) ÚLTIMAS NOTICIAS — título dividido por span.accent existente */
+#news .section-title{
+  color: var(--silver) !important;      /* "Últimas" */
+}
+#news .section-title .accent{
+  color: #000 !important;              /* "Noticias" */
+}
+
+/* 3) CONNECT — recuadro grande */
+#connect .connect-card,
+.section-connect .connect-card{
+  background: var(--cloud) !important;  /* (si prefieres 100% transparente, cambia a transparent) */
+}
+
+/* 2) BOTONES — SOLO CTAs específicos (NO toca tel/horario) */
+.header-controls > a.btn.btn-primary.btn-sm[data-i18n="header.collab"],
+#hero .hero-cta a.btn[href="servicios.html"],
+#hero .hero-cta a.btn[href*="capital.html"],
+#news .section-center-cta a.btn[href="noticias.html"],
+#contacto #contactSubmitBtn,
+#contacto button[type="submit"].btn,
+#contacto button[type="submit"].btn-primary{
+  background: var(--silver) !important;
+  border: 1px solid rgba(11,18,32,0.12) !important;
+  color: #fff !important;
+
+  /* Forma del "Conocer más" en screenshot (más cuadrado) */
+  border-radius: 6px !important;
+  padding: 10px 16px !important;
+
+  font-weight: 900 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+/* Hover igual de limpio */
+.header-controls > a.btn.btn-primary.btn-sm[data-i18n="header.collab"]:hover,
+#hero .hero-cta a.btn[href="servicios.html"]:hover,
+#hero .hero-cta a.btn[href*="capital.html"]:hover,
+#news .section-center-cta a.btn[href="noticias.html"]:hover,
+#contacto #contactSubmitBtn:hover,
+#contacto button[type="submit"].btn:hover,
+#contacto button[type="submit"].btn-primary:hover{
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+/* Iconos dentro de esos CTAs: blancos */
+.header-controls > a.btn.btn-primary.btn-sm[data-i18n="header.collab"] i,
+#hero .hero-cta a.btn[href="servicios.html"] i,
+#hero .hero-cta a.btn[href*="capital.html"] i,
+#news .section-center-cta a.btn[href="noticias.html"] i,
+#contacto #contactSubmitBtn svg,
+#contacto #contactSubmitBtn i{
+  color: #fff !important;
+  fill: #fff !important;
+  stroke: #fff !important;
+}
+
+
+/* =========================================================
+   PATCH 2026-02-22i — FIX quirúrgico (solo NEWS + CONNECT)
+   Objetivo (según captura):
+   1) "Últimas" azul rey (#5B75B6) y "Noticias" negro
+   2) CONNECT: el fondo del recuadro grande (connect-card) en Morning Cloud (#DCE2EF)
+   3) CONNECT: el botón "Agendar ahora" (connect.cta) EXACTO como el botón "Conocer más" de Servicios
+      -> sólido #5B75B6, texto blanco, rectangular, sin degradado.
+   ⚠️ No toca IDs, no toca JS, no cambia otros botones.
+========================================================= */
+
+:root{
+  --cloud:  #DCE2EF; /* Morning cloud */
+  --silver: #5B75B6; /* Silver lake blue */
+}
+
+/* 1) NEWS — usa la MISMA especificidad que tu override actual (que lo dejaba negro) */
+body:not(.theme-dark) .section-news#news .news-content .section-title{
+  color: var(--silver) !important; /* "Últimas" */
+}
+body:not(.theme-dark) .section-news#news .news-content .section-title .accent{
+  color: #000 !important;          /* "Noticias" */
+}
+
+/* 2) CONNECT — recuadro grande */
+body:not(.theme-dark) #connect .connect-card{
+  background: var(--cloud) !important;
+}
+
+/* 3) CONNECT — botón CTA (Agendar ahora / Schedule now!) */
+body:not(.theme-dark) #connect .connect-left > a.btn.btn-primary.btn-lg.btn-icon{
+  background: var(--silver) !important;                    /* sólido */
+  background-image: none !important;                       /* quita gradient */
+  border: 1px solid rgba(11,18,32,0.12) !important;
+  color: #fff !important;
+
+  border-radius: 6px !important;                           /* rectangular como "Conocer más" (captura) */
+  padding: 10px 16px !important;
+
+  box-shadow: none !important;
+  font-weight: 900 !important;
+}
+body:not(.theme-dark) #connect .connect-left > a.btn.btn-primary.btn-lg.btn-icon:hover{
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+  box-shadow: none !important;
+}
+body:not(.theme-dark) #connect .connect-left > a.btn.btn-primary.btn-lg.btn-icon i{
+  color: #fff !important;
+}
+

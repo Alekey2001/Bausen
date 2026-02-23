@@ -1,14 +1,18 @@
-/* =========================
-   BAUSEN — Impuestos (2026)
-   JS: Drawer, Theme toggle, Reveal, Tilt, Lottie mount, Form
-========================= */
-(() => {
+/* impuestos.js (UPDATED)
+   ✅ Paleta fija (sin tema claro/oscuro)
+   ✅ Header desktop: solo 3 controles (colaborador + idioma + hamburguesa)
+   ✅ Navegación completa vive en el drawer (PC + móvil)
+   ✅ i18n por data-i18n / data-i18n-text / data-i18n-placeholder
+*/
+
+document.addEventListener("DOMContentLoaded", () => {
   'use strict';
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  const body = document.body;
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
 
   const storage = {
     get(key, fallback = null) {
@@ -26,15 +30,15 @@
     },
   };
 
-  /* =========================
-     i18n dictionaries (ES/EN full)
-  ========================= */
   const I18N = {
     ES: {
       // Header/Nav
       "nav.home": "Inicio",
       "nav.press": "Prensa",
       "nav.services": "Servicios",
+      "nav.svc.payroll": "Procesamiento de nómina",
+      "nav.svc.specialized": "Servicios especializados",
+      "nav.svc.tax": "Consultoría fiscal",
       "nav.news": "Noticias",
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
@@ -197,6 +201,9 @@
       "nav.home": "Home",
       "nav.press": "Press",
       "nav.services": "Services",
+      "nav.svc.payroll": "Payroll processing",
+      "nav.svc.specialized": "Specialized services",
+      "nav.svc.tax": "Tax consulting",
       "nav.news": "News",
       "nav.training": "Training Center",
       "nav.about": "About",
@@ -355,462 +362,217 @@
     },
   };
 
-  /* =========================
-     Flags (keep all)
-  ========================= */
-  const FLAG_SVG = {
-    ES: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <rect width="24" height="24" rx="6" fill="#AA151B"></rect>
-          <rect y="7" width="24" height="10" fill="#F1BF00"></rect>
-        </svg>`,
-    EN: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <rect width="24" height="24" rx="6" fill="#012169"></rect>
-          <path d="M0 0 L24 24 M24 0 L0 24" stroke="#FFF" stroke-width="5"/>
-          <path d="M0 0 L24 24 M24 0 L0 24" stroke="#C8102E" stroke-width="3"/>
-        </svg>`,
-    DE: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <rect width="24" height="24" rx="6" fill="#000"></rect>
-          <rect y="8" width="24" height="8" fill="#DD0000"></rect>
-          <rect y="16" width="24" height="8" fill="#FFCE00"></rect>
-        </svg>`,
-    PT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <rect width="24" height="24" rx="6" fill="#006600"></rect>
-          <circle cx="10" cy="12" r="6" fill="#FF0000"></circle>
-        </svg>`,
-    FR: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <rect width="24" height="24" rx="6" fill="#FFF"></rect>
-          <rect width="8" height="24" rx="6" fill="#0055A4"></rect>
-          <rect x="16" width="8" height="24" rx="6" fill="#EF4135"></rect>
-        </svg>`,
-    IT: `<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-          <rect width="24" height="24" rx="6" fill="#FFF"></rect>
-          <rect width="8" height="24" rx="6" fill="#009246"></rect>
-          <rect x="16" width="8" height="24" rx="6" fill="#CE2B37"></rect>
-        </svg>`,
-  };
+  
 
   /* =========================
-     ONE language source of truth
+     i18n engine (compatible con referencia)
   ========================= */
   const LANG_KEY = "bausen_lang";
+  const LEGACY_KEY = "preferred-language";
 
-  const normalizeLang = (lang) => {
-    const v = String(lang || "").trim();
-    const up = v.toUpperCase();
-
-    // accept common variants
-    if (up === "EN" || up === "ES" || up === "DE" || up === "PT" || up === "FR" || up === "IT") return up;
-    if (v.toLowerCase().startsWith("en")) return "EN";
-    if (v.toLowerCase().startsWith("es")) return "ES";
-    if (v.toLowerCase().startsWith("pt")) return "PT";
-    if (v.toLowerCase().startsWith("fr")) return "FR";
-    if (v.toLowerCase().startsWith("it")) return "IT";
-    if (v.toLowerCase().startsWith("de")) return "DE";
-    return "EN"; // ✅ default site language
+  const getInitialLang = () => {
+    const stored = storage.get(LANG_KEY) || storage.get(LEGACY_KEY);
+    const norm = (stored || "EN").toString().trim().toUpperCase();
+    return I18N[norm] ? norm : "EN";
   };
 
-  const getLang = () => {
-    // compat: if you previously stored preferred-language
-    const saved = storage.get(LANG_KEY, null) || storage.get("preferred-language", null);
-    return normalizeLang(saved || "EN");
-  };
+  let currentLang = getInitialLang();
 
-  const setLang = (lang) => {
-    const L = normalizeLang(lang);
-    storage.set(LANG_KEY, L);
-    // compat keep
-    storage.set("preferred-language", L);
-    applyTranslations(L);
-  };
+  const applyI18n = (lang) => {
+    const dict = I18N[lang] || I18N.EN;
 
-  const t = (lang, key) => {
-    const L = normalizeLang(lang);
-    const dict = I18N[L] || I18N.ES; // fallback ES for non-EN/ES
-    return dict[key] ?? (I18N.ES[key] ?? key);
-  };
-
-  /* =========================
-     Translator (ONLY data-i18n*)
-  ========================= */
-  function applyTranslations(lang) {
-    const L = normalizeLang(lang);
-
-    // semantic html lang
-    document.documentElement.setAttribute("lang", L === "EN" ? "en" : "es");
-
-    // translate innerHTML
+    // data-i18n: innerHTML (permite <br/> y spans)
     $$("[data-i18n]").forEach((el) => {
       const key = el.getAttribute("data-i18n");
       if (!key) return;
-      el.innerHTML = t(L, key);
+      const val = dict[key];
+      if (typeof val === "string") el.innerHTML = val;
     });
 
-    // translate textContent
+    // data-i18n-text: textContent (texto plano)
     $$("[data-i18n-text]").forEach((el) => {
       const key = el.getAttribute("data-i18n-text");
       if (!key) return;
-      el.textContent = t(L, key);
+      const val = dict[key];
+      if (typeof val === "string") el.textContent = val;
     });
 
-    // placeholders
+    // data-i18n-placeholder: placeholder (inputs)
     $$("[data-i18n-placeholder]").forEach((el) => {
       const key = el.getAttribute("data-i18n-placeholder");
       if (!key) return;
-      el.setAttribute("placeholder", t(L, key));
+      const val = dict[key];
+      if (typeof val === "string") el.setAttribute("placeholder", val);
     });
+  };
 
-    // ARIA / UI labels (stable)
-    const menuToggle = $("#menu-toggle") || $("#navToggle");
-    if (menuToggle) menuToggle.setAttribute("aria-label", t(L, "ui.openMenu"));
-    const closeMenu = $("#close-menu") || $("#navClose");
-    if (closeMenu) closeMenu.setAttribute("aria-label", t(L, "ui.closeMenu"));
-    const themeToggle = $("#theme-toggle") || $("#themeToggle");
-    if (themeToggle) themeToggle.setAttribute("aria-label", t(L, "ui.toggleTheme"));
-    const langBtn = $("#language-btn");
-    if (langBtn) langBtn.setAttribute("aria-label", t(L, "ui.langSelect"));
-    const logoLink = $(".logo-link");
-    if (logoLink) logoLink.setAttribute("aria-label", t(L, "ui.goHome"));
-    const scrollBtn = $(".scroll-indicator");
-    if (scrollBtn) scrollBtn.setAttribute("aria-label", t(L, "ui.scrollNext"));
+  /* =========================
+     Flags (SVG inline) — como referencia
+  ========================= */
+  const FLAGS = {
+    ES: `<svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="18" height="18" rx="4" fill="#C60B1E"/>
+      <rect y="5" width="18" height="8" fill="#FFC400"/>
+    </svg>`,
+    EN: `<svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="18" height="18" rx="4" fill="#012169"/>
+      <path d="M0 0 L18 18 M18 0 L0 18" stroke="#FFF" stroke-width="4"/>
+      <path d="M0 0 L18 18 M18 0 L0 18" stroke="#C8102E" stroke-width="2"/>
+      <path d="M9 0 V18 M0 9 H18" stroke="#FFF" stroke-width="6"/>
+      <path d="M9 0 V18 M0 9 H18" stroke="#C8102E" stroke-width="3"/>
+    </svg>`,
+  };
 
-    // sync language code + flag
-    const languageCode = $("#language-code");
-    const mobileSelect = $("#mobile-language-select");
-    if (languageCode) languageCode.textContent = L;
-    if (mobileSelect) mobileSelect.value = L;
-
+  const setLangUI = (lang) => {
+    const codeEl = $("#language-code");
     const flagEl = $("#language-flag");
-    if (flagEl) flagEl.innerHTML = FLAG_SVG[L] || FLAG_SVG.ES;
+    if (codeEl) codeEl.textContent = lang;
+    if (flagEl) flagEl.innerHTML = FLAGS[lang] || "";
+  };
 
-    $$("[data-flag]").forEach((el) => {
-      const code = normalizeLang(el.getAttribute("data-flag") || "ES");
-      el.innerHTML = FLAG_SVG[code] || FLAG_SVG.ES;
-    });
-  }
+  const initLanguage = () => {
+    const btn = $("#language-btn");
+    const dropdown = $("#language-dropdown");
+    const options = $$(".language-option");
 
-  /* =========================
-     Language UI
-  ========================= */
-  function initLanguage() {
-    const languageBtn = $("#language-btn");
-    const languageDropdown = $("#language-dropdown");
-    const languageOptions = $$(".language-option");
-    const mobileLanguageSelect = $("#mobile-language-select");
+    setLangUI(currentLang);
+    applyI18n(currentLang);
 
-    // init apply
-    applyTranslations(getLang());
+    const closeDropdown = () => {
+      if (!dropdown || !btn) return;
+      dropdown.classList.remove("show");
+      btn.setAttribute("aria-expanded", "false");
+    };
 
-    // desktop dropdown
-    if (languageBtn && languageDropdown) {
-      const open = () => {
-        languageBtn.setAttribute("aria-expanded", "true");
-        languageDropdown.classList.add("show");
-      };
-      const close = () => {
-        languageBtn.setAttribute("aria-expanded", "false");
-        languageDropdown.classList.remove("show");
-      };
+    const openDropdown = () => {
+      if (!dropdown || !btn) return;
+      dropdown.classList.add("show");
+      btn.setAttribute("aria-expanded", "true");
+    };
 
-      languageBtn.addEventListener("click", (e) => {
-        e.preventDefault();
+    if (btn && dropdown) {
+      btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const expanded = languageBtn.getAttribute("aria-expanded") === "true";
-        expanded ? close() : open();
+        const expanded = btn.getAttribute("aria-expanded") === "true";
+        expanded ? closeDropdown() : openDropdown();
       });
 
-      languageOptions.forEach((opt) => {
-        opt.addEventListener("click", () => {
-          const lang = opt.getAttribute("data-lang") || "EN";
-          setLang(lang);
-          close();
-        });
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!languageDropdown.classList.contains("show")) return;
-        if (languageBtn.contains(e.target) || languageDropdown.contains(e.target)) return;
-        close();
-      });
-
+      document.addEventListener("click", () => closeDropdown());
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
+        if (e.key === "Escape") closeDropdown();
       });
     }
 
-    // mobile select
-    if (mobileLanguageSelect) {
-      mobileLanguageSelect.addEventListener("change", (e) => setLang(e.target.value));
-    }
-  }
+    options.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        const lang = (opt.getAttribute("data-lang") || "EN").toUpperCase();
+        currentLang = I18N[lang] ? lang : "EN";
+        storage.set(LANG_KEY, currentLang);
+        storage.set(LEGACY_KEY, currentLang);
+        setLangUI(currentLang);
+        applyI18n(currentLang);
+        closeDropdown();
+      });
+    });
+  };
 
   /* =========================
-     Loader
+     Drawer (overlay + menú)
   ========================= */
-  function initLoader() {
-    const pageLoader = $("#page-loader");
-    if (!pageLoader) return;
+  const initDrawer = () => {
+    const menuToggle = $("#menu-toggle");
+    const mobileMenu = $("#mobile-menu");
+    const overlay = $("#mobile-menu-overlay");
+    const closeBtn = $("#close-menu");
 
-    body.style.overflow = "hidden";
+    if (!menuToggle || !mobileMenu || !overlay) return;
 
-    const hide = () => {
-      if (pageLoader.classList.contains("hidden")) return;
-      pageLoader.classList.add("hidden");
-      body.style.overflow = "";
+    const openMenu = () => {
+      mobileMenu.classList.add("open");
+      overlay.classList.add("show");
+      document.body.classList.add("menu-open");
+      menuToggle.setAttribute("aria-expanded", "true");
     };
 
-    if (document.readyState === "complete") {
-      setTimeout(hide, prefersReducedMotion ? 120 : 350);
-    } else {
-      window.addEventListener("load", () => setTimeout(hide, prefersReducedMotion ? 120 : 350), { once: true });
-    }
-
-    setTimeout(hide, 3500);
-  }
-
-  /* =========================
-     Theme
-  ========================= */
-  function initThemeRef() {
-    const KEY = "theme";
-    const themeToggle = $("#theme-toggle") || $("#themeToggle");
-
-    const apply = (mode) => {
-      const isDark = mode === "dark";
-      body.classList.toggle("theme-dark", isDark);
-      storage.set(KEY, isDark ? "dark" : "light");
+    const closeMenu = () => {
+      mobileMenu.classList.remove("open");
+      overlay.classList.remove("show");
+      document.body.classList.remove("menu-open");
+      menuToggle.setAttribute("aria-expanded", "false");
     };
 
-    const saved = storage.get(KEY);
-    if (saved === "dark" || saved === "light") apply(saved);
-    else {
-      const osDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      apply(osDark ? "dark" : "light");
-    }
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileMenu.classList.contains("open");
+      isOpen ? closeMenu() : openMenu();
+    });
 
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        const isDark = body.classList.contains("theme-dark");
-        apply(isDark ? "light" : "dark");
+    overlay.addEventListener("click", closeMenu);
+    if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu();
+    });
+
+    // Cerrar al navegar
+    $$("#mobile-menu a").forEach((a) => {
+      a.addEventListener("click", () => closeMenu());
+    });
+
+    // Hover UX para <details> en pointer fine (como referencia)
+    if (hasFinePointer && !prefersReducedMotion) {
+      const details = $$("#mobile-menu details.menu-details");
+      details.forEach((d) => {
+        let openT = null;
+        let closeT = null;
+
+        const scheduleOpen = () => {
+          clearTimeout(closeT);
+          openT = setTimeout(() => {
+            d.open = true;
+          }, 140);
+        };
+
+        const scheduleClose = () => {
+          clearTimeout(openT);
+          closeT = setTimeout(() => {
+            d.open = false;
+          }, 180);
+        };
+
+        d.addEventListener("mouseenter", scheduleOpen);
+        d.addEventListener("mouseleave", scheduleClose);
       });
     }
-  }
-
-
-  // -------------------------
-  // Elements (navbar reference)
-  // -------------------------
-  const header = $('[data-header]');
-  const drawer = $('#navDrawer');
-  const btnOpen = $('#navToggle');
-  const btnClose = $('#navClose');
-  const backdrop = $('.drawer-backdrop');
-  const panel = $('.drawer-panel');
-  const themeToggle = $('#themeToggle');
-
-  // Footer year
-  const yearEl = $('[data-year]');
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
-
-  // -------------------------
-  // Header scrolled
-  // -------------------------
-  const onScroll = () => {
-    if (!header) return;
-    header.classList.toggle('is-scrolled', window.scrollY > 14);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  // -------------------------
-  // Drawer (mobile)
-  // -------------------------
-  const getScrollbarWidth = () => window.innerWidth - document.documentElement.clientWidth;
-
-  const lockScroll = () => {
-    const w = getScrollbarWidth();
-    document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = `${w}px`;
   };
 
-  const unlockScroll = () => {
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
+  /* =========================
+     Active state (resalta página actual)
+  ========================= */
+  const initActive = () => {
+    const path = (location.pathname || "").toLowerCase();
+
+    const normalize = (href) => {
+      try {
+        const url = new URL(href, location.origin);
+        return url.pathname.toLowerCase();
+      } catch {
+        return (href || "").toLowerCase();
+      }
+    };
+
+    const allLinks = $$(".mobile-nav-link, .mobile-sub-link, .mobile-summary-link");
+    allLinks.forEach((a) => {
+      const href = a.getAttribute("href");
+      if (!href) return;
+      const p = normalize(href);
+      if (p && p === path) {
+        a.classList.add("active");
+        a.setAttribute("aria-current", "page");
+      }
+    });
   };
 
-  const openDrawer = () => {
-    if (!drawer || !btnOpen) return;
-    drawer.hidden = false;
-    btnOpen.setAttribute('aria-expanded', 'true');
-    lockScroll();
-    setTimeout(() => btnClose?.focus(), 50);
-  };
-
-  const closeDrawer = () => {
-    if (!drawer || !btnOpen) return;
-    drawer.hidden = true;
-    btnOpen.setAttribute('aria-expanded', 'false');
-    unlockScroll();
-    btnOpen.focus();
-  };
-
-  btnOpen?.addEventListener('click', () => {
-    const isOpen = drawer && !drawer.hidden;
-    isOpen ? closeDrawer() : openDrawer();
-  });
-
-  btnClose?.addEventListener('click', closeDrawer);
-  backdrop?.addEventListener('click', closeDrawer);
-  panel?.addEventListener('click', (e) => e.stopPropagation());
-
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer && !drawer.hidden) closeDrawer();
-  });
-
-  drawer?.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if (a && a.classList.contains('drawer-link')) closeDrawer();
-  });
-
-  const mq = window.matchMedia('(min-width: 981px)');
-  const mqHandler = (ev) => { if (ev.matches && drawer && !drawer.hidden) closeDrawer(); };
-  mq.addEventListener ? mq.addEventListener('change', mqHandler) : mq.addListener(mqHandler);
-
-  // -------------------------
-  // Theme toggle (dark/light)
-  // -------------------------
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-  const updateThemeIcons = (theme) => {
-    const isLight = theme === 'light';
-    $$('.i-sun').forEach(el => el.style.display = isLight ? 'block' : 'none');
-    $$('.i-moon').forEach(el => el.style.display = isLight ? 'none' : 'block');
-  };
-
-  const setTheme = (theme) => {
-    if (!theme || !['light','dark'].includes(theme)) return;
-
-    document.documentElement.setAttribute('data-theme', theme);
-    // Compat con estilos del sitio principal (usa body.theme-dark)
-    document.body.classList.toggle('theme-dark', theme === 'dark');
-    localStorage.setItem('bausen_theme', theme);
-    updateThemeIcons(theme);
-
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0b0f17' : '#F8FBFF');
-  };
-
-  const initTheme = () => {
-    const saved = localStorage.getItem('bausen_theme');
-    if (saved === 'light' || saved === 'dark') return setTheme(saved);
-    setTheme(prefersDark.matches ? 'dark' : 'light');
-  };
-
-  initTheme();
   initLanguage();
-
-  prefersDark.addEventListener?.('change', (e) => {
-    if (!localStorage.getItem('bausen_theme')) setTheme(e.matches ? 'dark' : 'light');
-  });
-
-  themeToggle?.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-    setTheme(current === 'dark' ? 'light' : 'dark');
-  });
-
-  // -------------------------
-  // Reveal on scroll
-  // -------------------------
-  const reveals = $$('.reveal');
-  if ('IntersectionObserver' in window && reveals.length) {
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '50px' });
-    reveals.forEach(el => io.observe(el));
-  } else {
-    reveals.forEach(el => el.classList.add('is-visible'));
-  }
-
-  // -------------------------
-  // Tilt (lightweight)
-  // -------------------------
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const tilts = $$('[data-tilt]');
-
-  if (!prefersReduced && tilts.length) {
-    const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
-
-    const onMove = (el, ev) => {
-      const r = el.getBoundingClientRect();
-      const x = (ev.clientX - r.left) / r.width;
-      const y = (ev.clientY - r.top) / r.height;
-
-      const rx = clamp((0.5 - y) * 10, -8, 8);
-      const ry = clamp((x - 0.5) * 10, -8, 8);
-
-      el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-1px)`;
-    };
-
-    const reset = (el) => {
-      el.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-    };
-
-    tilts.forEach(el => {
-      el.addEventListener('mousemove', (e) => onMove(el, e));
-      el.addEventListener('mouseleave', () => reset(el));
-      el.addEventListener('mouseenter', () => reset(el));
-    });
-  }
-
-  // -------------------------
-  // Lottie mounting
-  // -------------------------
-  const LOTTIES = {
-    "hero-tax": "https://assets10.lottiefiles.com/packages/lf20_jcikwtux.json",
-    "audit":    "https://assets2.lottiefiles.com/packages/lf20_6wutsrox.json",
-    "strategy": "https://assets9.lottiefiles.com/packages/lf20_1z3w3tqj.json",
-    "shield":   "https://assets1.lottiefiles.com/packages/lf20_qm8eqzse.json",
-    "chart":    "https://assets2.lottiefiles.com/packages/lf20_touohxv0.json"
-  };
-
-  const mountLottie = (slot, url) => {
-    if (!slot || !url) return;
-    if (slot.querySelector('lottie-player')) return;
-
-    const player = document.createElement('lottie-player');
-    player.setAttribute('src', url);
-    player.setAttribute('background', 'transparent');
-    player.setAttribute('speed', '1');
-    player.setAttribute('loop', '');
-    player.setAttribute('autoplay', '');
-    player.style.width = '100%';
-    player.style.height = '100%';
-    player.style.maxWidth = '320px';
-
-    slot.appendChild(player);
-  };
-
-  $$('.lottie-slot[data-lottie]').forEach(slot => {
-    const key = slot.getAttribute('data-lottie');
-    mountLottie(slot, LOTTIES[key]);
-  });
-
-  // -------------------------
-  // Form feedback (UI only)
-  // -------------------------
-  const form = $('[data-form]');
-  const status = $('[data-form-status]');
-  if (form && status) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      status.textContent = 'Mensaje listo. Integra tu backend o servicio de envío para finalizar.';
-      status.style.color = 'rgba(16,185,129,.9)';
-      window.setTimeout(() => { status.textContent = ''; }, 4500);
-      form.reset();
-    });
-  }
-})();
+  initDrawer();
+  initActive();
+});

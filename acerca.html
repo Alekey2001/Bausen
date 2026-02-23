@@ -8,10 +8,10 @@
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
   <title>Bausen — Acerca de</title>
 <!-- Favicons correctos (nítidos en navegador) -->
-<link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
+<link href="/imgnavar/Icono .svg" rel="icon" sizes="any"/>
+<link href="/imgnavar/Icono .svg" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/imgnavar/Icono .svg" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/imgnavar/Icono .svg" rel="apple-touch-icon" sizes="180x180"/>
   <link rel="stylesheet" href="acerca.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,11 +109,27 @@
           </details>
         </li>
 
-        <!-- Servicios -->
+        <!-- Servicios ▸ (dropdown) -->
         <li class="mobile-nav-item">
-          <a class="mobile-nav-link" data-i18n="nav.services" data-page="servicios" href="servicios.html">Servicios</a>
-        </li>
+          <details class="menu-details">
+            <summary class="mobile-nav-link mobile-nav-summary" data-page="servicios">
+              <a class="mobile-summary-link" href="servicios.html"><span data-i18n="nav.services">Servicios</span></a>
+              <i aria-hidden="true" class="fas fa-chevron-right"></i>
+            </summary>
 
+            <ul class="mobile-submenu">
+              <li>
+                <a class="mobile-sub-link" href="capital.html" data-i18n-text="nav.svc.payroll">Procesamiento de nómina</a>
+              </li>
+              <li>
+                <a class="mobile-sub-link" href="/inexservicios/servicios.html" data-i18n-text="nav.svc.specialized">Servicios especializados</a>
+              </li>
+              <li>
+                <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.svc.tax">Consultoría fiscal</a>
+              </li>
+            </ul>
+          </details>
+        </li>
         <!-- Centro de formación -->
         <li class="mobile-nav-item">
           <a class="mobile-nav-link" data-i18n="nav.training" data-page="centro" href="centro.html">Centro de formación</a>
@@ -243,10 +259,6 @@
               </div>
             </div>
           </div>
-
-          <div class="hero__panel-hint">
-            Iluminación + efecto “glass” premium
-          </div>
         </aside>
       </div>
     </section>
@@ -259,7 +271,7 @@
             <i class="fa-solid fa-gem" aria-hidden="true"></i>
             Nuestra Esencia
           </div>
-          <h2 class="section__title">Nuestra Esencia</h2>
+          <h2 class="section__title two-tone">Nuestra Esencia</h2>
           <p class="section__sub">Los pilares fundamentales que guían cada decisión y acción en BAUSEN.</p>
         </div>
 
@@ -313,7 +325,7 @@
     <section class="section" id="historias">
       <div class="container">
         <div class="section__head reveal">
-          <h2 class="section__title">Historias de Clientes</h2>
+          <h2 class="section__title two-tone">Historias de Clientes</h2>
           <p class="section__sub">Resultados reales con impacto directo en operación, ventas y equipo.</p>
         </div>
 
@@ -376,7 +388,7 @@
     <section class="section section--dark" id="porque">
       <div class="container">
         <div class="section__head reveal">
-          <h2 class="section__title">¿Por qué <span class="accent">BAUSEN</span>?</h2>
+          <h2 class="section__title two-tone">¿Por qué <span class="accent">BAUSEN</span>?</h2>
           <p class="section__sub">Descubre las razones por las que cientos de empresas confían en nosotros.</p>
         </div>
 
@@ -428,16 +440,16 @@
             <i class="fa-solid fa-crown" aria-hidden="true"></i>
             Liderazgo
           </div>
-          <h2 class="section__title">Nuestro Equipo <span class="accent">Directivo</span></h2>
+          <h2 class="section__title two-tone">Nuestro Equipo <span class="accent">Directivo</span></h2>
           <p class="section__sub">Liderazgo con experiencia y compromiso con la excelencia.</p>
         </div>
 
         <div class="leader reveal" data-tilt>
           <div class="leader__icon">
-            <i class="fa-solid fa-user-group"></i>
+            <img class="leader__img" src="/images/Alejandra.jpeg" alt="Dirección General" loading="lazy" decoding="async"/>
           </div>
           <h3>Dirección General</h3>
-          <p>Chief Executive Officer</p>
+          <p> Dra. Alejandra Gómez Ruiz</p>
         </div>
       </div>
     </section>
@@ -450,7 +462,7 @@
             <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>
             Metodología
           </div>
-          <h2 class="section__title">Nuestro Proceso</h2>
+          <h2 class="section__title two-tone">Nuestro Proceso</h2>
           <p class="section__sub">Un enfoque estructurado que garantiza resultados excepcionales.</p>
         </div>
 
@@ -498,7 +510,7 @@
             <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>
             Historia y Logros
           </div>
-          <h2 class="section__title">Historia y Logros</h2>
+          <h2 class="section__title two-tone">Historia y Logros</h2>
           <p class="section__sub">Hitos clave que definen la evolución de BAUSEN.</p>
         </div>
 
@@ -528,7 +540,7 @@
     <section class="section section--dark" id="faq">
       <div class="container">
         <div class="section__head reveal">
-          <h2 class="section__title">Preguntas <span class="accent">Frecuentes</span></h2>
+          <h2 class="section__title two-tone">Preguntas <span class="accent">Frecuentes</span></h2>
           <p class="section__sub">Respuestas claras para tomar una decisión con confianza.</p>
         </div>
 

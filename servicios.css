@@ -1,6 +1,6 @@
 :root{
-  --c-primary: #003DA5;
-  --c-secondary: #182389;
+  --c-primary: rgba(220, 226, 239, .18);
+  --c-secondary: rgba(220, 226, 239, .18);
 
   --radius-xl: 22px;
   --radius-lg: 18px;
@@ -9,20 +9,20 @@
   --container: 1200px;
   --header-h: 66px;
 
-  --focus-ring: rgba(0,61,165,.32);
+  --focus-ring: rgba(220, 226, 239, .18);
 
   /* glow base (se ajusta por tema) */
-  --glow-1: rgba(0, 61, 165, .18);
-  --glow-2: rgba(24, 35, 137, .14);
-  --glow-strong-1: rgba(0, 61, 165, .28);
-  --glow-strong-2: rgba(24, 35, 137, .22);
+  --glow-1: rgba(220, 226, 239, .18);
+  --glow-2: rgba(220, 226, 239, .18);
+  --glow-strong-1:rgba(220, 226, 239, .18);
+  --glow-strong-2: rgba(220, 226, 239, .18);
   /* Aliases para i18n UI (compat con referencia) */
-  --primary: #1f5eff;
-  --primary-2: #2b8cff;
+  --primary: rgba(220, 226, 239, .18);
+  --primary-2: rgba(220, 226, 239, .18);
 
   /* Shadows / motion (como referencia) */
-  --shadow:    0 18px 55px rgba(19, 33, 68, 0.12);
-  --shadow-lg: 0 28px 90px rgba(19, 33, 68, 0.16);
+  --shadow:    0 18px 55px rgba(220, 226, 239, .18);
+  --shadow-lg: 0 28px 90px rgba(220, 226, 239, .18);
     --t-normal: 280ms ease;
   --z-overlay: 1100;
   --z-menu: 1200;
@@ -30,61 +30,6 @@
 
 }
 
-/* DARK */
-html[data-theme="dark"]{
-  --bg: #040610;
-  --bg-2: #060a16;
-  --surface: #0A1024;
-  --surface-2: #0D1630;
-
-  --text: #EAF0FF;
-  --muted: rgba(234,240,255,.72);
-
-  --border: rgba(255,255,255,.10);
-
-  --shadow: 0 14px 44px rgba(0,0,0,.42);
-  --shadow-soft: 0 10px 26px rgba(0,0,0,.26);
-
-  --hero-a: rgba(0,61,165,.82);
-  --hero-b: rgba(24,35,137,.92);
-  --hero-c: rgba(4,6,16,.98);
-
-  --divider-top: rgba(255,255,255,.10);
-  --divider-mid: rgba(0,61,165,.22);
-  --divider-bottom: rgba(0,0,0,.45);
-
-  --glow-strong-1: rgba(0, 61, 165, .34);
-  --glow-strong-2: rgba(24, 35, 137, .28);
-}
-
-/* LIGHT */
-html[data-theme="light"]{
-  --bg: #F6F8FF;
-  --bg-2: #EEF3FF;
-  --surface: #FFFFFF;
-  --surface-2: #F4F7FF;
-
-  --text: #0B1020;
-  --muted: rgba(11,16,32,.70);
-
-  --border: rgba(11,16,32,.10);
-
-  --shadow: 0 14px 40px rgba(11,16,32,.10);
-  --shadow-soft: 0 10px 24px rgba(11,16,32,.08);
-
-  --hero-a: rgba(0,61,165,.92);
-  --hero-b: rgba(24,35,137,.94);
-  --hero-c: rgba(255,255,255,.98);
-
-  --divider-top: rgba(11,16,32,.08);
-  --divider-mid: rgba(0,61,165,.16);
-  --divider-bottom: rgba(11,16,32,.10);
-
-  --glow-1: rgba(0, 61, 165, .12);
-  --glow-2: rgba(24, 35, 137, .10);
-  --glow-strong-1: rgba(0, 61, 165, .20);
-  --glow-strong-2: rgba(24, 35, 137, .16);
-}
 
 *{ box-sizing:border-box; }
 html,body{ height:100%; }
@@ -1029,3 +974,666 @@ html[data-theme="light"] .language-dropdown{
 }
 
 
+
+
+/* =========================================================
+   PATCH: Desktop nav moved into hamburger drawer (Servicios)
+========================================================= */
+.nav{ display:none !important; }
+.nav.nav-disabled{ display:none !important; }
+.menu-toggle{ display:flex !important; }
+
+
+
+/* Acordeón + submenu */
+.menu-details > summary{ list-style:none; }
+.menu-details > summary::-webkit-details-marker{ display:none; }
+
+.menu-details[open] .mobile-nav-summary i{ transform: rotate(90deg); }
+.mobile-nav-summary i{ transition: transform var(--t-fast, 150ms ease); }
+
+.mobile-submenu{ list-style:none; margin: 8px 0 0; padding: 0 0 0 8px; }
+.mobile-sub-link{
+  display:block;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 900;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 92%, #0b1220 8%);
+  opacity: .92;
+}
+.mobile-sub-link:hover,
+.mobile-sub-link:focus-visible{
+  background: color-mix(in srgb, var(--primary, #003DA5) 10%, transparent);
+  opacity: 1;
+}
+.mobile-summary-link.active,
+.mobile-nav-link.active,
+.mobile-sub-link.active {
+  background: color-mix(in srgb, var(--primary, #003DA5) 13%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(27,114,255,0.14);
+  opacity: 1;
+}
+
+
+
+/* =========================================================
+   PATCH v2: Match reference positioning + hamburger aesthetics
+   - Header actions pinned to top-right
+   - Drawer overlay/menu class mapping to reference styles
+========================================================= */
+
+/* Header layout: brand left, actions right */
+.header__inner{
+  justify-content: space-between;
+}
+.brand{ flex: 0 0 auto; }
+.header__actions{
+  margin-left: auto;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:10px;
+}
+
+/* Ensure order: CTA, language, burger (as reference) */
+.header__actions > .btn{ order: 1; }
+.header__actions > .language-selector{ order: 2; }
+.header__actions > .menu-toggle{ order: 3; }
+
+/* Tighten right edge like reference */
+.header__actions{ padding-right: 0; }
+.container.header__inner, .container .header__inner{ } /* no-op guard */
+
+/* Make language button same height as burger/cta */
+.language-btn{
+  height: 36px;
+  border-radius: 999px;
+  padding: 0 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.language-btn:hover{
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--c-primary) 20%, transparent),
+    0 0 18px var(--glow-1);
+}
+.language-code{ font-weight: 850; font-size: 12px; }
+
+/* Burger button same capsule look */
+.menu-toggle{
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: color-mix(in srgb, var(--text) 88%, transparent);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+}
+.menu-toggle:hover{
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--c-primary) 20%, transparent),
+    0 0 18px var(--glow-1);
+}
+
+/* --- Drawer overlay/menu: map our classes to reference styles --- */
+.mobile-menu-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.52);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  transition: opacity var(--t-normal), visibility var(--t-normal);
+}
+.mobile-menu-overlay.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-menu{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(92vw, 420px);
+  height: 100dvh;
+  height: 100vh;
+  background: color-mix(in srgb, var(--bg) 92%, #000 8%);
+  border-left: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  box-shadow: 0 28px 90px rgba(0,0,0,0.45);
+  transform: translateX(110%);
+  transition: transform var(--t-normal);
+  z-index: var(--z-menu);
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  border-radius: 0;
+  overflow: hidden;
+}
+.mobile-menu.open{ transform: translateX(0); }
+
+.mobile-menu-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 14px 10px;
+  border-bottom:1px solid var(--border);
+}
+.close-menu{
+  width:36px;
+  height:36px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: color-mix(in srgb, var(--text) 88%, transparent);
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+}
+.close-menu:hover{
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+  box-shadow: 0 0 18px var(--glow-2);
+}
+
+.mobile-nav-list{
+  display:flex;
+  flex-direction:column;
+  padding:10px;
+  gap:6px;
+}
+
+/* Card links like reference */
+.mobile-nav-link,
+.mobile-nav-summary,
+.mobile-sub-link{
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  font-weight: 900;
+  letter-spacing: .1px;
+}
+.mobile-nav-link{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 12px;
+}
+.mobile-summary-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
+  padding:0;
+}
+.mobile-nav-link:hover,
+.mobile-sub-link:hover{
+  box-shadow: 0 0 18px var(--glow-2);
+}
+
+/* Submenu wrapper */
+.mobile-submenu{
+  margin: 8px 0 0;
+  padding: 0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.mobile-sub-link{
+  display:block;
+  padding:12px 12px;
+}
+
+/* Active state (matches reference) */
+.mobile-nav-link.active,
+.mobile-summary-link.active,
+.mobile-sub-link.active{
+  background: color-mix(in srgb, var(--c-primary) 18%, transparent);
+  border-color: color-mix(in srgb, var(--c-primary) 22%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-primary) 16%, transparent);
+}
+
+/* Summary chevron */
+.mobile-nav-summary i{
+  transition: transform var(--t-normal);
+}
+.menu-details[open] .mobile-nav-summary i{
+  transform: rotate(90deg);
+}
+
+/* Keep desktop actions on small screens consistent */
+@media (max-width: 720px){
+  .header__actions .btn--primary{ display:none; } /* same idea as reference: CTA goes inside menu on mobile */
+}
+
+/* Desktop: allow hamburger even on large screens (as requested) */
+.menu-toggle{ display:grid !important; }
+
+
+
+/* =========================================================
+   PATCH: Button aesthetic (screenshot style)
+   - Background: #5B75B6
+   - Text: #fff
+   - Radius: 8px (pill variants keep pill geometry)
+   NOTE: Aesthetic-only. No ID changes.
+========================================================= */
+:root{
+  --btn-solid-bg: #5B75B6;
+  --btn-solid-bg-hover: #4F66A4;
+  --btn-solid-text: #FFFFFF;
+  --btn-solid-radius: 8px;
+}
+
+.btn,
+.btn--primary,
+.btn--light,
+.btn--ghost,
+.btn--ghost-light,
+.btn--soft{
+  background: var(--btn-solid-bg) !important;
+  color: var(--btn-solid-text) !important;
+  border: 1px solid color-mix(in srgb, #000 12%, transparent) !important;
+  border-radius: var(--btn-solid-radius) !important;
+  box-shadow: none !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+}
+
+.btn:hover,
+.btn:focus-visible,
+.btn--primary:hover,
+.btn--light:hover,
+.btn--ghost:hover,
+.btn--ghost-light:hover,
+.btn--soft:hover{
+  background: var(--btn-solid-bg-hover) !important;
+  box-shadow: 0 10px 22px rgba(27, 35, 60, .12) !important;
+}
+
+/* Preserve pill geometry when present */
+.btn--pill{ border-radius: 999px !important; }
+
+/* Small button sizing used in card actions ("Ver más detalles") */
+.btn--small{
+  padding: 10px 16px !important;
+  min-height: 38px;
+}
+
+/* Optional semantic helper class (no structural dependency) */
+.btn--solid{}
+
+/* If legacy .link remains somewhere, keep it visible but styled consistently */
+a.link{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding: 10px 16px;
+  border-radius: var(--btn-solid-radius);
+  background: var(--btn-solid-bg);
+  color: var(--btn-solid-text);
+  border: 1px solid color-mix(in srgb, #000 12%, transparent);
+  font-weight: 800;
+}
+a.link:hover{ background: var(--btn-solid-bg-hover); }
+
+
+
+/* =========================================================
+   PATCH: Mobile hamburger menu colors + remove underline highlight
+   Requested:
+   - Drawer base should be WHITE (not gray)
+   - Main items (Inicio/Servicios/etc) should not be gray
+   - Sub-items should NOT be white-only vs main; make consistent
+   - Remove underline-looking highlight; keep normal highlight
+   NOTE: IDs unchanged, aesthetic only.
+========================================================= */
+
+/* Drawer base: pure surface (white on light theme) */
+html[data-theme="light"] .mobile-menu{
+  background: var(--surface) !important;
+}
+
+/* Header inside drawer */
+html[data-theme="light"] .mobile-menu-header{
+  background: var(--surface) !important;
+}
+
+/* Main links: white cards */
+html[data-theme="light"] .mobile-nav-link,
+html[data-theme="light"] .mobile-nav-summary{
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+/* Sub links: same family (slightly tinted surface, not pure white vs main) */
+html[data-theme="light"] .mobile-sub-link{
+  background: var(--surface-2) !important;
+  color: var(--text) !important;
+}
+
+/* Remove any underline effect anywhere in the drawer */
+.mobile-menu a,
+.mobile-menu a:hover,
+.mobile-menu a:focus-visible{
+  text-decoration: none !important;
+}
+
+/* Some styles use underline via text-decoration; neutralize */
+.mobile-menu .link:hover,
+.mobile-menu .mobile-nav-link:hover,
+.mobile-menu .mobile-sub-link:hover{
+  text-decoration: none !important;
+  text-underline-offset: initial !important;
+}
+
+/* Active highlight stays (bg/border), but never underline */
+.mobile-menu .active{
+  text-decoration: none !important;
+}
+
+/* If any pseudo underline exists, kill it safely */
+.mobile-menu .active::after,
+.mobile-menu a::after{
+  content: none !important;
+}
+
+
+
+/* =========================================================
+   PATCH: Drawer colors (requested)
+   - Main items (Inicio/Servicios/Centro/Noticias/Prensa/Contáctanos): GRAY background
+   - Subitems (Acerca de / subservicios / Social): WHITE background
+   NOTE: Only affects items INSIDE #mobile-menu.
+========================================================= */
+
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary{
+  background: var(--surface-2) !important; /* light gray */
+  color: var(--text) !important;
+}
+
+html[data-theme="light"] #mobile-menu .mobile-sub-link{
+  background: var(--surface) !important; /* white */
+  color: var(--text) !important;
+}
+
+/* Keep highlight normal; never underline */
+#mobile-menu a,
+#mobile-menu a:hover,
+#mobile-menu a:focus-visible{
+  text-decoration: none !important;
+}
+#mobile-menu .active::after,
+#mobile-menu a::after{ content:none !important; }
+
+
+
+/* =========================================================
+   ESTÉTICA (solo UI) — Paleta + tipografía como referencia (index/stylebeca)
+   Paleta solicitada:
+   - Azul marino: #182389 (R24 G35 B137)
+   - Negro: #000000
+   - Tarjetas: #5B75B6 (R91 G117 B182)
+   - Fondo páginas: #DCE2EF (R220 G226 B239)
+   NOTA: No modifica estructura ni IDs. Solo colores/typography.
+========================================================= */
+
+html[data-theme="light"]{
+  --c-primary: #182389;     /* azul marino */
+  --c-secondary: #000000;   /* negro */
+  --bg: #DCE2EF;            /* Morning cloud */
+  --bg-2: #DCE2EF;
+  --surface: #FFFFFF;
+  --surface-2: rgba(255,255,255,.72);
+  --text: #000000;
+  --muted: rgba(0,0,0,.70);
+  --border: rgba(24,35,137,.14);
+
+  /* cards / CTA */
+  --card-bg: #5B75B6;
+  --card-text: #FFFFFF;
+}
+
+/* Tipografía como referencia */
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Oxygen, Ubuntu, sans-serif !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+/* Fondo general (suave, sin cambiar layout) */
+body:not(.theme-dark){
+  background: var(--bg) !important;
+}
+
+/* =========================
+   HAMBURGUESA — exactamente la paleta
+========================= */
+
+/* Base drawer */
+html[data-theme="light"] #mobile-menu{
+  background: var(--bg) !important; /* Morning cloud */
+  border-left: 1px solid var(--border) !important;
+  box-shadow: 0 28px 90px rgba(19,33,68,0.22) !important;
+}
+
+/* Header interno del drawer */
+html[data-theme="light"] #mobile-menu .mobile-menu-header{
+  background: var(--bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Items principales (Inicio/Servicios/Centro/Noticias/Prensa/Contáctanos): “card” azul */
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary{
+  background: var(--card-bg) !important;
+  color: var(--card-text) !important;
+  border: 1px solid rgba(0,0,0,.08) !important;
+  box-shadow: 0 14px 34px rgba(19,33,68,0.10) !important;
+  opacity: 1 !important;
+}
+
+/* Links dentro del summary */
+html[data-theme="light"] #mobile-menu .mobile-summary-link,
+html[data-theme="light"] #mobile-menu .mobile-summary-link span{
+  color: var(--card-text) !important;
+}
+
+/* Chevron visible en azul/white */
+html[data-theme="light"] #mobile-menu .mobile-nav-summary i{
+  color: rgba(255,255,255,.92) !important;
+}
+
+/* Subservicios: blanco */
+html[data-theme="light"] #mobile-menu .mobile-sub-link{
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 10px 22px rgba(19,33,68,0.06) !important;
+}
+
+/* Hover */
+html[data-theme="light"] #mobile-menu .mobile-nav-link:hover,
+html[data-theme="light"] #mobile-menu .mobile-sub-link:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(19,33,68,0.14) !important;
+}
+
+/* Active: resaltado normal (sin subrayado) */
+html[data-theme="light"] #mobile-menu .mobile-nav-link.active,
+html[data-theme="light"] #mobile-menu .mobile-summary-link.active,
+html[data-theme="light"] #mobile-menu .mobile-sub-link.active{
+  background: color-mix(in srgb, var(--c-primary) 18%, #FFFFFF) !important;
+  border-color: color-mix(in srgb, var(--c-primary) 22%, transparent) !important;
+  box-shadow: inset 0 0 0 1px rgba(24,35,137,0.18) !important;
+  text-decoration: none !important;
+}
+
+/* Quitar cualquier “subrayado”/underline accidental */
+#mobile-menu a,
+#mobile-menu a:hover,
+#mobile-menu a:focus-visible{
+  text-decoration: none !important;
+}
+#mobile-menu .active::after,
+#mobile-menu a::after{
+  content: none !important;
+}
+
+/* Botón cerrar del drawer (misma paleta) */
+html[data-theme="light"] #close-menu{
+  background: #FFFFFF !important;
+  border: 1px solid var(--border) !important;
+  color: #000000 !important;
+}
+html[data-theme="light"] #close-menu:hover{
+  box-shadow: 0 0 18px rgba(24,35,137,0.12) !important;
+}
+
+
+
+/* =========================================================
+   PATCH (aesthetic only): Font + gray sections + hamburger palette
+   - Add font stack (reference)
+   - Services section background: #DCE2EF
+   - CTA band background: #DCE2EF
+   - Hamburger: base white, buttons gray, text dark gray, subitems white
+   NOTE: No structure/ID changes.
+========================================================= */
+
+:root{ --morning-cloud: #DCE2EF; }
+
+body{
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif !important;
+}
+
+/* Services section background (remove blue) */
+#lineas-servicio{
+  background: var(--morning-cloud) !important;
+}
+
+/* CTA band background (remove blue) */
+.cta{
+  background: var(--morning-cloud) !important;
+  color: color-mix(in srgb, var(--text) 92%, transparent) !important;
+  box-shadow: none !important;
+}
+.cta .cta__title{ color: color-mix(in srgb, var(--text) 92%, transparent) !important; }
+.cta .cta__text{ color: color-mix(in srgb, var(--text) 72%, transparent) !important; }
+
+/* =========================================================
+   Hamburger menu colors (match reference behavior described)
+   - Base: white
+   - Bottom base: if exists and is gray, keep (we only set neutral borders)
+   - Main buttons: gray
+   - Main text: dark gray
+   - Subitems: white
+========================================================= */
+
+/* Base drawer */
+html[data-theme="light"] #mobile-menu{
+  background: #FFFFFF !important;
+  border-left: 1px solid rgba(11,16,32,.10) !important;
+}
+
+/* Header/logo area can remain light gray like reference */
+html[data-theme="light"] #mobile-menu .mobile-menu-header{
+  background: var(--morning-cloud) !important;
+  border-bottom: 1px solid rgba(11,16,32,.10) !important;
+}
+
+/* Main items (Inicio/Servicios/Centro/Noticias/Prensa/Contáctanos) -> gray buttons */
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary{
+  background: var(--morning-cloud) !important;
+  border: 1px solid rgba(11,16,32,.10) !important;
+  box-shadow: none !important;
+}
+
+/* Main text dark gray */
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary,
+html[data-theme="light"] #mobile-menu .mobile-summary-link,
+html[data-theme="light"] #mobile-menu .mobile-summary-link span{
+  color: rgba(11,16,32,.86) !important;
+}
+
+/* Chevron same dark gray */
+html[data-theme="light"] #mobile-menu .mobile-nav-summary i{
+  color: rgba(11,16,32,.70) !important;
+}
+
+/* Subitems -> white (as requested) */
+html[data-theme="light"] #mobile-menu .mobile-sub-link{
+  background: #FFFFFF !important;
+  border: 1px solid rgba(11,16,32,.10) !important;
+  color: rgba(11,16,32,.86) !important;
+  box-shadow: none !important;
+}
+
+/* Active highlight: keep subtle (no blue) */
+html[data-theme="light"] #mobile-menu .mobile-nav-link.active,
+html[data-theme="light"] #mobile-menu .mobile-summary-link.active,
+html[data-theme="light"] #mobile-menu .mobile-sub-link.active{
+  background: color-mix(in srgb, rgba(11,16,32,.08) 100%, #FFFFFF) !important;
+  border-color: rgba(11,16,32,.16) !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+/* Remove any underline effect in menu */
+#mobile-menu a,
+#mobile-menu a:hover,
+#mobile-menu a:focus-visible{
+  text-decoration: none !important;
+}
+#mobile-menu .active::after,
+#mobile-menu a::after{ content: none !important; }
+
+
+
+/* =========================================================
+   PATCH (solo lo solicitado)
+   1) En sección #lineas-servicio:
+      - Palabra / título "Nuestras Líneas de Servicio" (Servicios) -> Azul Rey #182389
+      - Subtítulo "Soluciones integrales..." -> color de botones (#5B75B6)
+   2) Menú hamburguesa:
+      - Base blanca (se mantiene)
+      - Quitar borde/entorno SOLO en subservicios (.mobile-sub-link)
+   NOTA: No cambia estructura ni IDs.
+========================================================= */
+
+/* 1) Título (Servicios) en Azul Rey */
+#lineas-servicio .section__title{
+  color: #182389 !important;
+}
+
+/* 1) Subtítulo en color de botones */
+#lineas-servicio .section__subtitle,
+#lineas-servicio [data-i18n-text="lines.subtitle"]{
+  color: var(--btn-solid-bg, #5B75B6) !important;
+}
+
+/* 2) Drawer base blanca (refuerzo por si otro patch la pisa) */
+html[data-theme="light"] #mobile-menu{
+  background: #FFFFFF !important;
+}
+
+/* 2) Quitar borde SOLO en subservicios (acerca de / nómina / especializados / fiscal / social) */
+html[data-theme="light"] #mobile-menu .mobile-sub-link{
+  border: none !important;
+  box-shadow: none !important;
+}

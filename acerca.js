@@ -24,6 +24,29 @@
   const body = document.body;
 
 
+  // Two-tone helper: pinta la 1ra palabra en azul marino y el resto en negro (sin romper i18n)
+  const applyTwoToneWords = (el) => {
+    if (!el) return;
+    const txt = (el.textContent || "").trim().replace(/\s+/g, " ");
+    const parts = txt.split(" ");
+    if (parts.length < 2) return;
+
+    const first = parts.shift();
+    const rest = parts.join(" ");
+
+    el.innerHTML = "";
+    const s1 = document.createElement("span");
+    s1.className = "tt1";
+    s1.textContent = first;
+
+    const s2 = document.createElement("span");
+    s2.className = "tt2";
+    s2.textContent = rest;
+
+    el.append(s1, document.createTextNode(" "), s2);
+  };
+
+
   // Forzar modo claro
   html.setAttribute("data-theme","light");
   /* =========================
@@ -263,6 +286,9 @@ mobileMenu?.addEventListener("click", (e) => {
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
       "header.collab": "¿Eres colaborador?",
+      "nav.svc.payroll": "Procesamiento de nómina",
+      "nav.svc.specialized": "Servicios especializados",
+      "nav.svc.tax": "Consultoría fiscal",
 
       // Hero
       "hero.pill": "Soluciones empresariales integrales",
@@ -488,7 +514,7 @@ mobileMenu?.addEventListener("click", (e) => {
       "about.team.title": "Nuestro Equipo <span class='accent'>Directivo</span>",
       "about.team.sub": "Liderazgo con experiencia y compromiso con la excelencia.",
       "about.team.cardTitle": "Dirección General",
-      "about.team.cardRole": "Chief Executive Officer",
+      "about.team.cardRole": " Dra. Alejandra Gómez Ruiz",
 
       "about.process.pill": "Metodología",
       "about.process.title": "Nuestro Proceso",
@@ -551,6 +577,10 @@ mobileMenu?.addEventListener("click", (e) => {
       "nav.training": "Training Center",
       "nav.about": "About",
       "header.collab": "Are you a collaborator?",
+
+      "nav.svc.payroll": "Payroll processing",
+      "nav.svc.specialized": "Specialized services",
+      "nav.svc.tax": "Tax consulting",
 
       // Hero
       "hero.pill": "Integrated business solutions",
@@ -959,7 +989,11 @@ mobileMenu?.addEventListener("click", (e) => {
     });
 
     try { translateAcercaPage(L); } catch (err) {}
-  }
+  
+
+    // Two-tone: 1ra palabra azul marino, resto negro (títulos)
+    $$(".two-tone").forEach(applyTwoToneWords);
+}
 
   /* =========================
      Language UI
@@ -1112,6 +1146,7 @@ mobileMenu?.addEventListener("click", (e) => {
       setHTML("#equipo .section__title", "about.team.title");
       setText("#equipo .section__sub", "about.team.sub");
       setText("#equipo .leader h3", "about.team.cardTitle");
+      applyTwoToneWords($("#equipo .leader h3"));
       setText("#equipo .leader p", "about.team.cardRole");
 
       // PROCESO
@@ -1507,4 +1542,58 @@ function initLanguage() {
 
   // initial FAQ filter (keeps empty state consistent)
   filterFaq();
+
+  /* =========================
+     Active link highlight (mobile menu)
+     - Adds .active + aria-current="page" based on current URL
+     - Supports your existing data-page attributes
+  ========================= */
+  function initActiveLink() {
+    const links = $$(".nav-link, .mobile-nav-link, .mobile-sub-link, .mobile-nav__link");
+
+    const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
+    const pageNoExt = file.split("?")[0].split("#")[0].replace(".html", "").replace(".htm", "");
+
+    const alias = {
+      indexbeca: "index",
+      index: "index",
+      inicio: "index",
+      contacto: "contacto",
+      acercade: "acercade",
+      acerca: "acercade",
+      servicios: "servicios",
+      noticias: "noticias",
+      prensa: "prensa",
+      centro: "centro",
+      capital: "servicios",
+      impuestos: "servicios",
+    };
+
+    const currentKey = alias[pageNoExt] || pageNoExt;
+
+    const keyFromLink = (a) => {
+      // Prefer explicit data-page (used in your menu)
+      const dp = (a.getAttribute("data-page") || "").trim().toLowerCase();
+      if (dp) return dp;
+
+      const href = (a.getAttribute("href") || "").trim().toLowerCase();
+      const last = href.split("/").pop().split("?")[0].split("#")[0];
+      const noExt = last.replace(".html", "").replace(".htm", "");
+      return alias[noExt] || noExt;
+    };
+
+    links.forEach((a) => {
+      const key = keyFromLink(a);
+      const isCurrent = key === currentKey;
+
+      a.classList.toggle("active", isCurrent);
+
+      if (isCurrent) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+  }
+
+  // run active link init
+  initActiveLink();
+
 })();

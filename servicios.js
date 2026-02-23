@@ -35,25 +35,155 @@
 
   const header = $("#siteHeader");
 
-  const menuToggle = $("#menuToggle");
-  const menuClose = $("#menuClose");
-  const mobileMenu = $("#mobileMenu");
-  const mobileOverlay = $("#mobileOverlay");
+  const menuToggle = $("#menu-toggle");
+  const menuClose = $("#close-menu");
+  const mobileMenu = $("#mobile-menu");
+  const mobileOverlay = $("#mobile-menu-overlay");
+  const themeToggle = null;
+  const mobileTheme = null;
+const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
-  const themeToggle = $("#themeToggle");
-  const mobileTheme = $("#mobileTheme");
-
-  const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+  
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
 
   /* =========================
-     i18n dictionaries (ES/EN full)
+     Desktop hover behavior (reference fix)
+     - Open on hover over burger
+     - Do NOT close when moving mouse from burger -> panel
+     - Close only after leaving both burger + panel (delay)
+     - Uses relatedTarget safe-zone checks
   ========================= */
+
+  const isDesktopHover = () => hasFinePointer;
+
+  let hoverCloseTimer = null;
+
+  const clearHoverTimer = () => {
+    if (hoverCloseTimer) {
+      window.clearTimeout(hoverCloseTimer);
+      hoverCloseTimer = null;
+    }
+  };
+
+  // If the mouse leaves the toggle heading into the panel/overlay, don't close
+  const leavingToMenuZone = (e) => {
+    const to = e.relatedTarget;
+    if (!to) return false;
+    return (mobileMenu && mobileMenu.contains(to)) || (mobileOverlay && mobileOverlay.contains(to));
+  };
+
+  // If the mouse leaves the panel heading into the toggle/overlay, don't close
+  const leavingToToggleZone = (e) => {
+    const to = e.relatedTarget;
+    if (!to) return false;
+    return (menuToggle && menuToggle.contains(to)) || (mobileOverlay && mobileOverlay.contains(to));
+  };
+
+  const scheduleHoverClose = () => {
+    if (!isDesktopHover()) return;
+    clearHoverTimer();
+
+    // extra time so cursor can reach the panel without flicker
+    hoverCloseTimer = window.setTimeout(() => {
+      const overToggle = !!(menuToggle && menuToggle.matches(":hover"));
+      const overPanel = !!(mobileMenu && mobileMenu.matches(":hover"));
+      if (!overToggle && !overPanel) closeMenu();
+    }, 320);
+  };
+
+  if (isDesktopHover() && menuToggle && mobileMenu && mobileOverlay) {
+    // Open when hovering the burger
+    menuToggle.addEventListener("mouseenter", () => {
+      clearHoverTimer();
+      openMenu();
+    });
+
+    // When leaving burger, only close if NOT going into panel/overlay
+    menuToggle.addEventListener("mouseleave", (e) => {
+      if (leavingToMenuZone(e)) return;
+      scheduleHoverClose();
+    });
+
+    // Keep open when entering panel/overlay
+    mobileMenu.addEventListener("mouseenter", () => clearHoverTimer());
+    mobileOverlay.addEventListener("mouseenter", () => clearHoverTimer());
+
+    // When leaving panel, only close if NOT going into burger/overlay
+    mobileMenu.addEventListener("mouseleave", (e) => {
+      if (leavingToToggleZone(e)) return;
+      scheduleHoverClose();
+    });
+
+    // Overlay mouseleave should not force close; use scheduler
+    }
+
+  /* =========================
+     Submenus: open on hover (desktop) with small delays
+  ========================= */
+  function initHamburgerSubmenuHover() {
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!finePointer) return;
+    if (!mobileMenu) return;
+
+    const groups = mobileMenu.querySelectorAll("details");
+    if (!groups.length) return;
+
+    groups.forEach((details) => {
+      let t;
+      details.addEventListener("mouseenter", () => {
+        clearTimeout(t);
+        details.open = true;
+      });
+      details.addEventListener("mouseleave", () => {
+        t = setTimeout(() => (details.open = false), 120);
+      });
+      details.addEventListener("focusin", () => {
+        clearTimeout(t);
+        details.open = true;
+      });
+      details.addEventListener("focusout", () => {
+        t = setTimeout(() => (details.open = false), 150);
+      });
+    });
+  }
+  document.addEventListener("DOMContentLoaded", initHamburgerSubmenuHover);
+
+  // Dropdown idioma hover (kept as in current file)
+  const langWrap = document.querySelector(".language-selector");
+  if (hasFinePointer && langWrap) {
+    let tIn = null, tOut = null;
+    const openLang = () => {
+      const btn = document.getElementById("language-btn");
+      const dd = document.getElementById("language-dropdown");
+      if (btn && dd) {
+        btn.setAttribute("aria-expanded", "true");
+        dd.classList.add("show");
+      }
+    };
+    const closeLang = () => {
+      const btn = document.getElementById("language-btn");
+      const dd = document.getElementById("language-dropdown");
+      if (btn && dd) {
+        btn.setAttribute("aria-expanded", "false");
+        dd.classList.remove("show");
+      }
+    };
+    const clear = () => { if (tIn) clearTimeout(tIn); if (tOut) clearTimeout(tOut); tIn = tOut = null; };
+    langWrap.addEventListener("mouseenter", () => { clear(); tIn = setTimeout(openLang, 140); });
+    langWrap.addEventListener("mouseleave", () => { clear(); tOut = setTimeout(closeLang, 220); });
+  }
+
+
+
   const I18N = {
     ES: {
       // Header/Nav
       "nav.home": "Inicio",
       "nav.press": "Prensa",
       "nav.services": "Servicios",
+      "nav.svc.tax": "Consultoría fiscal",
+      "nav.svc.specialized": "Servicios especializados",
+      "nav.svc.payroll": "Procesamiento de nómina",
       "nav.news": "Noticias",
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
@@ -61,9 +191,9 @@
 
       // Hero
       "hero.pill": "Soluciones empresariales integrales",
-      "hero.title": "Impulsamos<br /><span class='hero-accent'>tu talento</span>",
+      "hero.title": "Servicios<br /><span class='hero-accent'></span>",
       "hero.subtitle":
-        "Capital Humano, Desarrollo Organizacional y Management<br />Servicios para cada etapa de tu crecimiento.",
+        " Soluciones integrales diseñadas para optimizar cada aspecto de tu organización",
       "hero.ctaServices": "Ver Servicios",
       "hero.ctaContact": "Contactar",
       "kpi.years": "Años de experiencia",
@@ -245,6 +375,9 @@
       "nav.home": "Home",
       "nav.press": "Press",
       "nav.services": "Services",
+      "nav.svc.tax": "Tax consulting",
+      "nav.svc.specialized": "Specialized services",
+      "nav.svc.payroll": "Payroll processing",
       "nav.news": "News",
       "nav.training": "Training Center",
       "nav.about": "About",
@@ -252,9 +385,9 @@
 
       // Hero
       "hero.pill": "Integrated business solutions",
-      "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
+      "hero.title": "services<br /><span class='</span>",
       "hero.subtitle":
-        "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
+        " Comprehensive solutions designed to optimize every aspect of your organization",
       "hero.ctaServices": "View Services",
       "hero.ctaContact": "Contact",
       "kpi.years": "Years of experience",
@@ -538,12 +671,12 @@
     });
 
     // ARIA / UI labels (stable)
-    const menuToggle = $("#menuToggle");
+    const menuToggle = $("#menu-toggle");
     if (menuToggle) menuToggle.setAttribute("aria-label", t(L, "ui.openMenu"));
     const closeMenu = $("#menuClose");
     if (closeMenu) closeMenu.setAttribute("aria-label", t(L, "ui.closeMenu"));
-    const themeToggle = $("#themeToggle");
-    if (themeToggle) themeToggle.setAttribute("aria-label", t(L, "ui.toggleTheme"));
+  const themeToggle = null;
+if (themeToggle) themeToggle.setAttribute("aria-label", t(L, "ui.toggleTheme"));
     const langBtn = $("#language-btn");
     if (langBtn) langBtn.setAttribute("aria-label", t(L, "ui.langSelect"));
     const logoLink = $(".brand");
@@ -650,15 +783,15 @@
     window.setTimeout(() => root.classList.remove("theme-transition"), 380);
   }
 
-  function toggleTheme() {
-    const current = root.getAttribute("data-theme") || "dark";
-    applyTheme(current === "dark" ? "light" : "dark");
+  function toggleTheme(){
+    // Light-only: theme toggle removed
+    if(typeof applyTheme === "function") applyTheme("light");
+    try{ document.documentElement.setAttribute("data-theme","light"); }catch(e){}
   }
 
-  const savedTheme = localStorage.getItem("bausen_theme") || "dark";
+  const savedTheme = "light";
   applyTheme(savedTheme);
-
-  if (themeToggle) themeToggle.addEventListener("click", toggleTheme);
+if (themeToggle) themeToggle && themeToggle.addEventListener("click", toggleTheme);
   if (mobileTheme) mobileTheme.addEventListener("click", toggleTheme);
 
 
