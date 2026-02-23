@@ -2945,3 +2945,46 @@ body.menu-open{
   }
 }
 
+
+/* =========================================================
+   PATCH 2026-02-22d — Fix definitivo de cortes/guiones en móvil (Hero)
+   Problema en móvil (captura):
+   - "Procesamiento de no- mina" (hyphenation automática)
+   - "nues- tros" por <br> + hyphenation
+   Solución:
+   - Desactivar hyphenation y cortes agresivos SOLO en el hero
+   - En móvil ocultar <br> del texto para que fluya natural
+   - Mantener IDs / HTML intactos
+========================================================= */
+
+/* HERO: no partir palabras (ni títulos ni texto) */
+.hero-title,
+.hero-title *{
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+/* Permite saltar solo en espacios (evita 'no-' en medio) */
+.hero-title{
+  white-space: normal;
+  text-wrap: balance; /* mejora el reparto de líneas (soportado en navegadores modernos) */
+}
+
+/* Texto del hero: sin guiones automáticos */
+.hero-text,
+.hero-text *{
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+/* En móvil: quita los <br> forzados que están rompiendo frases */
+@media (max-width: 560px){
+  .hero-text br{
+    display: none !important;
+  }
+}
+
