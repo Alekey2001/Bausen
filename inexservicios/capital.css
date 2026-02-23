@@ -2908,3 +2908,40 @@ body.menu-open{
   }
 }
 
+
+/* =========================================================
+   PATCH 2026-02-22c — Fix visual de "Procesamiento de nómina"
+   Objetivo:
+   - Corregir "continuidad" visual (separación/partido raro) del texto
+   - Quitar línea del submenú (sin tocar HTML/IDs)
+   ========================================================= */
+
+/* 1) Asegura espacio visual aunque el i18n deje pegado ...</span>de... */
+.hero-title .grad{
+  margin-right: .18em; /* evita 'Procesamientode' cuando falta el espacio en el string */
+}
+
+/* 2) Menú hamburguesa: quitar la línea (border-left) del submenú */
+.mobile-submenu{
+  border-left: 0 !important;
+  padding-left: 0 !important;  /* sin sangría que dependía de la línea */
+  margin-left: 0 !important;
+}
+
+/* 3) Texto "Procesamiento de nómina" dentro del submenú: sin cortes raros */
+.mobile-sub-link[data-i18n-text="nav.svc.payroll"]{
+  white-space: normal;        /* permite 2 líneas si hace falta */
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: none !important;   /* NO separar nó-mi-na */
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+/* Si la pantalla es muy chica, baja un poco el tamaño para que no se vea “mal cortado” */
+@media (max-width: 380px){
+  .mobile-sub-link[data-i18n-text="nav.svc.payroll"]{
+    font-size: 13.5px;
+  }
+}
+
