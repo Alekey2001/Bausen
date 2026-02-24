@@ -1198,7 +1198,7 @@ html[data-theme="light"] .language-dropdown{
 /* Active state (matches reference) */
 .mobile-nav-link.active,
 .mobile-summary-link.active,
-.mobile-sub-link.active{
+.mobile-sub-link{
   background: color-mix(in srgb, var(--c-primary) 18%, transparent);
   border-color: color-mix(in srgb, var(--c-primary) 22%, transparent);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--c-primary) 16%, transparent);
@@ -1636,4 +1636,41 @@ html[data-theme="light"] #mobile-menu{
 html[data-theme="light"] #mobile-menu .mobile-sub-link{
   border: none !important;
   box-shadow: none !important;
+}
+/* =========================================================
+   FIX SEGURO FINAL - Header actions shape (rectangular / square)
+   - ¿Eres colaborador? = rectangular
+   - Idioma = rectangular
+   - Menú hamburguesa = cuadrado
+   - No toca IDs/JS/HTML
+========================================================= */
+
+/* 1) ¿Eres colaborador? (header) -> rectangular */
+.header__actions .btn.btn--primary.btn--pill{
+  border-radius: 10px !important;   /* antes pill */
+  padding: 10px 14px !important;
+  min-height: 36px;
+}
+
+/* 2) Botón de idioma -> rectangular */
+.header__actions .language-btn{
+  height: 36px !important;
+  border-radius: 10px !important;   /* antes pill */
+  padding: 0 12px !important;
+}
+
+/* 3) Menú hamburguesa -> cuadrado */
+.header__actions .menu-toggle{
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 10px !important;   /* cuadrado con esquinas suaves */
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+}
+
+/* Opcional: icono centrado visualmente */
+.header__actions .menu-toggle i{
+  line-height: 1;
+  font-size: 16px;
 }

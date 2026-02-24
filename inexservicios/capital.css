@@ -2881,33 +2881,26 @@ body.menu-open{
     gap: 10px;
   }
 
-  /* Idioma: compacto, redondo como referencia */
-  .language-btn{
-    height: 36px !important;
-    min-width: 36px !important;
-    padding: 0 12px !important;
-    border-radius: 999px !important;
-    width: auto !important;
-    justify-content: center !important;
-    white-space: nowrap !important;
-  }
-  .language-btn i{ font-size: 12px; }
-
-  /* Hamburguesa: circular, mismo tamaño que referencia en móvil */
-  .menu-toggle{
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 999px !important;
-    padding: 0 !important;
-    display: grid !important;
-    place-items: center !important;
-  }
-  .menu-toggle i{
-    font-size: 18px !important;
-    line-height: 1 !important;
-  }
+/* Idioma: móvil más cuadrado (no ovalado) */
+.language-btn{
+  height: 36px !important;
+  min-width: 36px !important;
+  padding: 0 10px !important;
+  border-radius: 10px !important;   /* antes 999px */
+  width: auto !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
 }
 
+/* Hamburguesa: móvil cuadrado */
+.menu-toggle{
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 10px !important;   /* antes 999px */
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+}
 
 /* =========================================================
    PATCH 2026-02-22c — Fix visual de "Procesamiento de nómina"
@@ -2988,3 +2981,120 @@ body.menu-open{
   }
 }
 
+/* =========================================================
+   PATCH — Menú hamburguesa (Capital) paleta Morning Cloud
+   - Cabecera: #DCE2EF
+   - Cuerpo drawer: blanco
+   - Botones principales: #DCE2EF + texto gris oscuro
+   - Subservicios: transparentes, sin borde, sin contorno
+   - NO cambia IDs ni estructura
+========================================================= */
+
+#mobile-menu{
+  background: #FFFFFF !important;              /* cuerpo del drawer */
+  border-left: 1px solid rgba(11,21,53,0.12) !important;
+}
+
+/* Cabecera completa (logo + botón cerrar) */
+#mobile-menu .mobile-menu-header{
+  background: #DCE2EF !important;              /* Morning cloud */
+  border-bottom: 1px solid rgba(11,21,53,0.12) !important;
+}
+
+/* Botón X dentro de la cabecera (para que combine con la cabecera) */
+#mobile-menu .close-menu{
+  background: #DCE2EF !important;
+  border: 1px solid rgba(11,21,53,0.12) !important;
+  box-shadow: none !important;
+  color: rgba(11,21,53,0.86) !important;      /* gris oscuro */
+}
+#mobile-menu .close-menu i{
+  color: rgba(11,21,53,0.86) !important;
+}
+
+/* Fondo de la lista interior (asegura blanco total debajo de la cabecera) */
+#mobile-menu .mobile-nav-list,
+#mobile-menu nav{
+  background: #FFFFFF !important;
+}
+
+/* Botones principales del menú (Inicio/Servicios/etc.) */
+#mobile-menu .mobile-nav-link,
+#mobile-menu .mobile-nav-summary{
+  background: #DCE2EF !important;              /* Morning cloud */
+  border: 1px solid rgba(11,21,53,0.12) !important;
+  box-shadow: none !important;
+  color: rgba(11,21,53,0.86) !important;      /* gris oscuro */
+}
+
+/* Texto interno de los summary (link dentro del summary) */
+#mobile-menu .mobile-summary-link,
+#mobile-menu .mobile-summary-link span{
+  color: rgba(11,21,53,0.86) !important;
+}
+
+/* Chevron/flecha */
+#mobile-menu .mobile-nav-summary i{
+  color: rgba(11,21,53,0.70) !important;
+}
+
+/* Hover/focus de botones principales (mantener misma paleta, sin azul) */
+#mobile-menu .mobile-nav-link:hover,
+#mobile-menu .mobile-nav-summary:hover,
+#mobile-menu .mobile-nav-link:focus-visible,
+#mobile-menu .mobile-nav-summary:focus-visible{
+  background: #DCE2EF !important;
+  border-color: rgba(11,21,53,0.16) !important;
+  box-shadow: none !important;
+}
+
+/* Estado activo (evita que se pinte con el color primario azul) */
+#mobile-menu .mobile-nav-link.active,
+#mobile-menu .mobile-nav-link[aria-current="page"],
+#mobile-menu .mobile-nav-summary.active,
+#mobile-menu .mobile-nav-summary[aria-current="page"]{
+  background: #DCE2EF !important;
+  border-color: rgba(11,21,53,0.16) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Submenú: sin línea lateral */
+#mobile-menu .mobile-submenu{
+  border-left: 0 !important;
+  padding-left: 0 !important;   /* opcional para quitar sangría ligada a la línea */
+  margin-left: 0 !important;
+  background: transparent !important;
+}
+
+/* Subservicios: transparentes, sin contorno, sobre fondo blanco */
+#mobile-menu .mobile-sub-link{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: rgba(11,21,53,0.86) !important;
+}
+
+/* Hover/focus de subservicios: mantener transparentes */
+#mobile-menu .mobile-sub-link:hover,
+#mobile-menu .mobile-sub-link:focus-visible,
+#mobile-menu .mobile-sub-link.active,
+#mobile-menu .mobile-sub-link[aria-current="page"]{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: rgba(11,21,53,0.86) !important;
+  transform: none !important;
+  text-decoration: none !important;
+}
+
+/* Quita cualquier subrayado/after heredado */
+#mobile-menu a,
+#mobile-menu a:hover,
+#mobile-menu a:focus-visible{
+  text-decoration: none !important;
+}
+#mobile-menu a::after,
+#mobile-menu .active::after{
+  content: none !important;
+}

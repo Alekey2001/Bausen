@@ -2326,3 +2326,201 @@ main > :last-child{
 body{
   padding-top: 0 !important;
 }
+/* =========================================================
+   FIX FINAL - Header móvil (servicios)
+   - Ocultar "Eres colaborador" en móvil (solo header)
+   - Hacer idioma más rectangular
+   - Hacer menú hamburguesa cuadrado/rectangular
+   ========================================================= */
+@media (max-width: 980px){
+
+  /* 1) Oculta SOLO el botón colaborador del header en móvil */
+  .header-controls > .btn.btn-primary.btn-sm{
+    display: none !important;
+  }
+
+  /* 2) Recuadro de idioma: rectangular/compacto */
+  .header-controls .language-btn{
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important; /* rectangular */
+    gap: 6px !important;
+  }
+
+  /* (opcional) Ajusta icono/texto dentro del idioma */
+  .header-controls .language-code{
+    font-size: 12px !important;
+    line-height: 1 !important;
+  }
+
+  .header-controls .language-flag{
+    width: 16px !important;
+    height: 16px !important;
+    border-radius: 4px !important;
+  }
+
+  /* 3) Botón hamburguesa: más cuadrado */
+  .header-controls .menu-toggle,
+  #menu-toggle{
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    border-radius: 10px !important; /* cuadrado con esquinas */
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .header-controls .menu-toggle i,
+  #menu-toggle i{
+    font-size: 16px !important;
+    line-height: 1 !important;
+  }
+
+  /* 4) Contenedor de controles: compactar espacio */
+  .header-controls{
+    gap: 8px !important;
+    align-items: center !important;
+  }
+}
+/* FIX: "Eres colaborador" rectangular + misma paleta que "Solicitar diagnóstico" */
+.header-controls > .btn.btn-primary.btn-sm{
+  /* MISMA paleta del botón "Solicitar diagnóstico" */
+  background: var(--btn-solid-bg, #5B75B6) !important;
+  color: var(--btn-solid-text, #FFFFFF) !important;
+  border: 1px solid color-mix(in srgb, #000 12%, transparent) !important;
+
+  /* RECTANGULAR (ya no ovalado) */
+  border-radius: 8px !important;
+
+  /* mantener proporción bonita del header (desktop/tablet) */
+  min-height: 40px !important;
+  padding: 0 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+.header-controls > .btn.btn-primary.btn-sm:hover,
+.header-controls > .btn.btn-primary.btn-sm:focus-visible{
+  background: var(--btn-solid-bg-hover, #4F66A4) !important;
+  color: var(--btn-solid-text, #FFFFFF) !important;
+}
+
+/* ✅ Mantener oculto "Eres colaborador" en móvil */
+@media (max-width: 980px){
+  .header-controls > .btn.btn-primary.btn-sm{
+    display: none !important;
+  }
+}
+/* =========================================================
+   PATCH FINAL — Menú hamburguesa (paleta solicitada)
+   - Cabecera azul #5B75B6
+   - Cuerpo blanco
+   - Botones principales azul #5B75B6 + texto gris oscuro
+   - Subservicios transparentes (sin borde/sombra)
+   - NO toca HTML / IDs / JS
+========================================================= */
+
+:root{
+  --menu-blue:  #DCE2EF;     /* Silver Lake Blue */
+  --menu-text-dark: #2F3A4A; /* Gris oscuro (puedes cambiarlo) */
+}
+
+/* 1) Drawer base (todo el panel) = blanco */
+html[data-theme="light"] #mobile-menu,
+html[data-theme="light"] #mobile-menu nav,
+html[data-theme="light"] #mobile-menu .mobile-nav-list{
+  background: #FFFFFF !important;
+}
+
+/* 2) Cabecera del drawer (logo + botón X) = azul */
+html[data-theme="light"] #mobile-menu .mobile-menu-header{
+  background: var(--menu-blue) !important;
+  border-bottom: 1px solid rgba(255,255,255,0.22) !important;
+}
+
+/* (Opcional pero recomendado) Botón cerrar para que combine con cabecera azul */
+html[data-theme="light"] #mobile-menu #close-menu,
+html[data-theme="light"] #mobile-menu .close-menu{
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.30) !important;
+  box-shadow: none !important;
+  color: #FFFFFF !important;
+}
+
+/* 3) Botones principales del menú (Inicio, Servicios, etc.) = azul */
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary{
+  background: var(--menu-blue) !important;
+  border: 1px solid rgba(0,0,0,0.08) !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Texto dentro de botones principales = gris oscuro */
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary,
+html[data-theme="light"] #mobile-menu .mobile-summary-link,
+html[data-theme="light"] #mobile-menu .mobile-summary-link span{
+  color: var(--menu-text-dark) !important;
+}
+
+/* Flecha del summary (chevron) = gris oscuro */
+html[data-theme="light"] #mobile-menu .mobile-nav-summary i{
+  color: var(--menu-text-dark) !important;
+}
+
+/* 4) Submenú wrapper (que no meta fondo raro) */
+html[data-theme="light"] #mobile-menu .mobile-submenu{
+  background: transparent !important;
+}
+
+/* 5) Subservicios = transparentes, sin borde, sin sombra */
+html[data-theme="light"] #mobile-menu .mobile-sub-link{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--menu-text-dark) !important;
+}
+
+/* Hover/focus de subservicios = sigue transparente */
+html[data-theme="light"] #mobile-menu .mobile-sub-link:hover,
+html[data-theme="light"] #mobile-menu .mobile-sub-link:focus-visible{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--menu-text-dark) !important;
+  transform: none !important;
+  outline: none !important;
+}
+
+/* 6) Estado active para que NO aparezca franja/gris raro */
+html[data-theme="light"] #mobile-menu .mobile-nav-link.active,
+html[data-theme="light"] #mobile-menu .mobile-summary-link.active{
+  background: var(--menu-blue) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+html[data-theme="light"] #mobile-menu .mobile-sub-link.active{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--menu-text-dark) !important;
+  text-decoration: none !important;
+}
+
+/* 7) Quitar subrayados/after accidentales dentro del drawer */
+#mobile-menu a,
+#mobile-menu a:hover,
+#mobile-menu a:focus-visible{
+  text-decoration: none !important;
+}
+#mobile-menu a::after,
+#mobile-menu .active::after{
+  content: none !important;
+}

@@ -422,8 +422,8 @@ p, li{ color: var(--muted); }
 }
 
 .btn--ghost{
-  background: #FFFFFF;
-  border-color: var(--border);
+  background: #5B75B6;
+  border-color: #5B75B6;
   color: var(--text);
 }
 .btn--ghost:hover{
@@ -2111,4 +2111,35 @@ body{ background: #DCE2EF; }
   .header__actions .collab-cta--header{
     display: none !important;
   }
+}
+/* ==========================================
+   OVERRIDE DEFINITIVO - Fondo del cuerpo del menú hamburguesa
+   (debajo del header logo + X)
+   - Mantiene cabecera igual
+   - Pinta TODA la barra interna
+   - Subservicios siguen transparentes
+========================================== */
+
+#mobile-menu{
+  overflow: hidden; /* evita cortes visuales al pintar el body */
+}
+
+#mobile-menu > nav{
+  flex: 1 1 auto;          /* ocupa todo el espacio restante bajo el header */
+  min-height: 0;           /* permite scroll interno correcto */
+  display: flex;
+  flex-direction: column;
+  background: #F2F5FB !important; /* <-- CAMBIA ESTE COLOR (fondo de toda la barra) */
+}
+
+/* La lista ocupa todo el alto del nav, pero SIN volver a pintar encima */
+#mobile-menu > nav > .mobile-nav-list{
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent !important;
+}
+
+/* Mantener subservicios transparentes (como pediste) */
+#mobile-menu .mobile-sub-link{
+  background: transparent !important;
 }
