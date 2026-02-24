@@ -1679,3 +1679,195 @@ body{
   .hero__grid{ grid-template-columns: 1fr !important; }
   .visual-card{ width: min(420px, 100%) !important; margin: 0 auto; }
 }
+/* =========================================================
+   FIX FINAL (móvil) — impuestos
+   - Oculta "Eres colaborador" en móvil
+   - Corrige escalado móvil (hero/header) sin tocar desktop
+========================================================= */
+@media (max-width: 980px){
+  /* 1) Quitar botón "Eres colaborador" SOLO en móvil (header superior) */
+  .header-controls > .btn.btn-primary.btn-sm{
+    display: none !important;
+  }
+
+  /* 2) Controles del header más compactos */
+  .header .container{
+    gap: 10px !important;
+    min-height: 72px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+  }
+  .header-controls{
+    gap: 8px !important;
+  }
+  .language-btn{
+    height: 40px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+    font-size: 13px !important;
+  }
+  .menu-toggle{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    padding: 8px !important;
+  }
+  .logo-img{
+    width: 112px !important;
+  }
+
+  /* 3) Escalado general móvil (evita que se vea “agrandado”) */
+  .wrap{
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .hero{
+    padding-top: 22px !important;
+    padding-bottom: 26px !important;
+  }
+  .hero__grid{
+    gap: 16px !important;
+    align-items: start !important;
+  }
+  .hero__title{
+    font-size: clamp(28px, 8vw, 34px) !important;
+    line-height: 1.07 !important;
+    letter-spacing: -0.02em !important;
+  }
+  .hero__subtitle{
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+  .hero__cta{
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .hero__cta .btn{
+    width: 100% !important;
+    justify-content: center !important;
+    min-height: 44px !important;
+  }
+  .hero__stats{
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* 4) Visual del hero más contenido (sin “inflarse”) */
+  .hero__visual{
+    min-height: auto !important;
+  }
+  .visual-card{
+    width: min(360px, 100%) !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+  }
+  .visual-card > img.lottie-slot{
+    max-height: 260px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    border-radius: 14px !important;
+  }
+  .floating{
+    display: none !important;
+  }
+}
+/* =========================================================
+   FIX FINAL — Header controls (PC + móvil)
+   - Más cuadrados: colaborador / idioma / hamburguesa
+   - Paleta azul #5B75B6 para idioma + hamburguesa
+   - Mantiene oculto "Eres colaborador" en móvil
+========================================================= */
+
+/* 1) PC / general: "Eres colaborador" más rectangular (sin tocar display) */
+.header-controls > .btn.btn-primary.btn-sm{
+  border-radius: 8px !important;   /* más cuadrado */
+  min-height: 40px !important;
+  padding: 0 14px !important;
+  line-height: 1 !important;
+}
+
+/* 2) Idioma (PC + móvil): más cuadrado + paleta azul */
+.language-btn{
+  border-radius: 10px !important;  /* más cuadrado */
+  background: #5B75B6 !important;  /* Silver lake blue */
+  border: 1px solid rgba(11,21,53,0.12) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 12px 26px rgba(91,117,182,0.22) !important;
+}
+
+.language-btn i,
+.language-btn .language-code{
+  color: #FFFFFF !important;
+}
+
+/* (Opcional visual) bandera dentro del botón idioma */
+.language-btn .language-flag{
+  box-shadow: none !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+}
+
+/* 3) Menú hamburguesa (PC + móvil): más cuadrado + paleta azul */
+.menu-toggle{
+  border-radius: 10px !important;  /* más cuadrado */
+  background: #5B75B6 !important;  /* Silver lake blue */
+  border: 1px solid rgba(11,21,53,0.12) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 12px 26px rgba(91,117,182,0.22) !important;
+}
+
+.menu-toggle i{
+  color: #FFFFFF !important;
+}
+
+/* Hover/focus consistentes (sin cambiar forma) */
+.language-btn:hover,
+.language-btn:focus-visible,
+.menu-toggle:hover,
+.menu-toggle:focus-visible{
+  background: #4F66A4 !important; /* tono hover */
+  border-color: rgba(11,21,53,0.16) !important;
+}
+
+/* 4) PC: tamaños limpios y consistentes */
+@media (min-width: 981px){
+  .header-controls{
+    gap: 10px !important;
+  }
+
+  .language-btn{
+    height: 42px !important;
+    min-width: 42px !important;
+    padding: 0 12px !important;
+  }
+
+  .menu-toggle{
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+}
+
+/* 5) Móvil: mantener cuadrados + NO reactivar "Eres colaborador" */
+@media (max-width: 980px){
+  .header-controls > .btn.btn-primary.btn-sm{
+    display: none !important; /* sigue oculto en móvil */
+  }
+
+  .language-btn{
+    height: 40px !important;
+    min-width: 40px !important;
+    padding: 0 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .menu-toggle{
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+}
