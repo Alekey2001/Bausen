@@ -128,7 +128,7 @@
       "benefits.item3.title": "Asesoramiento Personalizado",
       "benefits.item3.body": "Sesiones de asesoramiento personalizado con expertos en Capital Humano para tu empresa.",
 
-      "cta.title": "Todos los servicios en un<br />solo lugar",
+      "cta.title": "Todos los servicios en un solo lugar",
       "cta.body": "Solicita una reunión para más información sobre cómo podemos<br />ayudarte a optimizar tu gestión de  Procesamiento de nomina.",
       "cta.book": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M8 7V3m8 4V3' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M3 10h18' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M5 6h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z' stroke='currentColor' stroke-width='2' stroke-linejoin='round'/></svg> Agenda una cita",
       "cta.cases": "<i data-lucide='badge-plus' class='icon' aria-hidden='true'></i> Ver casos de éxito",
@@ -563,26 +563,11 @@
     }, 100);
   });
 
-  // ======================
-  // HEADER SCROLL EFFECT
+    // ======================
+  // HEADER (sin efecto de scroll tipo parallax / shrink)
+  // Referencia: header estable; sin cambios por scroll
   // ======================
   const header = $('.site-header');
-
-  function updateHeader() {
-    if (!header) return;
-
-    const scrolled = window.scrollY > 20;
-    header.classList.toggle('is-scrolled', scrolled);
-
-    const hero = $('.hero');
-    if (hero && window.scrollY < window.innerHeight) {
-      const scrolledPercent = window.scrollY / window.innerHeight;
-      hero.style.setProperty('--parallax', `${scrolledPercent * 20}px`);
-    }
-  }
-
-  updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
 
   // ======================
   
@@ -737,61 +722,54 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function initRevealAnimations() {
-    if (!prefersReducedMotion && 'IntersectionObserver' in window) {
-      const revealElements = [
-        ...$$('.section > .container'),
-        ...$$('.glass-card'),
-        ...$$('.benefit'),
-        ...$$('.contact-card'),
-        ...$$('.footer-grid'),
-        ...$$('.section-title'),
-        ...$$('.big-title'),
-        ...$$('.hero-left'),
-        ...$$('.hero-right'),
-        ...$$('.media-card'),
-        ...$$('.card-grid'),
-        ...$$('.two-col')
-      ].filter(el => el && el.isConnected);
+    const revealElements = [
+      ...$$('.section > .container'),
+      ...$$('.glass-card'),
+      ...$$('.benefit'),
+      ...$$('.contact-card'),
+      ...$$('.footer-grid'),
+      ...$$('.section-title'),
+      ...$$('.big-title'),
+      ...$$('.hero-left'),
+      ...$$('.hero-right'),
+      ...$$('.media-card'),
+      ...$$('.card-grid'),
+      ...$$('.two-col')
+    ].filter(el => el && el.isConnected);
 
-      const uniqueElements = [...new Set(revealElements)];
+    const uniqueElements = [...new Set(revealElements)];
+    if (!uniqueElements.length) return;
 
-      uniqueElements.forEach((el, index) => {
-        el.classList.add('reveal');
+    uniqueElements.forEach((el, index) => {
+      el.classList.add('reveal');
 
-        let delay = 0;
-        const rect = el.getBoundingClientRect();
-        const scrollPosition = window.scrollY + rect.top;
-        const viewportHeight = window.innerHeight;
+      // Delay corto y estable (alineado a referencia)
+      const attrDelay = parseInt(el.getAttribute('data-delay') || '0', 10);
+      const delay = Number.isFinite(attrDelay) && attrDelay > 0
+        ? attrDelay
+        : Math.min((index % 6) * 40, 200);
 
-        delay = Math.min((scrollPosition / viewportHeight) * 100, 300);
-        delay += (index % 6) * 40;
+      el.style.transitionDelay = `${delay}ms`;
+      el.style.setProperty('--d', `${delay}ms`);
+    });
 
-        el.style.setProperty('--d', `${delay}ms`);
-      });
-
-      const observerOptions = {
-        threshold: window.innerWidth < 768 ? 0.1 : 0.15,
-        rootMargin: window.innerWidth < 768 ? '0px 0px -5% 0px' : '0px 0px -10% 0px'
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-in');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
-      uniqueElements.forEach(el => observer.observe(el));
-    } else {
-      $$('.reveal').forEach(el => {
-        if (el) {
-          el.classList.remove('reveal');
-          el.classList.add('is-in');
-        }
-      });
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      uniqueElements.forEach(el => el.classList.add('is-in'));
+      return;
     }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.14,
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    uniqueElements.forEach(el => observer.observe(el));
   }
 
   // ======================
@@ -847,38 +825,12 @@
   }
 
   // ======================
-  // SMOOTH SCROLL FOR ANCHOR LINKS
+  // SMOOTH SCROLL (referencia)
+  // Sin JS personalizado: se usa scroll nativo del navegador/CSS
+  // para evitar el efecto distinto al sitio de referencia.
   // ======================
   function initSmoothScroll() {
-    const anchorLinks = $$('a[href^="#"]');
-
-    anchorLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-
-        if (href === '#' || href.startsWith('#!') || href.startsWith('http')) return;
-
-        const target = $(href);
-        if (!target) return;
-
-        e.preventDefault();
-
-        const headerHeight = header?.offsetHeight || 0;
-        const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = targetPosition - headerHeight - 20;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-
-        if (history.pushState) {
-          history.pushState(null, null, href);
-        } else {
-          location.hash = href;
-        }
-      });
-    });
+    // Intencionalmente vacío
   }
 
   // ======================

@@ -226,25 +226,24 @@ section[id], main[id]{
 }
 
 /* =========================
-   REVEAL ANIMATIONS (mejorado)
+   REVEAL ANIMATIONS (alineado a referencia: más sutil, sin blur)
 ========================= */
 .reveal{
   opacity: 0;
-  filter: blur(12px);
-  transform: translate3d(0, 32px, 0);
-  transition: 
-    opacity 0.9s var(--ease),
-    filter 0.9s var(--ease),
-    transform 0.9s var(--ease);
+  filter: none;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
   transition-delay: var(--d, 0ms);
-  will-change: opacity, transform, filter;
+  will-change: opacity, transform;
 }
 
 .reveal.is-in{
   opacity: 1;
-  filter: blur(0);
-  transform: translate3d(0, 0, 0);
+  transform: translateY(0);
 }
+
 
 /* =========================
    HEADER / NAVBAR (optimizado)
@@ -2471,22 +2470,18 @@ body:not(.theme-dark) .language-dropdown{
    2) Títulos: Azul rey vs negro (intercambio solicitado)
    ========================================================= */
 
-/* 1) Reveal más rápido y menos “desvanecido” */
+/* 1) Reveal alineado a referencia (sin blur, movimiento sutil) */
 .reveal{
   opacity: 0;
-  filter: blur(6px);
-  transform: translate3d(0, 18px, 0);
-  transition:
-    opacity 0.55s var(--ease),
-    filter 0.55s var(--ease),
-    transform 0.55s var(--ease);
+  filter: none;
+  transform: translateY(14px);
+  transition: opacity 700ms ease, transform 700ms ease;
   transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
 }
-
 .reveal.is-in{
   opacity: 1;
-  filter: blur(0);
-  transform: translate3d(0, 0, 0);
+  transform: translateY(0);
 }
 
 /* 2) Intercambio de colores en títulos (Azul rey = var(--accent), Negro = var(--text)) */
@@ -2709,7 +2704,7 @@ body:not(.theme-dark) .language-dropdown{
   text-decoration:none;
   color: rgba(11,21,53,0.84);
   font-weight: 900;
-  background: rgba(255,255,255,0.70);
+  background: rgba(220,226,239,0.55);
   border: 1px solid rgba(24,35,137,0.12);
   transition: background 150ms ease, transform 150ms ease, border-color 150ms ease;
 }
@@ -2901,6 +2896,7 @@ body.menu-open{
   display: grid !important;
   place-items: center !important;
 }
+}
 
 /* =========================================================
    PATCH 2026-02-22c — Fix visual de "Procesamiento de nómina"
@@ -3021,7 +3017,7 @@ body.menu-open{
 /* Botones principales del menú (Inicio/Servicios/etc.) */
 #mobile-menu .mobile-nav-link,
 #mobile-menu .mobile-nav-summary{
-  background: #DCE2EF !important;              /* Morning cloud */
+  background: rgba(220,226,239,0.55);              /* Morning cloud */
   border: 1px solid rgba(11,21,53,0.12) !important;
   box-shadow: none !important;
   color: rgba(11,21,53,0.86) !important;      /* gris oscuro */
@@ -3097,4 +3093,513 @@ body.menu-open{
 #mobile-menu a::after,
 #mobile-menu .active::after{
   content: none !important;
+}
+
+/* =========================================================
+   FIX FINAL CTA (SOLO CSS) — NO TOCA HTML/JS/i18n
+   "Todos los servicios en un" = azul marino #182389
+   "solo lugar" = negro #000000
+   Este bloque debe quedar al FINAL ABSOLUTO
+========================================================= */
+
+/* 1) Neutraliza cualquier gradiente/transparent aplicado al H2 del CTA */
+.cta .big-title,
+.cta .big-title[data-i18n],
+.section.cta .big-title{
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-fill-color: currentColor !important;
+}
+
+/* 2) Fuerza colores exactos en los spans del CTA */
+.cta .big-title > .split-blue,
+.section.cta .big-title > .split-blue,
+.section.cta .col-content .big-title > .split-blue{
+  display: block !important;
+  color: #182389 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #182389 !important;
+  text-fill-color: #182389 !important;
+}
+
+.cta .big-title > .split-black,
+.section.cta .big-title > .split-black,
+.section.cta .col-content .big-title > .split-black{
+  display: block !important;
+  color: #000000 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-fill-color: #000000 !important;
+}
+
+/* 3) Si algún fix anterior aplica color a todos los hijos del título, lo anulamos aquí */
+.cta .big-title > .split-blue *,
+.cta .big-title > .split-black *{
+  color: inherit !important;
+  -webkit-text-fill-color: currentColor !important;
+  background: none !important;
+}
+
+/* 4) Fallback visual si por i18n temporalmente desaparecen spans (opcional, no rompe nada) */
+.cta .big-title:not(:has(> .split-blue)){
+  color: #182389 !important;
+  background: none !important;
+  -webkit-text-fill-color: #182389 !important;
+}
+
+/* =========================================================
+   PATCH 2026-02-24 — Botones estilo referencia (rectangulares)
+   - NO toca IDs
+   - EXCLUYE menú hamburguesa / drawer
+   - Aplica desde "Eres colaborador" hasta "Enviar mensaje"
+========================================================= */
+
+:root{
+  --btn-ref-bg-top: #6B86CC;
+  --btn-ref-bg-bottom: #5D77BE;
+  --btn-ref-border: #4A62A8;
+  --btn-ref-border-2: #7E98DA;
+  --btn-ref-text: #F6F9FF;
+  --btn-ref-text-shadow: rgba(52, 68, 125, .9);
+}
+
+/* Base: links/botones visibles del contenido + CTA header (NO menú hamburguesa) */
+.header-controls .btn.btn-primary.btn-sm,
+.back-btn,
+a.btn-primary,
+button.btn-primary[type="submit"],
+a.btn-ghost,
+.card-link{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 10px 16px !important;
+  border-radius: 6px !important; /* más rectangular/cuadrado */
+  border: 1px solid var(--btn-ref-border) !important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 38%),
+    linear-gradient(180deg, var(--btn-ref-bg-top), var(--btn-ref-bg-bottom)) !important;
+  color: var(--btn-ref-text) !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+  line-height: 1.1;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(38,52,102,.22),
+    0 1px 0 var(--btn-ref-border-2),
+    0 6px 14px rgba(43, 59, 115, .18) !important;
+  text-shadow: 0 1px 0 var(--btn-ref-text-shadow);
+  transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
+  cursor: pointer;
+}
+
+/* Ajustes por tipo */
+.header-controls .btn.btn-primary.btn-sm{
+  min-height: 40px;
+  padding: 9px 14px !important;
+  border-radius: 6px !important;
+}
+
+.card-link{
+  min-height: 40px;
+  padding: 9px 14px !important;
+  gap: 8px !important;
+  margin-top: 4px;
+}
+
+/* SVG/iconos dentro de botones */
+.back-btn svg,
+a.btn-primary svg,
+button.btn-primary[type="submit"] svg,
+a.btn-ghost svg,
+.card-link svg{
+  width: 18px !important;
+  height: 18px !important;
+  color: currentColor !important;
+  opacity: .98;
+  filter: drop-shadow(0 1px 0 rgba(52,68,125,.45));
+}
+
+/* Hover / focus / active: mantener mismo look (sin ovalados ni estilos previos) */
+.header-controls .btn.btn-primary.btn-sm:hover,
+.back-btn:hover,
+a.btn-primary:hover,
+button.btn-primary[type="submit"]:hover,
+a.btn-ghost:hover,
+.card-link:hover{
+  transform: translateY(-1px) !important;
+  filter: brightness(1.03);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.24),
+    inset 0 -1px 0 rgba(38,52,102,.26),
+    0 1px 0 var(--btn-ref-border-2),
+    0 8px 16px rgba(43, 59, 115, .22) !important;
+  color: var(--btn-ref-text) !important;
+  text-decoration: none !important;
+  gap: 10px !important; /* neutraliza animación de .card-link */
+}
+
+.header-controls .btn.btn-primary.btn-sm:active,
+.back-btn:active,
+a.btn-primary:active,
+button.btn-primary[type="submit"]:active,
+a.btn-ghost:active,
+.card-link:active{
+  transform: translateY(0) !important;
+  filter: brightness(.98);
+  box-shadow:
+    inset 0 1px 2px rgba(33,44,88,.32),
+    0 1px 0 var(--btn-ref-border-2) !important;
+}
+
+/* Respetamos layout actual; sólo estética. */
+@media (max-width: 768px){
+  a.btn-primary,
+  button.btn-primary[type="submit"],
+  a.btn-ghost{
+    border-radius: 6px !important;
+  }
+}
+
+
+/* =========================================================
+   PATCH FINAL 2026-02-24b — Botones planos exactos + menú más cuadrado
+   Objetivo:
+   - Botones tipo referencia "Conocer más" (plano, 2 tonos, sin efecto 3D)
+   - Texto blanco exacto en botones
+   - Mantener IDs y HTML intactos
+   - Menú hamburguesa / drawer con esquinas menos ovaladas
+   ESTE BLOQUE DEBE QUEDAR AL FINAL ABSOLUTO
+========================================================= */
+
+:root{
+  --btn-flat-main: #5B75B6;   /* color base detectado de la referencia */
+  --btn-flat-side: #4F66AE;   /* franja izquierda más oscura */
+  --btn-flat-text: #FFFFFF;
+  --btn-flat-radius: 3px;     /* más cuadrado/rectangular */
+  --btn-flat-h: 44px;
+}
+
+/* 1) BOTONES DEL SITIO (EXCLUYE botón hamburguesa y links del drawer)
+   - "Eres colaborador"
+   - Hero CTA / CTA section
+   - Volver a servicios
+   - Ver más (cards)
+   - Enviar mensaje (submit)
+*/
+.header-controls .btn.btn-primary.btn-sm,
+main .back-btn,
+main a.btn-primary,
+main button.btn-primary,
+main a.btn-ghost,
+main button.btn-ghost,
+main .card-link{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+
+  min-height: var(--btn-flat-h) !important;
+  padding: 10px 16px !important;
+  border-radius: var(--btn-flat-radius) !important;
+
+  /* look plano (sin brillo/3D), con franja izquierda */
+  background: linear-gradient(90deg, var(--btn-flat-side) 0 16%, var(--btn-flat-main) 16% 100%) !important;
+  background-image: linear-gradient(90deg, var(--btn-flat-side) 0 16%, var(--btn-flat-main) 16% 100%) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+
+  color: var(--btn-flat-text) !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0 !important;
+
+  transform: none !important;
+  transition: background-color .12s ease, opacity .12s ease !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+}
+
+/* ajuste de tamaños para botones pequeños */
+.header-controls .btn.btn-primary.btn-sm{
+  min-height: 40px !important;
+  padding: 8px 14px !important;
+  border-radius: 3px !important;
+  font-size: 14px !important;
+}
+
+main .card-link{
+  min-height: 40px !important;
+  padding: 8px 14px !important;
+  gap: 8px !important;
+}
+
+/* Quita brillo/shimmer heredado */
+.header-controls .btn.btn-primary.btn-sm::before,
+main .btn-primary::before,
+main .btn-ghost::before,
+main .back-btn::before{
+  content: none !important;
+  display: none !important;
+}
+
+/* Iconos dentro de botones: sin animación ni sombras */
+main .back-btn svg,
+main a.btn-primary svg,
+main button.btn-primary svg,
+main a.btn-ghost svg,
+main button.btn-ghost svg,
+main .card-link svg{
+  width: 18px !important;
+  height: 18px !important;
+  color: #FFFFFF !important;
+  stroke: currentColor !important;
+  filter: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Hover/Focus/Active: mantener look plano (sin levantar, sin glow) */
+.header-controls .btn.btn-primary.btn-sm:hover,
+.header-controls .btn.btn-primary.btn-sm:focus-visible,
+.header-controls .btn.btn-primary.btn-sm:active,
+main .back-btn:hover,
+main .back-btn:focus-visible,
+main .back-btn:active,
+main a.btn-primary:hover,
+main a.btn-primary:focus-visible,
+main a.btn-primary:active,
+main button.btn-primary:hover,
+main button.btn-primary:focus-visible,
+main button.btn-primary:active,
+main a.btn-ghost:hover,
+main a.btn-ghost:focus-visible,
+main a.btn-ghost:active,
+main button.btn-ghost:hover,
+main button.btn-ghost:focus-visible,
+main button.btn-ghost:active,
+main .card-link:hover,
+main .card-link:focus-visible,
+main .card-link:active{
+  background: linear-gradient(90deg, var(--btn-flat-side) 0 16%, var(--btn-flat-main) 16% 100%) !important;
+  background-image: linear-gradient(90deg, var(--btn-flat-side) 0 16%, var(--btn-flat-main) 16% 100%) !important;
+  color: #FFFFFF !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+  opacity: .98;
+  text-decoration: none !important;
+  gap: 10px !important; /* neutraliza animaciones previas */
+  outline: none !important;
+}
+
+/* 2) MENÚ HAMBURGUESA (FORMA más cuadrada / menos ovalada)
+   - solo corrige radios + apariencia plana
+   - no cambia IDs ni comportamiento JS
+*/
+
+/* Botón hamburguesa del header */
+.menu-toggle{
+  border-radius: 8px !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+/* En móvil muy pequeño mantenemos compacto pero cuadrado */
+@media (max-width: 980px){
+  .menu-toggle{
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* Botón cerrar del drawer */
+#mobile-menu .close-menu{
+  border-radius: 8px !important;
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: none !important;
+}
+
+/* Botones del menú lateral (Inicio, Servicios, etc.) */
+#mobile-menu .mobile-nav-link,
+#mobile-menu .mobile-nav-summary{
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+/* Sub-links del menú lateral (Procesamiento de nómina, etc.) */
+#mobile-menu .mobile-sub-link{
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+/* Opciones de idioma (por si se ven ovaladas en tu header) */
+.language-btn{
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.language-option{
+  border-radius: 8px !important;
+}
+
+/* Quita "levantamiento" visual del menú/drawer si alguna regla previa lo aplica */
+.menu-toggle:hover,
+.menu-toggle:active,
+#mobile-menu .close-menu:hover,
+#mobile-menu .close-menu:active,
+#mobile-menu .mobile-nav-link:hover,
+#mobile-menu .mobile-nav-summary:hover,
+#mobile-menu .mobile-sub-link:hover{
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================
+   PATCH FINAL 2026-02-24c — Quitar franjas (botones + títulos)
+   - Elimina la franja lateral de color en TODOS los botones estilizados
+   - Elimina franjas/subrayados azules decorativos en títulos solicitados
+   - No toca IDs / HTML / JS
+========================================================= */
+
+:root{
+  --btn-flat-solid: #5B75B6;  /* azul del botón (sin franja) */
+  --btn-flat-solid-hover: #5B75B6; /* mismo color para evitar efecto visual */
+  --btn-flat-solid-text: #FFFFFF;
+}
+
+/* 1) BOTONES: quitar franja izquierda (gradiente) y dejar color plano */
+.header-controls .btn.btn-primary.btn-sm,
+main .back-btn,
+main a.btn-primary,
+main button.btn-primary,
+main button.btn-primary[type="submit"],
+main a.btn-ghost,
+main button.btn-ghost,
+main .card-link,
+main .pill-cta{
+  background: var(--btn-flat-solid) !important;
+  background-image: none !important;
+  color: var(--btn-flat-solid-text) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+
+.header-controls .btn.btn-primary.btn-sm:hover,
+.header-controls .btn.btn-primary.btn-sm:focus-visible,
+.header-controls .btn.btn-primary.btn-sm:active,
+main .back-btn:hover,
+main .back-btn:focus-visible,
+main .back-btn:active,
+main a.btn-primary:hover,
+main a.btn-primary:focus-visible,
+main a.btn-primary:active,
+main button.btn-primary:hover,
+main button.btn-primary:focus-visible,
+main button.btn-primary:active,
+main button.btn-primary[type="submit"]:hover,
+main button.btn-primary[type="submit"]:focus-visible,
+main button.btn-primary[type="submit"]:active,
+main a.btn-ghost:hover,
+main a.btn-ghost:focus-visible,
+main a.btn-ghost:active,
+main button.btn-ghost:hover,
+main button.btn-ghost:focus-visible,
+main button.btn-ghost:active,
+main .card-link:hover,
+main .card-link:focus-visible,
+main .card-link:active,
+main .pill-cta:hover,
+main .pill-cta:focus-visible,
+main .pill-cta:active{
+  background: var(--btn-flat-solid-hover) !important;
+  background-image: none !important;
+  color: var(--btn-flat-solid-text) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+/* Neutraliza animaciones heredadas que generan "franja"/brillo en botones */
+.header-controls .btn.btn-primary.btn-sm::before,
+main .back-btn::before,
+main .btn-primary::before,
+main .btn-ghost::before,
+main .card-link::before,
+main .pill-cta::before,
+.header-controls .btn.btn-primary.btn-sm::after,
+main .back-btn::after,
+main .card-link::after,
+main .pill-cta::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+/* Asegura color blanco del texto/iconos en botones */
+.header-controls .btn.btn-primary.btn-sm,
+main .back-btn,
+main a.btn-primary,
+main button.btn-primary,
+main a.btn-ghost,
+main button.btn-ghost,
+main .card-link,
+main .pill-cta,
+main .back-btn svg,
+main .btn-primary svg,
+main .btn-ghost svg,
+main .card-link svg,
+main .pill-cta svg,
+main .btn-ghost .icon,
+main .btn-ghost i{
+  color: #FFFFFF !important;
+  stroke: currentColor !important;
+}
+
+/* 2) TÍTULOS: quitar franja azul decorativa */
+.hero-title .grad::after,
+.grad::after,
+.section-title::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+}
+
+.hero-title:hover .grad::after{
+  transform: none !important;
+}
+
+/* Si algún título tiene línea decorativa por box-shadow/border (extra patchs), neutralizar */
+.hero-title .grad,
+.section-title,
+.section-title .grad2{
+  box-shadow: none !important;
 }

@@ -1674,3 +1674,15 @@ html[data-theme="light"] #mobile-menu .mobile-sub-link{
   line-height: 1;
   font-size: 16px;
 }
+/* SOLO botones principales del menú hamburguesa (no subservicios) */
+html[data-theme="light"] #mobile-menu .mobile-nav-link,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary{
+  background: rgba(220,226,239,0.55) !important; /* #DCE2EF opaco */
+  color: var(--text) !important;
+}
+
+/* Hover solo principales */
+html[data-theme="light"] #mobile-menu .mobile-nav-link:hover,
+html[data-theme="light"] #mobile-menu .mobile-nav-summary:hover{
+  background: rgba(220,226,239,0.55) !important;
+}
