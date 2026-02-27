@@ -204,6 +204,49 @@
     });
   }
 
+// =========================
+// Split de títulos (azul rey / negro) como referencia
+// - No toca IDs
+// - Se re-aplica después de cada cambio de idioma
+// =========================
+function applySplitTitles(lang) {
+  const L = String(lang || "ES").toUpperCase() === "EN" ? "EN" : "ES";
+
+  const setSplit = (selector, blue, black, br = false) => {
+    const el = $(selector, document);
+    if (!el) return;
+    const sep = br ? "<br />" : " ";
+    el.innerHTML = `<span class="split-blue">${blue}</span>${sep}<span class="split-black">${black}</span>`;
+  };
+
+  if (L === "ES") {
+    setSplit('[data-i18n="centro.heroTitle"]', "Transforma tu", "Carrera Profesional", true);
+    setSplit('[data-i18n-text="centro.howTitle"]', "¿Cómo", "funciona?");
+    setSplit('[data-i18n-text="centro.catalogTitle"]', "Catálogo", "de Cursos");
+    setSplit('[data-i18n-text="centro.offerTitle"]', "¿Qué", "ofrecemos?");
+    setSplit('[data-i18n-text="centro.whyTitle"]', "¿Por qué", "elegirnos?");
+    setSplit('[data-i18n-text="centro.internTitle"]', "Prácticas", "Profesionales");
+    setSplit('[data-i18n-text="centro.finalTitle"]', "¡Comienza tu transformación", "profesional hoy!", true);
+    setSplit('[data-i18n-text="centro.faqTitle"]', "Preguntas", "Frecuentes");
+
+    // Subtítulo interno (sección prácticas) también en split
+    setSplit('[data-i18n-text="centro.internHowTitle"]', "¿Cómo", "funciona?");
+    return;
+  }
+
+  // EN (best-effort, para no romper consistencia visual si activas inglés)
+  setSplit('[data-i18n="centro.heroTitle"]', "Transform your", "Professional Career", true);
+  setSplit('[data-i18n-text="centro.howTitle"]', "How", "it works");
+  setSplit('[data-i18n-text="centro.catalogTitle"]', "Course", "Catalog");
+  setSplit('[data-i18n-text="centro.offerTitle"]', "What", "we offer");
+  setSplit('[data-i18n-text="centro.whyTitle"]', "Why", "choose us");
+  setSplit('[data-i18n-text="centro.internTitle"]', "Professional", "Internships");
+  setSplit('[data-i18n-text="centro.finalTitle"]', "Start your", "transformation today!", true);
+  setSplit('[data-i18n-text="centro.faqTitle"]', "Frequently", "Asked Questions");
+  setSplit('[data-i18n-text="centro.internHowTitle"]', "How", "it works");
+}
+
+
   function renderLangOptions() {
     if (!langList) return;
 
@@ -233,7 +276,10 @@
     } catch (_) {}
 
     applyTranslations(L);
-  }
+
+
+    applySplitTitles(L);
+}
 
   function openLang() {
     if (!langList || !langBtn) return;
@@ -651,6 +697,41 @@
         btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
       });
     });
+
+    // Hover (PC) — abre al pasar el mouse y cierra al salir (no afecta touch)
+    const canHover = !!(window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches);
+    if (canHover) {
+      // Si sales del contenedor FAQ completo, cerramos todo
+      faq.addEventListener("mouseleave", () => {
+        items.forEach((b) => b.setAttribute("aria-expanded", "false"));
+      });
+
+      items.forEach((btn) => {
+        let leaveTimer = null;
+
+        const openBtn = () => {
+          if (leaveTimer) {
+            clearTimeout(leaveTimer);
+            leaveTimer = null;
+          }
+          items.forEach((b) => {
+            if (b !== btn) b.setAttribute("aria-expanded", "false");
+          });
+          btn.setAttribute("aria-expanded", "true");
+        };
+
+        const closeBtn = () => {
+          if (leaveTimer) clearTimeout(leaveTimer);
+          // delay mínimo para que no "parpadee" al mover el mouse
+          leaveTimer = setTimeout(() => {
+            btn.setAttribute("aria-expanded", "false");
+          }, 60);
+        };
+
+        btn.addEventListener("mouseenter", openBtn);
+        btn.addEventListener("mouseleave", closeBtn);
+      });
+    }
   }
 
   /* -------------------------
@@ -692,6 +773,11 @@
   ------------------------- */
   function init() {
     initLang();
+    // PATCH: asegurar split de títulos (azul rey / negro) siempre, sin tocar IDs ni layout
+    const __L = (() => { try { return localStorage.getItem(LANG_KEY); } catch (_) { return null; } })()
+      || (langCode ? langCode.textContent : "ES");
+    applySplitTitles(__L);
+    setTimeout(() => applySplitTitles(langCode ? langCode.textContent : __L), 50);
     initMobileMenu();
     initHoverUX();
     initActiveLink();

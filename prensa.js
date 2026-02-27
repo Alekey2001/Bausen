@@ -1064,3 +1064,86 @@ function initActiveLink() {
     init();
   }
 })();
+/* =========================================================
+   prensa_patch_titles_bg_sanitize.js
+   - NO modifica IDs ni la lógica existente (prensa.js).
+   - Solo:
+     1) Re-aplica el split azul/negro en títulos (porque data-i18n puede sobrescribir innerHTML).
+     2) Elimina textos "[object Object]" que aparezcan en tarjetas/fichas.
+========================================================= */
+
+(function () {
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+  function splitTitles() {
+    // HERO: "Sala de" (azul) / "Prensa" (negro)
+    const heroH1 = $(".hero__title[data-i18n='presspage.heroTitle'], .hero__title");
+    if (heroH1) {
+      const plain = heroH1.textContent.replace(/\s+/g, " ").trim();
+      if (/^Sala de\s*Prensa$/i.test(plain) || (plain.toLowerCase().includes("sala de") && plain.toLowerCase().includes("prensa"))) {
+        heroH1.innerHTML = '<span class="t-royal">Sala de</span><br><span class="t-black">Prensa</span>';
+      }
+    }
+
+    // SECTION: "Nuestros" (azul) / "Comunicados" (negro)
+    const h2 = $(".section__title[data-i18n='presspage.listTitle'], .section__title");
+    if (h2) {
+      const plain = h2.textContent.replace(/\s+/g, " ").trim();
+      if (/^Nuestros\s*Comunicados$/i.test(plain) || (plain.toLowerCase().includes("nuestros") && plain.toLowerCase().includes("comunicados"))) {
+        h2.innerHTML = '<span class="t-royal">Nuestros</span> <span class="t-black">Comunicados</span>';
+      }
+    }
+
+    // CTA: "¿Eres medio" (azul) / "de comunicación?" (negro)
+    const ctaH3 = $(".cta__copy h3[data-i18n='presspage.contactTitle'], .cta__copy h3");
+    if (ctaH3) {
+      const plain = ctaH3.textContent.replace(/\s+/g, " ").trim();
+      if (plain.toLowerCase().includes("¿eres medio") && plain.toLowerCase().includes("comunicación")) {
+        ctaH3.innerHTML = '<span class="t-royal">¿Eres medio</span> <span class="t-black">de comunicación?</span>';
+      }
+    }
+  }
+
+  function sanitizeObjectObject(root = document) {
+    // Solo tocar elementos hoja (sin hijos) para evitar romper layout
+    const nodes = $$("body *", root);
+    nodes.forEach((el) => {
+      if (el.children && el.children.length > 0) return;
+      const t = (el.textContent || "").trim();
+      if (!t) return;
+      if (t.includes("[object Object]")) {
+        el.textContent = t.replace(/\[object Object\]/g, "").trim();
+      }
+    });
+  }
+
+  function runAll() {
+    splitTitles();
+    sanitizeObjectObject();
+  }
+
+  const onReady = () => {
+    runAll();
+    setTimeout(runAll, 80);
+    setTimeout(runAll, 220);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  // Re-aplicar tras cambio de idioma (no modifica el sistema i18n, solo re-estiliza)
+  $$(".language-option").forEach((btn) => {
+    btn.addEventListener("click", () => setTimeout(runAll, 60));
+  });
+
+  // Observar el grid (si prensa.js renderiza tarjetas después)
+  const pressGrid = $("#pressGrid");
+  if (pressGrid && "MutationObserver" in window) {
+    const mo = new MutationObserver(() => sanitizeObjectObject(pressGrid));
+    mo.observe(pressGrid, { childList: true, subtree: true });
+  }
+})();

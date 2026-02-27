@@ -40,7 +40,7 @@
   --radius-lg: 24px;
 
   --ease: cubic-bezier(.2,.8,.2,1);
-  --max: 1180px;
+  --max: 1240px;
 
   --focus: 0 0 0 4px rgba(97,166,255,.22);
 
@@ -49,33 +49,37 @@
 }
 
 html[data-theme="light"]{
-  /* Light */
-  --bg:#F5F8FF;
-  --bg-2:#EDF3FF;
-  --panel:#FFFFFF;
-  --panel-2:#F7FAFF;
+  /* Light (paleta referencia: index/stylebeca) */
+  --navy:   #182389; /* Azul rey */
+  --silver: #5B75B6; /* Silver Lake Blue */
+  --cloud:  #DCE2EF; /* Morning Cloud */
 
-  --text:#0B1226;
-  --muted:#4A5875;
+  --bg:   var(--cloud);
+  --bg-2: #EDF3FF;
+  --panel:   #FFFFFF;
+  --panel-2: #F7FAFF;
 
-  --primary:#003DA5;
-  --primary-2:#0A4BFF;
-  --accent:#1B72FF;
+  --text:  #0B1226;     /* gris oscuro */
+  --muted: #4A5875;
 
-  --border: rgba(11,18,38,.12);
-  --border-2: rgba(11,18,38,.16);
+  --primary:   var(--navy);
+  --primary-2: var(--silver);
+  --accent:    var(--silver);
 
-  --glass: rgba(11,18,38,.03);
-  --glass-2: rgba(11,18,38,.05);
-  --glass-strong: rgba(11,18,38,.06);
+  --border:   rgba(24,35,137,.14);
+  --border-2: rgba(24,35,137,.18);
 
-  --shadow: 0 22px 70px rgba(11,18,38,.12);
-  --shadow-soft: 0 16px 46px rgba(11,18,38,.09);
-  --shadow-card: 0 14px 44px rgba(11,18,38,.10);
+  /* glass claro (controles header) */
+  --glass:        rgba(255,255,255,.58);
+  --glass-2:      rgba(255,255,255,.72);
+  --glass-strong: rgba(255,255,255,.78);
+
+  --shadow:       0 22px 70px rgba(11,18,38,.12);
+  --shadow-soft:  0 16px 46px rgba(11,18,38,.09);
+  --shadow-card:  0 14px 44px rgba(11,18,38,.10);
   --shadow-float: 0 26px 90px rgba(11,18,38,.14);
 
-  --focus: 0 0 0 4px rgba(27,114,255,.18);
-  --highlight: rgba(11,18,38,.08);
+  --focus: 0 0 0 4px rgba(24,35,137,.18);
 }
 
 *{ box-sizing:border-box; }
@@ -98,7 +102,11 @@ body{
 a{ color:inherit; text-decoration:none; }
 img{ max-width:100%; display:block; }
 
-.container{ width:min(var(--max), 100% - 40px); margin:0 auto; }
+.container{
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
 .w-full{ width:100%; }
 .muted{ color:var(--muted); }
@@ -482,6 +490,28 @@ html[data-theme="light"] .section--dark{
   font-size: clamp(28px, 4vw, 44px);
   letter-spacing: -0.02em;
 }
+
+/* =========================
+   Split Titles (Referencia)
+   - Azul rey + negro, sin gradientes
+========================= */
+.split-blue,
+.split-black{
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-fill-color: currentColor !important;
+}
+.split-blue{
+  color: var(--accent);
+}
+.split-black{
+  color: var(--text);
+}
+html[data-theme="light"] .split-blue{ color: #182389; }
+html[data-theme="light"] .split-black{ color: #0B1226; }
 .section__sub{
   margin:10px 0 0;
   color: var(--muted);
@@ -1498,7 +1528,6 @@ html[data-theme="light"] .footer__bottom{
 }
 @media (max-width: 620px){
   .footer__grid{ grid-template-columns: 1fr; }
-  .container{ width:min(var(--max), 100% - 28px); }
 }
 /* =========================
    FIX 1: Header siempre visible (evita corte de sticky)
@@ -1866,3 +1895,440 @@ body{
 @media (max-width: 980px){
   .header__actions .collab-cta{ display:none; }
 }
+
+/* =========================================================
+   PATCH 2026-02-25 — Centro: paleta referencia + detalles UI
+   - No cambia IDs ni lógica
+   - Ajusta colores para que se vea como index/stylebeca
+========================================================= */
+html[data-theme="light"] body{
+  background:
+    radial-gradient(1200px 650px at 12% 8%, rgba(91,117,182,.22), transparent 62%),
+    radial-gradient(900px 520px at 86% 18%, rgba(24,35,137,.18), transparent 60%),
+    radial-gradient(700px 520px at 40% 90%, rgba(91,117,182,.14), transparent 62%),
+    linear-gradient(180deg, var(--bg), var(--bg-2));
+}
+
+html[data-theme="light"] .site-header{
+  background: rgba(220,226,239,.92);
+  border-bottom: 1px solid rgba(24,35,137,.14);
+  box-shadow: 0 10px 28px rgba(11,18,38,.08);
+}
+
+/* Controles del header: look “integrado” a cloud */
+html[data-theme="light"] .icon-btn,
+html[data-theme="light"] .language-btn,
+html[data-theme="light"] .menu-toggle{
+  background: rgba(255,255,255,.75);
+  border: 1px solid rgba(24,35,137,.16);
+  box-shadow: 0 12px 26px rgba(11,18,38,.06);
+}
+
+/* Botón principal (sin gradiente): navy sólido como referencia */
+html[data-theme="light"] .btn--primary{
+  background: var(--primary);
+  background-image: none;
+  color:#fff;
+  border: 1px solid rgba(24,35,137,.18);
+  box-shadow: 0 16px 34px rgba(24,35,137,.22);
+}
+html[data-theme="light"] .btn--primary:hover{
+  box-shadow: 0 20px 42px rgba(24,35,137,.28);
+  transform: translateY(-1px);
+}
+
+/* Ghost: blanco con borde navy suave */
+html[data-theme="light"] .btn--ghost{
+  background: rgba(255,255,255,.70);
+  border: 1px solid rgba(24,35,137,.16);
+  color: rgba(11,18,38,.92);
+}
+html[data-theme="light"] .btn--ghost:hover{
+  background: rgba(255,255,255,.82);
+  border-color: rgba(24,35,137,.22);
+}
+
+/* Título dividido: “Carrera” en azul rey, resto negro */
+html[data-theme="light"] .hero__accent{
+  background: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  -webkit-text-fill-color: var(--navy) !important;
+  color: var(--navy) !important;
+}
+
+/* Las secciones “dark” en modo claro deben verse como cloud */
+html[data-theme="light"] .section--dark{
+  background: linear-gradient(180deg, rgba(220,226,239,.95), rgba(220,226,239,.72));
+}
+
+/* Orbes del hero: tonos silver/navy */
+html[data-theme="light"] .orb{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(24,35,137,.20), rgba(91,117,182,.14) 60%, rgba(0,0,0,0) 80%);
+  box-shadow: 0 26px 90px rgba(11,18,38,.12), 0 0 50px rgba(91,117,182,.18);
+}
+
+/* Iconos “azules” con Silver Lake Blue */
+html[data-theme="light"] .benefit__i{
+  background: linear-gradient(135deg, rgba(91,117,182,.22), rgba(24,35,137,.14));
+  border: 1px solid rgba(24,35,137,.18);
+  color: rgba(11,18,38,.92);
+}
+html[data-theme="light"] .how__icon.is-blue{
+  background: rgba(91,117,182,.20);
+  border: 1px solid rgba(24,35,137,.18);
+  color: rgba(11,18,38,.92);
+}
+
+/* Header de cursos: gradiente silver→navy */
+html[data-theme="light"] .course__top{
+  background:
+    radial-gradient(800px 240px at 30% 10%, rgba(255,255,255,.22), transparent 55%),
+    linear-gradient(135deg, rgba(91,117,182,.95), rgba(24,35,137,.90));
+}
+
+/* =========================================================
+   PATCH FINAL 2026-02-25 — BOTONES estilo referencia (sin layout)
+   Objetivo:
+   - TODOS los botones solicitados (hamburguesa, idiomas, colaborador y CTAs)
+     con estética rectangular/cuadrada como la referencia (index/stylebeca)
+   - Sin gradientes “3D” y sin movimiento (sin translate)
+   - NO mueve posicionamiento / NO toca IDs / NO toca lógica
+   - Este bloque debe quedar al FINAL del CSS
+========================================================= */
+
+:root{
+  --btn-ref-radius: 6px;              /* más cuadrado */
+  --btn-ref-primary: var(--primary);   /* azul rey en light (ya mapeado a #182389) */
+  --btn-ref-ghost: var(--glass);       /* glass base */
+  --btn-ref-border: var(--border);
+  --btn-ref-border-2: var(--border-2);
+  --btn-ref-text: #ffffff;
+  --btn-ref-text-dark: var(--text);
+}
+
+html[data-theme="light"]{
+  --btn-ref-primary: var(--primary);                /* #182389 */
+  --btn-ref-ghost: rgba(255,255,255,72);           /* parecido a referencia */
+  --btn-ref-border: rgba(24,35,137,16);
+  --btn-ref-border-2: rgba(24,35,137,22);
+}
+
+html[data-theme="dark"]{
+  --btn-ref-ghost: rgba(255,255,255,08);
+  --btn-ref-border: rgba(255,255,255,12);
+  --btn-ref-border-2: rgba(255,255,255,16);
+}
+
+/* ---------- BASE: quita 3D (gradientes, sombras fuertes, translate) ---------- */
+.btn,
+.btn--pill,
+.btn.btn-primary,
+.btn--primary,
+.btn--ghost,
+.icon-btn,
+.lang__btn,
+.lang__btn.language-btn,
+.menu-toggle,
+.burger.menu-toggle{
+  border-radius: var(--btn-ref-radius) !important;
+  background-image: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ---------- PRIMARY (Explorar, Agendar, Ver Curso, Enviar CV, Postularme, etc.) ---------- */
+.btn--primary,
+.btn.btn-primary{
+  background: var(--btn-ref-primary) !important;
+  color: var(--btn-ref-text) !important;
+  border: 1px solid var(--btn-ref-border) !important;
+}
+
+/* Mantener texto e iconos en blanco dentro del primario */
+.btn--primary i,
+.btn.btn-primary i,
+.btn--primary svg,
+.btn.btn-primary svg{
+  color: currentColor !important;
+}
+
+/* ---------- GHOST (Elegir archivo / botones secundarios) ---------- */
+.btn--ghost{
+  background: var(--btn-ref-ghost) !important;
+  color: var(--btn-ref-text-dark) !important;
+  border: 1px solid var(--btn-ref-border) !important;
+}
+
+/* ---------- Header controls (idiomas + hamburguesa + tema) ---------- */
+.icon-btn,
+.lang__btn,
+.lang__btn.language-btn,
+.menu-toggle,
+.burger.menu-toggle{
+  background: var(--btn-ref-ghost) !important;
+  border: 1px solid var(--btn-ref-border) !important;
+  color: var(--text) !important;
+}
+
+/* Evita “ovalado” en botones tipo pill del header/CTA */
+.btn--pill{
+  border-radius: var(--btn-ref-radius) !important;
+}
+
+/* ---------- HOVER/FOCUS: plano (sin translate) ---------- */
+.btn:hover,
+.btn:focus,
+.icon-btn:hover,
+.icon-btn:focus,
+.lang__btn:hover,
+.lang__btn:focus,
+.menu-toggle:hover,
+.menu-toggle:focus,
+.burger.menu-toggle:hover,
+.burger.menu-toggle:focus{
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: var(--btn-ref-border-2) !important;
+  filter: brightness(1.03);
+  outline: none;
+}
+
+/* Active: sin “salto” */
+.btn:active,
+.icon-btn:active,
+.lang__btn:active,
+.menu-toggle:active{
+  transform: none !important;
+  filter: brightness(0.98);
+}
+
+/* Accesibilidad: focus ring suave, sin cambiar layout */
+.btn:focus-visible,
+.icon-btn:focus-visible,
+.lang__btn:focus-visible,
+.menu-toggle:focus-visible{
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(91,117,182,18) !important; /* silver lake blue soft */
+}
+
+/* Mantén el padding actual (no tocamos layout), solo normalizamos line-height */
+.btn{ line-height: 1 !important; }
+
+
+
+/* =========================================================
+   PATCH 2026-02-25 — COLORES (solo estética, sin layout)
+   - NO se tocan tamaños, padding, display, gaps, posiciones
+   - NO se elimina ningún patch previo; solo overrides de color/borde
+========================================================= */
+
+html[data-theme="light"]{
+  --btn-silver-lake: #5B75B6; /* Silver lake blue */
+  --btn-morning-cloud: #DCE2EF; /* Morning cloud */
+  --btn-royal-navy: #182389; /* Azul rey */
+}
+
+/* A) Primarios solicitados -> Silver Lake Blue (solo color de fondo + texto) */
+html[data-theme="light"] .btn--primary,
+html[data-theme="light"] .btn.btn-primary{
+  background: var(--btn-silver-lake) !important;
+  color: var(--btn-morning-cloud) !important;
+}
+
+/* Iconos dentro de primarios */
+html[data-theme="light"] .btn--primary i,
+html[data-theme="light"] .btn--primary svg,
+html[data-theme="light"] .btn.btn-primary i,
+html[data-theme="light"] .btn.btn-primary svg{
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* B) Botones con contorno navy (idiomas, hamburguesa, agendar, elegir archivo, postularme)
+      -> quitar contorno + fondo Morning Cloud */
+html[data-theme="light"] .btn--ghost{
+  background: var(--btn-morning-cloud) !important;
+  border-color: transparent !important; /* quita contorno azul marino sin cambiar layout */
+  color: var(--btn-royal-navy) !important;
+}
+
+/* Idiomas + hamburguesa (solo esos botones) */
+html[data-theme="light"] #langBtn,
+html[data-theme="light"] #menuToggle{
+  background: var(--btn-morning-cloud) !important;
+  border-color: transparent !important;
+  color: var(--btn-royal-navy) !important;
+}
+
+/* Iconos dentro de idiomas/hamburguesa */
+html[data-theme="light"] #langBtn i,
+html[data-theme="light"] #langBtn svg,
+html[data-theme="light"] #menuToggle i,
+html[data-theme="light"] #menuToggle svg{
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Hover/Focus: plano y sin borde oscuro (solo estética) */
+html[data-theme="light"] .btn--primary:hover,
+html[data-theme="light"] .btn--ghost:hover,
+html[data-theme="light"] #langBtn:hover,
+html[data-theme="light"] #menuToggle:hover{
+  filter: brightness(1.02);
+  border-color: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html[data-theme="light"] .btn--primary:focus-visible,
+html[data-theme="light"] .btn--ghost:focus-visible,
+html[data-theme="light"] #langBtn:focus-visible,
+html[data-theme="light"] #menuToggle:focus-visible{
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(91,117,182,.22) !important; /* ring suave silver */
+}
+
+
+/* =========================================================
+   PATCH 2026-02-25 — AJUSTES FINOS (solo estética, sin layout)
+   1) Idiomas / Hamburguesa / Agendar / Elegir archivo / Postularme:
+      - Base Silver Lake Blue #5B75B6
+      - Contorno BLANCO
+      - Texto/iconos Morning Cloud #DCE2EF
+   2) Cabecera de tarjetas del catálogo (.course__top):
+      - Quitar efecto "3D" (gradientes/overlays)
+      - Fondo sólido #5B75B6
+========================================================= */
+
+html[data-theme="light"]{
+  --btn-silver-lake: #5B75B6;   /* Silver lake blue */
+  --btn-morning-cloud: #DCE2EF; /* Morning cloud */
+}
+
+/* 1) Controles + ghost específicos solicitados */
+html[data-theme="light"] #langBtn,
+html[data-theme="light"] #menuToggle,
+html[data-theme="light"] .btn--ghost,
+html[data-theme="light"] .file__btn,
+html[data-theme="light"] label[for="cvFile"],
+html[data-theme="light"] .file label{
+  background: var(--btn-silver-lake) !important;
+  color: var(--btn-morning-cloud) !important;
+  border-color: rgba(255,255,255,.95) !important; /* contorno blanco */
+}
+
+/* Iconos dentro de esos botones */
+html[data-theme="light"] #langBtn i,
+html[data-theme="light"] #langBtn svg,
+html[data-theme="light"] #menuToggle i,
+html[data-theme="light"] #menuToggle svg,
+html[data-theme="light"] .btn--ghost i,
+html[data-theme="light"] .btn--ghost svg,
+html[data-theme="light"] .file__btn i,
+html[data-theme="light"] .file__btn svg,
+html[data-theme="light"] label[for="cvFile"] i,
+html[data-theme="light"] label[for="cvFile"] svg{
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+/* Hover/focus: plano, solo ligera claridad (sin cambiar layout) */
+html[data-theme="light"] #langBtn:hover,
+html[data-theme="light"] #menuToggle:hover,
+html[data-theme="light"] .btn--ghost:hover,
+html[data-theme="light"] .file__btn:hover,
+html[data-theme="light"] label[for="cvFile"]:hover{
+  filter: brightness(1.02) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  border-color: rgba(255,255,255,.95) !important;
+}
+html[data-theme="light"] #langBtn:focus-visible,
+html[data-theme="light"] #menuToggle:focus-visible,
+html[data-theme="light"] .btn--ghost:focus-visible,
+html[data-theme="light"] .file__btn:focus-visible,
+html[data-theme="light"] label[for="cvFile"]:focus-visible{
+  outline: none !important;
+  box-shadow: 0 0 0 4px rgba(91,117,182,.22) !important; /* ring suave */
+}
+
+/* 2) Catálogo: cabecera plana (sin gradientes/overlays) */
+html[data-theme="light"] .course__top{
+  background: var(--btn-silver-lake) !important;
+  background-image: none !important;
+}
+html[data-theme="light"] .course__top::after{
+  content: none !important;
+  display: none !important;
+}
+/* (Opcional mínimo) Quitar sombra fuerte del icono dentro de cabecera para look plano */
+html[data-theme="light"] .course__icon{
+  box-shadow: none !important;
+  background: rgba(220,226,239,.20) !important;
+  border-color: rgba(220,226,239,.32) !important;
+}
+
+
+
+/* =========================================================
+   PATCH FINAL (solo estética)
+   - Idiomas (#langBtn) y Hamburguesa (#menuToggle):
+     fondo Morning Cloud, borde Silver Lake Blue, iconos/texto negro
+   - Quitar orbes/círculos del HERO (Transforma tu Carrera Profesional)
+   NO cambia posicionamiento ni elimina patches anteriores.
+========================================================= */
+
+html[data-theme="light"] #langBtn,
+html[data-theme="light"] #menuToggle{
+  background: var(--cloud) !important;   /* Morning Cloud #DCE2EF */
+  border: 1px solid var(--silver) !important; /* Silver Lake Blue #5B75B6 */
+  box-shadow: none !important;           /* sin relieve 3D */
+}
+
+/* Contenido (texto/íconos) */
+html[data-theme="light"] #langBtn,
+html[data-theme="light"] #langBtn *{
+  color: #0B1226 !important;
+}
+
+html[data-theme="light"] #menuToggle,
+html[data-theme="light"] #menuToggle i{
+  color: #0B1226 !important; /* barras negras */
+}
+
+/* Mantener hover sin cambiar layout */
+html[data-theme="light"] #langBtn:hover,
+html[data-theme="light"] #menuToggle:hover{
+  background: #FFFFFF !important;
+  border-color: var(--silver) !important;
+  transform: none !important;  /* evita efecto flotante */
+}
+
+/* Quitar los círculos/orbes en el HERO */
+html[data-theme="light"] .hero__bg .orb{
+  display: none !important;
+}
+/* Dejar la base del HERO en Morning Cloud (sin gradientes) */
+html[data-theme="light"] .hero{
+  background: var(--cloud) !important;
+}
+
+/* =========================================================
+   PATCH FINAL EXTRA (solo estética)
+   - SOLO: Idiomas (#langBtn) y Hamburguesa (#menuToggle)
+   - Cambia fondo de Morning Cloud (#DCE2EF) a BLANCO
+   - NO toca botones Silver Lake Blue (#5B75B6) ni posicionamiento
+========================================================= */
+html[data-theme="light"] #langBtn,
+html[data-theme="light"] #menuToggle{
+  background: #FFFFFF !important;
+}
+
+/* Mantener hover consistente (sin cambios de layout) */
+html[data-theme="light"] #langBtn:hover,
+html[data-theme="light"] #menuToggle:hover{
+  background: #FFFFFF !important;
+}
+ 

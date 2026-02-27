@@ -2184,3 +2184,196 @@ html[data-theme="light"] .mobile-nav .mobile-submenu{
 .mobile-nav .mobile-nav-link[data-i18n-text="nav.press"] + .mobile-nav-link[data-i18n-text="nav.contact"]{
   margin-top: 0;
 }
+
+/* =========================================================
+   PATCH FINAL (solo estética)
+   1) Títulos divididos azul rey / negro (Sala de Prensa, Nuestros Comunicados, ¿Eres medio de comunicación?)
+   2) Base del sitio (LIGHT) en Morning Cloud #DCE2EF (excepto menú hamburguesa/drawer)
+   3) Compat: si llega texto con <span class="grad"> lo forzamos a negro (sin gradiente)
+   ========================================================= */
+
+:root{
+  --royal-blue: #182389; /* azul rey */
+  --cloud: #DCE2EF;      /* Morning cloud */
+}
+
+/* 3) Si el HTML/idiomas inyecta .grad, aquí NO queremos gradiente: lo queremos negro */
+.grad{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0b1020 !important;
+}
+
+/* Clases para split */
+.t-royal{ color: var(--royal-blue) !important; }
+.t-black{ color: #0b1020 !important; }
+
+/* 3) Fondo base en LIGHT: Morning Cloud */
+html[data-theme="light"]{
+  --bg: var(--cloud) !important; /* body usa var(--bg) */
+}
+
+/* Importante: NO tocar el drawer del menú hamburguesa (sigue usando var(--panel2) / etc.) */
+html[data-theme="light"] .mobile-menu{
+  /* se mantiene como está (panel2) */
+}
+
+/* Para que secciones que usan fondos/gradientes no “ensucien” el cloud: las hacemos transparentes
+   (mantiene cards/paneles porque usan --panel/--panel2) */
+html[data-theme="light"] .cta,
+html[data-theme="light"] .site-footer{
+  background: transparent !important;
+}
+
+/* =========================================================
+   PATCH FINAL — Botones como referencia + quitar círculos grises
+   Requisitos:
+   1) Botones: Contacto de Prensa, Ver Comunicados (hero),
+      Ver comunicado (cards), contacto@bausen.mx + Ver comunicados (CTA)
+      -> cuadrados, base #5B75B6, texto blanco
+   2) Header: ¿Eres colaborador? azul #5B75B6 + texto blanco + más cuadrado;
+      Idiomas + Hamburguesa: más rectangulares/cuadrados (SIN cambiar posicionamiento)
+   3) Quitar círculos grises (orbes/divider/float-orb) sin tocar lógica
+========================================================= */
+
+:root{
+  --silver: #5B75B6; /* Silver lake blue */
+}
+
+/* ---------- 1) Botones de la página Prensa (sólidos, cuadrados) ---------- */
+html[data-theme="light"] .hero__cta .btn,
+html[data-theme="light"] .cta__actions .btn,
+html[data-theme="light"] .press-card__footer a:not(.tag),
+html[data-theme="light"] .press-card__footer button{
+  background: var(--silver) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(11,16,32,.12) !important;
+  border-radius: 8px !important;           /* más cuadrado (no pill) */
+  box-shadow: none !important;              /* sin 3D */
+  transform: none !important;               /* evita “flotar” */
+  text-decoration: none !important;
+  padding: 11px 16px !important;
+  min-height: 42px !important;
+  font-weight: 900 !important;
+}
+
+/* Iconos en blanco dentro de esos botones */
+html[data-theme="light"] .hero__cta .btn i,
+html[data-theme="light"] .cta__actions .btn i,
+html[data-theme="light"] .press-card__footer a:not(.tag) i{
+  color: #FFFFFF !important;
+}
+
+/* Hover: mismo color (sin cambio de tamaño ni sombra) */
+html[data-theme="light"] .hero__cta .btn:hover,
+html[data-theme="light"] .cta__actions .btn:hover,
+html[data-theme="light"] .press-card__footer a:not(.tag):hover,
+html[data-theme="light"] .press-card__footer button:hover{
+  background: var(--silver) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ---------- 2) Header: CTA colaborador azul + botones más cuadrados ---------- */
+html[data-theme="light"] .site-header .btn--collab{
+  background: var(--silver) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(11,16,32,.12) !important;
+  border-radius: 8px !important;           /* quita pill visual */
+  box-shadow: none !important;
+  transform: none !important;
+}
+html[data-theme="light"] .site-header .btn--collab:hover{
+  background: var(--silver) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* Idiomas (language-btn) más rectangular/cuadrado sin cambiar colores actuales */
+.language-btn{
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.language-btn:hover{ transform: none !important; }
+
+/* Hamburguesa más rectangular/cuadrado sin cambiar colores actuales */
+.menu-toggle{
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.menu-toggle:hover{ transform: none !important; }
+
+/* ---------- 3) Quitar círculos grises (orbes/divider) ---------- */
+.float-orb,
+.divider-3d__orbs,
+.divider-3d__glow{
+  display: none !important;
+}
+
+/* =========================================================
+   PATCH FINAL — X como LinkedIn/Instagram + logo PC más grande + tipografía base
+   Requisitos:
+   1) Botón X (footer) con misma estética que LinkedIn/Instagram
+   2) Logo Bausen en header (PC) 20–30% más grande
+   3) Tipografía: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ...
+   Nota: SOLO estética. No toca IDs ni lógica.
+========================================================= */
+
+/* 3) Tipografía global (HTML + BODY + controles) */
+html, body{
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif !important;
+}
+button, input, select, textarea{
+  font-family: inherit !important;
+}
+
+/* 2) Logo header (solo PC) */
+@media (min-width: 981px){
+  .brand__logo{
+    height: 42px !important; /* ~+30% vs 32px */
+    width: auto !important;
+  }
+}
+
+/* 1) Botón X del footer: igual que .social__btn (LinkedIn/Instagram) */
+.social .social-mini{
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 14px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid var(--border) !important;
+  background: rgba(255,255,255,.04) !important;
+  transition: transform .18s var(--ease) !important;
+  color: var(--text) !important;
+}
+html[data-theme="light"] .social .social-mini{
+  background: rgba(11,16,32,.03) !important;
+}
+.social .social-mini:hover{
+  transform: translateY(-2px) !important;
+}
+
+/* SVG del botón X: hereda color como los iconos FA */
+.social .social-mini svg path{
+  fill: currentColor !important;
+}
+
+/* =========================================================
+   PATCH FINAL — Ajustes solicitados (solo estética/estructura visual)
+   1) Ocultar botón duplicado "¿Eres colaborador?" dentro del menú hamburguesa SOLO en PC
+   2) Tarjetas más cuadradas: KPIs (50+, 38+, 100+, ∞) y tarjetas de comunicados (press-card)
+   Nota: NO toca IDs ni lógica JS.
+========================================================= */
+
+/* 2) Tarjetas más cuadradas */
+.kpi{ border-radius: 12px !important; }
+.press-card{ border-radius: 14px !important; }
+
+/* 1) En PC, quitar el CTA "¿Eres colaborador?" que está dentro del drawer */
+@media (min-width: 981px){
+  #mobileMenu .btn--collab{ display: none !important; }
+}
