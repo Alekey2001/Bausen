@@ -2524,3 +2524,52 @@ html[data-theme="light"] #mobile-menu .mobile-sub-link.active{
 #mobile-menu .active::after{
   content: none !important;
 }
+/* --- Footer Social Row --- */
+.footer__social .footer-social-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer__social .label {
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.footer__social .icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.footer__social .social-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18); /* ajusta según tu theme */
+  transition: transform .12s ease, background-color .12s ease, border-color .12s ease;
+}
+
+.footer__social .social-mini:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.28);
+}
+
+.footer__social .social-mini svg {
+  display: block;
+  fill: currentColor; /* X usa fill */
+}
+
+.footer__social .social-mini i {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Responsive: si tu grid en móvil apila columnas, esto se verá bien igual */

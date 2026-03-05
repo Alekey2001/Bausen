@@ -3603,3 +3603,223 @@ main .btn-ghost i{
 .section-title .grad2{
   box-shadow: none !important;
 }
+/* =========================================================
+   DESIGN SYSTEM / LAYOUT TOKENS (GLOBAL)
+   - No usa selectores por #id
+   - Enfocado a sincronía: ancho / escala / spacing
+   - Pegar al FINAL del CSS global (después de todo)
+========================================================= */
+
+:root{
+  /* Container */
+  --ds-container-max: 1100px;
+  --ds-container-pad: clamp(18px, 3vw, 28px);
+
+  /* Header + anchors */
+  --ds-header-h: 74px;
+  --ds-anchor-offset: 92px; /* header (74) + 18px */
+
+  /* Secciones (ritmo vertical) */
+  --ds-section-pad: clamp(70px, 7vw, 110px);
+
+  /* Hero */
+  --ds-hero-pt: 58px;
+  --ds-hero-pb: 40px;
+  --ds-hero-gap: clamp(26px, 4vw, 68px);
+
+  /* Tipografía */
+  --ds-h1: clamp(40px, 5.4vw, 70px);
+  --ds-h2: clamp(34px, 4.4vw, 56px);
+  --ds-sub: 15px;
+}
+
+/* Base */
+html{ font-size: 16px; }
+body{ line-height: 1.65; }
+
+/* Normaliza el offset de anclas: usa SOLO scroll-margin (evita doble offset) */
+html{ scroll-padding-top: 0px; } /* importante si alguna página ya traía scroll-padding */
+section{ scroll-margin-top: var(--ds-anchor-offset); }
+
+/* Tokens “puente” para páginas que ya usan estas variables */
+:root{
+  --header-h: var(--ds-header-h);
+  --gutter: var(--ds-container-pad);
+  --section-y: var(--ds-section-pad);
+}
+
+/* Contenedor estándar */
+.container{
+  width: 100%;
+  max-width: var(--ds-container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--ds-container-pad);
+  padding-right: var(--ds-container-pad);
+}
+
+/* Ritmo vertical de secciones */
+section,
+.section{
+  padding-top: var(--ds-section-pad);
+  padding-bottom: var(--ds-section-pad);
+}
+
+/* Header fijo: contrato de altura */
+.site-header{
+  height: var(--ds-header-h);
+}
+.site-header .nav-shell{
+  height: var(--ds-header-h);
+}
+
+/* Asegura que el primer bloque no quede debajo del header fijo */
+body{
+  padding-top: var(--ds-header-h);
+}
+
+/* HERO */
+.section.hero,
+.hero{
+  padding-top: var(--ds-hero-pt);
+  padding-bottom: var(--ds-hero-pb);
+  min-height: calc(100vh - var(--ds-header-h));
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid{
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: var(--ds-hero-gap);
+  align-items: center;
+}
+
+@media (max-width: 860px){
+  .hero-grid{ grid-template-columns: 1fr; }
+  .section.hero, .hero{ min-height: auto; }
+}
+
+/* Grids tipo “Servicios / cards” */
+.card-grid,
+.services-grid,
+.cards-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 32px;
+}
+
+@media (max-width: 980px){
+  .card-grid,
+  .services-grid,
+  .cards-grid{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px){
+  .card-grid,
+  .services-grid,
+  .cards-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tipografía consistente */
+.hero-title,
+.hero h1{
+  font-size: var(--ds-h1);
+  line-height: 1.05;
+}
+
+.section-title{
+  font-size: var(--ds-h2);
+  line-height: 1.12;
+}
+
+.subtitle,
+.hero-subtitle,
+.section-subtitle{
+  font-size: var(--ds-sub);
+  line-height: 1.65;
+}
+
+@media (max-width: 520px){
+  .hero-title,
+  .hero h1{ font-size: 38px; }
+
+  .section-title{ font-size: 28px; }
+
+  .subtitle,
+  .hero-subtitle,
+  .section-subtitle{ font-size: 15px; }
+}
+/* ================================
+   FIX: Anchor #contacto (desktop)
+   Evita doble offset (scroll-padding + scroll-margin)
+================================ */
+html{
+  scroll-padding-top: 0; /* apaga el offset global; nos quedamos con scroll-margin */
+}
+
+/* deja un solo offset (el correcto) */
+section[id],
+main[id]{
+  scroll-margin-top: calc(var(--header-h) + 10px); /* antes: +24 */
+}
+
+/* ================================
+   FIX: correo visible/completo
+================================ */
+.contact-direct .mail{
+  max-width: 100%;
+  padding-inline: 12px;
+
+  /* evita recortes: */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+
+  /* el <a> es inline-flex: permitimos wrap real */
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.contact-direct .mail svg{
+  flex: 0 0 auto;
+}
+
+/* ================================
+   Compactar Contacto en PC
+   (para que el correo quede visible “más arriba”)
+================================ */
+@media (min-width: 860px){
+  .section.contact{
+    padding-top: clamp(56px, 4vw, 86px);
+    padding-bottom: clamp(56px, 4vw, 86px);
+  }
+
+  .contact-top{
+    margin-bottom: clamp(18px, 2.2vw, 28px);
+  }
+
+  .contact-card{
+    padding: clamp(18px, 2.4vw, 30px);
+  }
+
+  .form-grid{
+    gap: clamp(14px, 2vw, 22px);
+    margin-bottom: 18px;
+  }
+
+  .field textarea{
+    min-height: 140px; /* antes: 180px */
+  }
+
+  .contact-direct{
+    margin-top: clamp(14px, 2vw, 22px);
+  }
+}

@@ -87,7 +87,7 @@ html,body{ margin:0; padding:0; }
 html{ scroll-behavior:smooth; }
 
 body{
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
   background: var(--bg);
   color: var(--text);
   overflow-x:hidden;
@@ -133,15 +133,17 @@ p, li{ color: var(--muted); }
    Header
 ========================= */
 .site-header{
-  position: fixed;
+  position: sticky;
   top:0; left:0; right:0;
   width:100%;
   z-index: var(--z-header);
-  background: rgba(255,255,255,.92);
+  height: var(--header-h);
+  background: #DCE2EF !important;
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(19,33,68,0.06);
 }
-
 .site-header:after{
   content:"";
   position:absolute;
@@ -161,7 +163,15 @@ p, li{ color: var(--muted); }
 
 .brand{ display:flex; align-items:center; gap:10px; }
 .brand__logo{ height: 26px; width:auto; object-fit:contain; }
-
+.brand img,
+.logo-link img{
+  width: 140px;
+  max-width: 180px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(19,33,68,0.10));
+}
 .header__actions{ display:flex; align-items:center; gap:10px; }
 /* =========================
    CONTROLES HEADER (igual a stylebeca.css)
@@ -171,7 +181,7 @@ p, li{ color: var(--muted); }
 .collab-cta--header{
   border-radius: 999px !important;
   padding: 10px 14px !important;
-  box-shadow: 0 16px 34px rgba(31,94,255,0.20);
+  box-shadow: none;
 }
 
 /* Language selector (desktop) — mismo tamaño/tono que referencia */
@@ -1722,25 +1732,22 @@ body.menu-open{
 
 /* 2) Botón de idioma: mismo tono, borde y tamaño que stylebeca */
 .site-header .language-btn{
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   gap: 8px;
-
   height: 44px;
   padding: 0 12px;
   min-width: 44px;
   border-radius: 14px;
-
-  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
-  border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(24,35,137,0.14);
   color: var(--text);
-  cursor:pointer;
-
+  cursor: pointer;
   transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
 }
 .site-header .language-btn:hover{ transform: translateY(-1px); }
-.site-header .language-btn i{ font-size: 12px; }
-
+.site-header .language-btn i{ font-size: 12px; transition: transform var(--t-fast); }
+.site-header .language-btn[aria-expanded="true"] i{ transform: rotate(180deg); }
 .site-header .language-flag{
   width: 18px;
   height: 18px;
@@ -1817,13 +1824,11 @@ body.menu-open{
   width: 46px;
   height: 44px;
   border-radius: 14px;
-
-  background: color-mix(in srgb, var(--bg) 84%, var(--primary) 16%);
-  border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border));
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(24,35,137,0.14);
   box-shadow: 0 12px 26px rgba(19,33,68,0.10);
-
-  display:grid; /* lo mantienes visible en PC/móvil */
-  place-items:center;
+  display: grid;
+  place-items: center;
 }
 .site-header .icon-btn.burger:hover{
   transform: translateY(-1px);
@@ -1975,6 +1980,8 @@ body{ background: #DCE2EF; }
   font-weight: 900 !important;
   letter-spacing: 0 !important;
 }
+
+
 
 /* Primary = Silver lake blue */
 .btn--primary,
@@ -2142,4 +2149,32 @@ body{ background: #DCE2EF; }
 /* Mantener subservicios transparentes (como pediste) */
 #mobile-menu .mobile-sub-link{
   background: transparent !important;
+}
+@media (max-width: 400px){
+  .brand img,
+  .logo-link img{
+    width: 120px;
+    max-width: 120px;
+  }
+}
+/* ── Mobile ≤980px: controles compactos ── */
+@media (max-width: 980px){
+
+  /* Idioma → píldora */
+  .site-header .language-btn{
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 999px;
+  }
+  .site-header .language-code{
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  /* Hamburguesa → círculo */
+ .site-header .icon-btn.burger{
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;  /* ← más cuadrado, menos ovalado */
+}
 }

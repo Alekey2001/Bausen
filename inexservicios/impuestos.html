@@ -9,6 +9,7 @@
   <meta name="color-scheme" content="dark light" />
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
   <title>Servicios de Impuestos | Bausen — Optimización Fiscal y Cumplimiento</title>
+  
 <!-- Favicons correctos (nítidos en navegador) -->
 <link href="/imgnavar/Icono .png" rel="icon" sizes="any"/>
 
@@ -53,6 +54,18 @@
   <script type="module" src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style id="font-stack-override">
+  :root {
+    --ff-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  }
+
+  body,
+  h1, h2, h3, h4, h5, h6,
+  p, span, a, li, label, input, textarea, select, button {
+    font-family: var(--ff-body);
+  }
+</style>
 
 </head>
 
@@ -149,8 +162,8 @@
         </a>
       </li>
       <li>
-        <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n-text="nav.svc.tax">
-          Consultoría fiscal
+        <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n="nav.svc.tax">
+          <span class="split-royal">Consultoria</span> <span class="split-black">Fiscal</span>
         </a>
       </li>
     </ul>
@@ -180,7 +193,7 @@
 </li>
 <!-- Contáctanos (opción aparte) -->
 <li class="mobile-nav-item">
-<a class="mobile-nav-link" data-i18n="footer.contact" data-page="contacto" href="/index.html#contacto">Contáctanos</a>
+<a class="mobile-nav-link" data-i18n="footer.contact" data-page="contacto" href="/index.html#contacto"><span class="split-royal">Conta</span><span class="split-black">cto</span></a>
 </li>
 <!-- CTA colaborador (se mantiene) -->
 </ul>
@@ -200,7 +213,7 @@
             </span>
           </p>
 
-          <h1 id="hero-title" class="hero__title" data-i18n="services.card3.title">Consultoria Fiscal</h1>
+          <h1 id="hero-title" class="hero__title" data-i18n="services.card3.title"><span class="split-royal">Consultoria</span> <span class="split-black">Fiscal</span></h1>
 
           <p class="hero__subtitle" data-i18n="services.card3.text">Optimiza tu carga fiscal con expertos certificados.</p>
 
@@ -215,7 +228,7 @@
               <dd>Años de experiencia</dd>
             </div>
             <div class="stat">
-              <dt>500+</dt>
+              <dt>1,000+</dt>
               <dd>Clientes atendidos</dd>
             </div>
             <div class="stat">
@@ -257,7 +270,7 @@
     <section class="section" id="detalle-servicio" aria-labelledby="detalle-title">
       <div class="wrap">
         <header class="section__head reveal">
-          <h2 id="detalle-title">¿Qué incluye el servicio?</h2>
+          <h2 id="detalle-title"><span class="split-royal">¿Qué incluye</span> <span class="split-black">el servicio?</span></h2>
           <p>Un enfoque completo: diagnóstico, planeación y soporte continuo.</p>
         </header>
 
@@ -302,7 +315,7 @@
     <section class="section section--alt" aria-labelledby="beneficios-title">
       <div class="wrap">
         <header class="section__head reveal">
-          <h2 id="beneficios-title">Beneficios medibles</h2>
+          <h2 id="beneficios-title"><span class="split-royal">Beneficios</span> <span class="split-black">medibles</span></h2>
           <p>Menos riesgos, más control y mayor claridad para tomar decisiones.</p>
         </header>
 
@@ -335,7 +348,7 @@
     <section class="section" aria-labelledby="faq-title">
       <div class="wrap">
         <header class="section__head reveal">
-          <h2 id="faq-title">Preguntas frecuentes</h2>
+          <h2 id="faq-title"><span class="split-royal">Preguntas</span> <span class="split-black">frecuentes</span></h2>
           <p>Respuestas rápidas para tomar decisión con confianza.</p>
         </header>
 
@@ -419,6 +432,39 @@
       <div class="footer__brand">
         <img class="footer__logo" src="/images/bausenlogo.png" alt="Bausen" />
         <p>Tu aliado estratégico en soluciones empresariales integrales.</p>
+        <div class="footer__col footer__social">
+  <div class="footer-social-row">
+    <div class="label" data-i18n-text="footer.follow">Follow us on social</div>
+
+    <div class="icons">
+      <!-- X -->
+      <a aria-label="X" class="social-mini is-x"
+         href="https://x.com/bausen_mx" rel="noopener noreferrer" target="_blank">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24">
+          <path d="M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.8L5 22H2l7.4-8.5L1 2h7l4.8 6.1L18.9 2Zm-1.2 18h1.7L7.1 3.9H5.3L17.7 20Z"></path>
+        </svg>
+      </a>
+
+      <!-- Instagram -->
+      <a aria-label="Instagram" class="social-mini is-instagram"
+         href="https://instagram.com/bausen_mx" rel="noopener noreferrer" target="_blank">
+        <i aria-hidden="true" class="fa-brands fa-instagram"></i>
+      </a>
+
+      <!-- LinkedIn -->
+      <a aria-label="LinkedIn" class="social-mini is-linkedin"
+         href="https://www.linkedin.com/in/bausen-tax-services-732a693a7" rel="noopener noreferrer" target="_blank">
+        <i aria-hidden="true" class="fa-brands fa-linkedin-in"></i>
+      </a>
+
+      <!-- Facebook -->
+      <a aria-label="Facebook" class="social-mini is-facebook"
+         href="https://www.facebook.com/BausenMx" rel="noopener noreferrer" target="_blank">
+        <i aria-hidden="true" class="fa-brands fa-facebook-f"></i>
+      </a>
+    </div>
+  </div>
+</div>
       </div>
 
       <div class="footer__col">
@@ -428,7 +474,7 @@
           <li><a href="./servicios.html">Servicios</a></li>
           <li><a href="./noticias.html">Noticias</a></li>
           <li><a href="./prensa.html">Prensa</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#contacto"><span class="split-royal">Conta</span><span class="split-black">cto</span></a></li>
         </ul>
       </div>
 

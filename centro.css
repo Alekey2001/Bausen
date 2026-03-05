@@ -1407,31 +1407,55 @@ html[data-theme="light"] .site-footer{
 .footer__hours strong{ display:block; font-weight: 950; }
 .footer__hours span{ color: var(--muted); font-weight: 750; font-size: 13px; display:block; margin-top: 2px; }
 
-.footer__social span{
-  display:block;
-  font-weight: 950;
-  margin-bottom: 10px;
+/* --- Footer Social Row --- */
+.footer__social .footer-social-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
-.social{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+
+.footer__social .label {
+  font-weight: 600;
+  line-height: 1.2;
 }
-.social a{
-  width: 40px; height: 40px;
-  display:grid;
-  place-items:center;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: var(--glass);
-  transition: transform .16s var(--ease), background .16s var(--ease), border-color .16s var(--ease), box-shadow .16s var(--ease);
+
+.footer__social .icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
-.social a:hover{
-  transform: translateY(-2px);
-  background: var(--glass-2);
-  border-color: rgba(97,166,255,.26);
-  box-shadow: 0 14px 30px rgba(0,0,0,.16);
+
+.footer__social .social-mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,.18); /* ajusta según tu theme */
+  transition: transform .12s ease, background-color .12s ease, border-color .12s ease;
 }
+
+.footer__social .social-mini:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.28);
+}
+
+.footer__social .social-mini svg {
+  display: block;
+  fill: currentColor; /* X usa fill */
+}
+
+.footer__social .social-mini i {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Responsive: si tu grid en móvil apila columnas, esto se verá bien igual */
 html[data-theme="light"] .social a:hover{ box-shadow: 0 14px 26px rgba(11,18,38,.08); }
 
 .footer__col h4{

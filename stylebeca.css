@@ -4714,3 +4714,71 @@ body:not(.theme-dark) #connect .connect-left > a.btn.btn-primary.btn-lg.btn-icon
   color: #fff !important;
 }
 
+/* From Uiverse.io by ali_5563 */ 
+.card {
+  /* ── Posicionamiento: flota sobre la imagen del hero ── */
+  position: absolute;
+  left: -18px;
+  bottom: 12%;          /* sube el card para que quede casi encima de la imagen */
+  z-index: 3;
+  animation: floatSoft 4.8s ease-in-out infinite;
+
+  /* ── Tamaño y estética UIverse ── */
+  width: 100%;
+  max-width: 220px;
+  height: 70px;
+  background: linear-gradient(135deg, #d7cfcf, #abbbe4);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: 0.5s ease-in-out;
+  box-shadow: 0 14px 36px rgba(10,16,32,.18);
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.img {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  border-radius: 10px;
+  background: linear-gradient(#d7cfcf, #9198e5);
+}
+
+.card:hover > .img {
+  transition: 0.5s ease-in-out;
+  background: linear-gradient();
+}
+
+.textBox {
+  width: calc(100% - 90px);
+  margin-left: 10px;
+  color: black;
+  font-family: "MOMO" trust;
+}
+
+.textContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.span {
+  font-size: 10px;
+}
+
+.h1 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.p {
+  font-size: 12px;
+  font-weight: normal;
+}
