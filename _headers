@@ -1,0 +1,7 @@
+/imgnavar/Icono.png
+  Cache-Control: public, max-age=300, must-revalidate
+
+/imgnavar/*
+  Cache-Control: public, max-age=300, must-revalidate
+  /favicon.ico
+  Cache-Control: public, max-age=300, must-revalidate
