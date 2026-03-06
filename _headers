@@ -1,7 +1,5 @@
-/imgnavar/Icono.png
+/imgnavar/Icono-v3.png
   Cache-Control: public, max-age=300, must-revalidate
 
-/imgnavar/*
-  Cache-Control: public, max-age=300, must-revalidate
-  /favicon.ico
+/apple-touch-icon.png
   Cache-Control: public, max-age=300, must-revalidate

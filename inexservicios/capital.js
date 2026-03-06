@@ -140,6 +140,16 @@
       "contact.directQ": "¿Prefieres contactarnos directamente?",
       "contact.directMail": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M4 6h16v12H4z' stroke='currentColor' stroke-width='2' /><path d='M4 8l8 6 8-6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg> contacto@bausen.com",
 
+      "contact.new.badge": "Contacto comercial",
+      "contact.new.titleBlue": "Tu asesora comercial",
+      "contact.new.titleBlack": "asignada",
+      "contact.new.subtitle": "También puedes comunicarte directamente con nuestra asesora comercial para recibir atención personalizada.",
+      "contact.new.nameLabel": "Nombre",
+      "contact.new.roleLabel": "Cargo",
+      "contact.new.phoneLabel": "Teléfono",
+      "contact.new.emailLabel": "Correo",
+      "contact.new.imagePlaceholder": "Espacio reservado para imagen",
+
       "form.nameLabel": "Tu nombre completo",
       "form.roleLabel": "Tu cargo",
       "form.phoneLabel": "Tu número de celular",
@@ -262,6 +272,16 @@
       "contact.sub": "We’re ready to help transform your company",
       "contact.directQ": "Prefer to contact us directly?",
       "contact.directMail": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M4 6h16v12H4z' stroke='currentColor' stroke-width='2' /><path d='M4 8l8 6 8-6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg> contacto@bausen.com",
+
+      "contact.new.badge": "Commercial contact",
+      "contact.new.titleBlue": "Your commercial advisor",
+      "contact.new.titleBlack": "assigned to you",
+      "contact.new.subtitle": "You can also contact our commercial advisor directly for personalized assistance.",
+      "contact.new.nameLabel": "Name",
+      "contact.new.roleLabel": "Role",
+      "contact.new.phoneLabel": "Phone",
+      "contact.new.emailLabel": "Email",
+      "contact.new.imagePlaceholder": "Reserved space for image",
 
       "form.nameLabel": "Full name",
       "form.roleLabel": "Job title",

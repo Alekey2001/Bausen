@@ -3823,3 +3823,168 @@ main[id]{
     margin-top: clamp(14px, 2vw, 22px);
   }
 }
+
+/* =========================
+   CONTACTO COMERCIAL
+   - Título dividido: azul rey / negro
+========================= */
+.contact-commercial{
+  width: min(940px, 100%);
+  margin: clamp(26px, 4vw, 38px) auto 0;
+}
+
+.contact-commercial-card{
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(240px, .82fr);
+  gap: clamp(22px, 3vw, 34px);
+  align-items: stretch;
+  padding: clamp(24px, 3.4vw, 38px);
+  border-radius: var(--r-xl);
+  background: linear-gradient(135deg,
+    color-mix(in oklab, var(--surface2) 92%, transparent),
+    color-mix(in oklab, var(--bg1) 82%, transparent)
+  );
+  border: 1px solid color-mix(in oklab, var(--stroke) 92%, transparent);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-commercial-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right,
+    color-mix(in oklab, var(--accent3) 12%, transparent) 0%,
+    transparent 42%
+  );
+  pointer-events: none;
+}
+
+.contact-commercial-info,
+.contact-commercial-media{
+  position: relative;
+  z-index: 1;
+}
+
+.contact-commercial-info{
+  min-width: 0;
+}
+
+.contact-commercial-badge{
+  margin-bottom: 12px;
+}
+
+.contact-commercial-title{
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.1vw, 48px);
+  line-height: .98;
+  letter-spacing: -0.04em;
+}
+
+.contact-commercial-title .split-blue,
+.contact-commercial-title .split-black{
+  display: block;
+}
+
+.contact-commercial-title .split-blue{
+  color: #182389 !important;
+  -webkit-text-fill-color: #182389 !important;
+}
+
+.contact-commercial-title .split-black{
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  margin-top: .08em;
+}
+
+.contact-commercial-text{
+  color: var(--muted);
+  margin-bottom: 22px;
+  max-width: 54ch;
+}
+
+.contact-commercial-data{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.contact-commercial-item{
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: color-mix(in oklab, var(--surface2) 84%, transparent);
+  border: 1px solid color-mix(in oklab, var(--stroke) 90%, transparent);
+  min-width: 0;
+}
+
+.contact-commercial-label{
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--fs-small);
+  font-weight: 800;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+.contact-commercial-value,
+.contact-commercial-link{
+  margin: 0;
+  font-weight: 800;
+  color: var(--text);
+  word-break: break-word;
+}
+
+.contact-commercial-link{
+  text-decoration: none;
+}
+
+.contact-commercial-link:hover{
+  color: var(--accent);
+}
+
+.contact-commercial-media{
+  display: flex;
+}
+
+.contact-commercial-image-frame{
+  width: 100%;
+  min-height: clamp(260px, 32vw, 100%);
+  border-radius: 28px;
+  border: 1px solid color-mix(in oklab, var(--stroke) 90%, transparent);
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--bg1) 96%, transparent),
+    color-mix(in oklab, var(--surface2) 88%, transparent)
+  );
+  overflow: hidden;
+  display: flex;
+}
+
+.contact-commercial-image-placeholder{
+  width: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.contact-commercial-image-text{
+  color: var(--muted2);
+  font-weight: 800;
+}
+
+@media (max-width: 860px){
+  .contact-commercial-card{
+    grid-template-columns: 1fr;
+  }
+
+  .contact-commercial-data{
+    grid-template-columns: 1fr;
+  }
+
+  .contact-commercial-image-frame{
+    min-height: 240px;
+  }
+}
