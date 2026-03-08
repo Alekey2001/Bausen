@@ -8,13 +8,15 @@
    Theme / Tokens
 ========================= */
 :root{
-  --z-header: 10020;
+  --z-header: 10000;
   --t-fast: 150ms ease;
   --ease: cubic-bezier(.2,.8,.2,1);
 
   /* Layout */
   --max: 1180px;
   --header-h: 74px;
+  --radius: 18px;
+  --radius-lg: 26px;
 
   /* Fondos (claros) */
   --bg: #DCE2EF;
@@ -117,30 +119,15 @@ img{ max-width:100%; display:block; }
 /* =========================
    Tipografía BAUSEN
 ========================= */
-/* =========================
-   Tipografía global unificada
-========================= */
-body,
-button,
-input,
-textarea,
-select,
-h1, h2, h3, h4, h5, h6,
-p, a, li, span, strong, small,
-.section__sub,
-.hero__subtitle,
-.muted,
-.logo-text {
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6, .logo-text {
+h1,h2,h3,h4,.logo-text{
+  font-family: "Momo Trust", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: -0.08em;
   color: var(--heading);
 }
-
-p, li {
-  color: var(--muted);
+p, .section__sub, .hero__subtitle, .muted{
+  font-family: "Source Sans 3", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
+p, li{ color: var(--muted); }
 
 /* =========================
    Header
@@ -151,14 +138,14 @@ p, li {
   width:100%;
   z-index: var(--z-header);
   height: var(--header-h);
- background: color-mix(in srgb, var(--bg) 84%, transparent);
+  background: #DCE2EF !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(24,35,137,.14);
-  box-shadow: none;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 12px 40px rgba(19,33,68,0.06);
 }
 .site-header:after{
- content:none;
+  content:"";
   position:absolute;
   left:0; right:0; bottom:-1px;
   height: 1px;
@@ -241,7 +228,7 @@ p, li {
   top: calc(100% + 10px);
 
   list-style:none;
-  background: var(--bg);
+  background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 28px 90px rgba(19,33,68,0.16);
@@ -548,6 +535,7 @@ p, li {
   height: 100vh;
   background: color-mix(in srgb, var(--bg) 92%, #000 8%);
   border-left: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  border-radius: 26px 0 0 26px;
   box-shadow: 0 28px 90px rgba(0,0,0,0.45);
   transform: translateX(110%);
   transition: transform .25s var(--ease);
@@ -1789,7 +1777,7 @@ body.menu-open{
 
   min-width: 230px;
   border-radius: 16px;
-  background: var(--bg);
+  background: #FFFFFF;
   border: 1px solid var(--border);
   box-shadow: 0 28px 90px rgba(19,33,68,0.16);
 
@@ -2190,4 +2178,90 @@ body{ background: #DCE2EF; }
   height: 36px;
   border-radius: 10px;  /* ← más cuadrado, menos ovalado */
 }
+}
+/* =========================================================
+   FIX FINAL — HAMBURGUESA OCULTA/DIFUMINADA AL ABRIR MENÚ (MÓVIL)
+   Basado en referencia index.html + stylebeca.css
+   - No toca HTML ni JS
+   - Solo evita que el botón hamburguesa quede visible debajo del drawer
+========================================================= */
+
+/* Misma estética base de la referencia para el botón hamburguesa */
+.site-header .icon-btn.burger{
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,0.78) !important;
+  border: 1px solid rgba(24,35,137,0.16) !important;
+  box-shadow: var(--shadow-soft) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.site-header .icon-btn.burger i{
+  opacity: 1 !important;
+  font-size: 18px !important;
+  width: auto !important;
+  height: auto !important;
+  color: rgba(11,21,53,0.88) !important;
+}
+.site-header .icon-btn.burger::before,
+.site-header .icon-btn.burger::after{
+  content: none !important;
+}
+
+/* En móvil, al abrir el drawer, la hamburguesa se difumina y desaparece */
+@media (max-width: 980px){
+  body.menu-open .site-header .icon-btn.burger,
+  .site-header .icon-btn.burger[aria-expanded="true"]{
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    filter: blur(8px) !important;
+    transform: scale(.92) !important;
+    box-shadow: none !important;
+  }
+
+  body.menu-open .site-header .icon-btn.burger:hover,
+  body.menu-open .site-header .icon-btn.burger:active,
+  .site-header .icon-btn.burger[aria-expanded="true"]:hover,
+  .site-header .icon-btn.burger[aria-expanded="true"]:active{
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    filter: blur(8px) !important;
+    transform: scale(.92) !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Ajustes solicitados — solo menú hamburguesa */
+#mobile-menu .mobile-menu-header{
+  background: linear-gradient(135deg, rgba(0,61,165,0.05), rgba(91,117,182,0.07)) !important;
+}
+
+#mobile-menu .mobile-nav-link{
+  background: color-mix(in srgb, #ffffff 92%, #0b1220 8%) !important;
+  color: rgba(11,21,53,0.84) !important;
+}
+
+#mobile-menu .mobile-summary-link,
+#mobile-menu .mobile-nav-summary,
+#mobile-menu .mobile-nav-summary i,
+#mobile-menu .mobile-sub-link{
+  color: rgba(11,21,53,0.84) !important;
+}
+
+.site-header .icon-btn.burger,
+.site-header .icon-btn.burger:hover,
+.site-header .icon-btn.burger:active,
+.site-header .icon-btn.burger:focus-visible,
+#mobile-menu .close-menu,
+#mobile-menu .close-menu:hover,
+#mobile-menu .close-menu:active,
+#mobile-menu .close-menu:focus-visible,
+.mobile-menu .close-menu,
+.mobile-menu .close-menu:hover,
+.mobile-menu .close-menu:active,
+.mobile-menu .close-menu:focus-visible{
+  box-shadow: none !important;
 }
