@@ -1846,10 +1846,9 @@ body{
 .language-btn:focus-visible,
 .menu-toggle:hover,
 .menu-toggle:focus-visible{
-  background: color-mix(in srgb, #5B75B6 12%, #FFFFFF 88%) !important;
+  background: #FFFFFF !important;
   border-color: rgba(11,21,53,0.16) !important;
 }
-
 /* 4) PC: tamaños limpios y consistentes */
 @media (min-width: 981px){
   .header-controls{
@@ -1965,3 +1964,174 @@ body{
 }
 
 /* Responsive: si tu grid en móvil apila columnas, esto se verá bien igual */
+/* =========================================================
+   OVERRIDE FINAL — Idiomas + Drawer + Secciones/Subsecciones
+   Pegar AL FINAL de impuestos.css
+========================================================= */
+
+/* 1) Banderas reales visibles (botón principal + dropdown) */
+.language-flag,
+.lang-option-flag{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  flex: 0 0 18px !important;
+}
+
+.language-flag svg,
+.lang-option-flag svg{
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+/* 2) Botón hamburguesa blanco */
+.menu-toggle{
+  background: #FFFFFF !important;
+  border: 1px solid rgba(91,117,182,0.22) !important;
+  color: var(--text) !important;
+}
+/* 3) Fondo blanco del drawer debajo de la cabecera */
+#mobile-menu{
+  background: #FFFFFF !important;
+}
+
+#mobile-menu > nav{
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF !important;
+}
+
+#mobile-menu > nav > .mobile-nav-list{
+  flex: 1 1 auto;
+  min-height: 0;
+  background: transparent !important;
+}
+
+/* 4) Secciones principales: gris claro como referencia */
+#mobile-menu .mobile-nav-link{
+  background: color-mix(in srgb, var(--bg) 92%, #0b1220 8%) !important;
+  border: 1px solid rgba(24,35,137,0.10) !important;
+  color: rgba(11,21,53,0.84) !important;
+  box-shadow: none !important;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active{
+  background: #E9EEF8 !important;
+  border-color: rgba(24,35,137,0.16) !important;
+  box-shadow: none !important;
+  color: #5C6470 !important;
+}
+
+/* 5) Quitar línea punteada/lateral del submenú */
+.mobile-submenu{
+  border-left: none !important;
+  padding-left: 0 !important;
+}
+
+/* 6) Subsecciones totalmente blancas / transparentes */
+#mobile-menu .mobile-sub-link{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: rgba(11,21,53,0.84) !important;
+}
+#mobile-menu .mobile-sub-link:hover,
+#mobile-menu .mobile-sub-link.active{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  color: rgba(11,21,53,0.84) !important;
+}
+#mobile-menu .mobile-summary-link,
+#mobile-menu .mobile-nav-summary,
+#mobile-menu .mobile-nav-summary i{
+  color: rgba(11,21,53,0.84) !important;
+}
+/* =========================================================
+   OVERRIDE FINAL — menú hamburguesa Bausen
+   Solo aplica:
+   1) cabecera: #E9EDF6
+   2) botones principales: #F2F4F8
+   3) texto del menú: #0B1535
+   4) forma del drawer: 26px 0 0 26px
+========================================================= */
+
+#mobile-menu{
+  background: #FFFFFF !important;
+  border-radius: 26px 0 0 26px !important;
+  right: 0 !important;
+  border-left: 1px solid rgba(11,21,53,0.08) !important;
+  box-shadow: 0 28px 90px rgba(19,33,68,0.18) !important;
+}
+
+#mobile-menu .mobile-menu-header{
+  background: #E9EDF6 !important;
+  border-bottom: 1px solid rgba(11,21,53,0.08) !important;
+  border-radius: 26px 0 0 0 !important;
+}
+
+#mobile-menu .close-menu{
+  background: #F2F4F8 !important;
+  border: 1px solid rgba(11,21,53,0.08) !important;
+  color: #0B1535 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+#mobile-menu .close-menu i{
+  color: #0B1535 !important;
+}
+
+#mobile-menu .mobile-nav-link{
+  background: #F2F4F8 !important;
+  color: #0B1535 !important;
+  border: 1px solid rgba(11,21,53,0.08) !important;
+  box-shadow: none !important;
+  border-radius: 16px !important;
+}
+
+#mobile-menu .mobile-nav-link:hover,
+#mobile-menu .mobile-nav-link.active{
+  background: #F2F4F8 !important;
+  color: #0B1535 !important;
+  border-color: rgba(11,21,53,0.12) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#mobile-menu .mobile-summary-link,
+#mobile-menu .mobile-nav-summary,
+#mobile-menu .mobile-nav-summary i,
+#mobile-menu .mobile-sub-link{
+  color: #0B1535 !important;
+}
+
+#mobile-menu .mobile-submenu{
+  border-left: none !important;
+  padding-left: 0 !important;
+}
+
+#mobile-menu .mobile-sub-link{
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#mobile-menu .mobile-sub-link:hover,
+#mobile-menu .mobile-sub-link.active{
+  background: transparent !important;
+  color: #0B1535 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}

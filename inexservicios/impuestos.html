@@ -10,8 +10,13 @@
   <meta name="google-site-verification" content="Jf9mRqFp5TQpOtYYMyUvmY-RAYj9NpUn7rSQErn0SK0" />
   <title>Servicios de Impuestos | Bausen — Optimización Fiscal y Cumplimiento</title>
   
-<!-- Favicons correctos (nítidos en navegador) -->
-<link href="/imgnavar/Icono.png" rel="icon" sizes="any"/>
+<!-- Favicons (definitivo iOS/Android/Desktop) -->
+<link rel="icon" type="image/png" sizes="32x32" href="/imgnavar/Icono-v3.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/imgnavar/Icono-v3.png">
+
+<!-- iOS / Apple -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
 
   <meta name="description" content="Optimiza tu carga fiscal con expertos certificados. Planeación fiscal, cumplimiento, auditorías internas, estrategias y acompañamiento integral para empresas." />
   <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -55,15 +60,17 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style id="font-stack-override">
-  :root {
-    --ff-body: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-      "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  body{
+    font-family: "Source Sans 3", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   }
 
-  body,
-  h1, h2, h3, h4, h5, h6,
-  p, span, a, li, label, input, textarea, select, button {
-    font-family: var(--ff-body);
+  h1, h2, h3, h4, .logo-text{
+    font-family: "Momo Trust", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    letter-spacing: -0.08em;
+  }
+
+  p, a, li, label, input, textarea, select, button, span{
+    font-family: "Source Sans 3", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   }
 </style>
 
@@ -113,7 +120,7 @@
 </div>
 </div>
 <!-- Menú overlay -->
-<div class="mobile-menu-overlay" id="mobile-menu-overlay"></div>
+<div class="mobile-menu-overlay" id="mobile-menu-overlay" hidden></div>
 <!-- Menú lateral -->
 <div aria-label="Navigation menu" aria-modal="true" class="mobile-menu" id="mobile-menu" role="dialog">
 <div class="mobile-menu-header">
@@ -163,7 +170,7 @@
       </li>
       <li>
         <a class="mobile-sub-link" href="/inexservicios/impuestos.html" data-i18n="nav.svc.tax">
-          <span class="split-royal">Consultoria</span> <span class="split-black">Fiscal</span>
+          Consultoría fiscal
         </a>
       </li>
     </ul>
@@ -193,7 +200,7 @@
 </li>
 <!-- Contáctanos (opción aparte) -->
 <li class="mobile-nav-item">
-<a class="mobile-nav-link" data-i18n="footer.contact" data-page="contacto" href="/index.html#contacto"><span class="split-royal">Conta</span><span class="split-black">cto</span></a>
+<a class="mobile-nav-link" data-i18n="footer.contact" data-page="contacto" href="/index.html#contacto">Contáctanos</a>
 </li>
 <!-- CTA colaborador (se mantiene) -->
 </ul>

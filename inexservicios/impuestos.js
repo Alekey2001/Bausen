@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "nav.services": "Servicios",
       "nav.svc.payroll": "Procesamiento de nómina",
       "nav.svc.specialized": "Servicios especializados",
-      "nav.svc.tax": "<span class=\'split-royal\'>Consultoria</span> <span class=\'split-black\'>Fiscal</span>",
+      "nav.svc.tax": "Consultoría fiscal",
       "nav.news": "Noticias",
       "nav.training": "Centro de Formación",
       "nav.about": "Acerca de",
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "footer.servicesLink": "Servicios",
       "footer.news": "Noticias",
       "footer.press": "Prensa",
-      "footer.contact": "<span class=\'split-royal\'>Conta</span><span class=\'split-black\'>cto</span>",
+      "footer.contact": "Contáctanos",
       "footer.svc.capital": "Capital Humano",
       "footer.svc.legal": "Servicios Legales",
       "footer.svc.accounting": "Servicios Contables",
@@ -423,29 +423,42 @@ document.addEventListener("DOMContentLoaded", () => {
     </svg>`,
   };
 
-  const setLangUI = (lang) => {
-    const codeEl = $("#language-code");
-    const flagEl = $("#language-flag");
-    if (codeEl) codeEl.textContent = lang;
-    if (flagEl) flagEl.innerHTML = FLAGS[lang] || "";
-  };
+ const setLangUI = (lang) => {
+  const codeEl = $("#language-code");
+  const flagEl = $("#language-flag");
+
+  if (codeEl) codeEl.textContent = lang;
+  if (flagEl) flagEl.innerHTML = FLAGS[lang] || "";
+
+  $$("[data-flag]").forEach((el) => {
+    const flagKey = (el.getAttribute("data-flag") || "").trim().toUpperCase();
+    el.innerHTML = FLAGS[flagKey] || "";
+  });
+};
 
   const initLanguage = () => {
     const btn = $("#language-btn");
     const dropdown = $("#language-dropdown");
     const options = $$(".language-option");
+    const wrap = btn?.closest(".language-selector");
 
     setLangUI(currentLang);
     applyI18n(currentLang);
 
-    const closeDropdown = () => {
+    let closeTimer = null;
+
+    const closeDropdown = (delay = 0) => {
       if (!dropdown || !btn) return;
-      dropdown.classList.remove("show");
-      btn.setAttribute("aria-expanded", "false");
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => {
+        dropdown.classList.remove("show");
+        btn.setAttribute("aria-expanded", "false");
+      }, delay);
     };
 
     const openDropdown = () => {
       if (!dropdown || !btn) return;
+      clearTimeout(closeTimer);
       dropdown.classList.add("show");
       btn.setAttribute("aria-expanded", "true");
     };
@@ -457,10 +470,18 @@ document.addEventListener("DOMContentLoaded", () => {
         expanded ? closeDropdown() : openDropdown();
       });
 
-      document.addEventListener("click", () => closeDropdown());
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeDropdown();
+      document.addEventListener("pointerdown", (e) => {
+        if (wrap && !wrap.contains(e.target)) closeDropdown(0);
       });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeDropdown(0);
+      });
+
+      if (wrap && hasFinePointer) {
+        wrap.addEventListener("pointerenter", openDropdown);
+        wrap.addEventListener("pointerleave", () => closeDropdown(120));
+      }
     }
 
     options.forEach((opt) => {
@@ -487,18 +508,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!menuToggle || !mobileMenu || !overlay) return;
 
+    const lockScroll = (locked) => {
+      document.documentElement.style.overflow = locked ? "hidden" : "";
+      document.body.style.overflow = locked ? "hidden" : "";
+    };
+
     const openMenu = () => {
-      mobileMenu.classList.add("open");
+      overlay.hidden = false;
       overlay.classList.add("show");
+      mobileMenu.classList.add("open");
+      mobileMenu.setAttribute("aria-hidden", "false");
       document.body.classList.add("menu-open");
       menuToggle.setAttribute("aria-expanded", "true");
+      lockScroll(true);
+
+      setTimeout(() => {
+        const first = mobileMenu.querySelector("a.mobile-nav-link, a.mobile-sub-link, button, [tabindex]:not([tabindex='-1'])");
+        first?.focus();
+      }, 50);
     };
 
     const closeMenu = () => {
       mobileMenu.classList.remove("open");
-      overlay.classList.remove("show");
+      mobileMenu.setAttribute("aria-hidden", "true");
       document.body.classList.remove("menu-open");
       menuToggle.setAttribute("aria-expanded", "false");
+      lockScroll(false);
+      overlay.classList.remove("show");
+
+      setTimeout(() => {
+        overlay.hidden = true;
+      }, 220);
+
+      menuToggle.focus();
     };
 
     menuToggle.addEventListener("click", () => {
@@ -507,40 +549,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     overlay.addEventListener("click", closeMenu);
-    if (closeBtn) closeBtn.addEventListener("click", closeMenu);
+    closeBtn?.addEventListener("click", closeMenu);
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu();
+      if (e.key === "Escape" && mobileMenu.classList.contains("open")) closeMenu();
     });
 
-    // Cerrar al navegar
     $$("#mobile-menu a").forEach((a) => {
       a.addEventListener("click", () => closeMenu());
     });
 
-    // Hover UX para <details> en pointer fine (como referencia)
-    if (hasFinePointer && !prefersReducedMotion) {
+    if (hasFinePointer) {
+      let openTimer = null;
+
+      menuToggle.addEventListener("pointerenter", () => {
+        clearTimeout(openTimer);
+        openTimer = setTimeout(() => {
+          if (!mobileMenu.classList.contains("open")) openMenu();
+        }, 120);
+      });
+
+      menuToggle.addEventListener("pointerleave", () => {
+        clearTimeout(openTimer);
+      });
+
+      mobileMenu.addEventListener("pointerleave", () => {
+        setTimeout(() => {
+          if (mobileMenu.classList.contains("open")) closeMenu();
+        }, 220);
+      });
+
+      overlay.addEventListener("pointerleave", (e) => {
+        if (!mobileMenu.classList.contains("open")) return;
+        const to = e.relatedTarget;
+        if (to && (mobileMenu.contains(to) || menuToggle.contains(to))) return;
+        closeMenu();
+      });
+
       const details = $$("#mobile-menu details.menu-details");
       details.forEach((d) => {
-        let openT = null;
-        let closeT = null;
+        let timer = null;
 
-        const scheduleOpen = () => {
-          clearTimeout(closeT);
-          openT = setTimeout(() => {
-            d.open = true;
-          }, 140);
-        };
+        d.addEventListener("pointerenter", () => {
+          clearTimeout(timer);
+          d.open = true;
+        });
 
-        const scheduleClose = () => {
-          clearTimeout(openT);
-          closeT = setTimeout(() => {
+        d.addEventListener("pointerleave", () => {
+          clearTimeout(timer);
+          timer = setTimeout(() => {
             d.open = false;
-          }, 180);
-        };
-
-        d.addEventListener("mouseenter", scheduleOpen);
-        d.addEventListener("mouseleave", scheduleClose);
+          }, 140);
+        });
       });
     }
   };

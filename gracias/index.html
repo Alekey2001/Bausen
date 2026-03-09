@@ -3,256 +3,725 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="canonical" href="https://bausenweb.netlify.app/gracias/">
-<meta name="robots" content="noindex, follow">
-
-<!-- Favicons correctos (nítidos en navegador) -->
-<link rel="icon" href="/images/favicon.ico?v=10" sizes="any">
-<link rel="icon" type="image/png" href="/images/favicon-32.png?v=10" sizes="32x32">
-<link rel="icon" type="image/png" href="/images/favicon-16.png?v=10" sizes="16x16">
-<link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=10" sizes="180x180">
-  <!-- Evita indexar la página de gracias (es correcto para SEO) -->
+  <meta name="theme-color" content="#FFFFFF" />
+  <link rel="canonical" href="https://bausenweb.netlify.app/gracias/" />
   <meta name="robots" content="noindex,follow" />
+  <meta name="googlebot" content="noindex,follow" />
 
-  <title>Gracias | BAUSEN</title>
-  <meta name="description" content="Hemos recibido tu mensaje. Nuestro equipo se pondrá en contacto contigo en breve." />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/imgnavar/Icono-v3.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/imgnavar/Icono-v3.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <title>Mensaje recibido | Contacto BAUSEN | Soluciones empresariales</title>
+  <meta name="description" content="BAUSEN ha recibido tu mensaje correctamente. Daremos seguimiento a tu solicitud relacionada con soluciones empresariales, Capital Humano, Desarrollo Organizacional o Management Services." />
+  <meta property="og:title" content="Mensaje recibido | Contacto BAUSEN | Soluciones empresariales" />
+  <meta property="og:description" content="Confirmación de contacto de BAUSEN. Nuestro equipo dará seguimiento a tu solicitud a la brevedad." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bausenweb.netlify.app/gracias/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"Mensaje recibido | Contacto BAUSEN | Soluciones empresariales",
+    "url":"https://bausenweb.netlify.app/gracias/",
+    "description":"Página de confirmación de contacto de BAUSEN con recepción correcta de mensaje y control de indexación para SEO.",
+    "inLanguage":"es-MX"
+  }
+  </script>
 
   <style>
     :root{
-      --bg: #0b0f17;
-      --card: rgba(255,255,255,.06);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --line: rgba(255,255,255,.14);
-      --accent: #7c3aed;
-      --accent2: #22c55e;
-      --shadow: 0 18px 60px rgba(0,0,0,.35);
-      --radius: 18px;
+      --bg: #FFFFFF;
+      --bg-soft: #F5F6FA;
+      --surface: rgba(255,255,255,.72);
+      --surface-strong: #FFFFFF;
+      --text: #0B1633;
+      --title: #182389;
+      --muted: rgba(11,22,51,.72);
+      --line: rgba(24,35,137,.14);
+      --primary: #003DA5;
+      --primary-2: #182389;
+      --accent-soft: #DCE2EF;
+      --ok-bg: rgba(16,185,129,.12);
+      --ok-line: rgba(16,185,129,.22);
+      --ok-text: #15803D;
+      --shadow: 0 18px 55px rgba(24,35,137,.12);
+      --shadow-lg: 0 28px 90px rgba(24,35,137,.16);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
     }
 
-    /* Auto light mode si el usuario lo tiene en claro */
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg: #f6f7fb;
-        --card: rgba(0,0,0,.04);
-        --text: rgba(0,0,0,.88);
-        --muted: rgba(0,0,0,.60);
-        --line: rgba(0,0,0,.10);
-        --shadow: 0 18px 60px rgba(0,0,0,.12);
-      }
-    }
-
-    *{ box-sizing: border-box; }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,.35), transparent 55%),
-                  radial-gradient(900px 600px at 90% 10%, rgba(34,197,94,.25), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      min-height: 100vh;
+      min-height:100vh;
+      font-family:"Source Sans 3", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 700px at 55% 10%, rgba(27,114,255,.08), transparent 60%),
+        radial-gradient(900px 600px at 18% 85%, rgba(0,61,165,.06), transparent 62%),
+        linear-gradient(180deg, #ffffff 0%, #fbfcff 55%, #ffffff 100%);
+      overflow-x:hidden;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    body::before,
+    body::after{
+      content:"";
+      position:fixed;
+      border-radius:999px;
+      pointer-events:none;
+      z-index:0;
+      filter:blur(6px);
+    }
+
+    body::before{
+      width:620px;
+      height:620px;
+      left:-180px;
+      top:-170px;
+      background:radial-gradient(circle, rgba(0,61,165,.08) 0%, rgba(0,61,165,0) 70%);
+    }
+
+    body::after{
+      width:540px;
+      height:540px;
+      right:-120px;
+      bottom:-140px;
+      background:radial-gradient(circle, rgba(24,35,137,.08) 0%, rgba(24,35,137,0) 70%);
+    }
+
+    .page{
+      position:relative;
+      z-index:1;
+      width:min(var(--max), calc(100% - 32px));
+      margin:24px auto;
+    }
+
+    .topbar{
       display:flex;
       align-items:center;
-      justify-content:center;
-      padding: 28px 16px;
-    }
-
-    .wrap{
-      width: min(980px, 100%);
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-    }
-
-    @media (max-width: 860px){
-      .wrap{ grid-template-columns: 1fr; }
-    }
-
-    .card{
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: 22px;
+      justify-content:space-between;
+      gap:16px;
+      padding:16px 18px;
+      margin-bottom:18px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.72);
+      backdrop-filter:blur(16px);
+      box-shadow:0 12px 40px rgba(19,33,68,.06);
     }
 
     .brand{
       display:flex;
       align-items:center;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap:14px;
+      min-width:0;
     }
 
-    .dot{
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 0 6px rgba(124,58,237,.12);
+    .logo-slot{
+      width:146px;
+      height:48px;
+      border-radius:14px;
+      border:1.5px dashed rgba(24,35,137,.22);
+      background:linear-gradient(180deg, rgba(220,226,239,.72), rgba(245,246,250,.92));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .logo-slot::after{
+      content:"";
+      width:44px;
+      height:16px;
+      border-radius:999px;
+      border:1.5px solid rgba(24,35,137,.18);
+      opacity:.55;
+    }
+
+    h1,
+    h2,
+    h3{
+      font-family:"Momo Trust", "Source Sans 3", system-ui, sans-serif;
+      letter-spacing:-.055em;
+    }
+
+    .status-chip{
+      display:inline-flex;
+      align-items:center;
+      gap:9px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(0,61,165,.06);
+      border:1px solid rgba(24,35,137,.16);
+      color:var(--title);
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+    }
+
+    .status-chip .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 0 0 5px rgba(0,61,165,.10);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:20px;
+    }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:30px;
+      background:rgba(255,255,255,.72);
+      backdrop-filter:blur(16px);
+      box-shadow:var(--shadow-lg);
+      overflow:hidden;
+      min-width:0;
+    }
+
+    .main-card{
+      padding:30px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:640px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      width:max-content;
+      max-width:100%;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(0,61,165,.07);
+      border:1px solid rgba(24,35,137,.14);
+      color:var(--title);
+      font-size:13px;
+      font-weight:900;
+      margin-bottom:18px;
+    }
+
+    .eyebrow::before{
+      content:"";
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 0 0 5px rgba(0,61,165,.10);
+      flex:0 0 auto;
     }
 
     h1{
-      font-size: clamp(28px, 4vw, 40px);
-      letter-spacing: -0.02em;
-      margin: 6px 0 10px;
+      margin:0;
+      font-size:clamp(40px, 6vw, 70px);
+      line-height:1.02;
+      color:var(--title);
+      font-weight:1000;
     }
 
-    .muted{ color: var(--muted); line-height: 1.55; }
+    .headline-accent{
+      color:#000;
+      display:block;
+    }
 
-    .pill{
+    .lead{
+      margin:18px 0 0;
+      max-width:660px;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.65;
+      font-weight:700;
+    }
+
+    .confirmation{
       display:inline-flex;
       align-items:center;
-      gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 8px 12px;
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 8px;
+      gap:10px;
+      width:max-content;
+      max-width:100%;
+      margin-top:22px;
+      padding:11px 15px;
+      border-radius:999px;
+      background:var(--ok-bg);
+      border:1px solid var(--ok-line);
+      color:var(--ok-text);
+      font-weight:800;
+      font-size:15px;
     }
 
-    .check{
-      width: 18px;
-      height: 18px;
-      display:inline-grid;
+    .confirmation .check{
+      width:22px;
+      height:22px;
+      border-radius:50%;
+      display:grid;
       place-items:center;
-      border-radius: 999px;
-      background: rgba(34,197,94,.18);
-      border: 1px solid rgba(34,197,94,.35);
-      color: #22c55e;
-      font-weight: 700;
-      line-height: 1;
+      background:#fff;
+      color:var(--ok-text);
+      font-weight:900;
+      flex:0 0 auto;
     }
 
-    .actions{
+    .cta-row{
       display:flex;
-      gap: 10px;
-      margin-top: 16px;
-      flex-wrap: wrap;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:24px;
     }
 
-    a.btn{
-      text-decoration:none;
+    .btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: rgba(255,255,255,.03);
-      transition: transform .12s ease, background .12s ease;
+      gap:10px;
+      min-height:50px;
+      padding:0 18px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:900;
+      font-size:15px;
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
     }
 
-    a.btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.06); }
+    .btn:hover{ transform:translateY(-1px); }
 
-    a.primary{
-      border: 1px solid rgba(124,58,237,.45);
-      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,197,94,.65));
-      color: white;
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(90deg, var(--primary), var(--primary-2));
+      box-shadow:0 16px 34px rgba(27,114,255,.22);
     }
 
-    .side h2{
-      margin: 0 0 10px;
-      font-size: 18px;
-      letter-spacing: -0.01em;
+    .btn-soft{
+      color:var(--title);
+      background:#fff;
+      border:1px solid rgba(24,35,137,.14);
+      box-shadow:0 12px 26px rgba(19,33,68,.08);
     }
 
-    .list{
-      margin: 0;
-      padding: 0;
-      list-style:none;
+    .mini-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:14px;
+      margin-top:30px;
+    }
+
+    .mini-card{
+      border-radius:22px;
+      padding:16px 16px 18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.96), rgba(245,246,250,.96));
+      border:1px solid rgba(24,35,137,.12);
+      box-shadow:0 12px 30px rgba(19,33,68,.06);
+    }
+
+    .mini-card strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:17px;
+      color:var(--title);
+      font-weight:900;
+    }
+
+    .mini-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      font-weight:700;
+    }
+
+
+    .mini-card code{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:.9em;
+      padding:.12em .42em;
+      border-radius:999px;
+      background:rgba(255,255,255,.8);
+      color:var(--title);
+      border:1px solid rgba(24,35,137,.10);
+    }
+
+    .main-footer{
+      margin-top:26px;
+      padding-top:18px;
+      border-top:1px solid rgba(24,35,137,.10);
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .side-card{
+      display:grid;
+      grid-template-rows:auto auto 1fr;
+      min-height:640px;
+    }
+
+    .visual-block{
+      padding:28px 28px 18px;
+      position:relative;
+    }
+
+    .visual-frame{
+      position:relative;
+      min-height:290px;
+      border-radius:28px;
+      overflow:hidden;
+      background:
+        radial-gradient(820px 420px at 50% -10%, rgba(0,61,165,.22), transparent 62%),
+        linear-gradient(135deg, #eef3fb 0%, #dce2ef 100%);
+      border:1px solid rgba(24,35,137,.12);
       display:flex;
-      flex-direction:column;
-      gap: 10px;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
     }
 
-    .item{
-      display:flex;
-      gap: 10px;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+    .visual-frame::before{
+      content:"";
+      position:absolute;
+      inset:18px;
+      border-radius:22px;
+      border:1.5px dashed rgba(24,35,137,.22);
+      pointer-events:none;
     }
 
-    .badge{
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
+    .visual-copy{
+      position:relative;
+      z-index:1;
+      text-align:center;
+      max-width:290px;
+    }
+
+    .visual-icon{
+      width:68px;
+      height:68px;
+      margin:0 auto 16px;
+      border-radius:20px;
       display:grid;
       place-items:center;
-      background: rgba(124,58,237,.14);
-      border: 1px solid rgba(124,58,237,.25);
-      color: rgba(255,255,255,.95);
-      font-weight: 700;
+      background:rgba(255,255,255,.72);
+      color:var(--title);
+      font-size:32px;
+      font-weight:900;
+      box-shadow:0 14px 34px rgba(19,33,68,.08);
     }
 
-    @media (prefers-color-scheme: light){
-      .badge{ color: rgba(0,0,0,.85); }
+    .visual-copy strong{
+      display:block;
+      color:var(--title);
+      font-size:22px;
+      font-weight:900;
+      line-height:1.1;
+      letter-spacing:-.03em;
     }
 
-    footer{
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--muted);
+    .visual-copy span{
+      display:block;
+      margin-top:8px;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.55;
+      font-weight:700;
+    }
+
+    .floating-badge{
+      position:absolute;
+      left:30px;
+      bottom:0;
+      transform:translateY(42%);
+      width:92px;
+      height:92px;
+      border-radius:28px;
+      display:grid;
+      place-items:center;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.98) 0%, rgba(255,255,255,.92) 38%, rgba(245,246,250,.98) 100%);
+      border:1px solid rgba(24,35,137,.12);
+      box-shadow:
+        0 20px 36px rgba(19,33,68,.12),
+        inset 0 1px 0 rgba(255,255,255,.9);
+      z-index:3;
+      overflow:hidden;
+      isolation:isolate;
+    }
+
+    .floating-badge::before{
+      content:"";
+      position:absolute;
+      inset:8px;
+      border-radius:22px;
+      background:linear-gradient(135deg, rgba(0,61,165,.05), rgba(24,35,137,.10));
+      border:1px solid rgba(24,35,137,.10);
+      z-index:-1;
+    }
+
+    .floating-badge::after{
+      content:"";
+      position:absolute;
+      inset:-25%;
+      background:radial-gradient(circle, rgba(27,114,255,.10) 0%, rgba(27,114,255,0) 65%);
+      pointer-events:none;
+    }
+
+    .floating-badge img{
+      width:44px;
+      height:44px;
+      object-fit:contain;
+      display:block;
+      filter:drop-shadow(0 6px 12px rgba(19,33,68,.16));
+    }
+
+    .steps{
+      padding:46px 28px 28px;
+    }
+
+    .steps h2{
+      margin:0 0 14px;
+      font-size:34px;
+      line-height:1.02;
+      color:var(--title);
+      font-weight:1000;
+    }
+
+    .steps-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:12px;
+    }
+
+    .steps-list li{
+      display:grid;
+      grid-template-columns:44px 1fr;
+      gap:14px;
+      align-items:start;
+      padding:16px;
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(245,246,250,.98));
+      border:1px solid rgba(24,35,137,.12);
+      box-shadow:0 10px 22px rgba(24,35,137,.06);
+    }
+
+    .step-no{
+      width:44px;
+      height:44px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      color:#fff;
+      font-weight:900;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow:0 12px 26px rgba(27,114,255,.18);
+    }
+
+    .steps-list strong{
+      display:block;
+      margin-bottom:4px;
+      color:var(--title);
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .steps-list p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.55;
+      font-weight:700;
+    }
+
+    .side-footer{
+      padding:0 28px 28px;
+      align-self:end;
+    }
+
+    .contact-box{
+      border-radius:22px;
+      padding:16px 18px;
+      background:linear-gradient(180deg, rgba(220,226,239,.52), rgba(245,246,250,.92));
+      border:1px solid rgba(24,35,137,.12);
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      font-weight:700;
+      box-shadow:0 10px 22px rgba(24,35,137,.06);
+    }
+
+    .contact-box strong{
+      color:var(--title);
+      display:block;
+      margin-bottom:4px;
+      font-size:15px;
+      font-weight:900;
+    }
+
+    .contact-box code{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size:.92em;
+      padding:.15em .45em;
+      border-radius:999px;
+      background:rgba(255,255,255,.72);
+      color:var(--title);
+      border:1px solid rgba(24,35,137,.12);
+    }
+
+    @media (max-width: 980px){
+      .layout{ grid-template-columns:1fr; }
+      .main-card,
+      .side-card{ min-height:auto; }
+      .mini-grid{ grid-template-columns:1fr; }
+      .topbar{ flex-direction:column; align-items:flex-start; }
+      .status-chip{ white-space:normal; }
+      .floating-badge{
+        left:22px;
+        transform:translateY(48%);
+      }
+    }
+
+    @media (max-width: 640px){
+      .page{ width:min(var(--max), calc(100% - 20px)); margin:10px auto 18px; }
+      .topbar,
+      .main-card,
+      .visual-block,
+      .steps,
+      .side-footer{ padding-left:18px; padding-right:18px; }
+      .logo-slot{ width:122px; height:44px; }
+      h1{ font-size:clamp(34px, 11vw, 48px); }
+      .steps h2{ font-size:28px; }
+      .cta-row{ flex-direction:column; }
+      .cta-row .btn{ width:100%; }
+      .floating-badge{
+        width:84px;
+        height:84px;
+        left:18px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <section class="card">
+  <div class="page">
+    <header class="topbar">
       <div class="brand">
-        <span class="dot" aria-hidden="true"></span>
-        <strong>BAUSEN</strong>
+        <img src="/imgnavar/Icono.png" alt="Logo de BAUSEN" width="32" height="32">
       </div>
-
-      <h1>¡Mensaje enviado!</h1>
-      <p class="muted">
-        Gracias por contactarnos. Hemos recibido tu solicitud y uno de nuestros especialistas te responderá a la brevedad.
-      </p>
-
-      <div class="pill">
-        <span class="check" aria-hidden="true">✓</span>
+      <div class="status-chip">
+        <span class="dot" aria-hidden="true"></span>
         Confirmación registrada correctamente
       </div>
-      <div class="actions">
-        <a class="btn primary" href="/">Volver al inicio</a>
-        <a class="btn" href="/#contacto">Enviar otro mensaje</a>
-      </div>
-      <footer>
-        Si no ves respuesta en 24–48 horas hábiles, revisa tu bandeja de spam o contáctanos por redes sociales.
-      </footer>
-    </section>
-    <aside class="card side">
-      <h2>¿Qué sigue?</h2>
-      <ul class="list">
-        <li class="item">
-          <div class="badge">1</div>
-          <div>
-            <div><strong>Revisión de tu solicitud</strong></div>
-            <div class="muted">Validamos la información y el mejor equipo para atenderte.</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel main-card">
+        <div>
+          <div class="eyebrow">Respuesta recibida por nuestro equipo</div>
+
+          <h1>
+            ¡Mensaje
+            <span class="headline-accent">enviado!</span>
+          </h1>
+
+          <p class="lead">
+            Gracias por contactarnos. Hemos recibido tu solicitud correctamente y uno de nuestros especialistas te responderá a la brevedad.
+            Esta página funciona como confirmación de envío y mantiene una configuración SEO controlada para no competir en Google con las páginas principales de servicios de BAUSEN.
+          </p>
+
+          <div class="confirmation">
+            <span class="check" aria-hidden="true">✓</span>
+            Tu mensaje quedó registrado en el sistema
           </div>
-        </li>
-        <li class="item">
-          <div class="badge">2</div>
-          <div>
-            <div><strong>Contacto por correo</strong></div>
-            <div class="muted">Te responderemos con pasos claros y disponibilidad.</div>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="/">Volver al inicio</a>
+            <a class="btn btn-soft" href="/#contacto">Enviar otro mensaje</a>
           </div>
-        </li>
-        <li class="item">
-          <div class="badge">3</div>
-          <div>
-            <div><strong>Reunión / diagnóstico</strong></div>
-            <div class="muted">Definimos alcance, tiempos y siguientes acciones.</div>
+        </div>
+
+        <div>
+          <div class="mini-grid" style="grid-template-columns:1fr;">
+            <article class="mini-card">
+              <strong>Soluciones empresariales con atención confiable</strong>
+              <p>Tu solicitud será canalizada de forma profesional hacia el área correspondiente de BAUSEN, en relación con servicios como Procesamiento de nómina, Servicios especializados, Consultoría fiscal, Capital Humano, Desarrollo Organizacional y Management Services. La información enviada se utiliza únicamente para dar seguimiento a tu requerimiento, brindarte atención clara y mantener un contacto fidedigno conforme a la finalidad solicitada por el usuario.</p>
+            </article>
           </div>
-        </li>
-      </ul>
-    </aside>
+
+          <div class="main-footer">
+            Si no ves respuesta en 24–48 horas hábiles, revisa tu bandeja de spam o contáctanos por tus canales principales.
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel side-card">
+        <div class="visual-block">
+          <div class="visual-frame">
+            <div class="visual-copy">
+              <div class="visual-icon" aria-hidden="true">+</div>
+              <strong>Espacio para imagen principal</strong>
+              <span>Aquí puedes colocar una fotografía, render, mockup o composición visual sin romper el diseño.</span>
+            </div>
+          </div>
+
+          <div class="floating-badge" aria-hidden="true">
+            <img src="/imgnavar/Icono-v3.png" alt="">
+          </div>
+        </div>
+
+        <div class="steps">
+          <h2>¿Qué sigue?</h2>
+
+          <ol class="steps-list">
+            <li>
+              <div class="step-no">1</div>
+              <div>
+                <strong>Revisión de tu solicitud</strong>
+                <p>Validamos la información y asignamos al equipo más adecuado para atender tu caso.</p>
+              </div>
+            </li>
+
+            <li>
+              <div class="step-no">2</div>
+              <div>
+                <strong>Contacto por correo</strong>
+                <p>Te responderemos con seguimiento, disponibilidad y siguientes pasos claros.</p>
+              </div>
+            </li>
+
+            <li>
+              <div class="step-no">3</div>
+              <div>
+                <strong>Diagnóstico o reunión</strong>
+                <p>Definimos alcance, tiempos, materiales y acciones para iniciar correctamente.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div class="side-footer">
+          <div class="contact-box">
+            <strong>Términos y condiciones</strong>
+            La información compartida en este formulario será utilizada únicamente para atender tu solicitud, dar seguimiento a tu mensaje y canalizarlo al área correspondiente de BAUSEN. Tus datos se resguardan para fines de contacto y atención vinculados con los servicios requeridos por el usuario, sin emplearse para finalidades ajenas a la gestión solicitada.
+          </div>
+        </div>
+      </aside>
+    </main>
   </div>
 </body>
 </html>
