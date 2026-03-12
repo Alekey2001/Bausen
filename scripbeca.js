@@ -1696,32 +1696,24 @@ function initHeroVideoAudio() {
       playIcon.classList.add(isPaused ? "fa-play" : "fa-pause");
     }
   };
+const startVideo = async () => {
+  video.autoplay = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.currentTime = 0;
+  video.volume = 1;
+  video.defaultMuted = false;
+  video.muted = false;
 
-  const startVideo = async () => {
-    video.autoplay = true;
-    video.loop = true;
-    video.playsInline = true;
-    video.volume = 1;
-    video.defaultMuted = false;
-    video.muted = false;
+  try {
+    await video.play();
+  } catch (error) {
+    console.warn("El navegador bloqueó el autoplay con sonido:", error);
+  }
 
-    try {
-      await video.play();
-    } catch (error) {
-      video.muted = true;
-      syncAudioUI();
-
-      try {
-        await video.play();
-      } catch (err) {
-        console.warn("No se pudo iniciar el video automáticamente:", err);
-      }
-    }
-
-    syncAudioUI();
-    syncPlayUI();
-  };
-
+  syncAudioUI();
+  syncPlayUI();
+};
   audioBtn.addEventListener("click", async () => {
     try {
       if (video.paused) {
@@ -1742,19 +1734,19 @@ function initHeroVideoAudio() {
     }
   });
 
-  playBtn.addEventListener("click", async () => {
-    try {
-      if (video.paused) {
-        await video.play();
-      } else {
-        video.pause();
-      }
-
-      syncPlayUI();
-    } catch (error) {
-      console.warn("No se pudo pausar o reproducir el video:", error);
+playBtn.addEventListener("click", async () => {
+  try {
+    if (video.paused) {
+      await video.play();
+    } else {
+      video.pause();
     }
-  });
+
+    syncPlayUI();
+  } catch (error) {
+    console.warn("No se pudo pausar o reproducir el video:", error);
+  }
+});
 
   video.addEventListener("volumechange", syncAudioUI);
   video.addEventListener("play", syncPlayUI);
