@@ -216,9 +216,26 @@
 <div class="hero-right" data-animate="fade-left" data-delay="220">
 <div class="media-wrap">
 <div class="media-card" id="media-card">
-<div class="media">
-<img alt="Preview" class="media-img" loading="lazy" src="/images/Bausenenmexico.png"/>
-</div>
+  <div class="media">
+    <video
+      class="media-img media-video"
+      autoplay
+      loop
+      playsinline
+      preload="metadata"
+      poster=""
+    >
+      <source src="/video/Edit2.mp4" type="video/mp4" />
+    </video>
+
+    <button class="video-audio-toggle" type="button" aria-label="Silenciar sonido">
+      <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+    </button>
+
+    <button class="video-play-toggle is-playing" type="button" aria-label="Pausar video">
+      <i class="fa-solid fa-pause" aria-hidden="true"></i>
+    </button>
+  </div>
 </div>
 <!--  icono de ISO -->
 <!-- From Uiverse.io by ali_5563 --> 

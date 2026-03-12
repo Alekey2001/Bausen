@@ -4782,3 +4782,121 @@ body:not(.theme-dark) #connect .connect-left > a.btn.btn-primary.btn-lg.btn-icon
   font-size: 12px;
   font-weight: normal;
 }
+.video-audio-toggle{
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 6;
+
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  background: rgba(11, 22, 51, 0.68);
+  color: #fff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+  transition: transform 150ms ease, background 150ms ease, box-shadow 150ms ease;
+}
+
+.video-audio-toggle:hover{
+  transform: translateY(-1px);
+  background: rgba(0, 61, 165, 0.88);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+}
+
+.video-audio-toggle i{
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.video-audio-toggle.is-muted{
+  background: rgba(11, 22, 51, 0.68);
+}
+
+.video-audio-toggle:not(.is-muted){
+  background: rgba(0, 61, 165, 0.88);
+}
+
+@media (max-width: 640px){
+  .video-audio-toggle{
+    right: 10px;
+    bottom: 10px;
+    width: 42px;
+    height: 42px;
+  }
+}
+.video-play-toggle{
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 6;
+
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  background: rgba(11, 22, 51, 0.68);
+  color: #fff;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.22);
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.media:hover .video-play-toggle,
+.media:focus-within .video-play-toggle,
+.video-play-toggle.is-paused{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.video-play-toggle:hover{
+  transform: translateY(-1px);
+  background: rgba(0, 61, 165, 0.88);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+}
+
+.video-play-toggle i{
+  font-size: 16px;
+  pointer-events: none;
+}
+
+@media (hover: none), (pointer: coarse){
+  .video-play-toggle{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px){
+  .video-play-toggle{
+    left: 10px;
+    bottom: 10px;
+    width: 42px;
+    height: 42px;
+  }
+}

@@ -448,7 +448,12 @@
           <p class="section-sub" data-i18n-text="contact.sub">Estamos listos para ayudarte a transformar tu empresa</p>
         </div>
 
-        <form class="contact-card" action="#" method="post">
+        <form class="contact-card" action="/gracias/" method="POST" name="contact" data-netlify="true" netlify data-netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="subject" value="New message from BAUSEN Capital" />
+          <p style="display:none;">
+            <label>Don’t fill this out: <input name="bot-field" /></label>
+          </p>
           <div class="form-grid">
             <label class="field">
               <span class="sr-only" data-i18n-text="form.nameLabel">Tu nombre completo</span>

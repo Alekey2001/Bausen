@@ -1656,11 +1656,117 @@ document.addEventListener("DOMContentLoaded", initHamburgerSubmenuHover);
     }
   });
 }
+function initHeroVideoAudio() {
+  const video = document.querySelector(".media-video");
+  const audioBtn = document.querySelector(".video-audio-toggle");
+  const playBtn = document.querySelector(".video-play-toggle");
 
+  if (!video || !audioBtn || !playBtn) return;
+
+  const audioIcon = audioBtn.querySelector("i");
+  const playIcon = playBtn.querySelector("i");
+
+  const syncAudioUI = () => {
+    const isMuted = video.muted || video.volume === 0;
+
+    audioBtn.classList.toggle("is-muted", isMuted);
+    audioBtn.setAttribute(
+      "aria-label",
+      isMuted ? "Activar sonido" : "Silenciar sonido"
+    );
+
+    if (audioIcon) {
+      audioIcon.classList.remove("fa-volume-xmark", "fa-volume-high");
+      audioIcon.classList.add(isMuted ? "fa-volume-xmark" : "fa-volume-high");
+    }
+  };
+
+  const syncPlayUI = () => {
+    const isPaused = video.paused;
+
+    playBtn.classList.toggle("is-paused", isPaused);
+    playBtn.classList.toggle("is-playing", !isPaused);
+    playBtn.setAttribute(
+      "aria-label",
+      isPaused ? "Reproducir video" : "Pausar video"
+    );
+
+    if (playIcon) {
+      playIcon.classList.remove("fa-play", "fa-pause");
+      playIcon.classList.add(isPaused ? "fa-play" : "fa-pause");
+    }
+  };
+
+  const startVideo = async () => {
+    video.autoplay = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.volume = 1;
+    video.defaultMuted = false;
+    video.muted = false;
+
+    try {
+      await video.play();
+    } catch (error) {
+      video.muted = true;
+      syncAudioUI();
+
+      try {
+        await video.play();
+      } catch (err) {
+        console.warn("No se pudo iniciar el video automáticamente:", err);
+      }
+    }
+
+    syncAudioUI();
+    syncPlayUI();
+  };
+
+  audioBtn.addEventListener("click", async () => {
+    try {
+      if (video.paused) {
+        await video.play();
+      }
+
+      if (video.muted || video.volume === 0) {
+        video.muted = false;
+        video.volume = 1;
+      } else {
+        video.muted = true;
+      }
+
+      syncAudioUI();
+      syncPlayUI();
+    } catch (error) {
+      console.warn("No se pudo cambiar el audio del video:", error);
+    }
+  });
+
+  playBtn.addEventListener("click", async () => {
+    try {
+      if (video.paused) {
+        await video.play();
+      } else {
+        video.pause();
+      }
+
+      syncPlayUI();
+    } catch (error) {
+      console.warn("No se pudo pausar o reproducir el video:", error);
+    }
+  });
+
+  video.addEventListener("volumechange", syncAudioUI);
+  video.addEventListener("play", syncPlayUI);
+  video.addEventListener("pause", syncPlayUI);
+
+  startVideo();
+}
   /* =========================
      Boot
   ========================= */
   initLoader();
+  initHeroVideoAudio();
   initTheme();
   initLanguage();
   initMobileMenu();
@@ -1705,6 +1811,8 @@ function initHamburgerSubmenuHoverFallback() {
       }, 120);
     });
   });
+
+  
 }
 
 document.addEventListener("DOMContentLoaded", initHamburgerSubmenuHoverFallback);
