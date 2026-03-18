@@ -2046,6 +2046,8 @@ body:not(.theme-dark) .menu-toggle{
   flex-direction:column;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
+  border-radius: 26px 0 0 26px;
+  overflow: hidden;
 }
 body:not(.theme-dark) .mobile-menu{
   background: color-mix(in srgb, #ffffff 92%, #0b1220 8%);
@@ -2573,3 +2575,27 @@ html[data-theme="light"] #mobile-menu .mobile-sub-link.active{
 }
 
 /* Responsive: si tu grid en móvil apila columnas, esto se verá bien igual */
+/* =========================================================
+   PATCH: Botones blancos + más cuadrados
+   1) Idioma y hamburguesa: fondo BLANCO (quitar gris)
+   2) Idioma, hamburguesa y colaborador: border-radius MÁS CUADRADO
+========================================================= */
+
+/* Idioma → blanco, cuadrado */
+.language-btn,
+.header-controls .language-btn{
+  background: #FFFFFF !important;
+  border-radius: 6px !important;
+}
+
+/* Hamburguesa → blanco, cuadrado */
+.menu-toggle,
+.header-controls .menu-toggle{
+  background: #FFFFFF !important;
+  border-radius: 6px !important;
+}
+
+/* Colaborador → cuadrado (color ya estaba bien) */
+.header-controls > .btn.btn-primary.btn-sm{
+  border-radius: 6px !important;
+}

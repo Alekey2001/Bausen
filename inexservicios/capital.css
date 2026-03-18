@@ -2353,7 +2353,7 @@ padding-bottom: 28px;
   gap: 8px;
   padding: 10px 12px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--bg) 86%, var(--primary) 14%);
+  background: #FFFFFF;
   border: 1px solid color-mix(in srgb, var(--primary) 16%, var(--border));
   color: var(--text);
   cursor:pointer;
@@ -2643,6 +2643,7 @@ body:not(.theme-dark) .language-dropdown{
   background: rgba(255,255,255,0.92);
   border-left: 1px solid rgba(24,35,137,0.14);
   border-radius: 26px 0 0 26px;
+  overflow: hidden;
   box-shadow: var(--shadow-lg);
   transform: translateX(110%);
   transition: transform 250ms ease;
@@ -3987,4 +3988,12 @@ main[id]{
   .contact-commercial-image-frame{
     min-height: 240px;
   }
+}
+
+/* PATCH: botón idioma fondo blanco (todas las resoluciones) */
+.language-btn,
+.header__actions .language-btn,
+.header-controls .language-btn,
+body:not(.theme-dark) .language-btn{
+  background: #FFFFFF !important;
 }

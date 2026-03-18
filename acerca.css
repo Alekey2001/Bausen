@@ -2165,7 +2165,7 @@ body{ background: #DCE2EF; }
   .site-header .language-btn{
     height: 36px;
     padding: 0 12px;
-    border-radius: 999px;
+    border-radius: 0px;
   }
   .site-header .language-code{
     font-size: 12px;

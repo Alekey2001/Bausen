@@ -892,44 +892,103 @@
       input.addEventListener('blur', handleBlur);
     });
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const statusEl = $('#formStatus', form);
+      const submitBtn = $('button[type="submit"]', form);
+      const originalHTML = submitBtn ? submitBtn.innerHTML : '';
+      const setStatus = (message = '', ok = true) => {
+        if (!statusEl) return;
+        statusEl.textContent = message;
+        statusEl.style.opacity = message ? '1' : '0';
+        statusEl.style.marginTop = message ? '12px' : '';
+        statusEl.style.fontWeight = '900';
+        statusEl.style.color = ok ? 'rgba(16,185,129,0.95)' : 'rgba(239,68,68,0.95)';
+      };
+      const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim());
+      const encodeFormData = (formData) => {
+        const params = new URLSearchParams();
+        for (const [key, value] of formData.entries()) params.append(key, value);
+        return params.toString();
+      };
+
+      let firstInvalid = null;
       let isValid = true;
+
       inputs.forEach(input => {
-        if (input.hasAttribute('required') && !input.value.trim()) {
+        const field = input.closest('.field');
+        const value = input.value.trim();
+        const requiredMissing = input.hasAttribute('required') && !value;
+        const invalidEmail = input.type === 'email' && value && !isEmail(value);
+
+        if (requiredMissing || invalidEmail) {
           isValid = false;
-          input.parentElement.classList.add('is-invalid');
-        } else {
-          input.parentElement.classList.remove('is-invalid');
+          if (field) field.classList.add('is-invalid');
+          if (!firstInvalid) firstInvalid = input;
+        } else if (field) {
+          field.classList.remove('is-invalid');
         }
       });
 
-      if (isValid) {
-        const submitBtn = $('button[type="submit"]', form);
-        const originalHTML = submitBtn.innerHTML;
+      if (!isValid) {
+        setStatus(currentLang === 'EN'
+          ? 'Please complete the required fields correctly.'
+          : 'Completa correctamente los campos obligatorios.', false);
+        if (firstInvalid) {
+          firstInvalid.focus();
+          if (typeof firstInvalid.reportValidity === 'function') firstInvalid.reportValidity();
+        }
+        return;
+      }
 
-        // Texto según idioma (solo el estado, no altera estética)
+      const botField = form.querySelector('input[name="bot-field"]');
+      if (botField && String(botField.value || '').trim()) return;
+
+      if (submitBtn) {
         submitBtn.innerHTML = currentLang === 'EN' ? 'Sending…' : 'Enviando...';
         submitBtn.disabled = true;
+      }
+      setStatus('', true);
 
-        setTimeout(() => {
-          alert(currentLang === 'EN'
-            ? 'Message sent successfully. We will contact you soon.'
-            : 'Mensaje enviado con éxito. Nos pondremos en contacto pronto.'
-          );
+      let redirected = false;
 
-          form.reset();
-          $$('.field', form).forEach(field => {
-            field.classList.remove('is-focused', 'is-invalid');
-          });
+      try {
+        const formData = new FormData(form);
+        if (!formData.get('form-name')) {
+          formData.set('form-name', form.getAttribute('name') || 'contact');
+        }
 
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encodeFormData(formData)
+        });
+
+        if (!response.ok) throw new Error(`Netlify form error: ${response.status}`);
+
+        const action = form.getAttribute('action') || '/gracias/';
+        const redirectTo = new URL(action, window.location.origin).toString();
+        redirected = true;
+        window.location.replace(redirectTo);
+      } catch (error) {
+        console.error('FORM SUBMIT ERROR:', error);
+        setStatus(currentLang === 'EN'
+          ? 'Something went wrong. Please try again.'
+          : 'Ocurrió un error. Por favor intenta de nuevo.', false);
+
+        try {
+          HTMLFormElement.prototype.submit.call(form);
+          redirected = true;
+        } catch (nativeError) {
+          console.error('NATIVE FORM SUBMIT ERROR:', nativeError);
+        }
+      } finally {
+        if (!redirected && submitBtn) {
           submitBtn.innerHTML = originalHTML;
           submitBtn.disabled = false;
-
-          // Re-aplica traducciones para restaurar texto correcto si el idioma es EN
           applyTranslations();
-        }, 1500);
+        }
       }
     });
   }
