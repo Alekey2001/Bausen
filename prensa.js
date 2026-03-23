@@ -1,5 +1,3 @@
-
-
 (() => {
   // Evita doble inicialización si por error cargas el script 2 veces
   if (window.__bausen_prensa_inited) return;
@@ -415,6 +413,33 @@
       // expose for mobile-menu open if needed
       window.__bausenCloseLang = close;
 
+      // Hover: abre al entrar al botón/wrapper, cierra al salir
+      const langWrapper = languageBtn.closest(".language-selector") || languageBtn.parentElement;
+      if (langWrapper) {
+        let hoverCloseTimer = null;
+        langWrapper.addEventListener("pointerenter", function(e) {
+          // solo dispositivos con mouse real
+          if (e.pointerType === "touch") return;
+          clearTimeout(hoverCloseTimer);
+          open();
+        });
+        langWrapper.addEventListener("pointerleave", function(e) {
+          if (e.pointerType === "touch") return;
+          clearTimeout(hoverCloseTimer);
+          hoverCloseTimer = setTimeout(close, 120);
+        });
+        // Si el dropdown también tiene pointerenter, cancelar el cierre
+        languageDropdown.addEventListener("pointerenter", function(e) {
+          if (e.pointerType === "touch") return;
+          clearTimeout(hoverCloseTimer);
+        });
+        languageDropdown.addEventListener("pointerleave", function(e) {
+          if (e.pointerType === "touch") return;
+          clearTimeout(hoverCloseTimer);
+          hoverCloseTimer = setTimeout(close, 120);
+        });
+      }
+
       languageBtn.addEventListener("click", (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -808,9 +833,12 @@
 
   
 function initActiveLink() {
-    // Soporta tanto desktop (.nav__link) como menú móvil (.mobile-nav-link)
-    const links = $$(".nav__link, .mobile-nav-link");
-    if (!links.length) return;
+    // Solo aplica estado activo al menú móvil (.mobile-nav-link)
+    // El nav desktop (.nav__link) no resalta la página actual (paridad con referencia acerca)
+    const mobileLinks = $(".mobile-nav-link") ? Array.from(document.querySelectorAll(".mobile-nav-link")) : [];
+    const desktopLinks = $(".nav__link") ? Array.from(document.querySelectorAll(".nav__link")) : [];
+
+    if (!mobileLinks.length && !desktopLinks.length) return;
 
     const file = (window.location.pathname.split("/").pop() || "").toLowerCase();
     const pageNoExt = file.split("?")[0].split("#")[0].replace(".html", "").replace(".htm", "");
@@ -842,19 +870,15 @@ function initActiveLink() {
       return alias[noExt] || noExt;
     };
 
-    links.forEach((a) => {
-      const key = keyFromLink(a);
-      const isCurrent = key === currentKey;
+    // Desktop y móvil: nunca resaltar el link activo (paridad con referencia acerca)
+    desktopLinks.forEach((a) => {
+      a.classList.remove("is-active", "active");
+      a.removeAttribute("aria-current");
+    });
 
-      // Clases usadas por este diseño (prensa.css)
-      a.classList.toggle("is-active", isCurrent);
-
-      // Compat (si algún estilo externo usa .active)
-      a.classList.toggle("active", isCurrent);
-
-      // Accesibilidad
-      if (isCurrent) a.setAttribute("aria-current", "page");
-      else a.removeAttribute("aria-current");
+    mobileLinks.forEach((a) => {
+      a.classList.remove("is-active", "active");
+      a.removeAttribute("aria-current");
     });
   }
 
@@ -870,6 +894,28 @@ function initActiveLink() {
   initReveal();
   initTilt();
   initPress();
+
+  // Guardia permanente: quita is-active/active/aria-current de nav desktop Y drawer móvil
+  // sin importar qué script externo los vuelva a poner
+  (function guardNavLinks() {
+    const clean = () => {
+      document.querySelectorAll(".nav__link, .mobile-nav-link").forEach(function(a) {
+        a.classList.remove("is-active", "active");
+        a.removeAttribute("aria-current");
+      });
+    };
+    clean();
+    // Observar tanto el nav desktop como el drawer móvil
+    [".nav", ".mobile-menu", "#mobileMenu"].forEach(function(sel) {
+      var el = document.querySelector(sel);
+      if (el && "MutationObserver" in window) {
+        new MutationObserver(clean).observe(el, {
+          subtree: true, attributes: true,
+          attributeFilter: ["class", "aria-current"]
+        });
+      }
+    });
+  })();
 })();
 (function () {
   if (window.__PRNSA_MENU_REVEAL_PATCH_V2__) return;

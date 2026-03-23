@@ -1,5 +1,3 @@
-
-
 :root{
   --c1: rgb(0,61,165);
   --c2: rgb(24,35,137);
@@ -149,14 +147,14 @@ html[data-theme="light"] .nav__link:hover{ background: rgba(11,16,32,.06); }
 .nav__link.active,
 .nav__link[aria-current="page"]{
   color: var(--text);
-  background: rgba(255,255,255,.08);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.10) inset;
+  background: transparent;
+  box-shadow: none;
 }
 html[data-theme="light"] .nav__link.is-active,
 html[data-theme="light"] .nav__link.active,
 html[data-theme="light"] .nav__link[aria-current="page"]{
-  background: rgba(11,16,32,.06);
-  box-shadow: 0 0 0 1px rgba(11,16,32,.08) inset;
+  background: transparent;
+  box-shadow: none;
 }
 
 .header__actions{
@@ -436,7 +434,6 @@ html[data-theme="light"] .menu-toggle{
   pointer-events:none;
   transition: opacity .22s var(--ease);
   z-index: var(--z-overlay);
-  backdrop-filter: blur(8px);
 }
 .overlay.show{ opacity:1; pointer-events:auto; }
 
@@ -1526,10 +1523,10 @@ html[data-theme="light"] .social__btn{ background: rgba(11,16,32,.03); }
 }
 .site-header .nav__link.is-active,
 .site-header .nav__link[aria-current="page"]{
-  opacity: 1;
+  opacity: 0.92;
   color: var(--text);
-  background: color-mix(in srgb, var(--primary) 13%, transparent);
-  box-shadow: inset 0 0 0 1px rgba(31,94,255,0.14);
+  background: transparent;
+  box-shadow: none;
 }
 
 /* Hamburger: match reference (.menu-toggle + .bar) exactly */
@@ -1744,9 +1741,8 @@ body.theme-dark{ background: var(--bg); color: var(--text); }
     font-weight: 800;
     line-height: 1.2;
     background: transparent;
-    border: 1px solid transparent;
+    border: none;
     transition: background var(--t-fast) var(--ease),
-                border-color var(--t-fast) var(--ease),
                 color var(--t-fast) var(--ease),
                 transform var(--t-fast) var(--ease);
   }
@@ -1755,7 +1751,6 @@ body.theme-dark{ background: var(--bg); color: var(--text); }
   .mobile-nav .mobile-sub-link:focus-visible{
     color: var(--text);
     background: rgba(31,94,255,0.06);
-    border-color: rgba(31,94,255,0.10);
     transform: translateY(-1px);
     outline: none;
   }
@@ -1763,7 +1758,6 @@ body.theme-dark{ background: var(--bg); color: var(--text); }
   html[data-theme="light"] .mobile-nav .mobile-sub-link:hover,
   html[data-theme="light"] .mobile-nav .mobile-sub-link:focus-visible{
     background: rgba(31,94,255,0.045);
-    border-color: rgba(11,16,32,0.08);
   }
 
   .mobile-nav .mobile-sub-link.active,
@@ -1771,7 +1765,6 @@ body.theme-dark{ background: var(--bg); color: var(--text); }
   .mobile-nav .mobile-sub-link[aria-current="page"]{
     color: var(--text);
     background: rgba(31,94,255,0.08);
-    border-color: rgba(31,94,255,0.12);
   }
 
   /* Mantener compatibilidad con tu padding del CTA al final */
@@ -1891,9 +1884,8 @@ html[data-theme="light"] .mobile-nav .mobile-submenu{
   font-weight:800;
   line-height:1.2;
   background: transparent;
-  border:1px solid transparent;
+  border: none;
   transition: background var(--t-fast, .18s) var(--ease),
-              border-color var(--t-fast, .18s) var(--ease),
               color var(--t-fast, .18s) var(--ease),
               transform var(--t-fast, .18s) var(--ease);
 }
@@ -1902,7 +1894,6 @@ html[data-theme="light"] .mobile-nav .mobile-submenu{
 .mobile-nav .mobile-sub-link:focus-visible{
   color: var(--text);
   background: rgba(31,94,255,0.06);
-  border-color: rgba(31,94,255,0.10);
   transform: translateY(-1px);
   outline:none;
 }
@@ -1910,7 +1901,6 @@ html[data-theme="light"] .mobile-nav .mobile-submenu{
 html[data-theme="light"] .mobile-nav .mobile-sub-link:hover,
 html[data-theme="light"] .mobile-nav .mobile-sub-link:focus-visible{
   background: rgba(31,94,255,0.045);
-  border-color: rgba(11,16,32,0.08);
 }
 
 .mobile-nav .mobile-sub-link.active,
@@ -1918,7 +1908,6 @@ html[data-theme="light"] .mobile-nav .mobile-sub-link:focus-visible{
 .mobile-nav .mobile-sub-link[aria-current="page"]{
   color: var(--text);
   background: rgba(31,94,255,0.08);
-  border-color: rgba(31,94,255,0.12);
 }
 
 /* Desktop pointer: apertura visual del submenú por hover (sin romper <details> touch) */
@@ -2124,14 +2113,13 @@ html[data-theme="light"] .mobile-nav .mobile-submenu{
   font-weight: 800;
   color: var(--muted);
   background: transparent;
-  border: 1px solid transparent;
-  transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+  border: none;
+  transition: background .16s ease, color .16s ease, transform .16s ease;
 }
 .mobile-nav .mobile-sub-link:hover,
 .mobile-nav .mobile-sub-link:focus-visible{
   color: var(--text);
   background: rgba(31,94,255,.05);
-  border-color: rgba(31,94,255,.12);
   transform: translateY(-1px);
   outline: none;
 }
@@ -2140,7 +2128,6 @@ html[data-theme="light"] .mobile-nav .mobile-submenu{
 .mobile-nav .mobile-sub-link[aria-current="page"]{
   color: var(--text);
   background: rgba(31,94,255,.08);
-  border-color: rgba(31,94,255,.14);
 }
 
 /* Contacto cerca del final (visual spacing antes del CTA) */
@@ -2416,4 +2403,563 @@ html[data-theme="light"] .social .social-mini{
 /* 1) En PC, quitar el CTA "¿Eres colaborador?" que está dentro del drawer */
 @media (min-width: 981px){
   #mobileMenu .btn--collab{ display: none !important; }
+}
+
+/* =========================================================
+   PATCH FINAL — Botones blancos + cuadrados
+   1) Idioma (PC + móvil): fondo BLANCO
+   2) Hamburguesa (PC + móvil): fondo BLANCO
+   3) Dropdown de idiomas: fondo BLANCO
+   4) Opciones dentro del dropdown: fondo BLANCO
+   5) Idioma, hamburguesa y colaborador: border-radius 6px (cuadrado)
+========================================================= */
+
+/* Idioma → blanco, cuadrado */
+.language-btn,
+.site-header .language-btn,
+.header__actions .language-btn{
+  background: #FFFFFF !important;
+  border-radius: 6px !important;
+}
+
+/* Hamburguesa → blanco, cuadrado */
+.menu-toggle,
+.site-header .menu-toggle{
+  background: #FFFFFF !important;
+  border-radius: 6px !important;
+}
+
+/* Colaborador → cuadrado (sin cambio de color) */
+.btn--collab.btn--primary,
+.header__actions .btn--collab,
+.header__actions .btn--primary{
+  border-radius: 6px !important;
+}
+
+/* Dropdown de idiomas → blanco */
+.language-dropdown,
+body:not(.theme-dark) .language-dropdown{
+  background: #FFFFFF !important;
+}
+
+/* Opciones dentro del dropdown → fondo blanco */
+.language-option{
+  background: #FFFFFF !important;
+}
+.language-option:hover{
+  background: rgba(11,16,32,0.06) !important;
+}
+/* =========================================================
+   PATCH: Cabecera (header) fondo Morning Cloud #DCE2EF
+   — PC y móvil, tema light
+========================================================= */
+html[data-theme="light"] .site-header{
+  background: #DCE2EF !important;
+}
+/* =========================================================
+   PATCH: Logo header — tamaño PC y móvil
+========================================================= */
+
+/* PC: width fijo 140px */
+@media (min-width: 981px){
+  .brand__logo,
+  .logo-link img{
+    width: 140px !important;
+    max-width: 180px !important;
+    height: auto !important;
+  }
+}
+
+/* Móvil: width 120px */
+@media (max-width: 980px){
+  .brand__logo,
+  .logo-link img{
+    width: 120px !important;
+    max-width: 120px !important;
+    height: auto !important;
+  }
+}
+/* =========================================================
+   PATCH: Drawer sale desde la derecha (PC + móvil)
+   + Ocultar "¿Eres colaborador?" dentro del menú en móvil
+========================================================= */
+
+/* Panel cerrado: fuera por la derecha */
+.mobile-menu{
+  transform: translateX(110%) !important;
+  opacity: 1 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  transition: transform .25s ease !important;
+}
+
+/* Panel abierto: desliza hacia dentro */
+.mobile-menu.open{
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Ocultar "¿Eres colaborador?" dentro del drawer en PC Y móvil */
+.mobile-menu .btn--collab,
+.mobile-menu .btn--primary.btn--collab,
+.mobile-nav > .btn--collab,
+#mobileMenu .btn--collab{
+  display: none !important;
+}
+/* =========================================================
+   PATCH: Cabecera del drawer + botón Servicios
+   1) Cabecera interna del menú → rgba(91,117,182,0.07)
+   2) Botón Servicios dentro del drawer → #EBECED
+========================================================= */
+
+/* 1) Cabecera del drawer (logo + botón X) */
+.mobile-menu .mobile-menu__head,
+.mobile-menu #mobile-menu-header,
+#mobileMenu .mobile-menu__head{
+  background: rgba(91,117,182,0.07) !important;
+}
+
+/* 2) Botón Servicios dentro del drawer */
+.mobile-menu .mobile-nav-summary[data-page="servicios"],
+#mobileMenu .mobile-nav-summary[data-page="servicios"]{
+  background: #EBECED !important;
+}
+/* =========================================================
+   PATCH: Cuerpo del menú hamburguesa (debajo de cabecera) → blanco
+========================================================= */
+.mobile-menu .mobile-nav,
+#mobileMenu .mobile-nav{
+  background: #FFFFFF !important;
+}
+/* =========================================================
+   PATCH: Sub-servicios fondo blanco
+   Botones principales (nav-link/summary) se mantienen en gris
+   Solo los sub-links debajo de cada sección → blanco
+========================================================= */
+
+/* Sub-servicios → blanco */
+.mobile-menu .mobile-nav .mobile-sub-link,
+.mobile-menu .mobile-submenu .mobile-sub-link,
+#mobileMenu .mobile-sub-link{
+  background: #FFFFFF !important;
+  border: none !important;
+}
+/* ==========================================================
+   PARIDAD REFERENCIA (acerca.html) — Solo móvil/PC hamburguesa
+   Regla: SOLO toca menú hamburguesa, botones drawer y colores.
+   No afecta layout ni secciones de página.
+   ========================================================== */
+
+/* ── 1. Botón hamburguesa: mismo look que .icon-btn.burger de acerca ── */
+.menu-toggle.icon-btn,
+.menu-toggle.burger,
+.icon-btn.burger{
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 14px !important;
+  border: 1px solid rgba(11,16,32,.12) !important;
+  background: rgba(11,16,32,.04) !important;
+  color: var(--text);
+  cursor: pointer;
+  padding: 0 !important;
+  box-shadow: 0 12px 26px rgba(19,33,68,.08) !important;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease),
+              background .18s var(--ease);
+  flex: 0 0 auto;
+}
+
+html[data-theme="light"] .menu-toggle.icon-btn,
+html[data-theme="light"] .icon-btn.burger{
+  box-shadow: 0 12px 26px rgba(19,33,68,.10) !important;
+}
+
+html[data-theme="dark"] .menu-toggle.icon-btn,
+html[data-theme="dark"] .icon-btn.burger{
+  border-color: rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.06) !important;
+  box-shadow: none !important;
+}
+
+.menu-toggle.icon-btn:hover,
+.icon-btn.burger:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px rgba(19,33,68,.13) !important;
+}
+
+/* Ícono FA dentro del burger */
+.icon-btn.burger i,
+.menu-toggle.icon-btn i{
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text);
+  pointer-events: none;
+}
+
+/* ── 2. Botón cerrar drawer: paridad con acerca ── */
+.mobile-menu__close{
+  display: grid !important;
+  place-items: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(11,16,32,.10) !important;
+  background: rgba(11,16,32,.04) !important;
+  color: var(--text) !important;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: transform .18s var(--ease), background .18s var(--ease);
+}
+
+html[data-theme="dark"] .mobile-menu__close{
+  border-color: rgba(255,255,255,.12) !important;
+  background: rgba(255,255,255,.05) !important;
+}
+
+.mobile-menu__close:hover{ transform: translateY(-1px) !important; }
+
+.mobile-menu__close i{
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* ── 3. Drawer background: mismo gradiente que acerca ── */
+.mobile-menu{
+  background: linear-gradient(160deg, #ffffff 0%, #f4f6ff 100%) !important;
+  border: 1px solid rgba(11,16,32,.08) !important;
+}
+
+html[data-theme="dark"] .mobile-menu{
+  background: linear-gradient(180deg, rgba(12,18,36,.95), rgba(10,14,28,.90)) !important;
+  border-color: rgba(255,255,255,.08) !important;
+}
+
+/* ── 4. Cabecera del drawer ── */
+.mobile-menu__head{
+  border-bottom: 1px solid rgba(11,16,32,.07) !important;
+  padding: 14px 14px 12px !important;
+}
+
+html[data-theme="dark"] .mobile-menu__head{
+  border-bottom-color: rgba(255,255,255,.08) !important;
+}
+
+/* ── 5. Nav links principales: color azul marino activo (como referencia) ── */
+.mobile-menu .mobile-nav-link,
+#mobileMenu .mobile-nav-link{
+  background: rgba(11,16,32,.03) !important;
+  border: 1px solid rgba(11,16,32,.07) !important;
+  color: var(--text) !important;
+  font-weight: 900 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06) !important;
+}
+
+html[data-theme="dark"] .mobile-menu .mobile-nav-link,
+html[data-theme="dark"] #mobileMenu .mobile-nav-link{
+  background: rgba(255,255,255,.04) !important;
+  border-color: rgba(255,255,255,.07) !important;
+  color: rgba(255,255,255,.85) !important;
+}
+
+.mobile-menu .mobile-nav-link:hover,
+#mobileMenu .mobile-nav-link:hover{
+  background: color-mix(in srgb, var(--c1) 9%, transparent) !important;
+  border-color: rgba(0,61,165,.18) !important;
+  color: var(--text) !important;
+  transform: translateY(-1px);
+}
+
+/* Link activo: azul marino referencia */
+.mobile-menu .mobile-nav-link.is-active,
+.mobile-menu .mobile-nav-link.active,
+.mobile-menu .mobile-nav-link[aria-current="page"],
+#mobileMenu .mobile-nav-link.is-active,
+#mobileMenu .mobile-nav-link.active,
+#mobileMenu .mobile-nav-link[aria-current="page"]{
+  background: rgba(0,61,165,.12) !important;
+  border-color: rgba(0,61,165,.26) !important;
+  color: rgb(0,61,165) !important;
+  box-shadow: 0 0 0 1px rgba(0,61,165,.10) inset,
+              0 12px 26px rgba(0,61,165,.10) !important;
+}
+
+html[data-theme="dark"] .mobile-menu .mobile-nav-link.is-active,
+html[data-theme="dark"] .mobile-menu .mobile-nav-link.active,
+html[data-theme="dark"] .mobile-menu .mobile-nav-link[aria-current="page"],
+html[data-theme="dark"] #mobileMenu .mobile-nav-link.is-active,
+html[data-theme="dark"] #mobileMenu .mobile-nav-link.active,
+html[data-theme="dark"] #mobileMenu .mobile-nav-link[aria-current="page"]{
+  background: rgba(0,61,165,.34) !important;
+  border-color: rgba(100,160,255,.30) !important;
+  color: rgba(255,255,255,.96) !important;
+}
+
+/* ── 6. Sub-links: mismo tono azul para activo ── */
+.mobile-menu .mobile-sub-link,
+#mobileMenu .mobile-sub-link{
+  background: #ffffff !important;
+  border: none !important;
+  color: var(--muted) !important;
+  font-weight: 800;
+  border-radius: 12px !important;
+}
+
+.mobile-menu .mobile-sub-link:hover,
+#mobileMenu .mobile-sub-link:hover{
+  background: rgba(0,61,165,.06) !important;
+  color: var(--text) !important;
+  transform: translateY(-1px);
+}
+
+.mobile-menu .mobile-sub-link.active,
+.mobile-menu .mobile-sub-link.is-active,
+#mobileMenu .mobile-sub-link.active,
+#mobileMenu .mobile-sub-link.is-active{
+  background: rgba(0,61,165,.10) !important;
+  color: rgb(0,61,165) !important;
+}
+
+/* ── 7. Botón CTA "¿Eres colaborador?" dentro del drawer: azul primario ── */
+.mobile-menu .btn--primary.btn--collab,
+.mobile-menu .btn--primary.btn--pill,
+#mobileMenu .btn--primary.btn--collab,
+#mobileMenu .btn--primary.btn--pill{
+  background: linear-gradient(135deg, var(--c1), var(--c2)) !important;
+  color: white !important;
+  box-shadow: 0 14px 40px rgba(0,61,165,.28) !important;
+  border-color: transparent !important;
+  font-weight: 800;
+}
+
+.mobile-menu .btn--primary.btn--collab:hover,
+#mobileMenu .btn--primary.btn--collab:hover{
+  transform: translateY(-1px) !important;
+  box-shadow: 0 18px 50px rgba(0,61,165,.34) !important;
+}
+
+/* ── 8. Responsive: hamburguesa visible en móvil Y PC (como referencia) ── */
+@media (max-width: 980px){
+  .icon-btn.burger,
+  .menu-toggle.icon-btn{
+    display: grid !important;
+  }
+}
+
+@media (min-width: 981px){
+  .icon-btn.burger,
+  .menu-toggle.icon-btn{
+    display: grid !important;   /* pc también muestra hambúrger como en acerca */
+  }
+}
+
+/* ==========================================================
+   PATCH FINAL — Botón hamburguesa blanco + botones drawer
+   claros con texto gris oscuro (paridad referencia acerca)
+   ========================================================== */
+
+/* ── Hamburguesa: blanco sólido, borde sutil, ícono gris oscuro ── */
+.menu-toggle,
+.menu-toggle.icon-btn,
+.icon-btn.burger,
+.site-header .menu-toggle{
+  background: #FFFFFF !important;
+  border: 1px solid rgba(11,16,32,.14) !important;
+  box-shadow: 0 2px 8px rgba(11,16,32,.08) !important;
+  color: #1a1f36 !important;
+}
+
+.menu-toggle i,
+.icon-btn.burger i,
+.menu-toggle.icon-btn i{
+  color: #1a1f36 !important;
+  font-size: 17px !important;
+}
+
+/* Barras (fallback si no tiene ícono FA) */
+.menu-toggle span,
+.menu-toggle .bar{
+  background: #1a1f36 !important;
+}
+
+.menu-toggle:hover,
+.icon-btn.burger:hover{
+  background: #f2f4f8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(11,16,32,.12) !important;
+}
+
+/* ── Todos los botones nav principales del drawer: claro + gris oscuro ── */
+.mobile-menu .mobile-nav-link,
+#mobileMenu .mobile-nav-link,
+.mobile-menu .mobile-nav-summary,
+#mobileMenu .mobile-nav-summary{
+  background: #F0F2F5 !important;
+  border: 1px solid rgba(11,16,32,.09) !important;
+  color: #1a1f36 !important;
+  box-shadow: 0 2px 6px rgba(11,16,32,.06) !important;
+}
+
+.mobile-menu .mobile-nav-link:hover,
+#mobileMenu .mobile-nav-link:hover{
+  background: #E5E8EF !important;
+  border-color: rgba(11,16,32,.13) !important;
+  color: #0b1020 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Activo: acento azul marino suave, texto oscuro */
+.mobile-menu .mobile-nav-link.is-active,
+.mobile-menu .mobile-nav-link.active,
+.mobile-menu .mobile-nav-link[aria-current="page"],
+#mobileMenu .mobile-nav-link.is-active,
+#mobileMenu .mobile-nav-link.active,
+#mobileMenu .mobile-nav-link[aria-current="page"]{
+  background: #dce4f5 !important;
+  border-color: rgba(0,61,165,.22) !important;
+  color: #003da5 !important;
+  box-shadow: 0 0 0 1px rgba(0,61,165,.10) inset,
+              0 4px 14px rgba(0,61,165,.08) !important;
+}
+
+/* Botón Servicios (summary con data-page) */
+.mobile-menu .mobile-nav-summary[data-page="servicios"],
+#mobileMenu .mobile-nav-summary[data-page="servicios"],
+.mobile-menu .mobile-nav-summary[data-page="noticias"],
+#mobileMenu .mobile-nav-summary[data-page="noticias"]{
+  background: #F0F2F5 !important;
+  color: #1a1f36 !important;
+}
+
+/* ── Sub-links: blanco con texto gris oscuro ── */
+.mobile-menu .mobile-nav .mobile-sub-link,
+.mobile-menu .mobile-submenu .mobile-sub-link,
+#mobileMenu .mobile-sub-link{
+  background: #FFFFFF !important;
+  border: none !important;
+  color: #3a4155 !important;
+  font-weight: 700 !important;
+}
+
+.mobile-menu .mobile-sub-link:hover,
+#mobileMenu .mobile-sub-link:hover{
+  background: #eef1f8 !important;
+  color: #0b1020 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ── Botón cerrar (X): blanco, borde sutil, ícono gris oscuro ── */
+.mobile-menu__close,
+#mobileMenu .mobile-menu__close{
+  background: #FFFFFF !important;
+  border: 1px solid rgba(11,16,32,.12) !important;
+  color: #1a1f36 !important;
+  box-shadow: 0 2px 6px rgba(11,16,32,.06) !important;
+}
+
+.mobile-menu__close i{
+  color: #1a1f36 !important;
+}
+
+.mobile-menu__close:hover{
+  background: #f2f4f8 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ==========================================================
+   FIX — Quitar resaltado del link activo "Prensa" en nav desktop
+   El link tiene aria-current="page" que aplica fondo/box-shadow.
+   En la referencia (acerca) todos los links del nav se ven igual,
+   sin resaltado de página activa. Solo el hover está permitido.
+   ========================================================== */
+
+/* Desktop nav: sin resaltado de página activa */
+.site-header .nav__link[aria-current="page"],
+.site-header .nav__link.active,
+.site-header .nav__link.is-active{
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text) !important;
+  opacity: 0.92;
+}
+
+html[data-theme="light"] .site-header .nav__link[aria-current="page"],
+html[data-theme="light"] .site-header .nav__link.active,
+html[data-theme="light"] .site-header .nav__link.is-active{
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text) !important;
+}
+
+/* Hover sí se mantiene igual que el resto */
+.site-header .nav__link[aria-current="page"]:hover{
+  background: color-mix(in srgb, var(--primary, rgb(0,61,165)) 10%, transparent) !important;
+}
+
+/* ==========================================================
+   FIX DEFINITIVO — Neutralizar resaltado nav link activo
+   El JS agrega aria-current/active dinámicamente según URL.
+   Este bloque lo sobreescribe con !important para anularlo.
+   Solo afecta el nav desktop, no el drawer móvil.
+   ========================================================== */
+
+/* Quitar cualquier resaltado de link activo en nav desktop */
+.site-header .nav .nav__link[aria-current="page"],
+.site-header .nav .nav__link.active,
+.site-header .nav .nav__link.is-active,
+header .nav .nav__link[aria-current="page"],
+header .nav .nav__link.active,
+header .nav .nav__link.is-active,
+.nav .nav__link[aria-current="page"],
+.nav .nav__link.active,
+.nav .nav__link.is-active {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+  color: var(--text) !important;
+  opacity: 0.92 !important;
+  font-weight: 900 !important;
+}
+
+/* Hover sigue funcionando normal */
+.site-header .nav .nav__link[aria-current="page"]:hover,
+.site-header .nav .nav__link.active:hover,
+.site-header .nav .nav__link.is-active:hover {
+  background: color-mix(in srgb, rgb(0,61,165) 10%, transparent) !important;
+  opacity: 1 !important;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================
+   FRANJA DESVANECIDA — Solo PC (≥981px)
+   Franja delgada debajo del header, igual que referencia acerca.
+   No cubre pantalla completa, no invade el header.
+   ========================================================== */
+@media (min-width: 981px) {
+  .site-header {
+    overflow: visible;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 32px;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      rgba(180, 192, 215, 0.50) 0%,
+      rgba(210, 220, 235, 0.20) 55%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+  }
 }
