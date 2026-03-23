@@ -896,22 +896,32 @@ function initActiveLink() {
   initPress();
 
   // Guardia permanente: quita is-active/active/aria-current de nav desktop Y drawer móvil
-  // sin importar qué script externo los vuelva a poner
+  // IMPORTANTE: solo observa aria-current (no "class") para evitar loop infinito
   (function guardNavLinks() {
-    const clean = () => {
+    var isRunning = false;
+    var clean = function() {
+      if (isRunning) return;
+      isRunning = true;
       document.querySelectorAll(".nav__link, .mobile-nav-link").forEach(function(a) {
         a.classList.remove("is-active", "active");
         a.removeAttribute("aria-current");
       });
+      isRunning = false;
     };
     clean();
-    // Observar tanto el nav desktop como el drawer móvil
-    [".nav", ".mobile-menu", "#mobileMenu"].forEach(function(sel) {
-      var el = document.querySelector(sel);
+    // Solo observar aria-current (no "class") para no interferir con .open del drawer
+    var nav = document.querySelector(".nav");
+    var drawer = document.querySelector(".mobile-menu, #mobileMenu");
+    [nav, drawer].forEach(function(el) {
       if (el && "MutationObserver" in window) {
-        new MutationObserver(clean).observe(el, {
+        new MutationObserver(function(mutations) {
+          var needsClean = mutations.some(function(m) {
+            return m.attributeName === "aria-current";
+          });
+          if (needsClean) clean();
+        }).observe(el, {
           subtree: true, attributes: true,
-          attributeFilter: ["class", "aria-current"]
+          attributeFilter: ["aria-current"]
         });
       }
     });
