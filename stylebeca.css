@@ -4978,3 +4978,14 @@ body:not(.theme-dark) #connect .connect-left > a.btn.btn-primary.btn-lg.btn-icon
     line-height: 1.6;
   }
 }
+
+/* =============================================
+   IDIOMA INGLÉS — OCULTO TEMPORALMENTE
+   Para reactivar: descomentar las reglas internas
+   ============================================= */
+/*
+.language-option[data-lang="EN"],
+.lang-option-flag[data-flag="EN"] {
+  display: none;
+}
+*/

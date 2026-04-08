@@ -5,7 +5,7 @@
    ✅ i18n:
    - Un solo motor (data-i18n / data-i18n-text / data-i18n-placeholder)
    - storage key única: bausen_lang (compat: preferred-language)
-   - Default: EN
+   - Default: ES (idioma original del sitio; EN es la traducción)
    ✅ Footer incluido y estable
 */
 
@@ -423,13 +423,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (v.toLowerCase().startsWith("fr")) return "FR";
     if (v.toLowerCase().startsWith("it")) return "IT";
     if (v.toLowerCase().startsWith("de")) return "DE";
-    return "EN"; // ✅ default site language
+    // return "EN"; // ✅ default site language — INGLÉS DESHABILITADO TEMPORALMENTE (in8)
+    return "ES"; // idioma por defecto mientras EN está oculto
   };
 
   const getLang = () => {
     // compat: if you previously stored preferred-language
     const saved = storage.get(LANG_KEY, null) || storage.get("preferred-language", null);
-    return normalizeLang(saved || "EN");
+    return normalizeLang(saved || /* "EN" */ "ES"); // default ES mientras EN está oculto
   };
 
   const setLang = (lang) => {
