@@ -425,18 +425,24 @@ html[data-theme="light"] .menu-toggle{
   opacity:.95;
 }
 
-/* Overlay */
+/* Overlay — cubre el contenido debajo del header únicamente */
 .overlay{
-  position:fixed;
-  inset:0;
-  background: rgba(0,0,0,.55);
-  opacity:0;
-  pointer-events:none;
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity .22s var(--ease);
-  z-index: var(--z-overlay);
+  z-index: calc(var(--z-header) - 1);
 }
 .overlay.show{ opacity:1; pointer-events:auto; }
 
+@media (max-width: 980px){
+  .overlay{ top: 0; z-index: calc(var(--z-header) - 1); }
+}
 /* Drawer */
 .mobile-menu{
   position: fixed;
@@ -2962,4 +2968,35 @@ header .nav .nav__link.is-active,
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
     mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
   }
+}
+
+/* ==========================================================
+   HEADER BLUR — cuando el menú hamburguesa está abierto
+   ::before cubre el header con gris difuminado.
+   header__inner tiene z-index mayor para quedar encima.
+   ========================================================== */
+
+.site-header::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(180, 195, 220, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s var(--ease);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+body.menu-open .site-header::before{
+  opacity: 1;
+}
+
+
+/* header__inner encima del ::before blur para que los controles no queden tapados */
+.site-header .header__inner{
+  position: relative;
+  z-index: 2;
 }

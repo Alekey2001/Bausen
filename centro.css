@@ -2355,4 +2355,394 @@ html[data-theme="light"] #langBtn:hover,
 html[data-theme="light"] #menuToggle:hover{
   background: #FFFFFF !important;
 }
- 
+
+/* =========================================================
+   PATCH — CAMBIOS SOLICITADOS (solo estética, sin layout)
+   1) PC: Eres colaborador, idiomas y hamburguesa -> cuadrados, sin borde de color, fondo blanco
+   2) Móvil: ocultar "Eres colaborador" dentro del menú hamburguesa
+   3) Menú hamburguesa (aside.mobile-menu): esquinas ovaladas
+========================================================= */
+
+/* 1) Cuadrado: quitar border-radius en los 3 botones del header en resolución PC */
+@media (min-width: 768px) {
+  html[data-theme="light"] .collab-cta,
+  html[data-theme="light"] #langBtn,
+  html[data-theme="light"] #menuToggle {
+    border-radius: 0 !important;
+    border-color: transparent !important;
+    background: #FFFFFF !important;
+  }
+
+  /* Hover: mantener cuadrado y blanco */
+  html[data-theme="light"] .collab-cta:hover,
+  html[data-theme="light"] #langBtn:hover,
+  html[data-theme="light"] #menuToggle:hover {
+    border-radius: 0 !important;
+    border-color: transparent !important;
+    background: #FFFFFF !important;
+  }
+}
+
+/* 2) Ocultar "Eres colaborador" dentro del menú hamburguesa en móvil */
+@media (max-width: 767px) {
+  .mobile-cta {
+    display: none !important;
+  }
+}
+
+/* 3) Menú hamburguesa (aside): esquinas ovaladas */
+.mobile-menu {
+  border-radius: 24px 0 0 24px !important;
+}
+
+/* =========================================================
+   PATCH — NUEVOS CAMBIOS SOLICITADOS (solo estética, sin layout)
+   1) PC: ocultar "Eres colaborador" dentro del menú hamburguesa
+   2) Icono hamburguesa (tres líneas): centrado dentro del botón
+   3) Móvil: idiomas y hamburguesa -> cuadrados, sin borde azul marino
+========================================================= */
+
+/* 1) Ocultar "Eres colaborador" en el menú hamburguesa también en PC */
+@media (min-width: 768px) {
+  .mobile-cta {
+    display: none !important;
+  }
+}
+
+/* 2) Centrar el icono de las tres líneas dentro del botón hamburguesa */
+#menuToggle {
+  display: grid !important;
+  place-items: center !important;
+}
+#menuToggle i {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+/* 3) Móvil: idiomas y hamburguesa -> cuadrados, sin borde azul marino, fondo blanco */
+@media (max-width: 767px) {
+  html[data-theme="light"] #langBtn,
+  html[data-theme="light"] #menuToggle {
+    border-radius: 0 !important;
+    border-color: transparent !important;
+    background: #FFFFFF !important;
+  }
+
+  html[data-theme="light"] #langBtn:hover,
+  html[data-theme="light"] #menuToggle:hover {
+    border-radius: 0 !important;
+    border-color: transparent !important;
+    background: #FFFFFF !important;
+  }
+}
+
+/* =========================================================
+   PATCH 2026-04-06
+   1) Esquinas ovaladas: .collab-cta, #langBtn, #menuToggle — PC y móvil
+   2) Fondo blanco en el cuerpo del drawer (bajo .mobile-menu__top)
+   3) Links de servicios ocupan todo el ancho del drawer
+========================================================= */
+
+/* ── 1. Esquinas ovaladas — sobreescribe border-radius: 0 de patches anteriores ── */
+.collab-cta,
+#langBtn,
+#menuToggle {
+  border-radius: 10px !important;
+}
+
+.collab-cta:hover,
+#langBtn:hover,
+#menuToggle:hover {
+  border-radius: 10px !important;
+}
+
+/* Mismo radio en móvil (sobreescribe el @media anterior que fijaba 0) */
+@media (max-width: 767px) {
+  .collab-cta,
+  #langBtn,
+  #menuToggle {
+    border-radius: 10px !important;
+  }
+}
+
+/* ── 2. Cuerpo del drawer: fondo blanco (zona nav, bajo el header logo+X) ── */
+.mobile-menu .mobile-nav {
+  background: #ffffff;
+}
+
+/* ── 3. Sub-links de servicios de extremo a extremo del drawer ── */
+.mobile-submenu {
+  padding-left: 0  !important;
+  padding-right: 0 !important;
+}
+
+.mobile-submenu li {
+  width: 100%;
+}
+
+.mobile-submenu .mobile-sub-link {
+  display: block        !important;
+  width: 100%           !important;
+  box-sizing: border-box !important;
+  padding-left: 1.5rem  !important;
+  padding-right: 1.5rem !important;
+}
+
+/* =========================================================
+   PATCH 2026-04-06-v2 — DEFINITIVO (solo estética, sin layout)
+   Especificidad suficiente para ganar a todos los patches anteriores.
+   1) Esquinas ovaladas en .collab-cta, #langBtn, #menuToggle — PC y móvil
+   2) Fondo blanco en .mobile-nav (cuerpo del drawer, bajo logo/X)
+   3) .mobile-sub-link ocupa todo el ancho del drawer
+========================================================= */
+
+/* ── 1A. Esquinas ovaladas — PC (sobreescribe @media min-width:768 con html[data-theme]) ── */
+@media (min-width: 768px) {
+  html[data-theme="light"] .collab-cta,
+  html[data-theme="light"] #langBtn,
+  html[data-theme="light"] #menuToggle,
+  html[data-theme="light"] .collab-cta:hover,
+  html[data-theme="light"] #langBtn:hover,
+  html[data-theme="light"] #menuToggle:hover {
+    border-radius: 10px !important;
+  }
+}
+
+/* ── 1B. Esquinas ovaladas — móvil (sobreescribe @media max-width:767 con html[data-theme]) ── */
+@media (max-width: 767px) {
+  html[data-theme="light"] .collab-cta,
+  html[data-theme="light"] #langBtn,
+  html[data-theme="light"] #menuToggle,
+  html[data-theme="light"] .collab-cta:hover,
+  html[data-theme="light"] #langBtn:hover,
+  html[data-theme="light"] #menuToggle:hover {
+    border-radius: 10px !important;
+  }
+}
+
+/* ── 2. Fondo blanco en el cuerpo del drawer (zona nav, bajo el header logo+X) ── */
+#mobileMenu .mobile-nav {
+  background: #ffffff !important;
+}
+
+/* ── 3. Sub-links de servicios de extremo a extremo del drawer ── */
+#mobileMenu .mobile-submenu {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#mobileMenu .mobile-submenu li {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+#mobileMenu .mobile-submenu .mobile-sub-link {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  margin: 0 !important;
+}
+
+/* =========================================================
+   PATCH 2026-04-06-v3 — DEFINITIVO
+   Selectores con especificidad ID para ganar a todas las reglas anteriores.
+   1) #mobileMenu fondo blanco puro
+   2) .mobile-sub-link de extremo a extremo del drawer
+========================================================= */
+
+/* ── 1. Fondo blanco en el cuerpo del drawer ── */
+/* El selector #mobileMenu.mobile-menu tiene especificidad ID+clase,
+   igual que la regla original en línea 1812, pero al estar después gana. */
+#mobileMenu.mobile-menu {
+  background: #ffffff !important;
+}
+
+/* ── 2. Sub-links de servicios de extremo a extremo ── */
+/* Anulamos el padding-left:14px y border-left del .mobile-submenu
+   y hacemos que cada link ocupe todo el ancho del drawer */
+#mobileMenu .mobile-submenu {
+  padding: 0 !important;
+  margin: 6px 0 10px 0 !important;
+  border-left: none !important;
+}
+
+#mobileMenu .mobile-submenu li {
+  width: 100% !important;
+}
+
+#mobileMenu .mobile-submenu .mobile-sub-link {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  border-radius: 0 !important;
+}
+
+/* =========================================================
+   PATCH 2026-04-06-v6  (solo estética, sin layout)
+   1) Franja gris entre header y hero: iguala el fondo del main
+      al fondo base del body en light mode (--cloud #DCE2EF)
+   2) Sub-links de servicios de extremo a extremo: anula el
+      padding:12px de .mobile-nav-list que bloqueaba los patches anteriores
+========================================================= */
+
+/* ── 1. Franja gris entre header y hero ──
+   main tiene padding-top:78px que expone el body background.
+   Se iguala el fondo del main al mismo color base del body en light mode. */
+html[data-theme="light"] main {
+  background: var(--cloud) !important;
+}
+
+/* ── 2. Sub-links de extremo a extremo ──
+   .mobile-nav-list{ padding:12px } es el contenedor padre real.
+   Se neutraliza solo el padding lateral con especificidad ID. */
+#mobileMenu .mobile-nav-list {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#mobileMenu .mobile-nav-item {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+#mobileMenu .mobile-submenu {
+  padding: 0 !important;
+  margin: 4px 0 8px 0 !important;
+  border-left: none !important;
+}
+#mobileMenu .mobile-submenu li {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+#mobileMenu .mobile-submenu .mobile-sub-link {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 10px 16px !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* =========================================================
+   PATCH 2026-04-06-v7 — Menú hamburguesa: referencia servicios → centro
+   IDs adaptados: #mobile-menu (ref) → #mobileMenu (destino)
+                  .mobile-menu-header (ref) → .mobile-menu-header (igual)
+                  #close-menu (ref) → #menuClose (destino)
+   Solo estética interior del drawer. Sin tocar estructura ni layout.
+========================================================= */
+
+/* ── Drawer base: blanco ── */
+html[data-theme="light"] #mobileMenu {
+  background: #FFFFFF !important;
+  border-left: 1px solid rgba(11,16,32,.10) !important;
+  box-shadow: 0 28px 90px rgba(19,33,68,0.22) !important;
+  border-radius: 26px 0 0 26px !important;
+}
+
+/* ── Cabecera (logo + X): Morning Cloud #DCE2EF, esquina redondeada ── */
+html[data-theme="light"] #mobileMenu .mobile-menu-header {
+  background: #DCE2EF !important;
+  border-bottom: 1px solid rgba(11,16,32,.10) !important;
+  border-radius: 26px 0 0 0 !important;
+}
+
+/* ── Botón cerrar (X): transparente sobre la cabecera ── */
+html[data-theme="light"] #menuClose {
+  background: transparent !important;
+  border: none !important;
+  color: rgba(11,16,32,.70) !important;
+}
+html[data-theme="light"] #menuClose:hover {
+  background: rgba(11,16,32,.08) !important;
+  box-shadow: none !important;
+}
+
+/* ── Items principales (Inicio/Servicios/Centro/Noticias/Prensa/Contáctanos):
+      Morning Cloud semitransparente, radio asimétrico izquierdo ── */
+html[data-theme="light"] #mobileMenu .mobile-nav-link,
+html[data-theme="light"] #mobileMenu .mobile-nav-summary {
+  background: rgba(220,226,239,0.55) !important;
+  color: rgba(11,16,32,.86) !important;
+  border: 1px solid rgba(11,16,32,.10) !important;
+  box-shadow: none !important;
+  border-radius: 14px 6px 6px 14px !important;
+  opacity: 1 !important;
+}
+
+/* ── Links y spans dentro del summary ── */
+html[data-theme="light"] #mobileMenu .mobile-summary-link,
+html[data-theme="light"] #mobileMenu .mobile-summary-link span {
+  color: rgba(11,16,32,.86) !important;
+}
+
+/* ── Chevron: mismo gris oscuro ── */
+html[data-theme="light"] #mobileMenu .mobile-nav-summary i {
+  color: rgba(11,16,32,.70) !important;
+}
+
+/* ── Subservicios: blanco, sin borde, radio asimétrico izquierdo ──
+      Ocupa ancho completo del drawer (anulando padding del contenedor) ── */
+html[data-theme="light"] #mobileMenu .mobile-nav-list {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+#mobileMenu .mobile-submenu {
+  padding: 0 !important;
+  margin: 4px 0 8px 0 !important;
+  border-left: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+
+#mobileMenu .mobile-submenu li {
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html[data-theme="light"] #mobileMenu .mobile-sub-link {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  background: #FFFFFF !important;
+  color: rgba(11,16,32,.86) !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 12px 4px 4px 12px !important;
+}
+
+/* ── Hover items principales ── */
+html[data-theme="light"] #mobileMenu .mobile-nav-link:hover,
+html[data-theme="light"] #mobileMenu .mobile-nav-summary:hover {
+  background: rgba(220,226,239,0.55) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(19,33,68,0.10) !important;
+}
+
+/* ── Hover subservicios ── */
+html[data-theme="light"] #mobileMenu .mobile-sub-link:hover {
+  background: rgba(220,226,239,0.40) !important;
+  transform: translateY(-1px);
+}
+
+/* ── Sin subrayado en ningún link del drawer ── */
+#mobileMenu a,
+#mobileMenu a:hover,
+#mobileMenu a:focus-visible {
+  text-decoration: none !important;
+}
+#mobileMenu .active::after,
+#mobileMenu a::after {
+  content: none !important;
+}
