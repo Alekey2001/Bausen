@@ -102,15 +102,12 @@
 "nav.svc.payroll": "Procesamiento de nómina",
 "nav.svc.specialized": "Servicios especializados",
 "nav.svc.tax": "Consultoría fiscal",
-
       "header.collab": "¿Eres colaborador?",
-
       "hero.back": "Volver a Servicios",
       "hero.badge": "Servicio Premium",
       "hero.title": "<span class='grad'> Procesamiento</span>de nomina",
       "hero.subtitle": "Potencia el crecimiento y éxito de tu empresa con nuestros<br />servicios de  Procesamiento de nomina. ¡Transforma tu empresa con<br />nuestro enfoque estratégico!",
       "hero.cta": "Contactar a BAUSEN <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M5 12h13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M13 6l6 6-6 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
-
       "services.title": "<span>Servicios</span> <span class='grad2'>Procesamiento de nomina</span>",
       "services.card1.title": "Servicios Especializados",
       "services.card1.body": "Avalados por la STPS y registrados en el<br />REPSE, garantizando transparencia y<br />cumplimiento legal.",
@@ -118,7 +115,6 @@
       "services.card2.body": "Desde el alta hasta la desvinculación,<br />incluyendo pagos de cuotas patronales, IMSS,<br />Infonavit, e impuestos.",
       "services.card3.title": "Atracción de Talento",
       "services.card3.body": "Utilizamos estrategias selectivas y entrevistas<br />exhaustivas para presentarte a los candidatos<br />correctos.",
-
       "benefits.badge": "Beneficios Exclusivos",
       "benefits.title": "Beneficios de <span class='grad'> Procesamiento</span><br /><span class='grad'>de nómina</span>",
       "benefits.item1.title": "Acceso Exclusivo BTC",
@@ -127,19 +123,16 @@
       "benefits.item2.body": "Optimiza los procesos de reclutamiento, selección y gestión de nómina con nuestras soluciones integrales.",
       "benefits.item3.title": "Asesoramiento Personalizado",
       "benefits.item3.body": "Sesiones de asesoramiento personalizado con expertos en Capital Humano para tu empresa.",
-
       "cta.title": "Todos los servicios en un solo lugar",
       "cta.body": "Solicita una reunión para más información sobre cómo podemos<br />ayudarte a optimizar tu gestión de  Procesamiento de nomina.",
       "cta.book": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M8 7V3m8 4V3' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M3 10h18' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M5 6h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z' stroke='currentColor' stroke-width='2' stroke-linejoin='round'/></svg> Agenda una cita",
       "cta.cases": "<i data-lucide='badge-plus' class='icon' aria-hidden='true'></i> Ver casos de éxito",
       "cta.stat": "Empresas",
-
       "contact.badge": "Contacto",
       "contact.title": "Contáctanos <span class='grad2'>Contáctanos</span>",
       "contact.sub": "Estamos listos para ayudarte a transformar tu empresa",
       "contact.directQ": "¿Prefieres contactarnos directamente?",
       "contact.directMail": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M4 6h16v12H4z' stroke='currentColor' stroke-width='2' /><path d='M4 8l8 6 8-6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg> contacto@bausen.com",
-
       "contact.new.badge": "Contacto comercial",
       "contact.new.titleBlue": "Tu asesora comercial",
       "contact.new.titleBlack": "asignada",
@@ -149,7 +142,6 @@
       "contact.new.phoneLabel": "Teléfono",
       "contact.new.emailLabel": "Correo",
       "contact.new.imagePlaceholder": "Espacio reservado para imagen",
-
       "form.nameLabel": "Tu nombre completo",
       "form.roleLabel": "Tu cargo",
       "form.phoneLabel": "Tu número de celular",
@@ -161,34 +153,28 @@
       "form.emailPh": "tu@email.com",
       "form.msgPh": "¿En qué podemos ayudarte?",
       "form.sendBtn": "<svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M22 2 11 13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M22 2 15 22l-4-9-9-4 20-7Z' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg> Enviar mensaje",
-
       "footer.desc": "Tu aliado estratégico en soluciones empresariales integrales.<br />Transformamos organizaciones desde adentro.",
       "footer.hoursTitle": "Horario de atención",
       "footer.hoursSub": "Lunes - Viernes: 9:00 - 18:00",
       "footer.follow": "Síguenos en redes",
-
       "footer.company": "EMPRESA",
       "footer.services": "Servicios",
       "footer.news": "Noticias",
       "footer.press": "Prensa",
       "footer.contact": "Contacto",
-
       "footer.servicesUpper": "SERVICIOS",
       "footer.legalServices": "Servicios Legales",
       "footer.accountingServices": "Servicios Contables",
       "footer.orgDev": "Desarrollo Organizacional",
-
       "footer.contactUpper": "CONTACTO",
       "footer.soon": "Próximamente. No se encontraron sucursales activas.",
       "footer.phone": "Teléfono",
       "footer.email": "Email",
       "footer.maps": "Ver en Google Maps <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M14 3h7v7' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M10 14 21 3' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6' stroke='currentColor' stroke-width='2' stroke-linecap='round'/></svg>",
-
       "footer.copy": "© 2026 Bausen. Todos los derechos reservados",
       "footer.privacy": "Política de privacidad",
       "footer.terms": "Términos de servicio",
       "footer.cookies": "Política de cookies",
-
       // ARIA
       "aria.brandHome": "Bausen - Inicio",
       "aria.mainNav": "Navegación principal",
@@ -207,21 +193,17 @@
       "aria.benefits": "Beneficios de Capital Humano",
       "aria.cta": "Todos los servicios en un solo lugar",
       "aria.contact": "Contacto",
-
       // ALT (solo si quieres cambiar alt por JS; aquí lo guardamos como texto)
       "alt.heroImg": "Equipo colaborando en oficina",
       "alt.benefitsImg": "Equipo en reunión",
       "alt.ctaImg": "Persona en llamada de negocio",
     },
-
     EN: {
       "head.title": "Human Capital | Bausen",
-
       "ui.skip": "Skip to content",
       "ui.menu": "Menu",
       "ui.langSelect": "Select language",
       "ui.seeMore": "See more <svg viewBox='0 0 24 24' fill='none' aria-hidden='true'><path d='M5 12h13' stroke='currentColor' stroke-width='2' stroke-linecap='round'/><path d='M13 6l6 6-6 6' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>",
-
       "nav.home": "Home",
       "nav.capital": "Payroll processing",
       "nav.specialized": "Specialized services",
@@ -1030,33 +1012,28 @@
       });
     }
   }
-
   // ======================
   // INITIALIZE EVERYTHING
   // ======================
   function init() {
     // i18n primero para que labels/aria estén correctos desde inicio
     initLanguageUI();
-
     initRevealAnimations();
     initSmoothScroll();
     initTiltEffect();
     initFormEnhancements();
     initLazyLoading();
-
     console.log('✅ Bausen Capital Humano - UI Enhancements loaded');
     console.log('🌐 Lang: ' + currentLang);
     console.log('📱 Viewport: ' + window.innerWidth + 'x' + window.innerHeight);
     console.log('🎨 Theme: ' + (document.documentElement.getAttribute('data-theme') || 'dark'));
     console.log('⚡ Performance: ' + (prefersReducedMotion ? 'Reduced motion' : 'Full animations'));
   }
-
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
   }
-
   // Debug API
   window.bausenUI = {
     updateViewportProperties,

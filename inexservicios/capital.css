@@ -1041,7 +1041,6 @@ width: min(520px, calc(100% - 28px));          /* más largo (más ancho) */
   color: var(--muted);
   font-size: var(--fs-body);
   line-height: 1.9;
-  max-width: 62ch;
 }
 
 /* Buttons mejorados */
