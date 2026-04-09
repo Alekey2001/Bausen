@@ -195,172 +195,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "ui.toggleTheme": "Cambiar tema claro/oscuro",
       "ui.scrollNext": "Bajar a la siguiente sección",
     },
-
-    EN: {
-      // Header/Nav
-      "nav.home": "Home",
-      "nav.press": "Press",
-      "nav.services": "Services",
-      "nav.svc.payroll": "Payroll processing",
-      "nav.svc.specialized": "Specialized services",
-      "nav.svc.tax": "Tax consulting",
-      "nav.news": "News",
-      "nav.training": "Training Center",
-      "nav.about": "About",
-      "header.collab": "Are you a collaborator?",
-
-      // Hero
-      "hero.pill": "Integrated business solutions",
-      "hero.title": "We empower<br /><span class='hero-accent'>your talent</span>",
-      "hero.subtitle":
-        "Human Capital, Organizational Development and Management<br />Services for every growth stage.",
-      "hero.ctaServices": "View Services",
-      "hero.ctaContact": "Contact",
-      "kpi.years": "Years of experience",
-      "kpi.clients": "Clients",
-      "kpi.sat": "Satisfaction",
-      "toast.title": "Certified",
-
-      // Services
-      "services.kicker": "What we do",
-      "services.title": "Our Services",
-      "services.subtitle": "Integrated solutions designed to optimize every aspect of your organization",
-      "services.card1.title": "Human Capital",
-      "services.card1.text": "Boost efficiency and results for your business.",
-      "services.card2.title": "Specialized Services",
-      "services.card2.text": "Boost efficiency and results for your business.",
-      "services.card3.title": "Tax Services",
-      "services.card3.text": "Optimize your tax burden with certified experts.",
-      "services.more": "Learn more",
-
-      // Press
-      "press.kicker": "Press room",
-      "press.title": "Press <span class='accent'>Releases</span>",
-      "press.subtitle": "Stay informed about the latest BAUSEN news and announcements",
-      "press.cta": "View all releases",
-
-      // Training
-      "training.kicker": "Talent development",
-      "training.title": "BAUSEN Training Center",
-      "training.subtitle": "We train and connect future talent with the best<br />opportunities",
-      "training.tab.events": "Events",
-      "training.tab.webinars": "Institutional Webinars",
-      "training.tab.interns": "Internship Program",
-      "training.leftTitle.events": "Events",
-      "training.leftTitle.webinars": "Institutional Webinars",
-      "training.leftTitle.interns": "Internship Program",
-      "training.panel.events.title": "Events",
-      "training.panel.events.text": "Active participation in events with schools and universities",
-      "training.panel.webinars.title": "Institutional Webinars",
-      "training.panel.webinars.text": "Specialized training and webinars with educational institutions",
-      "training.panel.interns.title": "Internship Program",
-      "training.panel.interns.text": "Comprehensive program for training and developing young talent",
-      "training.more": "Learn more",
-
-      // News
-      "news.kicker": "Blog & news",
-      "news.title": "Latest <span class='accent'>News</span>",
-      "news.subtitle": "Discover articles, success stories and industry trends",
-      "news.cta": "View all news",
-
-      // Connect
-      "connect.kicker": "Connect with us",
-      "connect.title": "Together we shape<br /><span class='connect-accent'>your path to success</span>",
-      "connect.text":
-        "Ready to take your business to the next level? Schedule a<br />meeting with our specialists and discover how we can<br />help you.",
-      "connect.cta": "Schedule now!",
-      "connect.follow": "Follow us on social!",
-
-      // Awards
-      "awards.kicker": "Recognized excellence",
-      "awards.title": "Our <span class='accent'>Recognitions</span>",
-      "awards.subtitle": "Certifications and partnerships that back our commitment to excellence",
-      "awards.card1.k": "Recognition 01",
-      "awards.card1.t": "Human Resources Council",
-      "awards.card2.k": "Recognition 02",
-      "awards.card2.t": "Humanitarian Companies Distinction",
-      "awards.card3.k": "Recognition 03",
-      "awards.card3.t": "Decent Work Certification",
-      "awards.card4.k": "Recognition 04",
-      "awards.card4.t": "Professional Specialists Registry",
-      "awards.card5.k": "Recognition 05",
-      "awards.card5.t": "Human Resources Council",
-      "awards.card6.k": "Recognition 06",
-      "awards.card6.t": "ISO Certification",
-      "awards.card7.k": "Recognition 07",
-      "awards.card7.t": "NOM Compliance",
-      "awards.card8.k": "Recognition 08",
-      "awards.card8.t": "REPSE Registry",
-
-      // Contact
-      "contact.kicker": "Ready to connect?",
-      "contact.title": "Let’s talk about <span class='contact-accent'>your project</span>",
-      "contact.subtitle":
-        "Tell us your ideas, needs or questions and our team will contact you<br />shortly. We’re here to help you transform your operations!",
-      "contact.formTitle": "Send us a message",
-      "contact.formSubtitle": "Fill out the form and we’ll contact you soon.",
-      "contact.infoTitle": "Contact Information",
-      "contact.phone": "Phone",
-      "contact.email": "Email",
-      "contact.location": "Location",
-      "contact.locationValue": "Querétaro, Mexico",
-      "contact.hours": "Hours",
-      "contact.hoursValue": "Mon - Fri: 9:00 - 18:00",
-      "contact.follow": "Follow us on social",
-
-      // Map
-      "map.kicker": "OUR LOCATIONS",
-      "map.noBranches": "No active branches found",
-      "map.retry": "Retry",
-      "map.searching": "Searching…",
-
-      // Footer
-      "footer.brandText":
-        "Your strategic ally in integrated business solutions.<br />We transform organizations from the inside out.",
-      "footer.hoursLabel": "Business hours",
-      "footer.hoursValue": "Mon - Fri: 9:00 - 18:00",
-      "footer.follow": "Follow us on social",
-      "footer.company": "COMPANY",
-      "footer.services": "SERVICES",
-      "footer.about": "About",
-      "footer.servicesLink": "Services",
-      "footer.news": "News",
-      "footer.press": "Press",
-      "footer.contact": "Contact",
-      "footer.svc.capital": "Human Capital",
-      "footer.svc.legal": "Legal Services",
-      "footer.svc.accounting": "Accounting Services",
-      "footer.svc.orgdev": "Organizational Development",
-      "footer.contactTitle": "CONTACT",
-      "footer.note": "Coming soon. No active branches found.",
-      "footer.phoneLabel": "Phone",
-      "footer.emailLabel": "Email",
-      "footer.maps": "View on Google Maps",
-      "footer.rights": "All rights reserved",
-      "footer.privacy": "Privacy Policy",
-      "footer.terms": "Terms of Service",
-      "footer.cookies": "Cookie Policy",
-
-      // Form
-      "form.fullNamePh": "Full name",
-      "form.emailPh": "you@email.com",
-      "form.messagePh": "How can we help you?",
-      "form.send": "Send message",
-      "form.err.required": "Please complete your name, email and message.",
-      "form.err.email": "Please enter a valid email.",
-      "form.ok": "Message sent. We’ll contact you shortly.",
-      "form.sending": "Sending…",
-      "form.fail": "Something went wrong. Please try again.",
-
-      // UI
-      "ui.openMenu": "Open menu",
-      "ui.closeMenu": "Close menu",
-      "ui.langSelect": "Select language",
-      "ui.goHome": "Go to home",
-      "ui.toggleTheme": "Toggle light/dark theme",
-      "ui.scrollNext": "Scroll to next section",
-    },
   };
+
 
   
 
@@ -370,16 +206,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const LANG_KEY = "bausen_lang";
   const LEGACY_KEY = "preferred-language";
 
-  const getInitialLang = () => {
-    const stored = storage.get(LANG_KEY) || storage.get(LEGACY_KEY);
-    const norm = (stored || "EN").toString().trim().toUpperCase();
-    return I18N[norm] ? norm : "EN";
-  };
+  const getInitialLang = () => 'ES';
 
-  let currentLang = getInitialLang();
+  let currentLang = 'ES';
 
   const applyI18n = (lang) => {
-    const dict = I18N[lang] || I18N.EN;
+    const dict = I18N[lang] || I18N.ES;
 
     // data-i18n: innerHTML (permite <br/> y spans)
     $$("[data-i18n]").forEach((el) => {
@@ -486,8 +318,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     options.forEach((opt) => {
       opt.addEventListener("click", () => {
-        const lang = (opt.getAttribute("data-lang") || "EN").toUpperCase();
-        currentLang = I18N[lang] ? lang : "EN";
+        const lang = (opt.getAttribute("data-lang") || "ES").toUpperCase();
+        currentLang = I18N[lang] ? lang : "ES";
         storage.set(LANG_KEY, currentLang);
         storage.set(LEGACY_KEY, currentLang);
         setLangUI(currentLang);
