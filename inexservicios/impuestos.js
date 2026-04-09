@@ -197,9 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   };
 
-
-  
-
   /* =========================
      i18n engine (compatible con referencia)
   ========================= */
